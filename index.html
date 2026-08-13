@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Modena Lines — Master-level Italian Game opening repertoire trainer. Drill deep PGN lines with interactive board, commentary, and active recall.">
+  <title>Modena Lines | Italian Game Repertoire Trainer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Chessboard.js CSS -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+
+  <!-- App CSS -->
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+  <!-- ====== HEADER ====== -->
+  <header id="app-header">
+    <div class="header-content">
+      <div class="header-brand">
+        <span class="brand-icon">♔</span>
+        <div>
+          <h1 id="app-title">Modena Lines</h1>
+          <p class="header-subtitle">Italian Game Repertoire Trainer</p>
+        </div>
+      </div>
+      <div class="header-badge" id="header-badge">
+        <span class="badge-dot"></span>
+        <span id="badge-text">Ready</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====== MAIN LAYOUT ====== -->
+  <main id="app-main">
+
+    <!-- ── Board Section ── -->
+    <section id="board-section">
+      <div id="board-wrapper">
+        <div id="board-glow"></div>
+        <div id="board-container">
+          <div id="board"></div>
+        </div>
+      </div>
+
+      <!-- Move Input -->
+      <div id="move-input-area">
+        <div id="move-input-container">
+          <span class="input-icon">⌨</span>
+          <input type="text"
+                 id="move-input"
+                 placeholder="Type your move (e.g. Nf3)…"
+                 autocomplete="off"
+                 spellcheck="false"
+                 disabled>
+          <button id="submit-move-btn" title="Submit move" disabled>↵</button>
+        </div>
+        <p id="input-hint" class="hint-text">Drag pieces on the board or type SAN notation</p>
+      </div>
+    </section>
+
+    <!-- ── Info Panel ── -->
+    <section id="info-panel">
+
+      <!-- Line Info -->
+      <div id="line-info-card" class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">📖</span>
+          <h2 id="line-name">Select a line to begin</h2>
+        </div>
+        <p id="line-description" class="card-body-text">
+          Choose one of the five Italian Game variations below, then press <strong>Start Drill</strong>.
+        </p>
+      </div>
+
+      <!-- Progress -->
+      <div id="progress-card" class="panel-card">
+        <div class="progress-header">
+          <span id="progress-label">Move 0 / 0</span>
+          <span id="progress-percent">0 %</span>
+        </div>
+        <div id="progress-track">
+          <div id="progress-bar"></div>
+        </div>
+      </div>
+
+      <!-- Commentary -->
+      <div id="commentary-card" class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">💡</span>
+          <h3>Commentary</h3>
+        </div>
+        <p id="commentary-text" class="card-body-text">
+          Start a drill to see move-by-move analysis.
+        </p>
+      </div>
+
+      <!-- Move History -->
+      <div id="history-card" class="panel-card">
+        <div class="card-header">
+          <span class="card-icon">📝</span>
+          <h3>Move History</h3>
+        </div>
+        <div id="move-history" class="card-body-text mono-text">—</div>
+      </div>
+
+      <!-- Stats -->
+      <div id="stats-card" class="panel-card stats-grid">
+        <div class="stat-item">
+          <span class="stat-value" id="stat-accuracy">0 %</span>
+          <span class="stat-label">Accuracy</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="stat-lines">0</span>
+          <span class="stat-label">Lines Done</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value" id="stat-attempts">0</span>
+          <span class="stat-label">Attempts</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====== CONTROLS BAR ====== -->
+  <div id="controls-bar">
+    <button id="btn-start"   class="ctrl-btn primary"  title="Start drilling the selected line">
+      <span class="btn-icon">▶</span> Start Drill
+    </button>
+    <button id="btn-shuffle" class="ctrl-btn"           title="Randomize the line order">
+      <span class="btn-icon">🔀</span> Shuffle
+    </button>
+    <button id="btn-next"    class="ctrl-btn"           title="Skip to the next line" disabled>
+      <span class="btn-icon">⏭</span> Next Line
+    </button>
+    <button id="btn-reset"   class="ctrl-btn danger"    title="Reset all progress">
+      <span class="btn-icon">↺</span> Reset
+    </button>
+  </div>
+
+  <!-- ====== LINE SELECTOR ====== -->
+  <div id="line-selector">
+    <!-- Populated by app.js -->
+  </div>
+
+  <!-- ====== STATUS TOAST ====== -->
+  <div id="status-toast" class="toast hidden" role="alert" aria-live="polite"></div>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
