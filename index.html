@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Modena Lines — Master the Italian Game with interactive active recall, soft neumorphic UX, SVG piece engine, and deep coach commentary.">
-  <title>Modena Lines | Italian Game Repertoire Trainer</title>
+  <meta name="description" content="Modena Lines — Master the Italian Game with White Soft Neumorphic UI, modular ES engine, spaced active recall, and ChessReps training deck.">
+  <title>Modena Lines | White Neumorphic Chess Repertoire Trainer</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +14,11 @@
   <!-- Chessboard.js CSS -->
   <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
 
-  <!-- App CSS -->
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="styles.css">
+  <!-- Modular White Neumorphic Design System Stylesheets -->
+  <link rel="stylesheet" href="styles/variables.css">
+  <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/components.css">
+  <link rel="stylesheet" href="styles/board.css">
 </head>
 <body>
 
@@ -29,11 +31,11 @@
         </div>
         <div>
           <h1 id="app-title">Modena Lines</h1>
-          <p class="header-subtitle">Italian Game Repertoire Trainer</p>
+          <p class="header-subtitle">White Neumorphic Repertoire Trainer</p>
         </div>
       </div>
 
-      <!-- View Navigation Tabs -->
+      <!-- View Switcher Tabs -->
       <nav class="view-tabs" aria-label="Main Navigation">
         <button id="nav-catalog-btn" class="nav-tab active" title="View All Courses">
           <span class="tab-icon">📚</span> Course Catalog
@@ -43,7 +45,7 @@
         </button>
       </nav>
 
-      <!-- User Stats Badge -->
+      <!-- User Metric Badge -->
       <div class="header-badge" id="header-badge">
         <div class="badge-item" title="Overall Accuracy">
           <span class="badge-icon">🎯</span>
@@ -61,13 +63,13 @@
   <!-- ==================== MAIN CONTENT AREA ==================== -->
   <main id="app-main">
 
-    <!-- ──────────────── 1. COURSE CATALOG / DASHBOARD VIEW ──────────────── -->
+    <!-- ──────────────── 1. CATALOG / DASHBOARD VIEW ──────────────── -->
     <section id="dashboard-view" class="view-section active">
       <div class="dashboard-hero">
         <div class="hero-text">
-          <h2>Master the Italian Game Repertoire</h2>
+          <h2>Master White's Opening Repertoire</h2>
           <p>
-            Build ironclad muscle memory for White using spaced active recall, move-by-move master explanations, and tactical drills.
+            Build ironclad muscle memory for White using soft neumorphic active recall, move-by-move coach explanations, and multi-mode training decks.
           </p>
         </div>
         <div class="hero-stats-card">
@@ -90,23 +92,53 @@
 
       <!-- Course Cards Grid -->
       <div class="section-title-bar">
-        <h3>Master Repertoire Lines</h3>
-        <span class="line-count-badge">5 Master Courses</span>
+        <h3>Master Opening Courses</h3>
+        <span class="course-badge">3 Course Categories</span>
       </div>
 
       <div id="course-grid" class="course-grid">
-        <!-- Dynamically populated by app.js -->
+        <!-- Dynamically populated by dashboard-view.js -->
       </div>
     </section>
 
-    <!-- ──────────────── 2. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
+    <!-- ──────────────── 2. COURSE DETAIL LINES HUB VIEW ──────────────── -->
+    <section id="course-lines-view" class="view-section hidden">
+      <div class="breadcrumb-bar">
+        <button id="back-to-courses-btn" class="breadcrumb-btn">← Course Catalog</button>
+        <span class="breadcrumb-separator">/</span>
+        <span id="course-lines-title">Italian Game Master Repertoire</span>
+      </div>
+
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <h2 id="course-lines-header-title">Italian Game Repertoire Hub</h2>
+          <p id="course-lines-desc">Select an opening variation line below to start training with the active recall coach engine.</p>
+
+          <!-- ChessReps Training Deck Modes Selector -->
+          <div id="course-mode-deck-container" style="margin-top: 1.2rem;">
+            <!-- Dynamically populated by mode-selector.js -->
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title-bar">
+        <h3>Repertoire Lines</h3>
+        <span class="course-badge">5 Deep PGN Lines</span>
+      </div>
+
+      <div id="lines-hub-list" class="lines-hub-container">
+        <!-- Dynamically populated by dashboard-view.js -->
+      </div>
+    </section>
+
+    <!-- ──────────────── 3. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
     <section id="study-view" class="view-section hidden">
 
-      <!-- Left Column: HD Chessboard & Text Input -->
+      <!-- Left Column: Board & Input -->
       <div id="board-section">
         
         <!-- Board Top Bar Info -->
-        <div id="board-header-bar" class="panel-card">
+        <div id="board-header-bar">
           <div class="active-line-meta">
             <span class="meta-tag" id="active-line-category">Main Line</span>
             <h3 id="active-line-title">Giuoco Piano Center Attack</h3>
@@ -117,7 +149,7 @@
           </div>
         </div>
 
-        <!-- Board Container -->
+        <!-- HD Board Wrapper -->
         <div id="board-wrapper">
           <div id="board-glow"></div>
           <div id="board-container">
@@ -125,7 +157,7 @@
           </div>
         </div>
 
-        <!-- Text Move Input Area -->
+        <!-- Text Move Input -->
         <div id="move-input-area">
           <div id="move-input-container">
             <span class="input-icon">⌨</span>
@@ -134,17 +166,17 @@
                    placeholder="Type move in SAN (e.g., Nf3, Bc4, d4)..."
                    autocomplete="off"
                    spellcheck="false">
-            <button id="submit-move-btn" class="neumorphic-btn-sm" title="Submit move">
+            <button id="submit-move-btn" class="card-action-btn" style="width: auto; padding: 0.45rem 1rem;" title="Submit move">
               Submit ↵
             </button>
           </div>
-          <p id="input-hint" class="hint-text">
-            💡 Drag pieces, tap squares, or type algebraic notation to play White's repertoire.
+          <p id="input-hint" class="card-body-text" style="font-size: 0.76rem; text-align: center;">
+            💡 Drag pieces, tap squares, or type SAN notation to play White's repertoire.
           </p>
         </div>
       </div>
 
-      <!-- Right Column: Training Coach Panel -->
+      <!-- Right Column: Coach & Stats Panel -->
       <div id="info-panel">
 
         <!-- Line Info Card -->
@@ -161,31 +193,29 @@
           </p>
         </div>
 
-        <!-- Progress Tracker -->
+        <!-- Progress Tracker Card -->
         <div id="progress-card" class="panel-card">
-          <div class="progress-header">
+          <div class="course-progress-header" style="margin-bottom: 0.6rem;">
             <span id="progress-label">Move 0 / 12</span>
-            <span id="progress-percent" class="percent-glow">0% Mastered</span>
+            <span id="progress-percent" style="color: var(--accent-indigo);">0% Mastered</span>
           </div>
-          <div id="progress-track">
-            <div id="progress-bar"></div>
+          <div class="course-progress-track">
+            <div id="progress-bar" class="course-progress-fill"></div>
           </div>
         </div>
 
         <!-- Coach Guidance Card -->
         <div id="commentary-card" class="panel-card coach-card">
           <div class="card-header">
-            <span class="card-icon coach-icon">💡</span>
+            <span class="card-icon" style="color: var(--accent-purple);">💡</span>
             <div>
               <h3>Coach Guidance</h3>
               <span class="coach-badge">Active Recall</span>
             </div>
           </div>
-          <div id="commentary-text-wrapper">
-            <p id="commentary-text" class="card-body-text highlight-commentary">
-              Press <strong>Start Drill</strong> below to begin White's active recall training!
-            </p>
-          </div>
+          <p id="commentary-text" class="card-body-text" style="font-weight: 600; color: var(--text-primary);">
+            Press <strong>Start Drill</strong> below to begin White's active recall training!
+          </p>
         </div>
 
         <!-- Interactive Move History -->
@@ -199,18 +229,18 @@
           </div>
         </div>
 
-        <!-- Master Line Step Tree -->
+        <!-- Step Tree -->
         <div id="tree-card" class="panel-card">
           <div class="card-header">
             <span class="card-icon">🗺</span>
             <h3>Full Line Sequence</h3>
           </div>
           <div id="line-step-tree" class="step-tree-container">
-            <!-- Populated by app.js -->
+            <!-- Populated by trainer-view.js -->
           </div>
         </div>
 
-        <!-- Line Accuracy & Session Stats -->
+        <!-- Session Stats -->
         <div id="stats-card" class="panel-card stats-grid">
           <div class="stat-item">
             <span class="stat-value" id="stat-accuracy">100%</span>
@@ -232,7 +262,7 @@
   <!-- ==================== BOTTOM NEUMORPHIC TOOL DECK ==================== -->
   <footer id="controls-bar">
     <div class="controls-container">
-      <button id="btn-catalog" class="ctrl-btn secondary" title="Back to Course Catalog">
+      <button id="nav-catalog-btn-bottom" class="ctrl-btn" onclick="window.appInstance.showCatalogView()" title="Back to Course Catalog">
         <span class="btn-icon">📋</span> Catalog
       </button>
 
@@ -259,22 +289,24 @@
         <span class="btn-icon">↺</span> Reset
       </button>
 
-      <button id="btn-flip" class="ctrl-btn secondary" title="Flip Board Orientation">
+      <button id="btn-flip" class="ctrl-btn" title="Flip Board Orientation">
         <span class="btn-icon">🔄</span> Flip
       </button>
     </div>
   </footer>
 
-  <!-- ==================== STATUS TOAST SYSTEM ==================== -->
+  <!-- ==================== TOAST NOTIFICATIONS ==================== -->
   <div id="status-toast" class="toast hidden" role="alert" aria-live="polite">
     <span id="toast-icon">✨</span>
     <span id="toast-message">Move feedback</span>
   </div>
 
-  <!-- ==================== APPLICATION SCRIPTS ==================== -->
+  <!-- ==================== EXTERNAL LIBRARIES & ES MODULE ENTRY ==================== -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
   <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
-  <script src="app.js"></script>
+  
+  <!-- ES Module Application Main Entry -->
+  <script type="module" src="src/main.js"></script>
 </body>
 </html>
