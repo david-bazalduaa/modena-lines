@@ -3,156 +3,275 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Modena Lines — Master-level Italian Game opening repertoire trainer. Drill deep PGN lines with interactive board, commentary, and active recall.">
+  <meta name="description" content="Modena Lines — Master the Italian Game with interactive active recall, soft neumorphic UX, SVG piece engine, and deep coach commentary.">
   <title>Modena Lines | Italian Game Repertoire Trainer</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
 
   <!-- Chessboard.js CSS -->
-  <link rel="stylesheet"
-        href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
 
   <!-- App CSS -->
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-  <!-- ====== HEADER ====== -->
+  <!-- ==================== TOP NAVIGATION HEADER ==================== -->
   <header id="app-header">
     <div class="header-content">
-      <div class="header-brand">
-        <span class="brand-icon">♔</span>
+      <div class="header-brand" id="brand-home" role="button" tabindex="0" title="Return to Course Catalog">
+        <div class="brand-icon-wrapper">
+          <span class="brand-icon">♔</span>
+        </div>
         <div>
           <h1 id="app-title">Modena Lines</h1>
           <p class="header-subtitle">Italian Game Repertoire Trainer</p>
         </div>
       </div>
+
+      <!-- View Navigation Tabs -->
+      <nav class="view-tabs" aria-label="Main Navigation">
+        <button id="nav-catalog-btn" class="nav-tab active" title="View All Courses">
+          <span class="tab-icon">📚</span> Course Catalog
+        </button>
+        <button id="nav-study-btn" class="nav-tab" title="Interactive Training Board">
+          <span class="tab-icon">♟</span> Study Board
+        </button>
+      </nav>
+
+      <!-- User Stats Badge -->
       <div class="header-badge" id="header-badge">
-        <span class="badge-dot"></span>
-        <span id="badge-text">Ready</span>
+        <div class="badge-item" title="Overall Accuracy">
+          <span class="badge-icon">🎯</span>
+          <span id="header-accuracy">100%</span>
+        </div>
+        <div class="badge-divider"></div>
+        <div class="badge-item" title="Lines Mastered">
+          <span class="badge-icon">🏆</span>
+          <span id="header-completed">0/5</span>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- ====== MAIN LAYOUT ====== -->
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
   <main id="app-main">
 
-    <!-- ── Board Section ── -->
-    <section id="board-section">
-      <div id="board-wrapper">
-        <div id="board-glow"></div>
-        <div id="board-container">
-          <div id="board"></div>
+    <!-- ──────────────── 1. COURSE CATALOG / DASHBOARD VIEW ──────────────── -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <h2>Master the Italian Game Repertoire</h2>
+          <p>
+            Build ironclad muscle memory for White using spaced active recall, move-by-move master explanations, and tactical drills.
+          </p>
+        </div>
+        <div class="hero-stats-card">
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-total-mastered">0</span>
+            <span class="stat-lbl">Lines Mastered</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-avg-accuracy">100%</span>
+            <span class="stat-lbl">Avg. Accuracy</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-total-drills">0</span>
+            <span class="stat-lbl">Drill Attempts</span>
+          </div>
         </div>
       </div>
 
-      <!-- Move Input -->
-      <div id="move-input-area">
-        <div id="move-input-container">
-          <span class="input-icon">⌨</span>
-          <input type="text"
-                 id="move-input"
-                 placeholder="Type your move (e.g. Nf3)…"
-                 autocomplete="off"
-                 spellcheck="false"
-                 disabled>
-          <button id="submit-move-btn" title="Submit move" disabled>↵</button>
-        </div>
-        <p id="input-hint" class="hint-text">Drag pieces on the board or type SAN notation</p>
+      <!-- Course Cards Grid -->
+      <div class="section-title-bar">
+        <h3>Master Repertoire Lines</h3>
+        <span class="line-count-badge">5 Master Courses</span>
+      </div>
+
+      <div id="course-grid" class="course-grid">
+        <!-- Dynamically populated by app.js -->
       </div>
     </section>
 
-    <!-- ── Info Panel ── -->
-    <section id="info-panel">
+    <!-- ──────────────── 2. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
+    <section id="study-view" class="view-section hidden">
 
-      <!-- Line Info -->
-      <div id="line-info-card" class="panel-card">
-        <div class="card-header">
-          <span class="card-icon">📖</span>
-          <h2 id="line-name">Select a line to begin</h2>
+      <!-- Left Column: HD Chessboard & Text Input -->
+      <div id="board-section">
+        
+        <!-- Board Top Bar Info -->
+        <div id="board-header-bar" class="panel-card">
+          <div class="active-line-meta">
+            <span class="meta-tag" id="active-line-category">Main Line</span>
+            <h3 id="active-line-title">Giuoco Piano Center Attack</h3>
+          </div>
+          <div class="turn-indicator-pill" id="turn-indicator">
+            <span class="turn-dot white"></span>
+            <span id="turn-text">White to move</span>
+          </div>
         </div>
-        <p id="line-description" class="card-body-text">
-          Choose one of the five Italian Game variations below, then press <strong>Start Drill</strong>.
-        </p>
+
+        <!-- Board Container -->
+        <div id="board-wrapper">
+          <div id="board-glow"></div>
+          <div id="board-container">
+            <div id="board"></div>
+          </div>
+        </div>
+
+        <!-- Text Move Input Area -->
+        <div id="move-input-area">
+          <div id="move-input-container">
+            <span class="input-icon">⌨</span>
+            <input type="text"
+                   id="move-input"
+                   placeholder="Type move in SAN (e.g., Nf3, Bc4, d4)..."
+                   autocomplete="off"
+                   spellcheck="false">
+            <button id="submit-move-btn" class="neumorphic-btn-sm" title="Submit move">
+              Submit ↵
+            </button>
+          </div>
+          <p id="input-hint" class="hint-text">
+            💡 Drag pieces, tap squares, or type algebraic notation to play White's repertoire.
+          </p>
+        </div>
       </div>
 
-      <!-- Progress -->
-      <div id="progress-card" class="panel-card">
-        <div class="progress-header">
-          <span id="progress-label">Move 0 / 0</span>
-          <span id="progress-percent">0 %</span>
-        </div>
-        <div id="progress-track">
-          <div id="progress-bar"></div>
-        </div>
-      </div>
+      <!-- Right Column: Training Coach Panel -->
+      <div id="info-panel">
 
-      <!-- Commentary -->
-      <div id="commentary-card" class="panel-card">
-        <div class="card-header">
-          <span class="card-icon">💡</span>
-          <h3>Commentary</h3>
+        <!-- Line Info Card -->
+        <div id="line-info-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">📖</span>
+            <div>
+              <h3 id="line-name">Giuoco Piano – Center Attack</h3>
+              <p class="card-subtitle" id="line-eco">1. e4 e5 2. Nf3 Nc6 3. Bc4</p>
+            </div>
+          </div>
+          <p id="line-description" class="card-body-text">
+            Deep central battle where White sacrifices a pawn structure edge for active piece play and pressure along the e-file.
+          </p>
         </div>
-        <p id="commentary-text" class="card-body-text">
-          Start a drill to see move-by-move analysis.
-        </p>
-      </div>
 
-      <!-- Move History -->
-      <div id="history-card" class="panel-card">
-        <div class="card-header">
-          <span class="card-icon">📝</span>
-          <h3>Move History</h3>
+        <!-- Progress Tracker -->
+        <div id="progress-card" class="panel-card">
+          <div class="progress-header">
+            <span id="progress-label">Move 0 / 12</span>
+            <span id="progress-percent" class="percent-glow">0% Mastered</span>
+          </div>
+          <div id="progress-track">
+            <div id="progress-bar"></div>
+          </div>
         </div>
-        <div id="move-history" class="card-body-text mono-text">—</div>
-      </div>
 
-      <!-- Stats -->
-      <div id="stats-card" class="panel-card stats-grid">
-        <div class="stat-item">
-          <span class="stat-value" id="stat-accuracy">0 %</span>
-          <span class="stat-label">Accuracy</span>
+        <!-- Coach Guidance Card -->
+        <div id="commentary-card" class="panel-card coach-card">
+          <div class="card-header">
+            <span class="card-icon coach-icon">💡</span>
+            <div>
+              <h3>Coach Guidance</h3>
+              <span class="coach-badge">Active Recall</span>
+            </div>
+          </div>
+          <div id="commentary-text-wrapper">
+            <p id="commentary-text" class="card-body-text highlight-commentary">
+              Press <strong>Start Drill</strong> below to begin White's active recall training!
+            </p>
+          </div>
         </div>
-        <div class="stat-item">
-          <span class="stat-value" id="stat-lines">0</span>
-          <span class="stat-label">Lines Done</span>
+
+        <!-- Interactive Move History -->
+        <div id="history-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">📝</span>
+            <h3>Move History</h3>
+          </div>
+          <div id="move-history" class="card-body-text mono-text">
+            <span class="empty-history">No moves played yet.</span>
+          </div>
         </div>
-        <div class="stat-item">
-          <span class="stat-value" id="stat-attempts">0</span>
-          <span class="stat-label">Attempts</span>
+
+        <!-- Master Line Step Tree -->
+        <div id="tree-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">🗺</span>
+            <h3>Full Line Sequence</h3>
+          </div>
+          <div id="line-step-tree" class="step-tree-container">
+            <!-- Populated by app.js -->
+          </div>
+        </div>
+
+        <!-- Line Accuracy & Session Stats -->
+        <div id="stats-card" class="panel-card stats-grid">
+          <div class="stat-item">
+            <span class="stat-value" id="stat-accuracy">100%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="stat-lines">0/5</span>
+            <span class="stat-label">Completed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="stat-attempts">0</span>
+            <span class="stat-label">Attempts</span>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- ====== CONTROLS BAR ====== -->
-  <div id="controls-bar">
-    <button id="btn-start"   class="ctrl-btn primary"  title="Start drilling the selected line">
-      <span class="btn-icon">▶</span> Start Drill
-    </button>
-    <button id="btn-shuffle" class="ctrl-btn"           title="Randomize the line order">
-      <span class="btn-icon">🔀</span> Shuffle
-    </button>
-    <button id="btn-next"    class="ctrl-btn"           title="Skip to the next line" disabled>
-      <span class="btn-icon">⏭</span> Next Line
-    </button>
-    <button id="btn-reset"   class="ctrl-btn danger"    title="Reset all progress">
-      <span class="btn-icon">↺</span> Reset
-    </button>
+  <!-- ==================== BOTTOM NEUMORPHIC TOOL DECK ==================== -->
+  <footer id="controls-bar">
+    <div class="controls-container">
+      <button id="btn-catalog" class="ctrl-btn secondary" title="Back to Course Catalog">
+        <span class="btn-icon">📋</span> Catalog
+      </button>
+
+      <button id="btn-start" class="ctrl-btn primary" title="Start or Restart line drill">
+        <span class="btn-icon">▶</span> Start Drill
+      </button>
+
+      <button id="btn-hint" class="ctrl-btn hint-btn" title="Highlight recommended move source and destination">
+        <span class="btn-icon">💡</span> Hint
+      </button>
+
+      <div class="button-group-divider"></div>
+
+      <button id="btn-prev" class="ctrl-btn icon-only" title="Step Previous Move" disabled>
+        <span class="btn-icon">◀</span>
+      </button>
+      <button id="btn-next" class="ctrl-btn icon-only" title="Step Next Move" disabled>
+        <span class="btn-icon">▶</span>
+      </button>
+
+      <div class="button-group-divider"></div>
+
+      <button id="btn-reset" class="ctrl-btn danger" title="Reset line to starting move">
+        <span class="btn-icon">↺</span> Reset
+      </button>
+
+      <button id="btn-flip" class="ctrl-btn secondary" title="Flip Board Orientation">
+        <span class="btn-icon">🔄</span> Flip
+      </button>
+    </div>
+  </footer>
+
+  <!-- ==================== STATUS TOAST SYSTEM ==================== -->
+  <div id="status-toast" class="toast hidden" role="alert" aria-live="polite">
+    <span id="toast-icon">✨</span>
+    <span id="toast-message">Move feedback</span>
   </div>
 
-  <!-- ====== LINE SELECTOR ====== -->
-  <div id="line-selector">
-    <!-- Populated by app.js -->
-  </div>
-
-  <!-- ====== STATUS TOAST ====== -->
-  <div id="status-toast" class="toast hidden" role="alert" aria-live="polite"></div>
-
-  <!-- ====== SCRIPTS ====== -->
+  <!-- ==================== APPLICATION SCRIPTS ==================== -->
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
   <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
