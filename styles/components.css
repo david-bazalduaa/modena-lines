@@ -386,6 +386,11 @@
   padding: 0.65rem 1rem;
 }
 
+/* Helper Utility Classes */
+.hidden {
+  display: none !important;
+}
+
 /* ── Toast Notifications ── */
 .toast {
   position: fixed;

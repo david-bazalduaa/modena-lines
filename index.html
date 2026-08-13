@@ -101,40 +101,10 @@
       </div>
     </section>
 
-    <!-- ──────────────── 2. COURSE DETAIL LINES HUB VIEW ──────────────── -->
-    <section id="course-lines-view" class="view-section hidden">
-      <div class="breadcrumb-bar">
-        <button id="back-to-courses-btn" class="breadcrumb-btn">← Course Catalog</button>
-        <span class="breadcrumb-separator">/</span>
-        <span id="course-lines-title">Italian Game Master Repertoire</span>
-      </div>
-
-      <div class="dashboard-hero">
-        <div class="hero-text">
-          <h2 id="course-lines-header-title">Italian Game Repertoire Hub</h2>
-          <p id="course-lines-desc">Select an opening variation line below to start training with the active recall coach engine.</p>
-
-          <!-- ChessReps Training Deck Modes Selector -->
-          <div id="course-mode-deck-container" style="margin-top: 1.2rem;">
-            <!-- Dynamically populated by mode-selector.js -->
-          </div>
-        </div>
-      </div>
-
-      <div class="section-title-bar">
-        <h3>Repertoire Lines</h3>
-        <span class="course-badge">5 Deep PGN Lines</span>
-      </div>
-
-      <div id="lines-hub-list" class="lines-hub-container">
-        <!-- Dynamically populated by dashboard-view.js -->
-      </div>
-    </section>
-
-    <!-- ──────────────── 3. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
+    <!-- ──────────────── 2. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
     <section id="study-view" class="view-section hidden">
 
-      <!-- Left Column: Board & Input -->
+      <!-- Left Column: HD Board & Move Input -->
       <div id="board-section">
         
         <!-- Board Top Bar Info -->
@@ -176,21 +146,50 @@
         </div>
       </div>
 
-      <!-- Right Column: Coach & Stats Panel -->
+      <!-- Right Column: Coach & ChessReps Mode Deck Panel -->
       <div id="info-panel">
 
-        <!-- Line Info Card -->
+        <!-- Line Header & Variation Selector Card -->
         <div id="line-info-card" class="panel-card">
           <div class="card-header">
             <span class="card-icon">📖</span>
-            <div>
+            <div style="flex: 1;">
               <h3 id="line-name">Giuoco Piano – Center Attack</h3>
               <p class="card-subtitle" id="line-eco">1. e4 e5 2. Nf3 Nc6 3. Bc4</p>
             </div>
           </div>
-          <p id="line-description" class="card-body-text">
-            Deep central battle where White sacrifices a pawn structure edge for active piece play and pressure along the e-file.
+          <!-- Variation Line Select Dropdown -->
+          <div style="margin-top: 0.5rem;">
+            <label for="variation-select" style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Repertoire Variation:</label>
+            <select id="variation-select" class="nav-tab" style="width: 100%; border: var(--border-subtle); background: var(--bg-surface); padding: 0.5rem; font-size: 0.85rem;">
+              <!-- Dynamically populated by trainer-view.js -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Coach Guidance Card (Clean, no extra inner border) -->
+        <div id="commentary-card" class="panel-card coach-card">
+          <div class="card-header">
+            <span class="card-icon" style="color: var(--accent-purple);">💡</span>
+            <div>
+              <h3>Coach Guidance</h3>
+              <span class="coach-badge">Active Recall</span>
+            </div>
+          </div>
+          <p id="commentary-text" class="card-body-text" style="font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">
+            Press <strong>Start Drill</strong> below to begin White's active recall training!
           </p>
+        </div>
+
+        <!-- ChessReps Interactive Mode Deck -->
+        <div id="trainer-mode-deck-card" class="panel-card">
+          <div class="card-header" style="margin-bottom: 0.4rem;">
+            <span class="card-icon">🎮</span>
+            <h3>Training Mode</h3>
+          </div>
+          <div id="trainer-mode-deck-container">
+            <!-- Dynamically populated by mode-selector.js -->
+          </div>
         </div>
 
         <!-- Progress Tracker Card -->
@@ -202,20 +201,6 @@
           <div class="course-progress-track">
             <div id="progress-bar" class="course-progress-fill"></div>
           </div>
-        </div>
-
-        <!-- Coach Guidance Card -->
-        <div id="commentary-card" class="panel-card coach-card">
-          <div class="card-header">
-            <span class="card-icon" style="color: var(--accent-purple);">💡</span>
-            <div>
-              <h3>Coach Guidance</h3>
-              <span class="coach-badge">Active Recall</span>
-            </div>
-          </div>
-          <p id="commentary-text" class="card-body-text" style="font-weight: 600; color: var(--text-primary);">
-            Press <strong>Start Drill</strong> below to begin White's active recall training!
-          </p>
         </div>
 
         <!-- Interactive Move History -->
@@ -259,10 +244,10 @@
     </section>
   </main>
 
-  <!-- ==================== BOTTOM NEUMORPHIC TOOL DECK ==================== -->
-  <footer id="controls-bar">
+  <!-- ==================== BOTTOM NEUMORPHIC TOOL DECK (STUDY VIEW ONLY) ==================== -->
+  <footer id="controls-bar" class="hidden">
     <div class="controls-container">
-      <button id="nav-catalog-btn-bottom" class="ctrl-btn" onclick="window.appInstance.showCatalogView()" title="Back to Course Catalog">
+      <button id="nav-catalog-btn-bottom" class="ctrl-btn" title="Back to Course Catalog">
         <span class="btn-icon">📋</span> Catalog
       </button>
 

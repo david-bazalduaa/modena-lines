@@ -1,14 +1,16 @@
 /* ============================================================
-   TRAINER VIEW & COACH PANEL (SAFE BOARD RE-INIT & BLIND STREAK)
+   TRAINER VIEW (DIRECT COURSE BOARD & CLICK-TO-MOVE ENGINE)
    ============================================================ */
 
 import { APP_CONFIG } from '../config/settings.js';
 import { getPieceDataURI } from '../engine/board-renderer.js';
 import { processLineData } from '../engine/chess-logic.js';
 import { userProgress } from '../storage/user-progress.js';
+import { renderModeDeck } from './mode-selector.js';
 
 export class TrainerView {
   constructor() {
+    this.currentCourse = null;
     this.currentLine = null;
     this.moveIndex = 0;
     this.game = new Chess();
@@ -24,7 +26,7 @@ export class TrainerView {
   }
 
   /**
-   * Safely re-binds and re-initializes chessboard instance to prevent frozen boards or memory leaks.
+   * Safely re-binds chessboard instance after DOM layout settles to prevent frozen boards or memory leaks.
    */
   rebindBoard(fenPosition) {
     const $boardContainer = $('#board');
@@ -32,36 +34,35 @@ export class TrainerView {
       $boardContainer.empty();
     }
 
+    if (this.board && typeof this.board.destroy === 'function') {
+      try { this.board.destroy(); } catch (e) {}
+    }
     this.board = null;
 
-    const config = {
-      position: fenPosition || 'start',
-      draggable: true,
-      orientation: APP_CONFIG.defaultOrientation,
-      pieceTheme: getPieceDataURI,
-      onDragStart: this.onDragStart.bind(this),
-      onDrop: this.onDrop.bind(this),
-      onSnapEnd: this.onSnapEnd.bind(this)
-    };
-
-    this.board = Chessboard('board', config);
-
-    // Unbind previous window resize & click handlers to prevent duplicate listeners
-    $(window).off('resize.trainerBoard').on('resize.trainerBoard', () => {
-      if (this.board) this.board.resize();
-    });
-
-    $('#board').off('click.squareSelect').on('click.squareSelect', '.square-55d63', (e) => {
-      const sq = $(e.currentTarget).data('square');
-      this.handleSquareClick(sq);
-    });
-
-    // Schedule resize after DOM layout stabilization
+    // Delay initialization until DOM layout settles so bounding rects are non-zero
     setTimeout(() => {
+      const config = {
+        position: fenPosition || 'start',
+        draggable: true,
+        orientation: APP_CONFIG.defaultOrientation,
+        pieceTheme: getPieceDataURI,
+        onDragStart: this.onDragStart.bind(this),
+        onDrop: this.onDrop.bind(this),
+        onSnapEnd: this.onSnapEnd.bind(this)
+      };
+
+      this.board = Chessboard('board', config);
+
+      // Re-bind click event delegate on newly instantiated board DOM
+      $('#board').off('click.squareSelect').on('click.squareSelect', '.square-55d63', (e) => {
+        const sq = $(e.currentTarget).data('square');
+        this.handleSquareClick(sq);
+      });
+
       if (this.board) {
         this.board.resize();
       }
-    }, 50);
+    }, 100);
 
     this.initControls();
   }
@@ -83,6 +84,46 @@ export class TrainerView {
     $('#btn-next').off('click').on('click', () => this.stepNext());
   }
 
+  loadCourse(course, lineIndex = 0) {
+    this.currentCourse = course;
+    if (!course || !course.lines || course.lines.length === 0) return;
+
+    this.renderVariationDropdown();
+    this.renderModeDeckPanel();
+    this.loadLine(course.lines[lineIndex]);
+  }
+
+  renderVariationDropdown() {
+    const $select = $('#variation-select');
+    if (!$select.length || !this.currentCourse) return;
+
+    $select.empty();
+    this.currentCourse.lines.forEach((line, index) => {
+      const st = userProgress.getLineStat(line.id);
+      const label = `${line.name} ${st.completed ? '🏆' : ''}`;
+      $select.append(`<option value="${index}">${label}</option>`);
+    });
+
+    $select.off('change').on('change', (e) => {
+      const idx = parseInt($(e.target).val(), 10);
+      if (!isNaN(idx) && this.currentCourse.lines[idx]) {
+        this.loadLine(this.currentCourse.lines[idx]);
+      }
+    });
+  }
+
+  renderModeDeckPanel() {
+    renderModeDeck('trainer-mode-deck-container', this.currentCourse, userProgress, (selectedMode) => {
+      if (selectedMode === 'drill' || selectedMode === 'arena') {
+        this.startBlindStreak(this.currentCourse, selectedMode);
+      } else {
+        this.isBlindStreak = false;
+        this.currentMode = selectedMode;
+        this.resetDrill();
+      }
+    });
+  }
+
   loadLine(rawLine, mode = 'learn') {
     this.isBlindStreak = false;
     this.currentMode = mode;
@@ -91,25 +132,19 @@ export class TrainerView {
     this.resetDrill();
   }
 
-  /**
-   * Starts a Blind Streak session (Drill Mode / Arena Mode)
-   */
   startBlindStreak(course, mode) {
     this.isBlindStreak = true;
     this.currentMode = mode;
     this.streakScore = 0;
 
-    // Filter lines based on mode rules
     if (mode === 'drill') {
-      // Pick from learned lines
       this.blindPool = course.lines.filter(line => userProgress.getLineStat(line.id).completed);
     } else {
-      // Arena mode picks from all repertoire lines
       this.blindPool = course.lines;
     }
 
     if (this.blindPool.length === 0) {
-      alert('No lines available for this mode yet!');
+      alert('No learned lines available for this mode yet!');
       return;
     }
 
@@ -177,31 +212,46 @@ export class TrainerView {
   }
 
   /**
-   * Dual Move Interaction: Click-to-Select piece & Click-to-Move destination
+   * Re-engineered Click-to-Move handler with source and target highlights
    */
   handleSquareClick(square) {
     if (!square || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
     if (this.game.turn() !== 'w') return;
 
     if (!this.selectedSquare) {
+      // First click: select White piece and highlight legal moves
       const piece = this.game.get(square);
       if (piece && piece.color === 'w') {
         this.selectedSquare = square;
         this.clearHighlights();
         $(`#board .square-${square}`).addClass('highlight-hint-src');
+
+        // Query legal moves from selected square and highlight target destinations
+        const legalMoves = this.game.moves({ square: square, verbose: true });
+        legalMoves.forEach(m => {
+          $(`#board .square-${m.to}`).addClass('highlight-hint-dst');
+        });
       }
     } else {
+      // Second click: user clicked a square while a piece is selected
       const src = this.selectedSquare;
       const piece = this.game.get(square);
 
       if (piece && piece.color === 'w' && src !== square) {
-        // Switch selection to another White piece
+        // Switch selection to a different White piece
         this.selectedSquare = square;
         this.clearHighlights();
         $(`#board .square-${square}`).addClass('highlight-hint-src');
+
+        const legalMoves = this.game.moves({ square: square, verbose: true });
+        legalMoves.forEach(m => {
+          $(`#board .square-${m.to}`).addClass('highlight-hint-dst');
+        });
       } else {
+        // Attempt move execution to target square
         this.selectedSquare = null;
         this.clearHighlights();
+
         if (src !== square) {
           this.attemptMove(src, square);
         }
@@ -356,6 +406,8 @@ export class TrainerView {
     }
 
     userProgress.markCompleted(this.currentLine.id, this.currentLine.totalHalfMoves / 2);
+    this.renderVariationDropdown();
+    this.renderModeDeckPanel();
     this.triggerSuccessGlow();
     this.showToast(`🎉 Line Mastered! 100% Complete!`, 'success');
     this.updateUI();

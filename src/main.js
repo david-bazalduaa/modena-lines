@@ -1,10 +1,10 @@
 /* ============================================================
-   MAIN APPLICATION ENTRY POINT & ROUTER
+   MAIN APPLICATION ENTRY POINT & ROUTER (DOM ISOLATION)
    ============================================================ */
 
 import { COURSES, getAllLines } from './data/courses.js';
 import { userProgress } from './storage/user-progress.js';
-import { renderDashboard, renderCourseLinesHub } from './ui/dashboard-view.js';
+import { renderDashboard } from './ui/dashboard-view.js';
 import { TrainerView } from './ui/trainer-view.js';
 
 class App {
@@ -18,23 +18,19 @@ class App {
     this.updateHeaderMetrics();
     this.initNavigation();
 
-    // Default route: render Course Catalog
+    // Default route: render Course Catalog View
     this.showCatalogView();
 
-    console.log('Modena Lines White Neumorphic Modular SPA Initialized!');
+    console.log('Modena Lines SPA Router & View Lifecycle Initialized!');
   }
 
   initNavigation() {
-    $('#nav-catalog-btn, #brand-home').off('click').on('click', () => {
+    $('#nav-catalog-btn, #brand-home, #nav-catalog-btn-bottom').off('click').on('click', () => {
       this.showCatalogView();
     });
 
     $('#nav-study-btn').off('click').on('click', () => {
       this.showStudyView();
-    });
-
-    $('#back-to-courses-btn').off('click').on('click', () => {
-      this.showCatalogView();
     });
   }
 
@@ -52,48 +48,47 @@ class App {
 
   showCatalogView() {
     this.currentView = 'catalog';
-    $('#dashboard-view').removeClass('hidden').addClass('active');
-    $('#course-lines-view').addClass('hidden').removeClass('active');
+
+    // Completely hide Study View & floating bottom controls deck
     $('#study-view').addClass('hidden').removeClass('active');
+    $('#controls-bar').addClass('hidden');
+
+    // Show Dashboard Catalog
+    $('#dashboard-view').removeClass('hidden').addClass('active');
 
     $('#nav-catalog-btn').addClass('active');
     $('#nav-study-btn').removeClass('active');
 
     this.updateHeaderMetrics();
-    renderDashboard((targetLine) => {
-      this.startLineDrill(targetLine);
-    });
-  }
-
-  showCourseLinesHub(course) {
-    this.currentView = 'course-hub';
-    $('#nav-catalog-btn').addClass('active');
-    $('#nav-study-btn').removeClass('active');
-
-    renderCourseLinesHub(course, (targetLine) => {
-      this.startLineDrill(targetLine);
+    renderDashboard((targetCourse) => {
+      this.startCourseDrill(targetCourse);
     });
   }
 
   showStudyView() {
     this.currentView = 'study';
+
+    // Completely hide Dashboard View
     $('#dashboard-view').addClass('hidden').removeClass('active');
     $('#course-lines-view').addClass('hidden').removeClass('active');
+
+    // Show Study Board & floating bottom controls deck
     $('#study-view').removeClass('hidden').addClass('active');
+    $('#controls-bar').removeClass('hidden');
 
     $('#nav-catalog-btn').removeClass('active');
     $('#nav-study-btn').addClass('active');
 
-    if (!this.trainer.currentLine && this.allLines.length > 0) {
-      this.trainer.loadLine(this.allLines[0]);
+    if (!this.trainer.currentCourse && COURSES.length > 0) {
+      this.trainer.loadCourse(COURSES[0]);
     } else if (this.trainer.board) {
       setTimeout(() => this.trainer.board.resize(), 50);
     }
   }
 
-  startLineDrill(line) {
+  startCourseDrill(course) {
     this.showStudyView();
-    this.trainer.loadLine(line);
+    this.trainer.loadCourse(course);
     this.updateHeaderMetrics();
   }
 
