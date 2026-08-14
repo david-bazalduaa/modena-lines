@@ -3,7 +3,14 @@
    ============================================================ */
 
 import { APP_CONFIG } from '../config/settings.js';
-import { getPieceDataURI, initClickToMove, clearBoardHighlights } from '../engine/board-renderer.js';
+import {
+  getPieceDataURI,
+  initClickToMove,
+  clearBoardHighlights,
+  clearBoardHighlightsKeepState,
+  highlightBoardSquare,
+  setSelectedSquare
+} from '../engine/board-renderer.js';
 import { processLineData } from '../engine/chess-logic.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
@@ -41,7 +48,6 @@ export class TrainerView {
     }
     this.board = null;
 
-    // Delay initialization until DOM layout settles so bounding rects are non-zero
     setTimeout(() => {
       const config = {
         position: fenPosition || 'start',
@@ -194,14 +200,25 @@ export class TrainerView {
       return false;
     }
 
-    this.clearHighlights();
+    // Synchronize selection state and legal destination highlights during drag
+    setSelectedSquare(source);
+    clearBoardHighlightsKeepState('#board');
+    highlightBoardSquare(source, 'selected', '#board');
+
+    const legalMoves = this.game.moves({ square: source, verbose: true }) || [];
+    legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', '#board'));
+
     return true;
   }
 
   onDrop(source, target) {
-    this.clearHighlights();
-    if (source === target) return 'snapback';
+    if (source === target) {
+      // User tapped/clicked without dragging: preserve click-to-move highlights!
+      return 'snapback';
+    }
 
+    // User actually dragged piece to a different square
+    this.clearHighlights();
     const move = this.handleUserMove(source, target);
     if (!move) return 'snapback';
   }
@@ -212,7 +229,7 @@ export class TrainerView {
 
   /**
    * UNIFIED MOVE EXECUTION PIPELINE
-   * All moves (Drag-and-Drop, Click-to-Move, and SAN Input Field) flow through this method.
+   * All user moves (Drag-and-Drop, Click-to-Move, and SAN Input) flow through this single method.
    */
   handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
@@ -220,7 +237,7 @@ export class TrainerView {
 
     const expected = this.currentLine.moves[this.moveIndex];
 
-    // 1. Verify if move is valid in chess.js
+    // 1. Verify move validity in chess.js
     const testMove = this.game.move({
       from: fromSquare,
       to: toSquare,
@@ -254,7 +271,7 @@ export class TrainerView {
       return null;
     }
 
-    // 3. If correct: execute move, play feedback, update UI, and trigger Black response
+    // 3. Move is correct: advance index, play feedback, update UI, and trigger Black response
     this.moveIndex++;
     if (this.isBlindStreak) {
       this.streakScore++;
@@ -283,7 +300,7 @@ export class TrainerView {
 
     $input.val('');
 
-    // Pre-test SAN move to extract exact source and target coordinates
+    // Pre-validate SAN move
     const testMove = this.game.move(sanText, { sloppy: true });
     if (!testMove) {
       this.showToast(`Invalid move notation: "${sanText}"`, 'error');
@@ -291,7 +308,7 @@ export class TrainerView {
       return;
     }
 
-    // Undo temporary move so it flows through the unified handleUserMove pipeline
+    // Undo temporary move so it routes through unified handleUserMove
     this.game.undo();
     this.handleUserMove(testMove.from, testMove.to, testMove.promotion);
   }

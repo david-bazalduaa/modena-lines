@@ -40,10 +40,10 @@
 
 #board {
   width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: var(--radius-md);
+  height: 100%;
+  border-radius: var(--radius-md, 12px);
   overflow: hidden;
-  box-shadow: var(--shadow-inset);
+  box-shadow: var(--shadow-inset, inset 3px 3px 6px #b8c0cc, inset -3px -3px 6px #ffffff);
   z-index: 2;
   position: relative;
 }
