@@ -1,5 +1,5 @@
 /* ============================================================
-   DASHBOARD VIEW (DIRECT COURSE ENTRY TO CHESSREPS BOARD)
+   DASHBOARD VIEW (COURSE CATALOG & MINI-BOARD PREVIEWS)
    ============================================================ */
 
 import { COURSES } from '../data/courses.js';
@@ -22,7 +22,7 @@ export function renderDashboard(onSelectCourse) {
 
     const cardHTML = `
       <div class="course-card" data-course-index="${courseIndex}">
-        <div class="card-top-preview">
+        <div class="card-top-preview card-preview-board">
           <span class="course-badge">${course.category}</span>
           ${generateMiniBoardHTML(course.previewFEN)}
         </div>
@@ -40,7 +40,7 @@ export function renderDashboard(onSelectCourse) {
           </div>
         </div>
         <button class="card-action-btn view-course-btn" data-course-index="${courseIndex}">
-          <span>Train Opening Course →</span>
+          <span>Train Opening Course \u2192</span>
         </button>
       </div>
     `;

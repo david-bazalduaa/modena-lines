@@ -381,3 +381,20 @@
   letter-spacing: 0.05em;
   margin-top: 0.2rem;
 }
+
+
+/* ============================================================
+   CLICK-TO-MOVE NEUMORPHIC SQUARE SELECTION & DESTINATION
+   ============================================================ */
+
+.highlight-selected-square,
+.highlight-selected {
+  box-shadow: inset 0 0 0 3.5px var(--accent-indigo), inset 3px 3px 6px rgba(79, 70, 229, 0.4) !important;
+  background-color: rgba(79, 70, 229, 0.22) !important;
+}
+
+.highlight-dest-square,
+.highlight-target {
+  box-shadow: inset 0 0 0 3.5px var(--accent-emerald) !important;
+  animation: hint-pulse 1.2s ease-in-out infinite;
+}

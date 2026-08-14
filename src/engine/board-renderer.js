@@ -18,6 +18,9 @@ export const SVG_PIECES = {
   bK: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45"><g fill="none" fill-rule="evenodd" stroke="#1b1c20" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 11.63V6M20 8h5" stroke-linejoin="miter"/><path d="M22.5 25c4.5 0 8-3.5 8-8 0-3-2.5-6-5.5-7h-5C17 11 14.5 14 14.5 17c0 4.5 3.5 8 8 8z" fill="#2d3038"/><path d="M11.5 37c5.5 3.5 16.5 3.5 22 0v-7s9-4.5 6-10.5c-4-1-5 2.5-7.5 2-3.5-.5-4-5-9.5-5s-6 4.5-9.5 5c-2.5.5-3.5-3-7.5-2-3 6 6 10.5 6 10.5v7z" fill="#2d3038"/><path d="M11.5 30c5.5-3 16.5-3 22 0M11.5 33.5c5.5-3 16.5-3 22 0M11.5 37c5.5-3 16.5-3 22 0" stroke="#ffffff" opacity="0.3"/></g></svg>`
 };
 
+/**
+ * Returns base64/data-URI for embedded SVG piece graphic.
+ */
 export function getPieceDataURI(piece) {
   if (SVG_PIECES[piece]) {
     return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(SVG_PIECES[piece]);
@@ -25,11 +28,54 @@ export function getPieceDataURI(piece) {
   return '';
 }
 
-export function generateMiniBoardHTML(fen) {
-  const temp = new Chess(fen || 'r1bqk2r/pppp1ppp/2n2n2/4p3/2B1P3/2P2N2/PPPP1PPP/RNBQK2R w KQkq - 0 4');
-  const boardArr = temp.board();
-  let html = '<div class="mini-board-grid">';
+/**
+ * Parses a FEN piece-placement string into an 8x8 matrix array.
+ */
+export function parseFENPosition(fen) {
+  const placement = (fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR').split(' ')[0];
+  const rows = placement.split('/');
+  const board = [];
 
+  for (let r = 0; r < 8; r++) {
+    const row = [];
+    const rowStr = rows[r] || '8';
+    for (let i = 0; i < rowStr.length; i++) {
+      const char = rowStr[i];
+      if (/^[1-8]$/.test(char)) {
+        const emptyCount = parseInt(char, 10);
+        for (let e = 0; e < emptyCount; e++) {
+          row.push(null);
+        }
+      } else {
+        const isWhite = char === char.toUpperCase();
+        row.push({
+          type: char.toLowerCase(),
+          color: isWhite ? 'w' : 'b'
+        });
+      }
+    }
+    board.push(row);
+  }
+  return board;
+}
+
+/**
+ * Generates lightweight, static 8x8 mini-board HTML string from a FEN string.
+ */
+export function generateMiniBoardHTML(fen) {
+  let boardArr;
+  if (typeof Chess !== 'undefined') {
+    try {
+      const tempGame = new Chess(fen);
+      boardArr = tempGame.board();
+    } catch (e) {
+      boardArr = parseFENPosition(fen);
+    }
+  } else {
+    boardArr = parseFENPosition(fen);
+  }
+
+  let html = '<div class="mini-board-grid">';
   for (let r = 0; r < 8; r++) {
     for (let c = 0; c < 8; c++) {
       const piece = boardArr[r][c];
@@ -38,11 +84,179 @@ export function generateMiniBoardHTML(fen) {
       let pieceImg = '';
       if (piece) {
         const pieceCode = (piece.color === 'w' ? 'w' : 'b') + piece.type.toUpperCase();
-        pieceImg = `<img src="${getPieceDataURI(pieceCode)}" alt="${pieceCode}"/>`;
+        pieceImg = `<img src="${getPieceDataURI(pieceCode)}" alt="${pieceCode}" draggable="false" />`;
       }
       html += `<div class="${sqClass}">${pieceImg}</div>`;
     }
   }
   html += '</div>';
   return html;
+}
+
+/**
+ * Mounts a static mini-board inside any container DOM element.
+ */
+export function renderMiniBoard(containerElement, fen) {
+  const $el = $(containerElement);
+  if ($el.length) {
+    $el.html(generateMiniBoardHTML(fen));
+  }
+}
+
+/* ============================================================
+   CLICK-TO-MOVE EVENT DELEGATION & SQUARE HIGHLIGHT SYSTEM
+   ============================================================ */
+
+let selectedSquare = null;
+
+/**
+ * Returns currently selected square coordinate or null.
+ */
+export function getSelectedSquare() {
+  return selectedSquare;
+}
+
+/**
+ * Updates selected square state.
+ */
+export function setSelectedSquare(sq) {
+  selectedSquare = sq;
+}
+
+/**
+ * Extracts square coordinate (e.g., "e2", "e4") from event target element.
+ */
+export function getSquareCoordinate(element) {
+  if (!element) return null;
+  const $el = $(element);
+
+  // 1. Direct or closest data-square attribute
+  const dataSq = $el.data('square') || $el.attr('data-square') || $el.closest('[data-square]').attr('data-square');
+  if (dataSq && /^[a-h][1-8]$/.test(dataSq)) {
+    return dataSq;
+  }
+
+  // 2. Class name matching square-xx (e.g. square-e4)
+  const fullClass = ($el.attr('class') || '') + ' ' + ($el.closest('.square-55d63').attr('class') || '');
+  const match = fullClass.match(/square-([a-h][1-8])\b/);
+  if (match && match[1]) {
+    return match[1];
+  }
+
+  return null;
+}
+
+/**
+ * Clears all click-to-move and hint highlights from the board.
+ */
+export function clearBoardHighlights(boardSelector = '#board') {
+  selectedSquare = null;
+  const $board = $(boardSelector);
+  $board.find('.square-55d63, [data-square]').removeClass(
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst'
+  );
+}
+
+/**
+ * Highlights selected source square or valid destination square.
+ */
+export function highlightBoardSquare(square, type = 'selected', boardSelector = '#board') {
+  if (!square) return;
+  const $board = $(boardSelector);
+  const $sq = $board.find(`.square-${square}, [data-square="${square}"]`);
+
+  if (type === 'selected') {
+    $sq.addClass('highlight-selected-square highlight-hint-src');
+  } else if (type === 'destination') {
+    $sq.addClass('highlight-dest-square highlight-hint-dst');
+  }
+}
+
+/**
+ * Re-architected native DOM event delegation for Click-to-Move piece interaction.
+ * Attach a global click listener to board container (#board or .chessboard).
+ */
+export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution) {
+  const $board = $(boardSelector);
+  if (!$board.length) return;
+
+  // Detach previous click listener namespace
+  $board.off('click.clickToMove');
+
+  // Attach single global delegated click listener
+  $board.on('click.clickToMove', function (e) {
+    const clickedSquare = getSquareCoordinate(e.target);
+    if (!clickedSquare) return;
+
+    const game = typeof getGameInstance === 'function' ? getGameInstance() : getGameInstance;
+    if (!game || typeof game.get !== 'function') return;
+
+    // Check if game is waiting for Black response or over
+    if (typeof game.game_over === 'function' && game.game_over()) return;
+    if (typeof game.turn === 'function' && game.turn() !== 'w') return;
+
+    const clickedPiece = game.get(clickedSquare);
+
+    // ============================================================
+    // CASE 1: No square is currently selected (selectedSquare === null)
+    // ============================================================
+    if (selectedSquare === null) {
+      if (clickedPiece && clickedPiece.color === 'w') {
+        selectedSquare = clickedSquare;
+        clearBoardHighlights(boardSelector);
+        highlightBoardSquare(clickedSquare, 'selected', boardSelector);
+
+        // Highlight valid destination squares
+        const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
+        legalMoves.forEach(m => {
+          highlightBoardSquare(m.to, 'destination', boardSelector);
+        });
+      }
+      return;
+    }
+
+    // ============================================================
+    // CASE 2: A square is already selected (selectedSquare !== null)
+    // ============================================================
+
+    // 2A. Clicked the same square -> Cancel selection
+    if (clickedSquare === selectedSquare) {
+      clearBoardHighlights(boardSelector);
+      selectedSquare = null;
+      return;
+    }
+
+    // 2B. Clicked another friendly White piece -> Update selection
+    if (clickedPiece && clickedPiece.color === 'w') {
+      selectedSquare = clickedSquare;
+      clearBoardHighlights(boardSelector);
+      highlightBoardSquare(clickedSquare, 'selected', boardSelector);
+
+      // Refresh valid destination highlights
+      const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
+      legalMoves.forEach(m => {
+        highlightBoardSquare(m.to, 'destination', boardSelector);
+      });
+      return;
+    }
+
+    // 2C. Clicked a destination square -> Attempt move execution
+    const fromSquare = selectedSquare;
+    const toSquare = clickedSquare;
+
+    // Clear highlights immediately
+    clearBoardHighlights(boardSelector);
+    selectedSquare = null;
+
+    if (typeof onMoveExecution === 'function') {
+      onMoveExecution(fromSquare, toSquare);
+    } else {
+      const move = game.move({ from: fromSquare, to: toSquare, promotion: 'q' });
+      if (!move) {
+        // Invalid move
+        clearBoardHighlights(boardSelector);
+        selectedSquare = null;
+      }
+    }
+  });
 }

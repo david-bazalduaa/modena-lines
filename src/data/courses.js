@@ -14,8 +14,8 @@ export const COURSES = [
     title: 'Italian Game Master Repertoire',
     subtitle: 'Classic 1. e4 e5 2. Nf3 Nc6 3. Bc4 Openings',
     category: '1. e4 Openings',
-    description: 'Master White’s classical initiative with sharp gambits, tactical sacrifices, and strategic maneuvering.',
-    previewFEN: 'r1bqk2r/pppp1ppp/2n2n2/4p3/2B1P3/2P2N2/PPPP1PPP/RNBQK2R w KQkq - 0 4',
+    description: 'Master White\u2019s classical initiative with sharp gambits, tactical sacrifices, and strategic maneuvering.',
+    previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3',
     lines: [
       giuocoPianoLine,
       evansGambitLine,
@@ -30,7 +30,7 @@ export const COURSES = [
     subtitle: '1. e4 c5 Dynamic Counter-Attacks',
     category: '1. e4 Counter',
     description: 'Crush the Sicilian with aggressive Open Sicilian & Grand Prix Attack lines.',
-    previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2',
+    previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
     lines: []
   },
   {

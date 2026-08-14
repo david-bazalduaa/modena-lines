@@ -424,3 +424,58 @@
 .toast.error {
   color: var(--accent-crimson);
 }
+
+
+/* ============================================================
+   CATALOG MINI-BOARD PREVIEWS & GRID STYLING
+   ============================================================ */
+
+.card-preview-board {
+  width: 100%;
+  height: 180px;
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-inset);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.mini-board-grid {
+  width: 156px;
+  height: 156px;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: var(--shadow-extruded-sm);
+  border: 1px solid rgba(163, 177, 198, 0.35);
+  user-select: none;
+  pointer-events: none;
+}
+
+.mini-sq {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mini-sq.light {
+  background-color: var(--sq-light);
+}
+
+.mini-sq.dark {
+  background-color: var(--sq-dark);
+}
+
+.mini-sq img {
+  width: 86%;
+  height: 86%;
+  object-fit: contain;
+  pointer-events: none;
+}

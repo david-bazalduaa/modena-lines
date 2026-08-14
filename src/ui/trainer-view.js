@@ -3,7 +3,7 @@
    ============================================================ */
 
 import { APP_CONFIG } from '../config/settings.js';
-import { getPieceDataURI } from '../engine/board-renderer.js';
+import { getPieceDataURI, initClickToMove, clearBoardHighlights } from '../engine/board-renderer.js';
 import { processLineData } from '../engine/chess-logic.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
@@ -15,7 +15,6 @@ export class TrainerView {
     this.moveIndex = 0;
     this.game = new Chess();
     this.board = null;
-    this.selectedSquare = null;
     this.toastTimer = null;
     
     // Blind streak game mode state
@@ -53,10 +52,9 @@ export class TrainerView {
 
       this.board = Chessboard('board', config);
 
-      // Re-bind click event delegate on newly instantiated board DOM
-      $('#board').off('click.squareSelect').on('click.squareSelect', '.square-55d63', (e) => {
-        const sq = $(e.currentTarget).data('square');
-        this.handleSquareClick(sq);
+      // Re-bind native delegated click-to-move handler
+      initClickToMove('#board', () => this.game, (fromSq, toSq) => {
+        this.attemptMove(fromSq, toSq);
       });
 
       if (this.board) {
@@ -100,7 +98,7 @@ export class TrainerView {
     $select.empty();
     this.currentCourse.lines.forEach((line, index) => {
       const st = userProgress.getLineStat(line.id);
-      const label = `${line.name} ${st.completed ? '🏆' : ''}`;
+      const label = `${line.name} ${st.completed ? '\u2714' : ''}`;
       $select.append(`<option value="${index}">${label}</option>`);
     });
 
@@ -159,11 +157,10 @@ export class TrainerView {
 
     this.game.reset();
     this.moveIndex = 0;
-    this.selectedSquare = null;
     this.clearHighlights();
 
     this.updateUI();
-    this.showToast(`🔥 Blind Streak Active! Current Streak: ${this.streakScore}`, 'success');
+    this.showToast(`\uD83D\uDD25 Blind Streak Active! Current Streak: ${this.streakScore}`, 'success');
   }
 
   resetDrill() {
@@ -175,7 +172,6 @@ export class TrainerView {
 
     this.game.reset();
     this.moveIndex = 0;
-    this.selectedSquare = null;
     if (this.board) this.board.position('start');
     this.clearHighlights();
 
@@ -212,51 +208,12 @@ export class TrainerView {
   }
 
   /**
-   * Re-engineered Click-to-Move handler with source and target highlights
+   * Click-to-Move entry point (also supports manual triggering)
    */
   handleSquareClick(square) {
+    // Delegated to board-renderer initClickToMove, or direct invocation
     if (!square || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
     if (this.game.turn() !== 'w') return;
-
-    if (!this.selectedSquare) {
-      // First click: select White piece and highlight legal moves
-      const piece = this.game.get(square);
-      if (piece && piece.color === 'w') {
-        this.selectedSquare = square;
-        this.clearHighlights();
-        $(`#board .square-${square}`).addClass('highlight-hint-src');
-
-        // Query legal moves from selected square and highlight target destinations
-        const legalMoves = this.game.moves({ square: square, verbose: true });
-        legalMoves.forEach(m => {
-          $(`#board .square-${m.to}`).addClass('highlight-hint-dst');
-        });
-      }
-    } else {
-      // Second click: user clicked a square while a piece is selected
-      const src = this.selectedSquare;
-      const piece = this.game.get(square);
-
-      if (piece && piece.color === 'w' && src !== square) {
-        // Switch selection to a different White piece
-        this.selectedSquare = square;
-        this.clearHighlights();
-        $(`#board .square-${square}`).addClass('highlight-hint-src');
-
-        const legalMoves = this.game.moves({ square: square, verbose: true });
-        legalMoves.forEach(m => {
-          $(`#board .square-${m.to}`).addClass('highlight-hint-dst');
-        });
-      } else {
-        // Attempt move execution to target square
-        this.selectedSquare = null;
-        this.clearHighlights();
-
-        if (src !== square) {
-          this.attemptMove(src, square);
-        }
-      }
-    }
   }
 
   attemptMove(fromSq, toSq, promoPiece) {
@@ -270,12 +227,14 @@ export class TrainerView {
     if (!testMove) {
       this.showToast('Illegal move!', 'error');
       this.triggerErrorShake();
+      this.clearHighlights();
       return null;
     }
 
     if (testMove.san !== expected.san) {
       this.game.undo();
       this.triggerErrorShake();
+      this.clearHighlights();
 
       if (this.isBlindStreak) {
         this.onBlindStreakEnd();
@@ -306,42 +265,20 @@ export class TrainerView {
     if (this.game.turn() === 'b') {
       setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
     }
-
     return testMove;
   }
 
-  playBlackResponse() {
-    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
-
-    const expected = this.currentLine.moves[this.moveIndex];
-    const bMove = this.game.move(expected.san);
-
-    if (bMove) {
-      this.moveIndex++;
-      if (this.board) this.board.position(this.game.fen());
-      this.highlightSquares(bMove.from, bMove.to);
-      this.updateUI();
-
-      if (this.moveIndex >= this.currentLine.moves.length) {
-        this.onLineComplete();
-      }
-    }
-  }
-
   handleTextMoveSubmit() {
-    const val = $('#move-input').val().trim();
-    if (!val || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
+    const $input = $('#move-input');
+    const sanText = $input.val().trim();
+    if (!sanText || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
 
-    if (this.game.turn() !== 'w') {
-      this.showToast("Wait for Black's response!", 'error');
-      return;
-    }
-
+    $input.val('');
     const expected = this.currentLine.moves[this.moveIndex];
-    const testMove = this.game.move(val, { sloppy: true });
+    const testMove = this.game.move(sanText, { sloppy: true });
 
     if (!testMove) {
-      this.showToast(`Invalid notation: "${val}"`, 'error');
+      this.showToast(`Invalid move notation: "${sanText}"`, 'error');
       this.triggerErrorShake();
       return;
     }
@@ -355,12 +292,12 @@ export class TrainerView {
         return;
       }
 
-      this.showToast(`Incorrect! Typed ${testMove.san}, expected ${expected.san}`, 'error');
+      this.showToast(`Incorrect! Expected ${expected.san}`, 'error');
       userProgress.recordMistake(this.currentLine.id);
       return;
     }
 
-    $('#move-input').val('');
+    // Correct Move!
     this.moveIndex++;
     if (this.isBlindStreak) {
       this.streakScore++;
@@ -369,6 +306,27 @@ export class TrainerView {
     if (this.board) this.board.position(this.game.fen());
     this.highlightSquares(testMove.from, testMove.to);
     this.triggerSuccessGlow();
+    this.updateUI();
+
+    if (this.moveIndex >= this.currentLine.moves.length) {
+      this.onLineComplete();
+      return;
+    }
+
+    if (this.game.turn() === 'b') {
+      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
+    }
+  }
+
+  playBlackResponse() {
+    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
+
+    const blackMoveData = this.currentLine.moves[this.moveIndex];
+    this.game.move(blackMoveData.san);
+    this.moveIndex++;
+
+    if (this.board) this.board.position(this.game.fen());
+    this.highlightSquares(blackMoveData.from, blackMoveData.to);
     this.updateUI();
 
     if (this.moveIndex >= this.currentLine.moves.length) {
@@ -390,15 +348,15 @@ export class TrainerView {
     $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
 
     if (!this.isBlindStreak) {
-      this.showToast(`💡 Hint: Play ${expected.piece.toUpperCase()} to ${expected.to} (${expected.san})`, 'success');
+      this.showToast(`\uD83D\uDCA1 Hint: Play ${expected.piece.toUpperCase()} to ${expected.to} (${expected.san})`, 'success');
     } else {
-      this.showToast(`💡 Hint: Target square is ${expected.to}`, 'success');
+      this.showToast(`\uD83D\uDCA1 Hint: Target square is ${expected.to}`, 'success');
     }
   }
 
   onLineComplete() {
     if (this.isBlindStreak) {
-      this.showToast(`✨ Line Cleared! Continuing Survival Streak (${this.streakScore} Moves)!`, 'success');
+      this.showToast(`\u2705 Line Cleared! Continuing Survival Streak (${this.streakScore} Moves)!`, 'success');
       setTimeout(() => {
         this.pickNextBlindLine();
       }, 1000);
@@ -409,16 +367,16 @@ export class TrainerView {
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
     this.triggerSuccessGlow();
-    this.showToast(`🎉 Line Mastered! 100% Complete!`, 'success');
+    this.showToast(`\uD83C\uDF89 Line Mastered! 100% Complete!`, 'success');
     this.updateUI();
   }
 
   onBlindStreakEnd() {
     const finalScore = this.streakScore;
-    this.showToast(`💥 Streak Ended! Final Survival Score: ${finalScore} Moves`, 'error');
+    this.showToast(`\uD83D\uDC80 Streak Ended! Final Survival Score: ${finalScore} Moves`, 'error');
 
     setTimeout(() => {
-      if (confirm(`💥 Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nWould you like to try another blind streak run?`)) {
+      if (confirm(`\uD83D\uDC80 Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nWould you like to try another blind streak run?`)) {
         this.streakScore = 0;
         this.pickNextBlindLine();
       }
@@ -448,7 +406,7 @@ export class TrainerView {
     if (!this.currentLine) return;
 
     if (this.isBlindStreak) {
-      $('#active-line-title').text(`🔥 ${this.currentMode === 'arena' ? 'Arena Survival' : 'Blind Drill Streak'} (${this.streakScore} Moves)`);
+      $('#active-line-title').text(`\uD83D\uDD25 ${this.currentMode === 'arena' ? 'Arena Survival' : 'Blind Drill Streak'} (${this.streakScore} Moves)`);
       $('#active-line-category').text('Blind Survival Mode');
       $('#line-name').text(`??? Hidden Line`);
       $('#line-eco').text('Blind Recall Test');
@@ -477,11 +435,11 @@ export class TrainerView {
 
     let commentary = '';
     if (this.isBlindStreak) {
-      commentary = `🔥 Survival Streak: <strong>${this.streakScore} Moves</strong>. Play White's repertoire move!`;
+      commentary = `\uD83D\uDD25 Survival Streak: <strong>${this.streakScore} Moves</strong>. Play White's repertoire move!`;
     } else {
       commentary = this.currentLine.annotations[this.moveIndex] || this.currentLine.annotations[this.moveIndex - 1] || this.currentLine.fullAnnotation;
       if (this.moveIndex >= this.currentLine.totalHalfMoves) {
-        commentary = "🏆 Line Complete! You've mastered all moves in this repertoire variation.";
+        commentary = "\uD83C\uDF89 Line Complete! You've mastered all moves in this repertoire variation.";
       }
     }
     $('#commentary-text').html(commentary);
@@ -544,7 +502,7 @@ export class TrainerView {
       if (isCompleted) rowClass += ' completed';
       if (isCurrent) rowClass += ' current';
 
-      const statusSymbol = isCompleted ? '✅' : (isCurrent ? '👉' : '⚪');
+      const statusSymbol = isCompleted ? '\u2705' : (isCurrent ? '\uD83D\uDD04' : '\u25FD');
 
       const html = `
         <div class="${rowClass}">
@@ -558,7 +516,8 @@ export class TrainerView {
   }
 
   clearHighlights() {
-    $('#board .square-55d63').removeClass('highlight-last-move highlight-hint-src highlight-hint-dst');
+    clearBoardHighlights('#board');
+    $('#board .square-55d63').removeClass('highlight-last-move');
   }
 
   highlightSquares(from, to) {
@@ -592,9 +551,9 @@ export class TrainerView {
     $toast.removeClass('hidden success error').addClass(type || 'success');
 
     if (type === 'error') {
-      $('#toast-icon').text('⚠️');
+      $('#toast-icon').text('\u274C');
     } else {
-      $('#toast-icon').text('✨');
+      $('#toast-icon').text('\u2705');
     }
 
     clearTimeout(this.toastTimer);
