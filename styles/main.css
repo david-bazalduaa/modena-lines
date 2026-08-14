@@ -449,10 +449,11 @@ body {
   margin-bottom: 0.6rem;
 }
 
-/* Coach Guidance Card */
-.coach-card {
-  border-left: 3px solid var(--accent-indigo, #4f46e5);
+/* Coach Guidance Card - Uniform Neumorphic Card Styling */
+.coach-card,
+#commentary-card {
   position: relative;
+  border-left: none;
 }
 
 /* Interactive Move History */
