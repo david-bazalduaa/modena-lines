@@ -130,15 +130,24 @@ export function getSquareCoordinate(element) {
   if (!element) return null;
   const $el = $(element);
 
-  // 1. Direct or closest data-square attribute
-  const dataSq = $el.data('square') || $el.attr('data-square') || $el.closest('[data-square]').attr('data-square');
-  if (dataSq && /^[a-h][1-8]$/.test(dataSq)) {
-    return dataSq;
+  // 1. Direct or closest element with data-square attribute
+  const dataSq = $el.attr('data-square') || 
+                 $el.closest('[data-square]').attr('data-square') ||
+                 $el.data('square') ||
+                 $el.closest('[data-square]').data('square');
+                 
+  if (dataSq && /^[a-h][1-8]$/.test(String(dataSq))) {
+    return String(dataSq);
   }
 
-  // 2. Class name matching square-xx (e.g. square-e4)
-  const fullClass = ($el.attr('class') || '') + ' ' + ($el.closest('.square-55d63').attr('class') || '');
-  const match = fullClass.match(/square-([a-h][1-8])\b/);
+  // 2. Search for square-xx class in element or parents
+  const classes = [
+    $el.attr('class') || '',
+    $el.closest('.square-55d63').attr('class') || '',
+    $el.parent().attr('class') || ''
+  ].join(' ');
+
+  const match = classes.match(/square-([a-h][1-8])\b/);
   if (match && match[1]) {
     return match[1];
   }
@@ -173,8 +182,8 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
 }
 
 /**
- * Re-architected native DOM event delegation for Click-to-Move piece interaction.
- * Attach a global click listener to board container (#board or .chessboard).
+ * Unblocked native DOM event delegation for Click-to-Move piece interaction.
+ * Enabled whenever chess.turn() === 'w' and waiting for user move.
  */
 export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution) {
   const $board = $(boardSelector);
@@ -183,7 +192,7 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   // Detach previous click listener namespace
   $board.off('click.clickToMove');
 
-  // Attach single global delegated click listener
+  // Attach unblocked global delegated click listener
   $board.on('click.clickToMove', function (e) {
     const clickedSquare = getSquareCoordinate(e.target);
     if (!clickedSquare) return;
@@ -191,14 +200,14 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     const game = typeof getGameInstance === 'function' ? getGameInstance() : getGameInstance;
     if (!game || typeof game.get !== 'function') return;
 
-    // Check if game is waiting for Black response or over
+    // The square click handler MUST be enabled as long as chess.turn() === 'w'
     if (typeof game.game_over === 'function' && game.game_over()) return;
     if (typeof game.turn === 'function' && game.turn() !== 'w') return;
 
     const clickedPiece = game.get(clickedSquare);
 
     // ============================================================
-    // CASE 1: No square is currently selected (selectedSquare === null)
+    // CASE 1: No square selected (selectedSquare === null)
     // ============================================================
     if (selectedSquare === null) {
       if (clickedPiece && clickedPiece.color === 'w') {
@@ -206,7 +215,7 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
         clearBoardHighlights(boardSelector);
         highlightBoardSquare(clickedSquare, 'selected', boardSelector);
 
-        // Highlight valid destination squares
+        // Highlight all legal destination squares
         const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
         legalMoves.forEach(m => {
           highlightBoardSquare(m.to, 'destination', boardSelector);
@@ -216,17 +225,17 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     }
 
     // ============================================================
-    // CASE 2: A square is already selected (selectedSquare !== null)
+    // CASE 2: A square is currently selected (selectedSquare !== null)
     // ============================================================
 
-    // 2A. Clicked the same square -> Cancel selection
+    // 2A. Clicked the exact same square -> Cancel selection
     if (clickedSquare === selectedSquare) {
       clearBoardHighlights(boardSelector);
       selectedSquare = null;
       return;
     }
 
-    // 2B. Clicked another friendly White piece -> Update selection
+    // 2B. Clicked another friendly White piece -> Switch selection
     if (clickedPiece && clickedPiece.color === 'w') {
       selectedSquare = clickedSquare;
       clearBoardHighlights(boardSelector);
@@ -240,23 +249,18 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
       return;
     }
 
-    // 2C. Clicked a destination square -> Attempt move execution
+    // 2C. Clicked target square -> Execute move via unified handler
     const fromSquare = selectedSquare;
     const toSquare = clickedSquare;
 
-    // Clear highlights immediately
+    // Reset selection and clear highlights immediately
     clearBoardHighlights(boardSelector);
     selectedSquare = null;
 
     if (typeof onMoveExecution === 'function') {
       onMoveExecution(fromSquare, toSquare);
     } else {
-      const move = game.move({ from: fromSquare, to: toSquare, promotion: 'q' });
-      if (!move) {
-        // Invalid move
-        clearBoardHighlights(boardSelector);
-        selectedSquare = null;
-      }
+      game.move({ from: fromSquare, to: toSquare, promotion: 'q' });
     }
   });
 }

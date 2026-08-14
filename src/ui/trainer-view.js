@@ -1,5 +1,5 @@
 /* ============================================================
-   TRAINER VIEW (DIRECT COURSE BOARD & CLICK-TO-MOVE ENGINE)
+   TRAINER VIEW (DIRECT COURSE BOARD & UNIFIED MOVE ENGINE)
    ============================================================ */
 
 import { APP_CONFIG } from '../config/settings.js';
@@ -22,10 +22,13 @@ export class TrainerView {
     this.currentMode = 'learn'; // 'learn' | 'practice' | 'drill' | 'arena'
     this.streakScore = 0;
     this.blindPool = [];
+
+    // Unified move execution alias
+    this.attemptMove = this.handleUserMove.bind(this);
   }
 
   /**
-   * Safely re-binds chessboard instance after DOM layout settles to prevent frozen boards or memory leaks.
+   * Safely re-binds chessboard instance and binds unblocked click-to-move listener.
    */
   rebindBoard(fenPosition) {
     const $boardContainer = $('#board');
@@ -52,9 +55,9 @@ export class TrainerView {
 
       this.board = Chessboard('board', config);
 
-      // Re-bind native delegated click-to-move handler
+      // Unblock and bind native delegated click-to-move handler
       initClickToMove('#board', () => this.game, (fromSq, toSq) => {
-        this.attemptMove(fromSq, toSq);
+        this.handleUserMove(fromSq, toSq);
       });
 
       if (this.board) {
@@ -199,7 +202,7 @@ export class TrainerView {
     this.clearHighlights();
     if (source === target) return 'snapback';
 
-    const move = this.attemptMove(source, target);
+    const move = this.handleUserMove(source, target);
     if (!move) return 'snapback';
   }
 
@@ -208,19 +211,19 @@ export class TrainerView {
   }
 
   /**
-   * Click-to-Move entry point (also supports manual triggering)
+   * UNIFIED MOVE EXECUTION PIPELINE
+   * All moves (Drag-and-Drop, Click-to-Move, and SAN Input Field) flow through this method.
    */
-  handleSquareClick(square) {
-    // Delegated to board-renderer initClickToMove, or direct invocation
-    if (!square || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
-    if (this.game.turn() !== 'w') return;
-  }
+  handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
+    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
+    if (this.game.turn() !== 'w') return null;
 
-  attemptMove(fromSq, toSq, promoPiece) {
     const expected = this.currentLine.moves[this.moveIndex];
+
+    // 1. Verify if move is valid in chess.js
     const testMove = this.game.move({
-      from: fromSq,
-      to: toSq,
+      from: fromSquare,
+      to: toSquare,
       promotion: promoPiece || 'q'
     });
 
@@ -231,10 +234,15 @@ export class TrainerView {
       return null;
     }
 
+    // 2. Compare against expected repertoire move for active line
     if (testMove.san !== expected.san) {
       this.game.undo();
       this.triggerErrorShake();
       this.clearHighlights();
+
+      // Highlight expected move coordinates
+      $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
+      $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
 
       if (this.isBlindStreak) {
         this.onBlindStreakEnd();
@@ -246,7 +254,7 @@ export class TrainerView {
       return null;
     }
 
-    // Correct Move!
+    // 3. If correct: execute move, play feedback, update UI, and trigger Black response
     this.moveIndex++;
     if (this.isBlindStreak) {
       this.streakScore++;
@@ -274,48 +282,18 @@ export class TrainerView {
     if (!sanText || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
 
     $input.val('');
-    const expected = this.currentLine.moves[this.moveIndex];
-    const testMove = this.game.move(sanText, { sloppy: true });
 
+    // Pre-test SAN move to extract exact source and target coordinates
+    const testMove = this.game.move(sanText, { sloppy: true });
     if (!testMove) {
       this.showToast(`Invalid move notation: "${sanText}"`, 'error');
       this.triggerErrorShake();
       return;
     }
 
-    if (testMove.san !== expected.san) {
-      this.game.undo();
-      this.triggerErrorShake();
-
-      if (this.isBlindStreak) {
-        this.onBlindStreakEnd();
-        return;
-      }
-
-      this.showToast(`Incorrect! Expected ${expected.san}`, 'error');
-      userProgress.recordMistake(this.currentLine.id);
-      return;
-    }
-
-    // Correct Move!
-    this.moveIndex++;
-    if (this.isBlindStreak) {
-      this.streakScore++;
-    }
-
-    if (this.board) this.board.position(this.game.fen());
-    this.highlightSquares(testMove.from, testMove.to);
-    this.triggerSuccessGlow();
-    this.updateUI();
-
-    if (this.moveIndex >= this.currentLine.moves.length) {
-      this.onLineComplete();
-      return;
-    }
-
-    if (this.game.turn() === 'b') {
-      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
-    }
+    // Undo temporary move so it flows through the unified handleUserMove pipeline
+    this.game.undo();
+    this.handleUserMove(testMove.from, testMove.to, testMove.promotion);
   }
 
   playBlackResponse() {
