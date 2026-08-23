@@ -2,11 +2,12 @@
    MASTER COURSES REGISTRY & 3-LEVEL SUB-COURSE MODULES
    ============================================================ */
 
-import { giuocoPianoLine } from './lines/italian-giuoco.js';
-import { evansGambitLine } from './lines/italian-evans.js';
+import { giuocoPianoLine, giuocoMoellerLine, giuocoSolidLine } from './lines/italian-giuoco.js';
+import { evansGambitLine, evansLaskerLine, evansDeclinedLine } from './lines/italian-evans.js';
 import { friedLiverLine } from './lines/italian-fried-liver.js';
 import { polerioCounterLine } from './lines/italian-polerio.js';
-import { giuocoPianissimoLine } from './lines/italian-pianissimo.js';
+import { traxlerRefutationLine } from './lines/italian-traxler.js';
+import { pianissimoSuperGMLine, pianissimoNc3Line } from './lines/italian-pianissimo.js';
 
 export const COURSES = [
   {
@@ -25,7 +26,7 @@ export const COURSES = [
         category: 'Main Line',
         description: 'Classical center strike fighting for central dominance with c3 and d4.',
         previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3',
-        lines: [giuocoPianoLine]
+        lines: [giuocoPianoLine, giuocoMoellerLine, giuocoSolidLine]
       },
       {
         id: 'italian-evans-gambit',
@@ -35,7 +36,7 @@ export const COURSES = [
         category: 'Tactical Gambit',
         description: 'Sacrifice the b-pawn for blistering development, rapid castling, and attack on f7.',
         previewFEN: 'r1bqk2r/pppp1ppp/2n2n2/4p3/1bB1P3/2P2N2/PP1P1PPP/RNBQK2R b KQkq - 0 4',
-        lines: [evansGambitLine]
+        lines: [evansGambitLine, evansLaskerLine, evansDeclinedLine]
       },
       {
         id: 'italian-two-knights',
@@ -43,9 +44,9 @@ export const COURSES = [
         title: 'Italian Game – Two Knights Defense',
         subtitle: '1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5',
         category: 'Sharp Attack',
-        description: 'Enter hyper-aggressive tactical waters against 3... Nf6 with Ng5, Fried Liver & Polerio lines.',
+        description: 'Enter hyper-aggressive tactical waters against 3... Nf6 with Ng5, Fried Liver, Polerio & Traxler lines.',
         previewFEN: 'r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4',
-        lines: [friedLiverLine, polerioCounterLine]
+        lines: [friedLiverLine, polerioCounterLine, traxlerRefutationLine]
       },
       {
         id: 'italian-pianissimo',
@@ -55,7 +56,7 @@ export const COURSES = [
         category: 'Positional Quiet',
         description: 'Deep positional maneuvering favored by modern elite grandmasters with d3, c3, and Nbd2.',
         previewFEN: 'r1bqk2r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4',
-        lines: [giuocoPianissimoLine]
+        lines: [pianissimoSuperGMLine, pianissimoNc3Line]
       }
     ]
   },
