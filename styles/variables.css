@@ -9,6 +9,7 @@
   --bg-surface-alt:    #E6E9EF;
   --bg-card:           #E0E5EC;
   --bg-glass:          rgba(224, 229, 236, 0.85);
+  --neumorphic-bg-flat:#E0E5EC;
 
   /* Neumorphic Volumetric Shadows (Light Top-Left, Dark Bottom-Right) */
   --shadow-extruded:    9px 9px 16px #A3B1C6, -9px -9px 16px #FFFFFF;

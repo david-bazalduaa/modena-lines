@@ -103,6 +103,8 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     // 1. Remove active state styling from all mode cards and restore default status badges
     $container.find('.mode-deck-card').each(function () {
       $(this).removeClass('active');
+      $(this).removeAttr('style');
+      $(this).find('*').removeAttr('style');
       const defBadge = $(this).attr('data-default-badge');
       if (defBadge) {
         $(this).find('.coach-badge').text(defBadge);

@@ -257,7 +257,7 @@
 }
 
 .mode-deck-card {
-  background: var(--bg-surface);
+  background: var(--neumorphic-bg-flat);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-extruded-sm);
   padding: 0.85rem 0.6rem;
@@ -269,6 +269,7 @@
   user-select: none;
   transition: all var(--spring-transition);
   text-align: center;
+  border: 1.5px solid transparent;
 }
 
 .mode-deck-card:hover {
@@ -277,6 +278,7 @@
 }
 
 .mode-deck-card.active {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(79, 70, 229, 0.05) 100%);
   box-shadow: var(--shadow-inset);
   border: 1.5px solid var(--accent-purple);
 }
@@ -288,7 +290,7 @@
 .mode-title {
   font-size: 0.82rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: #2c3e50;
 }
 
 .mode-desc {
@@ -296,11 +298,21 @@
   color: var(--text-muted);
 }
 
-.mode-deck-card.learn-mode {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(79, 70, 229, 0.05) 100%);
+.mode-deck-card.active .mode-title {
+  color: var(--accent-purple);
 }
 
-.mode-deck-card.learn-mode .mode-title {
+.mode-deck-card .coach-badge {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+  display: block;
+}
+
+.mode-deck-card.active .coach-badge {
   color: var(--accent-purple);
 }
 
