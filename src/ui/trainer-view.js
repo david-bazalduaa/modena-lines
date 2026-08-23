@@ -174,12 +174,11 @@ export class TrainerView {
 
   /**
    * Evaluates if White faces an ambiguous branching point and conditionally applies pulsing visual hints.
-   * If Black's previous move uniquely determined the response, no hints are shown.
+   * Runs universally across ALL training modes (Learn, Practice, Drill, Arena) when true ambiguity exists.
    */
   checkAndApplyAmbiguityHint() {
     clearAmbiguityHints('#board');
 
-    if (this.isBlindStreak) return;
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
     if (this.game.turn() !== 'w') return;
 
@@ -434,8 +433,9 @@ export class TrainerView {
   }
 
   /**
-   * UNIFIED MOVE EXECUTION PIPELINE WITH DYNAMIC TRANSPOSITION MATCHING
-   * Validates user move against active line; if mismatched, checks for valid sibling line branches in the sub-course.
+   * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
+   * Validates user move strictly against the target line.
+   * If incorrect, registers failure penalty immediately without auto-correction.
    */
   handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
@@ -461,67 +461,29 @@ export class TrainerView {
       return null;
     }
 
-    // 2. Compare against expected repertoire move for active line
+    // 2. Strict validation against expected repertoire move for the active line
     if (testMove.san !== expected.san) {
-      // ──────────────── TRANSPOSITION ENGINE ────────────────
-      // Check if another line in the active Sub-Course matches this move branch!
-      let transposedLine = null;
-      let transposedIndex = -1;
+      // Revert incorrect move on chess board
+      this.game.undo();
+      this.triggerErrorShake();
+      this.clearHighlights();
 
-      const activePool = this.currentSubCourse || this.currentCourse;
-      if (activePool && activePool.lines && activePool.lines.length > 1) {
-        const playedHistory = this.game.history(); // includes testMove as last element
-        const prevMoveCount = playedHistory.length - 1;
+      // Highlight expected move coordinates to assist manual retry
+      $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
+      $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
 
-        for (let i = 0; i < activePool.lines.length; i++) {
-          const candidateRaw = activePool.lines[i];
-          if (candidateRaw.id === this.currentLine.id) continue;
+      // Record mistake penalty in progress metrics
+      userProgress.recordMistake(this.currentLine.id);
 
-          const candidate = processLineData(candidateRaw);
-          if (!candidate.moves || candidate.moves.length <= currentMoveIndex) continue;
-
-          // Verify all previous moves match candidate prefix
-          let prefixMatches = true;
-          for (let m = 0; m < prevMoveCount; m++) {
-            if (!candidate.moves[m] || candidate.moves[m].san !== playedHistory[m]) {
-              prefixMatches = false;
-              break;
-            }
-          }
-
-          // Verify candidate move at currentMoveIndex matches testMove.san
-          if (prefixMatches && candidate.moves[currentMoveIndex].san === testMove.san) {
-            transposedLine = candidate;
-            transposedIndex = i;
-            break;
-          }
-        }
-      }
-
-      if (transposedLine) {
-        // Dynamically bind to the user's chosen transposition line branch!
-        this.currentLine = transposedLine;
-        $('#variation-select').val(transposedIndex);
-        this.showToast(`Branching to: ${stripEmojis(this.currentLine.name)}`, 'success');
-      } else {
-        // Genuine incorrect move: undo and penalize
-        this.game.undo();
-        this.triggerErrorShake();
-        this.clearHighlights();
-
-        // Highlight expected move coordinates
-        $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
-        $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
-
-        if (this.isBlindStreak) {
-          this.onBlindStreakEnd();
-          return null;
-        }
-
-        this.showToast(`Incorrect! Expected ${expected.san}`, 'error');
-        userProgress.recordMistake(this.currentLine.id);
+      // In blind streak modes (Drill/Arena), immediately terminate the streak
+      if (this.isBlindStreak) {
+        this.onBlindStreakEnd();
         return null;
       }
+
+      // In standard modes, show failure notification and require manual retry
+      this.showToast(`Incorrect move! Expected ${expected.san}. Try again!`, 'error');
+      return null;
     }
 
     // 3. Move is correct: advance index, play feedback, update UI, and trigger Black response
@@ -704,7 +666,7 @@ export class TrainerView {
 
     if (this.game.turn() === 'w') {
       $('#turn-indicator').html('<span class="turn-dot white"></span><span>Your Turn: White</span>');
-      // Evaluate and trigger on-board ambiguity hint if position requires it
+      // Evaluate and trigger on-board ambiguity hint across all training modes
       this.checkAndApplyAmbiguityHint();
     } else {
       $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
