@@ -119,7 +119,7 @@ export function getSquareCoordinate(element) {
 export function clearBoardHighlights(boardSelector = '#board') {
   selectedSquare = null;
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst'
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
   );
 }
 
@@ -128,8 +128,31 @@ export function clearBoardHighlights(boardSelector = '#board') {
  */
 export function clearBoardHighlightsKeepState(boardSelector = '#board') {
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst'
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
   );
+}
+
+/**
+ * Clears on-board ambiguity hints without affecting active selection state.
+ */
+export function clearAmbiguityHints(boardSelector = '#board') {
+  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
+    'square-hint highlight-ambiguity-hint'
+  );
+}
+
+/**
+ * Highlights candidate source/target square with pulsing amber ambiguity glow.
+ */
+export function highlightAmbiguityHintSquare(fromSquare, toSquare, boardSelector = '#board') {
+  if (!fromSquare) return;
+  const $from = $(boardSelector).find('.square-' + fromSquare + ', [data-square="' + fromSquare + '"]');
+  $from.addClass('square-hint highlight-ambiguity-hint');
+
+  if (toSquare) {
+    const $to = $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]');
+    $to.addClass('square-hint');
+  }
 }
 
 /**
@@ -142,6 +165,8 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
     $sq.addClass('highlight-selected-square');
   } else if (type === 'destination') {
     $sq.addClass('highlight-dest-square');
+  } else if (type === 'ambiguity-hint' || type === 'hint') {
+    $sq.addClass('square-hint highlight-ambiguity-hint');
   }
 }
 

@@ -8,10 +8,12 @@ import {
   initClickToMove,
   clearBoardHighlights,
   clearBoardHighlightsKeepState,
+  clearAmbiguityHints,
+  highlightAmbiguityHintSquare,
   highlightBoardSquare,
   setSelectedSquare
 } from '../engine/board-renderer.js';
-import { processLineData } from '../engine/chess-logic.js';
+import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
 import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
@@ -168,6 +170,36 @@ export class TrainerView {
         this.showToast("Sub-Course Module Mastered!", 'success');
       }
     }, 2000);
+  }
+
+  /**
+   * Evaluates if White faces an ambiguous branching point and conditionally applies pulsing visual hints.
+   * If Black's previous move uniquely determined the response, no hints are shown.
+   */
+  checkAndApplyAmbiguityHint() {
+    clearAmbiguityHints('#board');
+
+    if (this.isBlindStreak) return;
+    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
+    if (this.game.turn() !== 'w') return;
+
+    const activePool = this.currentSubCourse || this.currentCourse;
+    const subCourseLines = activePool ? (activePool.lines || []) : [];
+    const moveHistory = this.game.history();
+
+    const isAmbiguous = isAmbiguousWhiteBranch(
+      this.currentLine,
+      this.moveIndex,
+      subCourseLines,
+      moveHistory
+    );
+
+    if (isAmbiguous) {
+      const expected = this.currentLine.moves[this.moveIndex];
+      if (expected) {
+        highlightAmbiguityHintSquare(expected.from, expected.to, '#board');
+      }
+    }
   }
 
   /**
@@ -371,6 +403,9 @@ export class TrainerView {
       return false;
     }
 
+    // Immediately clear ambiguity hint upon user interaction
+    clearAmbiguityHints('#board');
+
     // Synchronize selection state and legal destination highlights during drag
     setSelectedSquare(source);
     clearBoardHighlightsKeepState('#board');
@@ -405,6 +440,9 @@ export class TrainerView {
   handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
     if (this.game.turn() !== 'w') return null;
+
+    // Clear ambiguity visual hints immediately upon user move execution
+    clearAmbiguityHints('#board');
 
     const currentMoveIndex = this.moveIndex;
     const expected = this.currentLine.moves[currentMoveIndex];
@@ -666,8 +704,11 @@ export class TrainerView {
 
     if (this.game.turn() === 'w') {
       $('#turn-indicator').html('<span class="turn-dot white"></span><span>Your Turn: White</span>');
+      // Evaluate and trigger on-board ambiguity hint if position requires it
+      this.checkAndApplyAmbiguityHint();
     } else {
       $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
+      clearAmbiguityHints('#board');
     }
 
     let commentary = '';
@@ -756,6 +797,7 @@ export class TrainerView {
 
   clearHighlights() {
     clearBoardHighlights('#board');
+    clearAmbiguityHints('#board');
     $('#board .square-55d63').removeClass('highlight-last-move');
   }
 
