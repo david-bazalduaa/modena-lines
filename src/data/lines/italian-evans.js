@@ -1,5 +1,5 @@
 /* ============================================================
-   THE EVANS GAMBIT REPERTOIRE LINES
+   THE EVANS GAMBIT REPERTOIRE (5 MASTER LINES)
    ============================================================ */
 
 export const evansGambitLine = {
@@ -55,6 +55,59 @@ export const evansLaskerLine = {
     20: "11. Nxc4 — Recapture knight with active central placement.",
     22: "12. Nxb6 — Eliminate the powerful dark-squared bishop.",
     24: "13. O-O — Complete development with superior pawn mobility!"
+  }
+};
+
+export const evansBe7Line = {
+  id: 'evans-be7',
+  courseId: 'italian-game',
+  subCourseId: 'italian-evans-gambit',
+  name: 'Evans Gambit – 5...Be7 Defense',
+  shortName: '5...Be7 Defense',
+  category: 'Black Sideline',
+  eco: '1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Be7',
+  pgn: '1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Be7 6. d4 Na5 7. Be2 exd4 8. Qxd4 Nf6 9. e5 Nc6 10. Qa4 Nd5 11. Qg4 g6 12. Qe4',
+  fullAnnotation: 'Black retreats the bishop modestly with 5...Be7. White aggressively targets Black\'s uncoordinated knights and kingside.',
+  previewFEN: 'r1bqk2r/ppppb2p/2n3p1/3nP3/4Q3/2P5/P3BPPP/RNB1K2R b KQkq - 2 12',
+  annotations: {
+    0:  "1. e4 — King's pawn opening.",
+    2:  "2. Nf3 — Attack e5.",
+    4:  "3. Bc4 — Target f7 square.",
+    6:  "4. b4 — The Evans Gambit.",
+    8:  "5. c3 — Kick bishop to e7.",
+    10: "6. d4 — Strike in the center.",
+    12: "7. Be2 — Preserve the bishop pair against 6...Na5.",
+    14: "8. Qxd4 — Centralize queen with devastating central authority.",
+    16: "9. e5 — Thrust forward attacking the f6 knight.",
+    18: "10. Qa4 — Queen pivots to a4 pinning Black's knight.",
+    20: "11. Qg4 — Rapid kingside switch punishing Black's weak dark squares.",
+    22: "12. Qe4 — Reposition queen to dominate the center and trap the d5 knight!"
+  }
+};
+
+export const evansBc5Line = {
+  id: 'evans-bc5',
+  courseId: 'italian-game',
+  subCourseId: 'italian-evans-gambit',
+  name: 'Evans Gambit – Stone-Ware Defense (5...Bc5)',
+  shortName: 'Stone-Ware Defense',
+  category: 'Sharp Mainline',
+  eco: '1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5',
+  pgn: '1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Bc5 6. d4 exd4 7. O-O d6 8. cxd4 Bb6 9. Nc3 Bg4 10. Bb5 Bd7 11. e5',
+  fullAnnotation: 'The classic Stone-Ware retreat. White builds a massive d4/e4 pawn center and bursts through with 11. e5.',
+  previewFEN: 'r2qk1nr/pppb1ppp/1bnp4/1B2P3/3PP3/2N2N2/P4PPP/R1BQ1RK1 b kq - 0 11',
+  annotations: {
+    0:  "1. e4 — King's pawn opening.",
+    2:  "2. Nf3 — Attack e5.",
+    4:  "3. Bc4 — Target f7.",
+    6:  "4. b4 — The Evans Gambit.",
+    8:  "5. c3 — Gain tempo on c5 bishop.",
+    10: "6. d4 — Center clash.",
+    12: "7. O-O — Castle into king safety.",
+    14: "8. cxd4 — Establish formidable center pawn duo.",
+    16: "9. Nc3 — Rapid knight development.",
+    18: "10. Bb5 — Pin c6 knight to open central tactics.",
+    20: "11. e5! — Central breakthrough tearing open Black's defense!"
   }
 };
 
