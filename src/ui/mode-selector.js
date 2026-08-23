@@ -2,7 +2,7 @@
    CHESSREPS TRAINING DECK MODES WIDGET & PROGRESSION RULES
    ============================================================ */
 
-export function renderModeDeck(containerId, course, userProgress, onSelectMode) {
+export function renderModeDeck(containerId, course, userProgress, onSelectMode, activeModeId = 'learn') {
   const $container = $(`#${containerId}`);
   if (!$container.length) return;
 
@@ -21,54 +21,65 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode) 
   const isDrillUnlocked = learnedCount >= 1;
   const isArenaUnlocked = totalCount > 0 && learnedCount === totalCount;
 
+  const defaultBadges = {
+    learn: 'Discovered',
+    practice: `${learnedCount}/${totalCount}`,
+    drill: isDrillUnlocked ? 'Unlocked' : 'Learn 1 line',
+    arena: isArenaUnlocked ? 'Unlocked' : 'Need 100%'
+  };
+
   const modes = [
     {
       id: 'learn',
       title: 'Learn',
-      icon: '📖',
+      icon: 'L',
       desc: 'Discover new lines',
       cssClass: 'learn-mode',
       unlocked: true,
-      badge: 'Active'
+      defaultBadge: defaultBadges.learn
     },
     {
       id: 'practice',
       title: 'Practice',
-      icon: '🎯',
+      icon: 'P',
       desc: 'Perfect learned lines',
       cssClass: 'practice-mode',
       unlocked: true,
-      badge: `${learnedCount}/${totalCount}`
+      defaultBadge: defaultBadges.practice
     },
     {
       id: 'drill',
       title: 'Drill',
-      icon: '🔥',
+      icon: 'D',
       desc: 'Blind streak test',
       cssClass: 'drill-mode',
       unlocked: isDrillUnlocked,
-      badge: isDrillUnlocked ? 'Unlocked' : '🔒 Learn 1 line'
+      defaultBadge: defaultBadges.drill
     },
     {
       id: 'arena',
       title: 'Arena',
-      icon: '⚔️',
+      icon: 'A',
       desc: 'Master survival',
       cssClass: 'arena-mode',
       unlocked: isArenaUnlocked,
-      badge: isArenaUnlocked ? 'Unlocked' : '🔒 Need 100%'
+      defaultBadge: defaultBadges.arena
     }
   ];
 
   let html = '<div class="training-deck-widget">';
   modes.forEach(mode => {
     const lockClass = mode.unlocked ? '' : 'locked-mode';
+    const isActive = mode.id === activeModeId;
+    const activeClass = isActive ? 'active' : '';
+    const badgeText = isActive ? 'Active' : mode.defaultBadge;
+
     html += `
-      <div class="mode-deck-card ${mode.cssClass} ${lockClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}">
+      <div class="mode-deck-card ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" data-default-badge="${mode.defaultBadge}">
         <span class="mode-icon">${mode.icon}</span>
         <span class="mode-title">${mode.title}</span>
         <span class="mode-desc">${mode.desc}</span>
-        <span class="coach-badge" style="font-size: 0.62rem; margin-top: 0.2rem;">${mode.badge}</span>
+        <span class="coach-badge" style="font-size: 0.62rem; margin-top: 0.2rem;">${badgeText}</span>
       </div>
     `;
   });
@@ -76,21 +87,31 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode) 
 
   $container.html(html);
 
-  $container.find('.mode-deck-card').on('click', function () {
+  $container.find('.mode-deck-card').off('click').on('click', function () {
     const unlocked = $(this).data('unlocked');
     const modeId = $(this).data('mode-id');
 
     if (!unlocked) {
       if (modeId === 'drill') {
-        alert('🔒 Drill Mode unlocks as soon as you complete at least 1 line in Learn Mode!');
+        alert('Drill Mode unlocks as soon as you complete at least 1 line in Learn Mode!');
       } else if (modeId === 'arena') {
-        alert('🔒 Arena Mode unlocks when you complete 100% of all lines in this course!');
+        alert('Arena Mode unlocks when you complete 100% of all lines in this course!');
       }
       return;
     }
 
-    $container.find('.mode-deck-card').removeClass('active');
+    // 1. Remove active state styling from all mode cards and restore default status badges
+    $container.find('.mode-deck-card').each(function () {
+      $(this).removeClass('active');
+      const defBadge = $(this).attr('data-default-badge');
+      if (defBadge) {
+        $(this).find('.coach-badge').text(defBadge);
+      }
+    });
+
+    // 2. Apply active state styling and update status badge explicitly to "Active"
     $(this).addClass('active');
+    $(this).find('.coach-badge').text('Active');
 
     if (onSelectMode) {
       onSelectMode(modeId);

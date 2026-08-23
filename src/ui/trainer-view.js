@@ -15,6 +15,14 @@ import { processLineData } from '../engine/chess-logic.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
 
+/**
+ * Strips all emoji characters from a string for crisp, pure text rendering.
+ */
+export function stripEmojis(str) {
+  if (!str) return '';
+  return str.replace(/[\u{1F300}-\u{1F9FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F600}-\u{1F64F}\u{1F680}-\u{1F6FF}\u{1F900}-\u{1F9FF}\u{1F1E6}-\u{1F1FF}]/gu, '').trim();
+}
+
 export class TrainerView {
   constructor() {
     this.currentCourse = null;
@@ -30,8 +38,131 @@ export class TrainerView {
     this.streakScore = 0;
     this.blindPool = [];
 
+    // Auto-advance 2-second progression loop state
+    this.autoAdvanceTimer = null;
+    this.autoAdvanceInterval = null;
+    this.autoAdvanceSecondsRemaining = 0;
+    this.isAutoAdvancing = false;
+    this.lineQueue = [];
+    this.completedInLoop = new Set();
+
     // Unified move execution alias
     this.attemptMove = this.handleUserMove.bind(this);
+  }
+
+  /**
+   * Initializes the non-repeating line progression queue for the active course loop.
+   */
+  initLineQueue() {
+    if (!this.currentCourse || !this.currentCourse.lines) {
+      this.lineQueue = [];
+      return;
+    }
+
+    // Build array of uncompleted line indices in the current course loop
+    this.lineQueue = [];
+    this.currentCourse.lines.forEach((line, index) => {
+      if (!this.completedInLoop.has(line.id)) {
+        this.lineQueue.push(index);
+      }
+    });
+
+    // If all lines have been completed in this loop, reset loop memory to allow a new loop
+    if (this.lineQueue.length === 0) {
+      this.completedInLoop.clear();
+      this.lineQueue = this.currentCourse.lines.map((_, index) => index);
+    }
+  }
+
+  /**
+   * Retrieves the next available line index from the non-repeating queue.
+   */
+  getNextLineIndexFromQueue() {
+    if (!this.currentCourse || !this.currentCourse.lines || this.currentCourse.lines.length === 0) {
+      return -1;
+    }
+
+    if (this.lineQueue.length === 0) {
+      this.initLineQueue();
+    }
+
+    // Check if the whole course loop has been finished
+    if (this.completedInLoop.size >= this.currentCourse.lines.length) {
+      return -1; // Indicates full course loop completion
+    }
+
+    // Current line index
+    const currentIdx = this.currentCourse.lines.findIndex(l => l.id === this.currentLine?.id);
+    
+    // Find next index in queue (avoiding immediate repeat if possible)
+    let nextIndexPos = this.lineQueue.findIndex(idx => idx !== currentIdx);
+    if (nextIndexPos === -1) nextIndexPos = 0;
+
+    const [nextIndex] = this.lineQueue.splice(nextIndexPos, 1);
+    return nextIndex !== undefined ? nextIndex : -1;
+  }
+
+  /**
+   * Cancels any active 2-second auto-advance timers and resets state.
+   */
+  cancelAutoAdvance() {
+    if (this.autoAdvanceTimer) {
+      clearTimeout(this.autoAdvanceTimer);
+      this.autoAdvanceTimer = null;
+    }
+    if (this.autoAdvanceInterval) {
+      clearInterval(this.autoAdvanceInterval);
+      this.autoAdvanceInterval = null;
+    }
+    this.isAutoAdvancing = false;
+    this.autoAdvanceSecondsRemaining = 0;
+  }
+
+  /**
+   * Starts 2-second auto-advance countdown upon completing an opening line in Learn or Practice mode.
+   */
+  triggerAutoAdvance() {
+    this.cancelAutoAdvance();
+    this.isAutoAdvancing = true;
+    this.autoAdvanceSecondsRemaining = 2;
+
+    const updateCountdownText = () => {
+      const msg = `Line Completed! Next line loading in ${this.autoAdvanceSecondsRemaining}s...`;
+      $('#commentary-text').html(`<strong>${msg}</strong>`);
+      this.showToast(msg, 'success');
+    };
+
+    updateCountdownText();
+
+    this.autoAdvanceInterval = setInterval(() => {
+      this.autoAdvanceSecondsRemaining -= 1;
+      if (this.autoAdvanceSecondsRemaining > 0) {
+        updateCountdownText();
+      }
+    }, 1000);
+
+    this.autoAdvanceTimer = setTimeout(() => {
+      this.cancelAutoAdvance();
+
+      const nextIndex = this.getNextLineIndexFromQueue();
+      if (nextIndex >= 0 && this.currentCourse && this.currentCourse.lines[nextIndex]) {
+        const nextLine = this.currentCourse.lines[nextIndex];
+        
+        // Synchronize variation dropdown UI selection
+        $('#variation-select').val(nextIndex);
+
+        // Load new line starting position with clean state reset
+        this.loadLine(nextLine, this.currentMode);
+        this.showToast(`Auto-advanced to: ${stripEmojis(nextLine.name)}`, 'success');
+      } else {
+        // Course loop completed!
+        this.completedInLoop.clear();
+        this.initLineQueue();
+        const finishMsg = "Course Loop Mastered! You have completed all repertoire lines in this course.";
+        $('#commentary-text').html(`<strong>${finishMsg}</strong>`);
+        this.showToast("Course Loop Mastered!", 'success');
+      }
+    }, 2000);
   }
 
   /**
@@ -92,8 +223,12 @@ export class TrainerView {
   }
 
   loadCourse(course, lineIndex = 0) {
+    this.cancelAutoAdvance();
     this.currentCourse = course;
     if (!course || !course.lines || course.lines.length === 0) return;
+
+    this.completedInLoop.clear();
+    this.initLineQueue();
 
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
@@ -107,31 +242,34 @@ export class TrainerView {
     $select.empty();
     this.currentCourse.lines.forEach((line, index) => {
       const st = userProgress.getLineStat(line.id);
-      const label = `${line.name} ${st.completed ? '\u2714' : ''}`;
+      const cleanName = stripEmojis(line.name);
+      const label = `${cleanName} ${st.completed ? '✓' : ''}`;
       $select.append(`<option value="${index}">${label}</option>`);
     });
 
     $select.off('change').on('change', (e) => {
       const idx = parseInt($(e.target).val(), 10);
       if (!isNaN(idx) && this.currentCourse.lines[idx]) {
-        this.loadLine(this.currentCourse.lines[idx]);
+        this.loadLine(this.currentCourse.lines[idx], this.currentMode);
       }
     });
   }
 
   renderModeDeckPanel() {
     renderModeDeck('trainer-mode-deck-container', this.currentCourse, userProgress, (selectedMode) => {
+      this.cancelAutoAdvance();
+      this.currentMode = selectedMode;
       if (selectedMode === 'drill' || selectedMode === 'arena') {
         this.startBlindStreak(this.currentCourse, selectedMode);
       } else {
         this.isBlindStreak = false;
-        this.currentMode = selectedMode;
         this.resetDrill();
       }
-    });
+    }, this.currentMode);
   }
 
   loadLine(rawLine, mode = 'learn') {
+    this.cancelAutoAdvance();
     this.isBlindStreak = false;
     this.currentMode = mode;
     this.currentLine = processLineData(rawLine);
@@ -140,6 +278,7 @@ export class TrainerView {
   }
 
   startBlindStreak(course, mode) {
+    this.cancelAutoAdvance();
     this.isBlindStreak = true;
     this.currentMode = mode;
     this.streakScore = 0;
@@ -159,6 +298,7 @@ export class TrainerView {
   }
 
   pickNextBlindLine() {
+    this.cancelAutoAdvance();
     const randomIndex = Math.floor(Math.random() * this.blindPool.length);
     const rawLine = this.blindPool[randomIndex];
     this.currentLine = processLineData(rawLine);
@@ -169,10 +309,11 @@ export class TrainerView {
     this.clearHighlights();
 
     this.updateUI();
-    this.showToast(`\uD83D\uDD25 Blind Streak Active! Current Streak: ${this.streakScore}`, 'success');
+    this.showToast(`Blind Streak Active! Current Streak: ${this.streakScore}`, 'success');
   }
 
   resetDrill() {
+    this.cancelAutoAdvance();
     if (this.isBlindStreak) {
       this.streakScore = 0;
       this.pickNextBlindLine();
@@ -189,7 +330,7 @@ export class TrainerView {
     }
 
     this.updateUI();
-    this.showToast(`Drill started: ${this.currentLine.name}`, 'success');
+    this.showToast(`Drill started: ${stripEmojis(this.currentLine.name)}`, 'success');
   }
 
   onDragStart(source, piece) {
@@ -343,15 +484,15 @@ export class TrainerView {
     $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
 
     if (!this.isBlindStreak) {
-      this.showToast(`\uD83D\uDCA1 Hint: Play ${expected.piece.toUpperCase()} to ${expected.to} (${expected.san})`, 'success');
+      this.showToast(`Hint: Play ${expected.piece.toUpperCase()} to ${expected.to} (${expected.san})`, 'success');
     } else {
-      this.showToast(`\uD83D\uDCA1 Hint: Target square is ${expected.to}`, 'success');
+      this.showToast(`Hint: Target square is ${expected.to}`, 'success');
     }
   }
 
   onLineComplete() {
     if (this.isBlindStreak) {
-      this.showToast(`\u2705 Line Cleared! Continuing Survival Streak (${this.streakScore} Moves)!`, 'success');
+      this.showToast(`Line Cleared! Continuing Survival Streak (${this.streakScore} Moves)!`, 'success');
       setTimeout(() => {
         this.pickNextBlindLine();
       }, 1000);
@@ -359,19 +500,29 @@ export class TrainerView {
     }
 
     userProgress.markCompleted(this.currentLine.id, this.currentLine.totalHalfMoves / 2);
+    if (this.currentLine) {
+      this.completedInLoop.add(this.currentLine.id);
+    }
+
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
     this.triggerSuccessGlow();
-    this.showToast(`\uD83C\uDF89 Line Mastered! 100% Complete!`, 'success');
     this.updateUI();
+
+    // Auto-advance in Learn and Practice modes
+    if (this.currentMode === 'learn' || this.currentMode === 'practice') {
+      this.triggerAutoAdvance();
+    } else {
+      this.showToast(`Line Mastered! 100% Complete!`, 'success');
+    }
   }
 
   onBlindStreakEnd() {
     const finalScore = this.streakScore;
-    this.showToast(`\uD83D\uDC80 Streak Ended! Final Survival Score: ${finalScore} Moves`, 'error');
+    this.showToast(`Streak Ended! Final Survival Score: ${finalScore} Moves`, 'error');
 
     setTimeout(() => {
-      if (confirm(`\uD83D\uDC80 Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nWould you like to try another blind streak run?`)) {
+      if (confirm(`Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nWould you like to try another blind streak run?`)) {
         this.streakScore = 0;
         this.pickNextBlindLine();
       }
@@ -379,6 +530,7 @@ export class TrainerView {
   }
 
   stepPrev() {
+    this.cancelAutoAdvance();
     if (this.moveIndex > 0) {
       this.moveIndex--;
       if (this.game.history().length > 0) this.game.undo();
@@ -388,6 +540,7 @@ export class TrainerView {
   }
 
   stepNext() {
+    this.cancelAutoAdvance();
     if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
       const nextM = this.currentLine.moves[this.moveIndex];
       this.game.move(nextM.san);
@@ -401,17 +554,30 @@ export class TrainerView {
     if (!this.currentLine) return;
 
     if (this.isBlindStreak) {
-      $('#active-line-title').text(`\uD83D\uDD25 ${this.currentMode === 'arena' ? 'Arena Survival' : 'Blind Drill Streak'} (${this.streakScore} Moves)`);
-      $('#active-line-category').text('Blind Survival Mode');
+      if (this.currentMode === 'drill') {
+        $('#active-line-category').text('DRILL MODE');
+        $('#active-line-title').text('Blind Streak Challenge');
+      } else {
+        $('#active-line-category').text('ARENA MODE');
+        $('#active-line-title').text('Master Survival Challenge');
+      }
       $('#line-name').text(`??? Hidden Line`);
       $('#line-eco').text('Blind Recall Test');
       $('#line-description').text('Identify and execute the correct White repertoire moves without knowing the line name beforehand!');
     } else {
-      $('#active-line-title').text(this.currentLine.name);
-      $('#active-line-category').text(this.currentLine.category);
-      $('#line-name').text(this.currentLine.name);
-      $('#line-eco').text(this.currentLine.eco);
-      $('#line-description').text(this.currentLine.fullAnnotation);
+      if (this.currentMode === 'learn') {
+        $('#active-line-category').text('LEARN MODE');
+        $('#active-line-title').text(stripEmojis(this.currentLine ? this.currentLine.name : 'Discover New Lines'));
+      } else if (this.currentMode === 'practice') {
+        $('#active-line-category').text('PRACTICE MODE');
+        $('#active-line-title').text(stripEmojis(this.currentLine ? this.currentLine.name : 'Perfect Learned Lines'));
+      } else {
+        $('#active-line-category').text(stripEmojis(this.currentLine.category));
+        $('#active-line-title').text(stripEmojis(this.currentLine.name));
+      }
+      $('#line-name').text(stripEmojis(this.currentLine.name));
+      $('#line-eco').text(stripEmojis(this.currentLine.eco));
+      $('#line-description').text(stripEmojis(this.currentLine.fullAnnotation));
     }
 
     const currentMoveNum = Math.floor(this.moveIndex / 2);
@@ -429,15 +595,17 @@ export class TrainerView {
     }
 
     let commentary = '';
-    if (this.isBlindStreak) {
-      commentary = `\uD83D\uDD25 Survival Streak: <strong>${this.streakScore} Moves</strong>. Play White's repertoire move!`;
+    if (this.isAutoAdvancing) {
+      commentary = `Line Completed! Next line loading in ${this.autoAdvanceSecondsRemaining}s...`;
+    } else if (this.isBlindStreak) {
+      commentary = `Survival Streak: <strong>${this.streakScore} Moves</strong>. Play White's repertoire move!`;
     } else {
       commentary = this.currentLine.annotations[this.moveIndex] || this.currentLine.annotations[this.moveIndex - 1] || this.currentLine.fullAnnotation;
       if (this.moveIndex >= this.currentLine.totalHalfMoves) {
-        commentary = "\uD83C\uDF89 Line Complete! You've mastered all moves in this repertoire variation.";
+        commentary = "Line Complete! You've mastered all moves in this repertoire variation.";
       }
     }
-    $('#commentary-text').html(commentary);
+    $('#commentary-text').html(stripEmojis(commentary));
 
     this.renderMoveHistory();
     this.renderStepTree();
@@ -497,7 +665,7 @@ export class TrainerView {
       if (isCompleted) rowClass += ' completed';
       if (isCurrent) rowClass += ' current';
 
-      const statusSymbol = isCompleted ? '\u2705' : (isCurrent ? '\uD83D\uDD04' : '\u25FD');
+      const statusSymbol = isCompleted ? '✓' : (isCurrent ? '●' : '○');
 
       const html = `
         <div class="${rowClass}">
@@ -542,13 +710,14 @@ export class TrainerView {
 
   showToast(message, type) {
     const $toast = $('#status-toast');
-    $('#toast-message').text(message);
+    const cleanMsg = stripEmojis(message);
+    $('#toast-message').text(cleanMsg);
     $toast.removeClass('hidden success error').addClass(type || 'success');
 
     if (type === 'error') {
-      $('#toast-icon').text('\u274C');
+      $('#toast-icon').text('!');
     } else {
-      $('#toast-icon').text('\u2705');
+      $('#toast-icon').text('✓');
     }
 
     clearTimeout(this.toastTimer);
