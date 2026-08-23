@@ -12,12 +12,26 @@ export function renderDashboard(onSelectCourse) {
 
   COURSES.forEach((course, courseIndex) => {
     let completedCount = 0;
-    course.lines.forEach(line => {
-      const st = userProgress.getLineStat(line.id);
-      if (st.completed) completedCount++;
-    });
+    let totalLines = 0;
 
-    const totalLines = course.lines.length;
+    if (course.subCourses && course.subCourses.length > 0) {
+      course.subCourses.forEach(sub => {
+        const lines = sub.lines || [];
+        totalLines += lines.length;
+        lines.forEach(line => {
+          const st = userProgress.getLineStat(line.id);
+          if (st.completed) completedCount++;
+        });
+      });
+    } else if (course.lines) {
+      totalLines = course.lines.length;
+      course.lines.forEach(line => {
+        const st = userProgress.getLineStat(line.id);
+        if (st.completed) completedCount++;
+      });
+    }
+
+    const subCount = course.subCourses ? course.subCourses.length : 0;
     const percent = totalLines > 0 ? Math.round((completedCount / totalLines) * 100) : 0;
 
     const cardHTML = `
@@ -28,11 +42,14 @@ export function renderDashboard(onSelectCourse) {
         </div>
         <div class="course-card-info">
           <h4>${course.title}</h4>
+          <p class="card-subtitle" style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.35rem;">
+            ${course.subtitle || ''}
+          </p>
           <p>${course.description}</p>
         </div>
         <div class="course-progress-block">
           <div class="course-progress-header">
-            <span>Progress (${completedCount}/${totalLines} Lines Mastered)</span>
+            <span>Progress (${completedCount}/${totalLines} Lines • ${subCount} Modules)</span>
             <span>${percent}%</span>
           </div>
           <div class="course-progress-track">
@@ -40,7 +57,7 @@ export function renderDashboard(onSelectCourse) {
           </div>
         </div>
         <button class="card-action-btn view-course-btn" data-course-index="${courseIndex}">
-          <span>Train Opening Course \u2192</span>
+          <span>Explore Sub-Courses &rarr;</span>
         </button>
       </div>
     `;

@@ -101,7 +101,50 @@
       </div>
     </section>
 
-    <!-- ──────────────── 2. INTERACTIVE STUDY BOARD VIEW ──────────────── -->
+    <!-- ──────────────── 2. SUB-COURSE SELECTION HUB VIEW (LEVEL 2) ──────────────── -->
+    <section id="subcourse-view" class="view-section hidden">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <div style="margin-bottom: 0.85rem;">
+            <button id="btn-back-to-catalog" class="card-action-btn" style="width: auto; padding: 0.45rem 1rem; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 0.4rem;" title="Back to Main Course Catalog">
+              &larr; Back to Main Catalog
+            </button>
+          </div>
+          <h2 id="subcourse-hero-title">Italian Game Master Repertoire</h2>
+          <p id="subcourse-hero-desc">
+            Explore focused sub-course modules with dedicated line pools and active recall training decks.
+          </p>
+        </div>
+        <div class="hero-stats-card">
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-total-mastered">0</span>
+            <span class="stat-lbl">Lines Mastered</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-modules-count">4</span>
+            <span class="stat-lbl">Sub-Courses</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-avg-accuracy">100%</span>
+            <span class="stat-lbl">Avg. Accuracy</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Course Cards Grid -->
+      <div class="section-title-bar">
+        <h3 id="subcourse-grid-title">Sub-Course Modules</h3>
+        <span class="course-badge" id="subcourse-grid-badge">4 Sub-Course Modules</span>
+      </div>
+
+      <div id="subcourse-grid" class="course-grid">
+        <!-- Dynamically populated by subcourse-view.js -->
+      </div>
+    </section>
+
+    <!-- ──────────────── 3. INTERACTIVE STUDY BOARD VIEW (LEVEL 3) ──────────────── -->
     <section id="study-view" class="view-section hidden">
 
       <!-- Left Column: HD Board & Move Input -->
@@ -249,6 +292,9 @@
     <div class="controls-container">
       <button id="nav-catalog-btn-bottom" class="ctrl-btn" title="Back to Course Catalog">
         Catalog
+      </button>
+      <button id="nav-subcourse-btn-bottom" class="ctrl-btn" title="Back to Sub-Courses">
+        Modules
       </button>
 
       <button id="btn-start" class="ctrl-btn primary" title="Start or Restart line drill">

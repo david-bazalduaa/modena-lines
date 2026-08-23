@@ -1,15 +1,18 @@
 /* ============================================================
-   MAIN APPLICATION ENTRY POINT & ROUTER (DOM ISOLATION)
+   MAIN APPLICATION ENTRY POINT & 3-LEVEL ROUTER (DOM ISOLATION)
    ============================================================ */
 
 import { COURSES, getAllLines } from './data/courses.js';
 import { userProgress } from './storage/user-progress.js';
 import { renderDashboard } from './ui/dashboard-view.js';
+import { renderSubCourseHub } from './ui/subcourse-view.js';
 import { TrainerView } from './ui/trainer-view.js';
 
 class App {
   constructor() {
-    this.currentView = 'catalog';
+    this.currentView = 'catalog'; // 'catalog' | 'subcourse' | 'study'
+    this.selectedCourse = null;
+    this.selectedSubCourse = null;
     this.trainer = new TrainerView();
     this.allLines = getAllLines();
   }
@@ -18,23 +21,37 @@ class App {
     this.updateHeaderMetrics();
     this.initNavigation();
 
-    // Default route: render Course Catalog View
+    // Default route: render Level 1 Course Catalog View
     this.showCatalogView();
 
-    console.log('Modena Lines SPA Router & View Lifecycle Initialized!');
+    console.log('Modena Lines 3-Level Navigation Router Initialized!');
   }
 
   initNavigation() {
+    // Level 1 Nav shortcuts
     $('#nav-catalog-btn, #brand-home, #nav-catalog-btn-bottom').off('click').on('click', () => {
       this.showCatalogView();
     });
 
+    // Level 2 Nav shortcut from bottom bar
+    $('#nav-subcourse-btn-bottom').off('click').on('click', () => {
+      if (this.selectedCourse) {
+        this.showSubCourseHub(this.selectedCourse);
+      } else if (COURSES.length > 0) {
+        this.showSubCourseHub(COURSES[0]);
+      } else {
+        this.showCatalogView();
+      }
+    });
+
+    // Level 3 Study Board Tab
     $('#nav-study-btn').off('click').on('click', () => {
-      this.showStudyView();
+      this.showStudyView(this.selectedSubCourse);
     });
   }
 
   updateHeaderMetrics() {
+    this.allLines = getAllLines();
     const metrics = userProgress.recalculateMetrics(this.allLines);
     $('#header-accuracy').text(metrics.overallAccuracy + '%');
     $('#header-completed').text(`${metrics.completedCount}/${metrics.totalCount}`);
@@ -46,14 +63,18 @@ class App {
     $('#stat-lines').text(`${metrics.completedCount}/${metrics.totalCount}`);
   }
 
+  /**
+   * LEVEL 1: MAIN CATALOG VIEW (/catalog)
+   */
   showCatalogView() {
     this.currentView = 'catalog';
 
-    // Completely hide Study View & floating bottom controls deck
+    // Hide Level 2 Sub-Course Hub, Level 3 Study View & floating bottom controls
+    $('#subcourse-view').addClass('hidden').removeClass('active');
     $('#study-view').addClass('hidden').removeClass('active');
     $('#controls-bar').addClass('hidden');
 
-    // Show Dashboard Catalog
+    // Show Level 1 Dashboard Catalog
     $('#dashboard-view').removeClass('hidden').addClass('active');
 
     $('#nav-catalog-btn').addClass('active');
@@ -61,16 +82,55 @@ class App {
 
     this.updateHeaderMetrics();
     renderDashboard((targetCourse) => {
-      this.startCourseDrill(targetCourse);
+      this.showSubCourseHub(targetCourse);
     });
   }
 
-  showStudyView() {
+  /**
+   * LEVEL 2: SUB-COURSE SELECTION HUB (/course/:courseId)
+   */
+  showSubCourseHub(course) {
+    this.currentView = 'subcourse';
+    this.selectedCourse = course || (COURSES.length > 0 ? COURSES[0] : null);
+
+    if (!this.selectedCourse) {
+      this.showCatalogView();
+      return;
+    }
+
+    // Hide Level 1 Catalog, Level 3 Study View & bottom controls
+    $('#dashboard-view').addClass('hidden').removeClass('active');
+    $('#study-view').addClass('hidden').removeClass('active');
+    $('#controls-bar').addClass('hidden');
+
+    // Show Level 2 Sub-Course Hub
+    $('#subcourse-view').removeClass('hidden').addClass('active');
+
+    $('#nav-catalog-btn').addClass('active');
+    $('#nav-study-btn').removeClass('active');
+
+    this.updateHeaderMetrics();
+    renderSubCourseHub(
+      this.selectedCourse,
+      userProgress,
+      (targetSubCourse) => {
+        this.startSubCourse(targetSubCourse);
+      },
+      () => {
+        this.showCatalogView();
+      }
+    );
+  }
+
+  /**
+   * LEVEL 3: INTERACTIVE STUDY BOARD VIEW (/study/:subCourseId)
+   */
+  showStudyView(subCourse = null) {
     this.currentView = 'study';
 
-    // Completely hide Dashboard View
+    // Completely hide Level 1 and Level 2 views
     $('#dashboard-view').addClass('hidden').removeClass('active');
-    $('#course-lines-view').addClass('hidden').removeClass('active');
+    $('#subcourse-view').addClass('hidden').removeClass('active');
 
     // Show Study Board & floating bottom controls deck
     $('#study-view').removeClass('hidden').addClass('active');
@@ -79,22 +139,34 @@ class App {
     $('#nav-catalog-btn').removeClass('active');
     $('#nav-study-btn').addClass('active');
 
-    if (!this.trainer.currentCourse && COURSES.length > 0) {
-      this.trainer.loadCourse(COURSES[0]);
+    if (subCourse) {
+      this.selectedSubCourse = subCourse;
+      this.trainer.loadSubCourse(subCourse, 0, this.selectedCourse);
+    } else if (!this.trainer.currentSubCourse) {
+      // Default to first subcourse of first course
+      if (COURSES.length > 0 && COURSES[0].subCourses && COURSES[0].subCourses.length > 0) {
+        this.selectedCourse = COURSES[0];
+        this.selectedSubCourse = COURSES[0].subCourses[0];
+        this.trainer.loadSubCourse(this.selectedSubCourse, 0, this.selectedCourse);
+      }
     } else if (this.trainer.board) {
       setTimeout(() => this.trainer.board.resize(), 50);
     }
-  }
 
-  startCourseDrill(course) {
-    this.showStudyView();
-    this.trainer.loadCourse(course);
     this.updateHeaderMetrics();
   }
 
-  startBlindStreakMode(course, mode) {
-    this.showStudyView();
-    this.trainer.startBlindStreak(course, mode);
+  startSubCourse(subCourse) {
+    this.showStudyView(subCourse);
+  }
+
+  startCourseDrill(course) {
+    this.showSubCourseHub(course);
+  }
+
+  startBlindStreakMode(subCourse, mode) {
+    this.showStudyView(subCourse);
+    this.trainer.startBlindStreak(subCourse, mode);
     this.updateHeaderMetrics();
   }
 }

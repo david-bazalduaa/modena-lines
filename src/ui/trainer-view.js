@@ -12,6 +12,7 @@ import {
   setSelectedSquare
 } from '../engine/board-renderer.js';
 import { processLineData } from '../engine/chess-logic.js';
+import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
 
@@ -26,6 +27,7 @@ export function stripEmojis(str) {
 export class TrainerView {
   constructor() {
     this.currentCourse = null;
+    this.currentSubCourse = null;
     this.currentLine = null;
     this.moveIndex = 0;
     this.game = new Chess();
@@ -51,17 +53,18 @@ export class TrainerView {
   }
 
   /**
-   * Initializes the non-repeating line progression queue for the active course loop.
+   * Initializes the non-repeating line progression queue for the active sub-course loop.
    */
   initLineQueue() {
-    if (!this.currentCourse || !this.currentCourse.lines) {
+    const activePool = this.currentSubCourse || this.currentCourse;
+    if (!activePool || !activePool.lines) {
       this.lineQueue = [];
       return;
     }
 
-    // Build array of uncompleted line indices in the current course loop
+    // Build array of uncompleted line indices in the current sub-course loop
     this.lineQueue = [];
-    this.currentCourse.lines.forEach((line, index) => {
+    activePool.lines.forEach((line, index) => {
       if (!this.completedInLoop.has(line.id)) {
         this.lineQueue.push(index);
       }
@@ -70,15 +73,16 @@ export class TrainerView {
     // If all lines have been completed in this loop, reset loop memory to allow a new loop
     if (this.lineQueue.length === 0) {
       this.completedInLoop.clear();
-      this.lineQueue = this.currentCourse.lines.map((_, index) => index);
+      this.lineQueue = activePool.lines.map((_, index) => index);
     }
   }
 
   /**
-   * Retrieves the next available line index from the non-repeating queue.
+   * Retrieves the next available line index from the active sub-course non-repeating queue.
    */
   getNextLineIndexFromQueue() {
-    if (!this.currentCourse || !this.currentCourse.lines || this.currentCourse.lines.length === 0) {
+    const activePool = this.currentSubCourse || this.currentCourse;
+    if (!activePool || !activePool.lines || activePool.lines.length === 0) {
       return -1;
     }
 
@@ -86,13 +90,13 @@ export class TrainerView {
       this.initLineQueue();
     }
 
-    // Check if the whole course loop has been finished
-    if (this.completedInLoop.size >= this.currentCourse.lines.length) {
-      return -1; // Indicates full course loop completion
+    // Check if the whole sub-course loop has been finished
+    if (this.completedInLoop.size >= activePool.lines.length) {
+      return -1; // Indicates full sub-course loop completion
     }
 
     // Current line index
-    const currentIdx = this.currentCourse.lines.findIndex(l => l.id === this.currentLine?.id);
+    const currentIdx = activePool.lines.findIndex(l => l.id === this.currentLine?.id);
     
     // Find next index in queue (avoiding immediate repeat if possible)
     let nextIndexPos = this.lineQueue.findIndex(idx => idx !== currentIdx);
@@ -144,9 +148,10 @@ export class TrainerView {
     this.autoAdvanceTimer = setTimeout(() => {
       this.cancelAutoAdvance();
 
+      const activePool = this.currentSubCourse || this.currentCourse;
       const nextIndex = this.getNextLineIndexFromQueue();
-      if (nextIndex >= 0 && this.currentCourse && this.currentCourse.lines[nextIndex]) {
-        const nextLine = this.currentCourse.lines[nextIndex];
+      if (nextIndex >= 0 && activePool && activePool.lines[nextIndex]) {
+        const nextLine = activePool.lines[nextIndex];
         
         // Synchronize variation dropdown UI selection
         $('#variation-select').val(nextIndex);
@@ -155,12 +160,12 @@ export class TrainerView {
         this.loadLine(nextLine, this.currentMode);
         this.showToast(`Auto-advanced to: ${stripEmojis(nextLine.name)}`, 'success');
       } else {
-        // Course loop completed!
+        // Sub-course loop completed!
         this.completedInLoop.clear();
         this.initLineQueue();
-        const finishMsg = "Course Loop Mastered! You have completed all repertoire lines in this course.";
+        const finishMsg = "Sub-Course Module Mastered! You have completed all repertoire lines in this module.";
         $('#commentary-text').html(`<strong>${finishMsg}</strong>`);
-        this.showToast("Course Loop Mastered!", 'success');
+        this.showToast("Sub-Course Module Mastered!", 'success');
       }
     }, 2000);
   }
@@ -222,25 +227,39 @@ export class TrainerView {
     $('#btn-next').off('click').on('click', () => this.stepNext());
   }
 
-  loadCourse(course, lineIndex = 0) {
+  /**
+   * Loads a Sub-Course module into the trainer view with isolated line pools.
+   */
+  loadSubCourse(subCourse, lineIndex = 0, parentCourse = null) {
     this.cancelAutoAdvance();
-    this.currentCourse = course;
-    if (!course || !course.lines || course.lines.length === 0) return;
+    this.currentSubCourse = subCourse;
+    this.currentCourse = parentCourse || (subCourse ? getCourseById(subCourse.courseId) : null);
+
+    if (!subCourse || !subCourse.lines || subCourse.lines.length === 0) return;
 
     this.completedInLoop.clear();
     this.initLineQueue();
 
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
-    this.loadLine(course.lines[lineIndex]);
+    this.loadLine(subCourse.lines[lineIndex]);
+  }
+
+  loadCourse(course, lineIndex = 0) {
+    if (course && course.subCourses && course.subCourses.length > 0) {
+      this.loadSubCourse(course.subCourses[0], lineIndex, course);
+      return;
+    }
+    this.loadSubCourse(course, lineIndex, course);
   }
 
   renderVariationDropdown() {
     const $select = $('#variation-select');
-    if (!$select.length || !this.currentCourse) return;
+    const activePool = this.currentSubCourse || this.currentCourse;
+    if (!$select.length || !activePool || !activePool.lines) return;
 
     $select.empty();
-    this.currentCourse.lines.forEach((line, index) => {
+    activePool.lines.forEach((line, index) => {
       const st = userProgress.getLineStat(line.id);
       const cleanName = stripEmojis(line.name);
       const label = `${cleanName} ${st.completed ? '(Mastered)' : ''}`;
@@ -249,18 +268,19 @@ export class TrainerView {
 
     $select.off('change').on('change', (e) => {
       const idx = parseInt($(e.target).val(), 10);
-      if (!isNaN(idx) && this.currentCourse.lines[idx]) {
-        this.loadLine(this.currentCourse.lines[idx], this.currentMode);
+      if (!isNaN(idx) && activePool.lines[idx]) {
+        this.loadLine(activePool.lines[idx], this.currentMode);
       }
     });
   }
 
   renderModeDeckPanel() {
-    renderModeDeck('trainer-mode-deck-container', this.currentCourse, userProgress, (selectedMode) => {
+    const activePool = this.currentSubCourse || this.currentCourse;
+    renderModeDeck('trainer-mode-deck-container', activePool, userProgress, (selectedMode) => {
       this.cancelAutoAdvance();
       this.currentMode = selectedMode;
       if (selectedMode === 'drill' || selectedMode === 'arena') {
-        this.startBlindStreak(this.currentCourse, selectedMode);
+        this.startBlindStreak(activePool, selectedMode);
       } else {
         this.isBlindStreak = false;
         this.resetDrill();
@@ -277,20 +297,30 @@ export class TrainerView {
     this.resetDrill();
   }
 
-  startBlindStreak(course, mode) {
+  /**
+   * Starts Blind Streak mode exclusively isolated to the active sub-course line pool.
+   */
+  startBlindStreak(subCourse, mode) {
     this.cancelAutoAdvance();
     this.isBlindStreak = true;
     this.currentMode = mode;
     this.streakScore = 0;
 
+    const activePool = subCourse || this.currentSubCourse || this.currentCourse;
+    const lines = activePool ? (activePool.lines || []) : [];
+
     if (mode === 'drill') {
-      this.blindPool = course.lines.filter(line => userProgress.getLineStat(line.id).completed);
+      this.blindPool = lines.filter(line => userProgress.getLineStat(line.id).completed);
     } else {
-      this.blindPool = course.lines;
+      this.blindPool = lines;
     }
 
     if (this.blindPool.length === 0) {
-      alert('No learned lines available for this mode yet!');
+      alert('No learned lines available for this mode in this sub-course yet!');
+      this.isBlindStreak = false;
+      this.currentMode = 'learn';
+      this.renderModeDeckPanel();
+      this.resetDrill();
       return;
     }
 
@@ -330,7 +360,7 @@ export class TrainerView {
     }
 
     this.updateUI();
-    this.showToast(`Drill started: ${stripEmojis(this.currentLine.name)}`, 'success');
+    this.showToast(`Drill started: ${stripEmojis(this.currentLine ? this.currentLine.name : 'Opening Line')}`, 'success');
   }
 
   onDragStart(source, piece) {
@@ -369,14 +399,15 @@ export class TrainerView {
   }
 
   /**
-   * UNIFIED MOVE EXECUTION PIPELINE
-   * All user moves (Drag-and-Drop, Click-to-Move, and SAN Input) flow through this single method.
+   * UNIFIED MOVE EXECUTION PIPELINE WITH DYNAMIC TRANSPOSITION MATCHING
+   * Validates user move against active line; if mismatched, checks for valid sibling line branches in the sub-course.
    */
   handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
     if (this.game.turn() !== 'w') return null;
 
-    const expected = this.currentLine.moves[this.moveIndex];
+    const currentMoveIndex = this.moveIndex;
+    const expected = this.currentLine.moves[currentMoveIndex];
 
     // 1. Verify move validity in chess.js
     const testMove = this.game.move({
@@ -394,22 +425,65 @@ export class TrainerView {
 
     // 2. Compare against expected repertoire move for active line
     if (testMove.san !== expected.san) {
-      this.game.undo();
-      this.triggerErrorShake();
-      this.clearHighlights();
+      // ──────────────── TRANSPOSITION ENGINE ────────────────
+      // Check if another line in the active Sub-Course matches this move branch!
+      let transposedLine = null;
+      let transposedIndex = -1;
 
-      // Highlight expected move coordinates
-      $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
-      $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
+      const activePool = this.currentSubCourse || this.currentCourse;
+      if (activePool && activePool.lines && activePool.lines.length > 1) {
+        const playedHistory = this.game.history(); // includes testMove as last element
+        const prevMoveCount = playedHistory.length - 1;
 
-      if (this.isBlindStreak) {
-        this.onBlindStreakEnd();
-        return null;
+        for (let i = 0; i < activePool.lines.length; i++) {
+          const candidateRaw = activePool.lines[i];
+          if (candidateRaw.id === this.currentLine.id) continue;
+
+          const candidate = processLineData(candidateRaw);
+          if (!candidate.moves || candidate.moves.length <= currentMoveIndex) continue;
+
+          // Verify all previous moves match candidate prefix
+          let prefixMatches = true;
+          for (let m = 0; m < prevMoveCount; m++) {
+            if (!candidate.moves[m] || candidate.moves[m].san !== playedHistory[m]) {
+              prefixMatches = false;
+              break;
+            }
+          }
+
+          // Verify candidate move at currentMoveIndex matches testMove.san
+          if (prefixMatches && candidate.moves[currentMoveIndex].san === testMove.san) {
+            transposedLine = candidate;
+            transposedIndex = i;
+            break;
+          }
+        }
       }
 
-      this.showToast(`Incorrect! Expected ${expected.san}`, 'error');
-      userProgress.recordMistake(this.currentLine.id);
-      return null;
+      if (transposedLine) {
+        // Dynamically bind to the user's chosen transposition line branch!
+        this.currentLine = transposedLine;
+        $('#variation-select').val(transposedIndex);
+        this.showToast(`Branching to: ${stripEmojis(this.currentLine.name)}`, 'success');
+      } else {
+        // Genuine incorrect move: undo and penalize
+        this.game.undo();
+        this.triggerErrorShake();
+        this.clearHighlights();
+
+        // Highlight expected move coordinates
+        $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
+        $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
+
+        if (this.isBlindStreak) {
+          this.onBlindStreakEnd();
+          return null;
+        }
+
+        this.showToast(`Incorrect! Expected ${expected.san}`, 'error');
+        userProgress.recordMistake(this.currentLine.id);
+        return null;
+      }
     }
 
     // 3. Move is correct: advance index, play feedback, update UI, and trigger Black response
@@ -553,6 +627,8 @@ export class TrainerView {
   updateUI() {
     if (!this.currentLine) return;
 
+    const subTitle = this.currentSubCourse ? stripEmojis(this.currentSubCourse.category || this.currentSubCourse.title) : 'Main Line';
+
     if (this.isBlindStreak) {
       if (this.currentMode === 'drill') {
         $('#active-line-category').text('DRILL MODE');
@@ -561,18 +637,18 @@ export class TrainerView {
         $('#active-line-category').text('ARENA MODE');
         $('#active-line-title').text('Master Survival Challenge');
       }
-      $('#line-name').text(`??? Hidden Line`);
+      $('#line-name').text('??? Hidden Line');
       $('#line-eco').text('Blind Recall Test');
       $('#line-description').text('Identify and execute the correct White repertoire moves without knowing the line name beforehand!');
     } else {
       if (this.currentMode === 'learn') {
-        $('#active-line-category').text('LEARN MODE');
+        $('#active-line-category').text(subTitle);
         $('#active-line-title').text(stripEmojis(this.currentLine ? this.currentLine.name : 'Discover New Lines'));
       } else if (this.currentMode === 'practice') {
         $('#active-line-category').text('PRACTICE MODE');
         $('#active-line-title').text(stripEmojis(this.currentLine ? this.currentLine.name : 'Perfect Learned Lines'));
       } else {
-        $('#active-line-category').text(stripEmojis(this.currentLine.category));
+        $('#active-line-category').text(subTitle);
         $('#active-line-title').text(stripEmojis(this.currentLine.name));
       }
       $('#line-name').text(stripEmojis(this.currentLine.name));
