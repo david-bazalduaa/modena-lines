@@ -27,7 +27,7 @@
     <div class="header-content">
       <div class="header-brand" id="brand-home" role="button" tabindex="0" title="Return to Course Catalog">
         <div class="brand-icon-wrapper">
-          <span class="brand-icon">♔</span>
+          <span class="brand-icon">K</span>
         </div>
         <div>
           <h1 id="app-title">Modena Lines</h1>
@@ -38,22 +38,22 @@
       <!-- View Switcher Tabs -->
       <nav class="view-tabs" aria-label="Main Navigation">
         <button id="nav-catalog-btn" class="nav-tab active" title="View All Courses">
-          <span class="tab-icon">📚</span> Course Catalog
+          Course Catalog
         </button>
         <button id="nav-study-btn" class="nav-tab" title="Interactive Training Board">
-          <span class="tab-icon">♟</span> Study Board
+          Study Board
         </button>
       </nav>
 
       <!-- User Metric Badge -->
       <div class="header-badge" id="header-badge">
         <div class="badge-item" title="Overall Accuracy">
-          <span class="badge-icon">🎯</span>
+          <span class="badge-label" style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted);">ACC</span>
           <span id="header-accuracy">100%</span>
         </div>
         <div class="badge-divider"></div>
         <div class="badge-item" title="Lines Mastered">
-          <span class="badge-icon">🏆</span>
+          <span class="badge-label" style="font-size: 0.7rem; font-weight: 700; color: var(--text-muted);">LINES</span>
           <span id="header-completed">0/5</span>
         </div>
       </div>
@@ -130,14 +130,14 @@
         <!-- Text Move Input -->
         <div id="move-input-area">
           <div id="move-input-container">
-            <span class="input-icon">⌨</span>
+            <span class="input-icon">SAN</span>
             <input type="text"
                    id="move-input"
                    placeholder="Type move in SAN (e.g., Nf3, Bc4, d4)..."
                    autocomplete="off"
                    spellcheck="false">
             <button id="submit-move-btn" class="card-action-btn" style="width: auto; padding: 0.45rem 1rem;" title="Submit move">
-              Submit ↵
+              Submit
             </button>
           </div>
           <p id="input-hint" class="card-body-text" style="font-size: 0.76rem; text-align: center;">
@@ -184,7 +184,7 @@
         <!-- ChessReps Interactive Mode Deck -->
         <div id="trainer-mode-deck-card" class="panel-card">
           <div class="card-header" style="margin-bottom: 0.4rem;">
-            <span class="card-icon">🎮</span>
+            <span class="card-icon">MODE</span>
             <h3>Training Mode</h3>
           </div>
           <div id="trainer-mode-deck-container">
@@ -206,7 +206,7 @@
         <!-- Interactive Move History -->
         <div id="history-card" class="panel-card">
           <div class="card-header">
-            <span class="card-icon">📝</span>
+            <span class="card-icon">LOG</span>
             <h3>Move History</h3>
           </div>
           <div id="move-history" class="card-body-text mono-text">
@@ -217,7 +217,7 @@
         <!-- Step Tree -->
         <div id="tree-card" class="panel-card">
           <div class="card-header">
-            <span class="card-icon">🗺</span>
+            <span class="card-icon">TREE</span>
             <h3>Full Line Sequence</h3>
           </div>
           <div id="line-step-tree" class="step-tree-container">
@@ -248,41 +248,41 @@
   <footer id="controls-bar" class="hidden">
     <div class="controls-container">
       <button id="nav-catalog-btn-bottom" class="ctrl-btn" title="Back to Course Catalog">
-        <span class="btn-icon">📋</span> Catalog
+        Catalog
       </button>
 
       <button id="btn-start" class="ctrl-btn primary" title="Start or Restart line drill">
-        <span class="btn-icon">▶</span> Start Drill
+        Start Drill
       </button>
 
       <button id="btn-hint" class="ctrl-btn hint-btn" title="Highlight recommended move source and destination">
-        <span class="btn-icon">💡</span> Hint
+        Hint
       </button>
 
       <div class="button-group-divider"></div>
 
       <button id="btn-prev" class="ctrl-btn icon-only" title="Step Previous Move" disabled>
-        <span class="btn-icon">◀</span>
+        &lt;
       </button>
       <button id="btn-next" class="ctrl-btn icon-only" title="Step Next Move" disabled>
-        <span class="btn-icon">▶</span>
+        &gt;
       </button>
 
       <div class="button-group-divider"></div>
 
       <button id="btn-reset" class="ctrl-btn danger" title="Reset line to starting move">
-        <span class="btn-icon">↺</span> Reset
+        Reset
       </button>
 
       <button id="btn-flip" class="ctrl-btn" title="Flip Board Orientation">
-        <span class="btn-icon">🔄</span> Flip
+        Flip
       </button>
     </div>
   </footer>
 
   <!-- ==================== TOAST NOTIFICATIONS ==================== -->
   <div id="status-toast" class="toast hidden" role="alert" aria-live="polite">
-    <span id="toast-icon">✓</span>
+    <span id="toast-icon" class="hidden"></span>
     <span id="toast-message">Move feedback</span>
   </div>
 

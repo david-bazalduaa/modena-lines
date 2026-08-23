@@ -364,7 +364,7 @@ function renderCourseCatalog() {
         </div>
         <div class="course-progress-block">
           <div class="course-progress-header">
-            <span>${st.completed ? '🏆 Mastered' : 'Progress'}</span>
+            <span>${st.completed ? 'Mastered' : 'Progress'}</span>
             <span>${st.completed ? '100%' : progressPercent + '%'}</span>
           </div>
           <div class="course-progress-track">
@@ -372,7 +372,7 @@ function renderCourseCatalog() {
           </div>
         </div>
         <button class="card-action-btn start-course-btn" data-line-index="${index}">
-          <span>${st.completed ? '🔄 Practice Course' : '▶ Start Line'}</span>
+          <span>${st.completed ? 'Practice Course' : 'Start Line'}</span>
         </button>
       </div>
     `;
@@ -639,7 +639,7 @@ function requestHint() {
   $(`#board .square-${expectedMove.from}`).addClass('highlight-hint-src');
   $(`#board .square-${expectedMove.to}`).addClass('highlight-hint-dst');
 
-  showToast(`💡 Hint: Play ${expectedMove.piece.toUpperCase() || 'Pawn'} to ${expectedMove.to} (${expectedMove.san})`, 'success');
+  showToast(`Hint: Play ${expectedMove.piece.toUpperCase() || 'Pawn'} to ${expectedMove.to} (${expectedMove.san})`, 'success');
 }
 
 // ────────────────────────────────────────────────────────────
@@ -684,7 +684,7 @@ function onLineComplete() {
   saveState();
 
   triggerSuccessGlow();
-  showToast(`🎉 Line Mastered! 100% Complete with ${acc}% Accuracy!`, 'success');
+  showToast(`Line Mastered! 100% Complete with ${acc}% Accuracy!`, 'success');
   updateUI();
 }
 
@@ -730,7 +730,7 @@ function updateUI() {
   // Coach Guidance commentary text
   var commentary = line.annotations[moveIndex] || line.annotations[moveIndex - 1] || line.fullAnnotation;
   if (moveIndex >= line.totalHalfMoves) {
-    commentary = "🏆 Line Complete! You've mastered all moves in this White repertoire variation.";
+    commentary = "Line Complete! You've mastered all moves in this White repertoire variation.";
   }
   $('#commentary-text').html(commentary);
 
@@ -793,7 +793,7 @@ function renderStepTree(line) {
     if (isCompleted) rowClass += ' completed';
     if (isCurrent) rowClass += ' current';
 
-    var statusSymbol = isCompleted ? '✅' : (isCurrent ? '👉' : '⚪');
+    var statusSymbol = isCompleted ? 'DONE' : (isCurrent ? 'NOW' : 'NEXT');
 
     var html = `
       <div class="${rowClass}">
@@ -846,11 +846,7 @@ function showToast(message, type) {
 
   $toast.removeClass('hidden success error').addClass(type || 'success');
 
-  if (type === 'error') {
-    $('#toast-icon').text('⚠️');
-  } else {
-    $('#toast-icon').text('✨');
-  }
+  $('#toast-icon').addClass('hidden').empty();
 
   clearTimeout(window.toastTimer);
   window.toastTimer = setTimeout(function () {

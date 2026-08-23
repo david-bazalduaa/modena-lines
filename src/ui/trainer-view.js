@@ -243,7 +243,7 @@ export class TrainerView {
     this.currentCourse.lines.forEach((line, index) => {
       const st = userProgress.getLineStat(line.id);
       const cleanName = stripEmojis(line.name);
-      const label = `${cleanName} ${st.completed ? '✓' : ''}`;
+      const label = `${cleanName} ${st.completed ? '(Mastered)' : ''}`;
       $select.append(`<option value="${index}">${label}</option>`);
     });
 
@@ -665,7 +665,7 @@ export class TrainerView {
       if (isCompleted) rowClass += ' completed';
       if (isCurrent) rowClass += ' current';
 
-      const statusSymbol = isCompleted ? '✓' : (isCurrent ? '●' : '○');
+      const statusSymbol = isCompleted ? 'OK' : (isCurrent ? 'NOW' : 'NEXT');
 
       const html = `
         <div class="${rowClass}">
@@ -713,12 +713,7 @@ export class TrainerView {
     const cleanMsg = stripEmojis(message);
     $('#toast-message').text(cleanMsg);
     $toast.removeClass('hidden success error').addClass(type || 'success');
-
-    if (type === 'error') {
-      $('#toast-icon').text('!');
-    } else {
-      $('#toast-icon').text('✓');
-    }
+    $('#toast-icon').addClass('hidden').empty();
 
     clearTimeout(this.toastTimer);
     this.toastTimer = setTimeout(() => $toast.addClass('hidden'), APP_CONFIG.toastDurationMs);
