@@ -436,8 +436,8 @@ export class TrainerView {
       }
     });
 
-    $('#progress-label').text('0 / 0 Lines');
-    $('#progress-percent').text('0% Unlocked');
+    $('#progress-label').text('Lines Mastered: 0 / 0');
+    $('#progress-percent').text('0% Mastered');
     $('#progress-bar').css('width', '0%');
 
     $('#stat-lines').text('0/0');
@@ -614,8 +614,10 @@ export class TrainerView {
       // Record mistake penalty in progress metrics
       userProgress.recordMistake(this.currentLine.id);
 
-      // In blind streak modes (Drill/Arena), immediately terminate the streak
+      // In blind streak modes (Drill/Arena), immediately reset streak and terminate the run
       if (this.isBlindStreak) {
+        this.streakScore = 0;
+        this.updateUI();
         this.onBlindStreakEnd();
         return null;
       }
@@ -735,12 +737,24 @@ export class TrainerView {
 
   onBlindStreakEnd() {
     const finalScore = this.streakScore;
-    this.showToast(`Streak Ended! Final Survival Score: ${finalScore} Moves`, 'error');
+    this.streakScore = 0;
+    this.updateUI();
+    this.triggerErrorShake();
+    this.showToast(`Streak Ended! Final Score: ${finalScore}. Resetting to 0.`, 'error');
 
     setTimeout(() => {
-      if (confirm(`Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nWould you like to try another blind streak run?`)) {
+      if (confirm(`Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nYour streak has been reset to 0. Would you like to start a new streak run?`)) {
         this.streakScore = 0;
         this.pickNextBlindLine();
+      } else {
+        this.currentMode = 'learn';
+        this.renderModeDeckPanel();
+        this.renderVariationDropdown();
+        const activePool = this.currentSubCourse || this.currentCourse;
+        const subLines = (activePool && activePool.lines) ? activePool.lines : [];
+        if (subLines.length > 0) {
+          this.loadLine(subLines[0], 'learn');
+        }
       }
     }, 400);
   }
@@ -817,13 +831,34 @@ export class TrainerView {
       $('#line-description').text(stripEmojis(this.currentLine.fullAnnotation));
     }
 
-    const currentMoveNum = Math.floor(this.moveIndex / 2);
-    const totalMovesNum = Math.ceil(this.currentLine.totalHalfMoves / 2);
-    const percent = Math.min(100, Math.round((this.moveIndex / this.currentLine.totalHalfMoves) * 100));
+    // Calculate line-based progress metrics across the active Sub-Course session
+    if (this.isBlindStreak) {
+      $('#progress-label').text(`Survival Streak: ${this.streakScore} Moves`);
+      $('#progress-percent').text(`${this.streakScore} Streak`);
+      const streakPercent = Math.min(100, this.streakScore * 10);
+      $('#progress-bar').css('width', `${streakPercent}%`);
+    } else if (this.currentMode === 'practice') {
+      const learnedLines = this.getLearnedLines();
+      const completedPracticeLines = this.completedInLoop.size;
+      const totalLearnedLines = learnedLines.length;
+      const practicePercent = totalLearnedLines > 0 ? Math.round((completedPracticeLines / totalLearnedLines) * 100) : 0;
 
-    $('#progress-label').text(`Move ${currentMoveNum} / ${totalMovesNum}`);
-    $('#progress-percent').text(`${percent}% Mastered`);
-    $('#progress-bar').css('width', percent + '%');
+      $('#progress-label').text(`Lines Mastered: ${completedPracticeLines} / ${totalLearnedLines}`);
+      $('#progress-percent').text(`${practicePercent}% Mastered`);
+      $('#progress-bar').css('width', `${practicePercent}%`);
+    } else {
+      // Learn mode / standard mode
+      let completedLines = 0;
+      subCourseLines.forEach(l => {
+        if (userProgress.isLineCompleted(l)) completedLines++;
+      });
+      const totalSubCourseLines = subCourseLines.length;
+      const progressPercent = totalSubCourseLines > 0 ? Math.round((completedLines / totalSubCourseLines) * 100) : 0;
+
+      $('#progress-label').text(`Lines Mastered: ${completedLines} / ${totalSubCourseLines}`);
+      $('#progress-percent').text(`${progressPercent}% Mastered`);
+      $('#progress-bar').css('width', `${progressPercent}%`);
+    }
 
     if (this.game.turn() === 'w') {
       $('#turn-indicator').html('<span class="turn-dot white"></span><span>Your Turn: White</span>');
