@@ -22,8 +22,9 @@ export function renderSubCourseHub(course, userProgress, onSelectSubCourse, onBa
     const lines = sub.lines || [];
     totalCourseLines += lines.length;
     lines.forEach(line => {
-      const st = userProgress.getLineStat(line.id);
-      if (st.completed) totalCourseMastered++;
+      if (typeof userProgress.isLineCompleted === 'function' ? userProgress.isLineCompleted(line) : userProgress.getLineStat(line.id).completed) {
+        totalCourseMastered++;
+      }
     });
   });
 
@@ -40,8 +41,9 @@ export function renderSubCourseHub(course, userProgress, onSelectSubCourse, onBa
     let subCompletedCount = 0;
 
     lines.forEach(line => {
-      const st = userProgress.getLineStat(line.id);
-      if (st.completed) subCompletedCount++;
+      if (typeof userProgress.isLineCompleted === 'function' ? userProgress.isLineCompleted(line) : userProgress.getLineStat(line.id).completed) {
+        subCompletedCount++;
+      }
     });
 
     const subTotalLines = lines.length;

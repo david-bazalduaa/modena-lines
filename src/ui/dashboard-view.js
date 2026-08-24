@@ -19,15 +19,17 @@ export function renderDashboard(onSelectCourse) {
         const lines = sub.lines || [];
         totalLines += lines.length;
         lines.forEach(line => {
-          const st = userProgress.getLineStat(line.id);
-          if (st.completed) completedCount++;
+          if (typeof userProgress.isLineCompleted === 'function' ? userProgress.isLineCompleted(line) : userProgress.getLineStat(line.id).completed) {
+            completedCount++;
+          }
         });
       });
     } else if (course.lines) {
       totalLines = course.lines.length;
       course.lines.forEach(line => {
-        const st = userProgress.getLineStat(line.id);
-        if (st.completed) completedCount++;
+        if (typeof userProgress.isLineCompleted === 'function' ? userProgress.isLineCompleted(line) : userProgress.getLineStat(line.id).completed) {
+          completedCount++;
+        }
       });
     }
 

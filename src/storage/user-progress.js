@@ -61,6 +61,17 @@ class UserProgress {
     this.save();
   }
 
+  isLineCompleted(line) {
+    if (!line) return false;
+    if (typeof line === 'string') {
+      const st = this.state.lineStats[line];
+      return Boolean(st && st.completed);
+    }
+    if (line.mastered === true || line.completedInLearn === true) return true;
+    const st = this.state.lineStats[line.id];
+    return Boolean(st && st.completed);
+  }
+
   markCompleted(lineId, totalMoves) {
     const st = this.getLineStat(lineId);
     st.completed = true;
@@ -78,9 +89,10 @@ class UserProgress {
     let accCount = 0;
 
     allLines.forEach(line => {
+      const isCompleted = this.isLineCompleted(line);
+      if (isCompleted) completedCount++;
       const st = this.state.lineStats[line.id];
       if (st) {
-        if (st.completed) completedCount++;
         attemptsTotal += (st.attempts || 0);
         if (st.accuracy !== undefined) {
           accSum += st.accuracy;

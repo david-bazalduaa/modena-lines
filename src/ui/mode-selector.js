@@ -13,8 +13,9 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
 
   if (course && course.lines) {
     course.lines.forEach(line => {
-      const st = userProgress.getLineStat(line.id);
-      if (st.completed) learnedCount++;
+      if (typeof userProgress.isLineCompleted === 'function' ? userProgress.isLineCompleted(line) : userProgress.getLineStat(line.id).completed) {
+        learnedCount++;
+      }
     });
   }
 
