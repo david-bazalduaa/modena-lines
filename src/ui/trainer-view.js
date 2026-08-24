@@ -247,7 +247,7 @@ export class TrainerView {
         draggable: true,
         orientation: APP_CONFIG.defaultOrientation,
         pieceTheme: getPieceDataURI,
-        moveSpeed: APP_CONFIG.blackMoveSpeed || 250,
+        moveSpeed: APP_CONFIG.blackMoveSpeed || 300,
         snapbackSpeed: 50,
         snapSpeed: 25,
         onDragStart: this.onDragStart.bind(this),
@@ -509,7 +509,8 @@ export class TrainerView {
     this.clearHighlights();
 
     this.updateUI();
-    this.showToast(`Blind Streak Active! Current Streak: ${this.streakScore}`, 'success');
+    const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+    this.showToast(`Blind Streak Active! Current Streak: ${this.streakScore} ${lineUnit}`, 'success');
   }
 
   resetDrill() {
@@ -629,9 +630,6 @@ export class TrainerView {
 
     // 3. Move is correct: advance index, play feedback, update UI, and trigger Black response
     this.moveIndex++;
-    if (this.isBlindStreak) {
-      this.streakScore++;
-    }
 
     if (this.board) this.board.position(this.game.fen());
     this.highlightSquares(testMove.from, testMove.to);
@@ -710,7 +708,10 @@ export class TrainerView {
 
   onLineComplete() {
     if (this.isBlindStreak) {
-      this.showToast(`Line Cleared! Continuing Survival Streak (${this.streakScore} Moves)!`, 'success');
+      this.streakScore++;
+      const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+      this.showToast(`Line Cleared! Continuing Survival Streak (${this.streakScore} ${lineUnit})!`, 'success');
+      this.updateUI();
       setTimeout(() => {
         this.pickNextBlindLine();
       }, 1000);
@@ -740,10 +741,11 @@ export class TrainerView {
     this.streakScore = 0;
     this.updateUI();
     this.triggerErrorShake();
-    this.showToast(`Streak Ended! Final Score: ${finalScore}. Resetting to 0.`, 'error');
+    const lineUnit = finalScore === 1 ? 'Line' : 'Lines';
+    this.showToast(`Streak Ended! Final Score: ${finalScore} ${lineUnit}. Resetting to 0.`, 'error');
 
     setTimeout(() => {
-      if (confirm(`Streak Ended!\nFinal Survival Score: ${finalScore} Moves.\n\nYour streak has been reset to 0. Would you like to start a new streak run?`)) {
+      if (confirm(`Streak Ended!\nFinal Survival Score: ${finalScore} ${lineUnit} Completed.\n\nYour streak has been reset to 0. Would you like to start a new streak run?`)) {
         this.streakScore = 0;
         this.pickNextBlindLine();
       } else {
@@ -803,7 +805,8 @@ export class TrainerView {
       $('#line-name').text('??? Hidden Line');
       $('#line-eco').text('Blind Recall Test');
       $('#line-description').text('Identify and execute the correct White repertoire moves without knowing the line name beforehand!');
-      $('#stat-lines').text(`Streak: ${this.streakScore}`);
+      const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+      $('#stat-lines').text(`${this.streakScore} ${lineUnit}`);
     } else {
       if (this.currentMode === 'learn') {
         $('#active-line-category').text(subTitle);
@@ -833,9 +836,10 @@ export class TrainerView {
 
     // Calculate line-based progress metrics across the active Sub-Course session
     if (this.isBlindStreak) {
-      $('#progress-label').text(`Survival Streak: ${this.streakScore} Moves`);
-      $('#progress-percent').text(`${this.streakScore} Streak`);
-      const streakPercent = Math.min(100, this.streakScore * 10);
+      const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+      $('#progress-label').text(`Survival Streak: ${this.streakScore} ${lineUnit}`);
+      $('#progress-percent').text(`${this.streakScore} ${lineUnit} Streak`);
+      const streakPercent = Math.min(100, this.streakScore * 20);
       $('#progress-bar').css('width', `${streakPercent}%`);
     } else if (this.currentMode === 'practice') {
       const learnedLines = this.getLearnedLines();
@@ -873,7 +877,8 @@ export class TrainerView {
     if (this.isAutoAdvancing) {
       commentary = `Line Completed! Next line loading in ${this.autoAdvanceSecondsRemaining}s...`;
     } else if (this.isBlindStreak) {
-      commentary = `Survival Streak: <strong>${this.streakScore} Moves</strong>. Play White's repertoire move!`;
+      const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+      commentary = `Survival Streak: <strong>${this.streakScore} ${lineUnit}</strong>. Complete White's repertoire line without mistakes!`;
     } else {
       commentary = this.currentLine.annotations[this.moveIndex] || this.currentLine.annotations[this.moveIndex - 1] || this.currentLine.fullAnnotation;
       if (this.moveIndex >= this.currentLine.totalHalfMoves) {
