@@ -5,7 +5,16 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false
+    sourcemap: false,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('firebase')) {
+            return 'firebase';
+          }
+        }
+      }
+    }
   },
   server: {
     port: 3000,

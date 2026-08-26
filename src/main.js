@@ -4,6 +4,8 @@
 
 import { COURSES, getAllLines } from './data/courses.js';
 import { userProgress } from './storage/user-progress.js';
+import { authService } from './services/auth-service.js';
+import { authModal, renderHeaderAuth } from './ui/auth-modal.js';
 import { renderDashboard } from './ui/dashboard-view.js';
 import { renderSubCourseHub } from './ui/subcourse-view.js';
 import { TrainerView } from './ui/trainer-view.js';
@@ -20,11 +22,34 @@ class App {
   init() {
     this.updateHeaderMetrics();
     this.initNavigation();
+    this.initAuth();
+
+    // Subscribe to progress changes from local or cloud synchronization
+    userProgress.subscribe(() => {
+      this.updateHeaderMetrics();
+      this.refreshCurrentView();
+    });
 
     // Default route: render Level 1 Course Catalog View
     this.showCatalogView();
 
-    console.log('Modena Lines 3-Level Navigation Router Initialized!');
+    console.log('Modena Lines 3-Level Navigation Router & Cloud Sync Initialized!');
+  }
+
+  initAuth() {
+    // Render initial auth deck
+    renderHeaderAuth('#header-auth-container', authService.getCurrentUser(), () => {
+      authModal.open('signin');
+    });
+
+    // Listen to reactive auth state transitions
+    authService.onAuthStateChanged((user) => {
+      renderHeaderAuth('#header-auth-container', user, () => {
+        authModal.open('signin');
+      });
+      this.updateHeaderMetrics();
+      this.refreshCurrentView();
+    });
   }
 
   initNavigation() {
@@ -48,6 +73,27 @@ class App {
     $('#nav-study-btn').off('click').on('click', () => {
       this.showStudyView(this.selectedSubCourse);
     });
+  }
+
+  refreshCurrentView() {
+    if (this.currentView === 'catalog') {
+      renderDashboard((targetCourse) => {
+        this.showSubCourseHub(targetCourse);
+      });
+    } else if (this.currentView === 'subcourse' && this.selectedCourse) {
+      renderSubCourseHub(
+        this.selectedCourse,
+        userProgress,
+        (targetSubCourse) => {
+          this.startSubCourse(targetSubCourse);
+        },
+        () => {
+          this.showCatalogView();
+        }
+      );
+    } else if (this.currentView === 'study' && this.trainer && this.trainer.currentSubCourse) {
+      this.trainer.renderLinesList();
+    }
   }
 
   updateHeaderMetrics() {

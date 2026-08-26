@@ -1,8 +1,9 @@
 /* ============================================================
-   USER PROGRESS & LOCALSTORAGE PERSISTENCE ENGINE
+   USER PROGRESS MANAGER WITH REPOSITORY PATTERN & CLOUD SYNC
    ============================================================ */
 
-import { APP_CONFIG } from '../config/settings.js';
+import { progressRepository } from './progress-repository.js';
+import { authService } from '../services/auth-service.js';
 
 class UserProgress {
   constructor() {
@@ -12,29 +13,55 @@ class UserProgress {
       completedCount: 0,
       overallAccuracy: 100
     };
-    this.load();
+    this.currentUser = null;
+    this.changeListeners = [];
+
+    // Initialize with local cache first for instant synchronous startup
+    this.state = progressRepository.loadFromLocalStorage();
+
+    // Hook into authentication state changes for cloud sync & migration
+    authService.onAuthStateChanged(async (user) => {
+      this.currentUser = user;
+      if (user) {
+        // Authenticated: merge any guest progress with Cloud Firestore
+        const cloudState = await progressRepository.mergeLocalWithCloud(user);
+        if (cloudState) {
+          this.state = cloudState;
+          this.notifySubscribers();
+        }
+      } else {
+        // Guest / Logged out: fallback to local storage
+        this.state = progressRepository.loadFromLocalStorage();
+        this.notifySubscribers();
+      }
+    });
   }
 
-  load() {
-    try {
-      const raw = localStorage.getItem(APP_CONFIG.storageKey);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && parsed.lineStats) {
-          this.state = parsed;
-        }
-      }
-    } catch (e) {
-      console.warn('LocalStorage read warning:', e);
+  /**
+   * Subscribe to progress state changes (e.g., after cloud sync).
+   * @param {Function} callback (state) => void
+   */
+  subscribe(callback) {
+    if (typeof callback === 'function') {
+      this.changeListeners.push(callback);
     }
+    return () => {
+      this.changeListeners = this.changeListeners.filter(fn => fn !== callback);
+    };
+  }
+
+  notifySubscribers() {
+    this.changeListeners.forEach(fn => {
+      try {
+        fn(this.state);
+      } catch (err) {
+        console.error('[UserProgress] Subscriber notification error:', err);
+      }
+    });
   }
 
   save() {
-    try {
-      localStorage.setItem(APP_CONFIG.storageKey, JSON.stringify(this.state));
-    } catch (e) {
-      console.warn('LocalStorage write warning:', e);
-    }
+    progressRepository.saveProgress(this.state, this.currentUser);
   }
 
   getLineStat(lineId) {
@@ -76,7 +103,8 @@ class UserProgress {
     const st = this.getLineStat(lineId);
     st.completed = true;
     const mistakes = st.mistakes || 0;
-    const acc = Math.max(0, Math.round(((totalMoves - mistakes) / totalMoves) * 100));
+    const moves = totalMoves && totalMoves > 0 ? totalMoves : 1;
+    const acc = Math.max(0, Math.round(((moves - mistakes) / moves) * 100));
     st.accuracy = acc;
     st.mistakes = 0;
     this.save();
@@ -88,7 +116,7 @@ class UserProgress {
     let accSum = 0;
     let accCount = 0;
 
-    allLines.forEach(line => {
+    (allLines || []).forEach(line => {
       const isCompleted = this.isLineCompleted(line);
       if (isCompleted) completedCount++;
       const st = this.state.lineStats[line.id];
@@ -107,7 +135,7 @@ class UserProgress {
 
     return {
       completedCount,
-      totalCount: allLines.length,
+      totalCount: (allLines || []).length,
       attemptsTotal,
       overallAccuracy: this.state.overallAccuracy
     };
