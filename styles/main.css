@@ -107,40 +107,57 @@ body {
   text-transform: uppercase;
 }
 
-/* Navigation Tabs */
+/* Navigation Tabs & Repertoire Filter Switch */
 .view-tabs {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
   padding: 0.35rem;
   background: var(--bg-surface);
   border-radius: var(--radius-pill);
   box-shadow: var(--shadow-inset);
+  border: var(--border-neumorphic);
 }
 
 .nav-tab {
   display: flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.55rem 1.25rem;
+  gap: 0.5rem;
+  padding: 0.55rem 1.3rem;
   border-radius: var(--radius-pill);
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   color: var(--text-secondary);
   font-size: 0.88rem;
   font-weight: 600;
   cursor: pointer;
   transition: all var(--spring-transition);
+  user-select: none;
+}
+
+.tab-piece-icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--spring-transition);
 }
 
 .nav-tab:hover {
   color: var(--text-primary);
 }
 
+.nav-tab:hover .tab-piece-icon {
+  transform: scale(1.1);
+}
+
 .nav-tab.active {
   background: var(--bg-surface);
   color: var(--accent-indigo);
   box-shadow: var(--shadow-extruded-sm);
+  border-color: rgba(255, 255, 255, 0.7);
+  font-weight: 700;
 }
 
 /* Header User Metric Badge */

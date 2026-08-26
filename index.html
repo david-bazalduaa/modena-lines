@@ -35,13 +35,15 @@
         </div>
       </div>
 
-      <!-- View Switcher Tabs -->
-      <nav class="view-tabs" aria-label="Main Navigation">
-        <button id="nav-catalog-btn" class="nav-tab active" title="View All Courses">
-          Course Catalog
+      <!-- Repertoire Filter Switch Tabs (White Openings vs Black Defenses) -->
+      <nav class="view-tabs repertoire-filter-nav" id="repertoire-filter-tabs" aria-label="Repertoire Category Filter">
+        <button id="nav-white-btn" class="nav-tab active" data-filter="white" title="White Openings & Repertoires">
+          <span class="tab-piece-icon">♔</span>
+          <span>White Openings</span>
         </button>
-        <button id="nav-study-btn" class="nav-tab" title="Interactive Training Board">
-          Study Board
+        <button id="nav-black-btn" class="nav-tab" data-filter="black" title="Black Defenses & Counter-Attacks">
+          <span class="tab-piece-icon">♚</span>
+          <span>Black Defenses</span>
         </button>
       </nav>
 
@@ -97,8 +99,7 @@
 
       <!-- Course Cards Grid -->
       <div class="section-title-bar">
-        <h3>Master Opening Courses</h3>
-        <span class="course-badge">3 Course Categories</span>
+        <h3 id="catalog-section-title">Master White Opening Repertoires</h3>
       </div>
 
       <div id="course-grid" class="course-grid">

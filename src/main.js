@@ -6,6 +6,7 @@ import { COURSES, getAllLines } from './data/courses.js';
 import { userProgress } from './storage/user-progress.js';
 import { authService } from './services/auth-service.js';
 import { authModal, renderHeaderAuth } from './ui/auth-modal.js';
+import { HeaderView } from './ui/header-view.js';
 import { renderDashboard } from './ui/dashboard-view.js';
 import { renderSubCourseHub } from './ui/subcourse-view.js';
 import { TrainerView } from './ui/trainer-view.js';
@@ -13,13 +14,16 @@ import { TrainerView } from './ui/trainer-view.js';
 class App {
   constructor() {
     this.currentView = 'catalog'; // 'catalog' | 'subcourse' | 'study'
+    this.activeColorFilter = 'white'; // 'white' | 'black'
     this.selectedCourse = null;
     this.selectedSubCourse = null;
     this.trainer = new TrainerView();
     this.allLines = getAllLines();
+    this.headerView = null;
   }
 
   init() {
+    this.initHeader();
     this.updateHeaderMetrics();
     this.initNavigation();
     this.initAuth();
@@ -34,6 +38,16 @@ class App {
     this.showCatalogView();
 
     console.log('Modena Lines 3-Level Navigation Router & Cloud Sync Initialized!');
+  }
+
+  initHeader() {
+    this.headerView = new HeaderView({
+      initialFilter: this.activeColorFilter,
+      onFilterChange: (newFilter) => {
+        this.activeColorFilter = newFilter;
+        this.showCatalogView();
+      }
+    });
   }
 
   initAuth() {
@@ -54,7 +68,7 @@ class App {
 
   initNavigation() {
     // Level 1 Nav shortcuts
-    $('#nav-catalog-btn, #brand-home, #nav-catalog-btn-bottom').off('click').on('click', () => {
+    $('#brand-home, #nav-catalog-btn-bottom').off('click').on('click', () => {
       this.showCatalogView();
     });
 
@@ -68,18 +82,21 @@ class App {
         this.showCatalogView();
       }
     });
-
-    // Level 3 Study Board Tab
-    $('#nav-study-btn').off('click').on('click', () => {
-      this.showStudyView(this.selectedSubCourse);
-    });
   }
 
   refreshCurrentView() {
     if (this.currentView === 'catalog') {
-      renderDashboard((targetCourse) => {
-        this.showSubCourseHub(targetCourse);
-      });
+      renderDashboard(
+        (targetCourse) => {
+          this.showSubCourseHub(targetCourse);
+        },
+        this.activeColorFilter,
+        (targetFilter) => {
+          if (this.headerView) {
+            this.headerView.setActiveFilter(targetFilter, true);
+          }
+        }
+      );
     } else if (this.currentView === 'subcourse' && this.selectedCourse) {
       renderSubCourseHub(
         this.selectedCourse,
@@ -123,13 +140,18 @@ class App {
     // Show Level 1 Dashboard Catalog
     $('#dashboard-view').removeClass('hidden').addClass('active');
 
-    $('#nav-catalog-btn').addClass('active');
-    $('#nav-study-btn').removeClass('active');
-
     this.updateHeaderMetrics();
-    renderDashboard((targetCourse) => {
-      this.showSubCourseHub(targetCourse);
-    });
+    renderDashboard(
+      (targetCourse) => {
+        this.showSubCourseHub(targetCourse);
+      },
+      this.activeColorFilter,
+      (targetFilter) => {
+        if (this.headerView) {
+          this.headerView.setActiveFilter(targetFilter, true);
+        }
+      }
+    );
   }
 
   /**
@@ -151,9 +173,6 @@ class App {
 
     // Show Level 2 Sub-Course Hub
     $('#subcourse-view').removeClass('hidden').addClass('active');
-
-    $('#nav-catalog-btn').addClass('active');
-    $('#nav-study-btn').removeClass('active');
 
     this.updateHeaderMetrics();
     renderSubCourseHub(
@@ -181,9 +200,6 @@ class App {
     // Show Study Board & floating bottom controls deck
     $('#study-view').removeClass('hidden').addClass('active');
     $('#controls-bar').removeClass('hidden');
-
-    $('#nav-catalog-btn').removeClass('active');
-    $('#nav-study-btn').addClass('active');
 
     if (subCourse) {
       this.selectedSubCourse = subCourse;

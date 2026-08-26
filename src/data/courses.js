@@ -13,6 +13,7 @@ export const COURSES = [
     title: 'Italian Game Master Repertoire',
     subtitle: 'Classic 1. e4 e5 2. Nf3 Nc6 3. Bc4 Openings (100 Master Lines)',
     category: '1. e4 Openings',
+    side: 'white',
     description: 'Master classical initiative with sharp gambits, tactical sacrifices, and strategic maneuvering.',
     previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/2B1P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3',
     subCourses: [
@@ -59,30 +60,11 @@ export const COURSES = [
     ]
   },
   {
-    id: 'sicilian-defense',
-    title: 'Sicilian Defense Openings',
-    subtitle: '1. e4 c5 Dynamic Counter-Attacks',
-    category: '1. e4 Counter',
-    description: 'Crush the Sicilian with aggressive Open Sicilian & Grand Prix Attack lines.',
-    previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
-    subCourses: [
-      {
-        id: 'sicilian-open',
-        courseId: 'sicilian-defense',
-        title: 'Open Sicilian – Main Repertoire',
-        subtitle: '1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4',
-        category: 'Open Lines',
-        description: 'Seize central control and tactical dynamism against Black\'s asymmetric defense.',
-        previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
-        lines: []
-      }
-    ]
-  },
-  {
     id: 'ruy-lopez',
     title: 'Ruy Lopez Spanish Game',
     subtitle: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Classical Battle',
     category: '1. e4 Openings',
+    side: 'white',
     description: 'Master the Spanish Torture with long-term strategic positional pressure.',
     previewFEN: 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3',
     subCourses: [
@@ -94,6 +76,48 @@ export const COURSES = [
         category: 'Main Line',
         description: 'Build strategic pawn structures and long-term bishop pressure along the a4-e8 diagonal.',
         previewFEN: 'r1bqkbnr/pppp1ppp/2n5/1B2p3/4P3/5N2/PPPP1PPP/RNBQK2R b KQkq - 3 3',
+        lines: []
+      }
+    ]
+  },
+  {
+    id: 'sicilian-defense',
+    title: 'Sicilian Defense Openings',
+    subtitle: '1. e4 c5 Dynamic Counter-Attacks',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Crush White\'s initiative with aggressive Open Sicilian, Najdorf, and Dragon counter-attacks.',
+    previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+    subCourses: [
+      {
+        id: 'sicilian-open',
+        courseId: 'sicilian-defense',
+        title: 'Open Sicilian – Main Repertoire',
+        subtitle: '1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4',
+        category: 'Open Lines',
+        description: 'Seize central control and tactical dynamism against White\'s 1. e4 setup.',
+        previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+        lines: []
+      }
+    ]
+  },
+  {
+    id: 'caro-kann',
+    title: 'Caro-Kann Defense',
+    subtitle: '1. e4 c6 Solid Counter-Attacking Weapon',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Build an ultra-solid, impenetrable defensive wall against 1. e4 favored by World Champions.',
+    previewFEN: 'rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+    subCourses: [
+      {
+        id: 'caro-kann-classical',
+        courseId: 'caro-kann',
+        title: 'Caro-Kann – Classical & Advance Lines',
+        subtitle: '1. e4 c6 2. d4 d5',
+        category: 'Counter Defense',
+        description: 'Neutralize White\'s center and build a resilient pawn structure with active counterplay.',
+        previewFEN: 'rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
         lines: []
       }
     ]
