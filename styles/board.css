@@ -53,6 +53,7 @@
   border: none !important;
   border-radius: var(--radius-md);
   overflow: hidden;
+  position: relative;
 }
 
 .white-1e1d7 {
@@ -63,6 +64,26 @@
 .black-3c85d {
   background-color: var(--sq-dark) !important;
   color: var(--sq-light) !important;
+}
+
+/* GPU Hardware-Accelerated Piece Rendering & 60 FPS Gliding */
+.piece-417db,
+#board img {
+  will-change: transform, top, left;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  image-rendering: -webkit-optimize-contrast;
+  pointer-events: auto;
+}
+
+/* Smooth transition coordinates for active animated pieces */
+.animated-63560 {
+  will-change: top, left, transform;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  z-index: 100 !important;
 }
 
 /* Move highlight rings & markers */

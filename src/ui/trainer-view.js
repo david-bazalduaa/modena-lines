@@ -569,7 +569,13 @@ export class TrainerView {
   }
 
   onSnapEnd() {
-    if (this.board) this.board.position(this.game.fen());
+    if (this.board && this.game) {
+      const currentPos = this.board.fen();
+      const gamePos = this.game.fen();
+      if (currentPos !== gamePos) {
+        this.board.position(gamePos, false);
+      }
+    }
   }
 
   /**
@@ -667,6 +673,10 @@ export class TrainerView {
     this.handleUserMove(testMove.from, testMove.to, testMove.promotion);
   }
 
+  /**
+   * Executes Black's opponent response with a smooth 400ms piece glide and 300ms human pacing.
+   * State synchronization and UI re-renders are scheduled strictly after the animation completes.
+   */
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
 
@@ -674,21 +684,33 @@ export class TrainerView {
     this.game.move(blackMoveData.san);
     this.moveIndex++;
 
+    // Immediate lightweight state transition
+    clearAmbiguityHints('#board');
+    $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
+    this.highlightSquares(blackMoveData.from, blackMoveData.to);
+
+    const animationDuration = APP_CONFIG.blackMoveSpeed || 400;
+
     if (this.board) {
-      // Animate opponent (Black) move smoothly across the board
+      // Initiate 60 FPS hardware-accelerated piece glide across the board
       this.board.position(this.game.fen(), true);
     }
-    this.highlightSquares(blackMoveData.from, blackMoveData.to);
-    this.updateUI();
 
-    if (this.moveIndex >= this.currentLine.moves.length) {
-      this.onLineComplete();
-      return;
-    }
+    // Synchronize UI, move history, and line completion strictly AFTER the visual piece glide settles
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        this.updateUI();
 
-    if (this.game.turn() === 'b') {
-      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
-    }
+        if (this.moveIndex >= this.currentLine.moves.length) {
+          this.onLineComplete();
+          return;
+        }
+
+        if (this.game.turn() === 'b') {
+          setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+        }
+      });
+    }, animationDuration + 20);
   }
 
   requestHint() {
