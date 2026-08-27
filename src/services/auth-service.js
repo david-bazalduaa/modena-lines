@@ -20,11 +20,16 @@ class AuthService {
     this.isInitialized = false;
 
     if (auth) {
-      onAuthStateChanged(auth, (user) => {
-        this.currentUser = user;
+      try {
+        onAuthStateChanged(auth, (user) => {
+          this.currentUser = user;
+          this.isInitialized = true;
+          this.notifyListeners(user);
+        });
+      } catch (err) {
+        console.warn('[AuthService] Failed to bind auth state listener, defaulting to Guest Mode:', err);
         this.isInitialized = true;
-        this.notifyListeners(user);
-      });
+      }
     } else {
       this.isInitialized = true;
     }

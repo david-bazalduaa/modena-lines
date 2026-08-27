@@ -55,27 +55,32 @@ export function parseFENPosition(fen) {
  * Generates lightweight, static 8x8 mini-board HTML string from a FEN string.
  */
 export function generateMiniBoardHTML(fen) {
-  let boardArr;
-  if (typeof Chess !== 'undefined') {
-    try { boardArr = new Chess(fen).board(); } catch (e) { boardArr = parseFENPosition(fen); }
-  } else {
-    boardArr = parseFENPosition(fen);
-  }
-  let html = '<div class="mini-board-grid">';
-  for (let r = 0; r < 8; r++) {
-    for (let c = 0; c < 8; c++) {
-      const piece = boardArr[r][c];
-      const sqClass = (r + c) % 2 === 0 ? 'mini-sq light' : 'mini-sq dark';
-      let pieceImg = '';
-      if (piece) {
-        const pieceCode = (piece.color === 'w' ? 'w' : 'b') + piece.type.toUpperCase();
-        pieceImg = `<img src="${getPieceDataURI(pieceCode)}" alt="${pieceCode}" draggable="false" />`;
-      }
-      html += `<div class="${sqClass}">${pieceImg}</div>`;
+  try {
+    let boardArr;
+    if (typeof Chess !== 'undefined') {
+      try { boardArr = new Chess(fen).board(); } catch (e) { boardArr = parseFENPosition(fen); }
+    } else {
+      boardArr = parseFENPosition(fen);
     }
+    let html = '<div class="mini-board-grid">';
+    for (let r = 0; r < 8; r++) {
+      for (let c = 0; c < 8; c++) {
+        const piece = boardArr && boardArr[r] && boardArr[r][c];
+        const sqClass = (r + c) % 2 === 0 ? 'mini-sq light' : 'mini-sq dark';
+        let pieceImg = '';
+        if (piece && piece.type) {
+          const pieceCode = (piece.color === 'w' ? 'w' : 'b') + piece.type.toUpperCase();
+          pieceImg = `<img src="${getPieceDataURI(pieceCode)}" alt="${pieceCode}" draggable="false" />`;
+        }
+        html += `<div class="${sqClass}">${pieceImg}</div>`;
+      }
+    }
+    html += '</div>';
+    return html;
+  } catch (err) {
+    console.warn('[BoardRenderer] Error generating mini board HTML:', err);
+    return '<div class="mini-board-grid"></div>';
   }
-  html += '</div>';
-  return html;
 }
 
 export function renderMiniBoard(containerElement, fen) {

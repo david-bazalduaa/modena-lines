@@ -13,10 +13,15 @@ export const firebaseConfig = {
 };
 
 export function isFirebaseConfigured() {
+  const apiKey = import.meta.env.VITE_FIREBASE_API_KEY;
+  const projectId = import.meta.env.VITE_FIREBASE_PROJECT_ID;
+
   return Boolean(
-    firebaseConfig.apiKey &&
-    firebaseConfig.apiKey !== 'your-api-key-here' &&
-    firebaseConfig.projectId &&
-    firebaseConfig.projectId !== 'your-project-id'
+    apiKey &&
+    apiKey.trim() !== '' &&
+    apiKey !== 'your-api-key-here' &&
+    projectId &&
+    projectId.trim() !== '' &&
+    projectId !== 'your-project-id'
   );
 }

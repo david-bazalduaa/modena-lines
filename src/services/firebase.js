@@ -13,7 +13,9 @@ let auth = null;
 let db = null;
 let analytics = null;
 
-if (isFirebaseConfigured()) {
+const isConfigured = Boolean(import.meta.env.VITE_FIREBASE_API_KEY) && isFirebaseConfigured();
+
+if (isConfigured) {
   try {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp();
     auth = getAuth(app);
@@ -32,7 +34,11 @@ if (isFirebaseConfigured()) {
 
     console.log('[Firebase] Initialized successfully for project:', firebaseConfig.projectId);
   } catch (error) {
-    console.warn('[Firebase] Initialization error, falling back to LocalStorage:', error);
+    console.warn('[Firebase] Initialization error, falling back to LocalStorage Guest Mode:', error);
+    app = null;
+    auth = null;
+    db = null;
+    analytics = null;
   }
 } else {
   console.info('[Firebase] Config keys missing or incomplete. Operating in LocalStorage Guest Mode.');

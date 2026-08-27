@@ -22,15 +22,21 @@ class UserProgress {
     // Hook into authentication state changes for cloud sync & migration
     authService.onAuthStateChanged(async (user) => {
       this.currentUser = user;
-      if (user) {
-        // Authenticated: merge any guest progress with Cloud Firestore
-        const cloudState = await progressRepository.mergeLocalWithCloud(user);
-        if (cloudState) {
-          this.state = cloudState;
+      try {
+        if (user) {
+          // Authenticated: merge any guest progress with Cloud Firestore
+          const cloudState = await progressRepository.mergeLocalWithCloud(user);
+          if (cloudState) {
+            this.state = cloudState;
+            this.notifySubscribers();
+          }
+        } else {
+          // Guest / Logged out: fallback to local storage
+          this.state = progressRepository.loadFromLocalStorage();
           this.notifySubscribers();
         }
-      } else {
-        // Guest / Logged out: fallback to local storage
+      } catch (err) {
+        console.warn('[UserProgress] Cloud sync error, keeping local progress:', err);
         this.state = progressRepository.loadFromLocalStorage();
         this.notifySubscribers();
       }
