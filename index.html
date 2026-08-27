@@ -31,8 +31,10 @@
   <header id="app-header">
     <div class="header-content">
       <div class="header-brand" id="brand-home" role="button" tabindex="0" title="Return to Course Catalog">
-        <div class="brand-icon-wrapper">
-          <span class="brand-icon">K</span>
+        <div class="brand-icon-wrapper" aria-label="Modena Lines Pawn Logo">
+          <svg class="brand-icon-svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 2.5a2.5 2.5 0 0 0-2.5 2.5c0 .67.27 1.28.7 1.73A4.5 4.5 0 0 0 8 11a4.49 4.49 0 0 0 2.22 3.89L10 18H8v2.5h8V18h-2l-.22-3.11A4.49 4.49 0 0 0 16 11a4.5 4.5 0 0 0-2.2-4.27c.43-.45.7-1.06.7-1.73A2.5 2.5 0 0 0 12 2.5z"/>
+          </svg>
         </div>
         <div>
           <h1 id="app-title">Modena Lines</h1>
@@ -138,8 +140,8 @@
           </div>
           <div class="hero-stat-divider"></div>
           <div class="hero-stat">
-            <span class="stat-num" id="subcourse-avg-accuracy">100%</span>
-            <span class="stat-lbl">Avg. Accuracy</span>
+            <span class="stat-num" id="subcourse-overall-progress">0%</span>
+            <span class="stat-lbl">Overall Progress</span>
           </div>
         </div>
       </div>
@@ -206,7 +208,15 @@
         <!-- Line Header & Variation Selector Card -->
         <div id="line-info-card" class="panel-card">
           <div class="card-header">
-            <span class="card-icon">LINE</span>
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="3" x2="6" y2="15"></line>
+                <circle cx="18" cy="6" r="3"></circle>
+                <circle cx="6" cy="18" r="3"></circle>
+                <path d="M18 9a9 9 0 0 1-9 9"></path>
+              </svg>
+              LINE
+            </span>
             <div style="flex: 1;">
               <h3 id="line-name">Giuoco Piano – Center Attack</h3>
               <p class="card-subtitle" id="line-eco">1. e4 e5 2. Nf3 Nc6 3. Bc4</p>
@@ -224,7 +234,13 @@
         <!-- Coach Guidance Card (Clean, no extra inner border) -->
         <div id="commentary-card" class="panel-card coach-card">
           <div class="card-header">
-            <span class="card-icon" style="color: var(--primary-accent, #334155);">COACH</span>
+            <span class="card-icon" style="color: var(--primary-accent, #334155);">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path>
+                <path d="M9 21h6"></path>
+              </svg>
+              COACH
+            </span>
             <div>
               <h3>Coach Guidance</h3>
               <span class="coach-badge">Active Recall</span>
@@ -238,7 +254,14 @@
         <!-- ChessReps Interactive Mode Deck -->
         <div id="trainer-mode-deck-card" class="panel-card">
           <div class="card-header" style="margin-bottom: 0.4rem;">
-            <span class="card-icon">MODE</span>
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+              MODE
+            </span>
             <h3>Training Mode</h3>
           </div>
           <div id="trainer-mode-deck-container">
@@ -260,7 +283,13 @@
         <!-- Interactive Move History -->
         <div id="history-card" class="panel-card">
           <div class="card-header">
-            <span class="card-icon">LOG</span>
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              LOG
+            </span>
             <h3>Move History</h3>
           </div>
           <div id="move-history" class="card-body-text mono-text">
@@ -271,7 +300,15 @@
         <!-- Step Tree -->
         <div id="tree-card" class="panel-card">
           <div class="card-header">
-            <span class="card-icon">TREE</span>
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="15" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="9" y="15" width="6" height="6" rx="1.5"></rect>
+                <path d="M6 9v3a3 3 0 0 0 3 3h3m6-6v3a3 3 0 0 1-3 3"></path>
+              </svg>
+              TREE
+            </span>
             <h3>Full Line Sequence</h3>
           </div>
           <div id="line-step-tree" class="step-tree-container">

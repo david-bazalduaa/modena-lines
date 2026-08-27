@@ -40,6 +40,7 @@ export function renderSubCourseHub(course, userProgress, onSelectSubCourse, onBa
 
     $('#subcourse-total-mastered').text(totalCourseMastered);
     $('#subcourse-modules-count').text(subCourses.length);
+    $('#subcourse-overall-progress').text(percentOverall + '%');
     $('#subcourse-avg-accuracy').text(percentOverall + '%');
     $('#subcourse-grid-badge').text(`${subCourses.length} Sub-Course Modules`);
 
