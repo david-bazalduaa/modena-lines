@@ -247,7 +247,7 @@ export class TrainerView {
         draggable: true,
         orientation: APP_CONFIG.defaultOrientation,
         pieceTheme: getPieceDataURI,
-        moveSpeed: APP_CONFIG.blackMoveSpeed || 300,
+        moveSpeed: APP_CONFIG.blackMoveSpeed || 400,
         snapbackSpeed: 50,
         snapSpeed: 25,
         onDragStart: this.onDragStart.bind(this),
