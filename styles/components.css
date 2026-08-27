@@ -48,7 +48,7 @@
 .stat-num {
   font-size: 1.55rem;
   font-weight: 800;
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
 }
 
 .stat-lbl {
@@ -128,7 +128,7 @@
   border-radius: var(--radius-pill);
   background: var(--bg-surface);
   box-shadow: var(--shadow-extruded-sm);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
 }
 
 .course-card-info h4 {
@@ -170,7 +170,7 @@
 
 .course-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--accent-indigo), var(--accent-purple));
+  background: linear-gradient(90deg, var(--primary-accent-light, #475569), var(--primary-accent, #334155));
   border-radius: var(--radius-pill);
   width: 0%;
   transition: width 0.4s ease;
@@ -183,7 +183,7 @@
   border: none;
   background: var(--bg-surface);
   box-shadow: var(--shadow-extruded-sm);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   font-size: 0.9rem;
   font-weight: 800;
   cursor: pointer;
@@ -197,7 +197,7 @@
 .card-action-btn:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-extruded);
-  color: var(--accent-purple);
+  color: var(--primary-accent-dark, #1e293b);
 }
 
 .card-action-btn:active {
@@ -244,7 +244,7 @@
 .line-hub-moves {
   font-family: 'Fira Code', monospace;
   font-size: 0.8rem;
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   font-weight: 600;
 }
 
@@ -278,9 +278,9 @@
 }
 
 .mode-deck-card.active {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.08) 0%, rgba(79, 70, 229, 0.05) 100%);
+  background: linear-gradient(135deg, rgba(51, 65, 85, 0.1) 0%, rgba(30, 41, 59, 0.06) 100%);
   box-shadow: var(--shadow-inset);
-  border: 1.5px solid var(--accent-purple);
+  border: 1.5px solid var(--primary-accent, #334155);
 }
 
 .mode-icon {
@@ -299,7 +299,7 @@
 }
 
 .mode-deck-card.active .mode-title {
-  color: var(--accent-purple);
+  color: var(--primary-accent-dark, #1e293b);
 }
 
 .mode-deck-card .coach-badge {
@@ -313,7 +313,7 @@
 }
 
 .mode-deck-card.active .coach-badge {
-  color: var(--accent-purple);
+  color: var(--primary-accent, #334155);
 }
 
 /* ── Bottom Controls Deck ── */
@@ -383,7 +383,7 @@
 }
 
 .ctrl-btn.primary {
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
 }
 
 .ctrl-btn.hint-btn {
@@ -562,7 +562,7 @@
   border: none;
   background: var(--bg-surface);
   box-shadow: var(--shadow-extruded-sm);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   font-size: 0.82rem;
   font-weight: 700;
   cursor: pointer;
@@ -608,7 +608,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: var(--accent-indigo);
+  background: var(--primary-accent, #334155);
   color: #FFFFFF;
   display: flex;
   align-items: center;
@@ -879,7 +879,7 @@ body.modal-open {
 
 .auth-brand-icon {
   font-size: 1.8rem;
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
 }
 
 .auth-modal-title {
@@ -976,7 +976,7 @@ body.modal-open {
 
 .auth-tab.active {
   background: var(--bg-surface);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   box-shadow: var(--shadow-extruded-sm);
 }
 
@@ -1028,7 +1028,7 @@ body.modal-open {
 }
 
 .auth-input:focus {
-  box-shadow: var(--shadow-inset), 0 0 0 2px var(--accent-indigo);
+  box-shadow: var(--shadow-inset), 0 0 0 2px var(--primary-accent, #334155);
 }
 
 .auth-submit-btn {
@@ -1040,8 +1040,8 @@ body.modal-open {
   padding: 0.8rem 1.5rem;
   border-radius: var(--radius-pill);
   border: none;
-  background: var(--accent-indigo);
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+  background: var(--primary-accent, #334155);
+  box-shadow: 0 4px 14px var(--primary-accent-glow, rgba(51, 65, 85, 0.35));
   color: #FFFFFF;
   font-size: 0.92rem;
   font-weight: 700;
@@ -1052,7 +1052,8 @@ body.modal-open {
 
 .auth-submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.45);
+  box-shadow: 0 6px 20px rgba(30, 41, 59, 0.45);
+  background: var(--primary-accent-dark, #1e293b);
 }
 
 .auth-submit-btn:active:not(:disabled) {

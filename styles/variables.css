@@ -30,14 +30,24 @@
   --text-muted:         #718096;
   --text-white:         #FFFFFF;
 
-  /* Accent Colors */
-  --accent-indigo:      #4F46E5;
-  --accent-purple:      #8B5CF6;
+  /* Dark Slate Gray Accent Design Tokens */
+  --primary-accent:       #334155; /* Slate 700 */
+  --primary-accent-dark:  #1E293B; /* Slate 800 */
+  --primary-accent-light: #475569; /* Slate 600 */
+  --primary-accent-bg:    #F1F5F9; /* Slate 100 */
+  --primary-accent-glow:  rgba(51, 65, 85, 0.4);
+
+  /* Legacy & Semantic Accent Colors */
+  --accent-slate:       #334155;
+  --accent-slate-dark:  #1E293B;
+  --accent-slate-light: #475569;
+  --accent-indigo:      #334155;
+  --accent-purple:      #1E293B;
   --accent-gold:        #D97706;
   --accent-gold-light:  #F59E0B;
   --accent-emerald:     #10B981;
   --accent-crimson:     #EF4444;
-  --accent-blue:        #3B82F6;
+  --accent-blue:        #334155;
 
   /* Chessboard Square Colors */
   --sq-light:           #E2D6B5;

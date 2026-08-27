@@ -89,7 +89,7 @@ body {
 
 .brand-icon {
   font-size: 1.6rem;
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
 }
 
 #app-title {
@@ -154,7 +154,7 @@ body {
 
 .nav-tab.active {
   background: var(--bg-surface);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   box-shadow: var(--shadow-extruded-sm);
   border-color: rgba(255, 255, 255, 0.7);
   font-weight: 700;
@@ -226,7 +226,7 @@ body {
   border: none;
   padding: 0.45rem 1rem;
   border-radius: var(--radius-pill);
-  color: var(--accent-indigo);
+  color: var(--primary-accent, #334155);
   font-weight: 700;
   cursor: pointer;
   transition: all var(--spring-transition);
@@ -284,7 +284,7 @@ body {
   font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
-  color: var(--accent-indigo, #4f46e5);
+  color: var(--primary-accent, #334155);
   letter-spacing: 0.06em;
 }
 
@@ -387,7 +387,8 @@ body {
 }
 
 #move-input-container:focus-within {
-  border-color: var(--accent-indigo, #4f46e5);
+  border-color: var(--primary-accent, #334155);
+  box-shadow: var(--shadow-inset), 0 0 0 2px var(--primary-accent-glow, rgba(51, 65, 85, 0.4));
 }
 
 .input-icon {
@@ -447,7 +448,7 @@ body {
 .card-subtitle {
   font-size: 0.75rem;
   font-family: 'Fira Code', monospace;
-  color: var(--accent-indigo, #4f46e5);
+  color: var(--primary-accent, #334155);
   margin-top: 0.1rem;
 }
 
@@ -513,12 +514,12 @@ body {
 }
 
 .move-ply:hover {
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--accent-indigo, #4f46e5);
+  background: rgba(51, 65, 85, 0.12);
+  color: var(--primary-accent, #334155);
 }
 
 .move-ply.active {
-  background: var(--accent-indigo, #4f46e5);
+  background: var(--primary-accent, #334155);
   color: #ffffff;
   font-weight: 700;
 }
@@ -557,8 +558,8 @@ body {
 }
 
 .tree-step-row.current {
-  border-color: var(--accent-indigo, #4f46e5);
-  background: rgba(79, 70, 229, 0.08);
+  border-color: var(--primary-accent, #334155);
+  background: rgba(51, 65, 85, 0.08);
 }
 
 .tree-step-idx {
@@ -596,7 +597,7 @@ body {
 .stat-value {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--accent-indigo, #4f46e5);
+  color: var(--primary-accent, #334155);
 }
 
 .stat-label {
