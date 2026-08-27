@@ -29,7 +29,8 @@ export class ProgressRepository {
             lineStats: cloudData.lineStats || {},
             totalAttempts: cloudData.totalAttempts || 0,
             completedCount: cloudData.completedCount || 0,
-            overallAccuracy: cloudData.overallAccuracy !== undefined ? cloudData.overallAccuracy : 100
+            overallAccuracy: cloudData.overallAccuracy !== undefined ? cloudData.overallAccuracy : 100,
+            streakData: cloudData.streakData || { currentDailyStreak: 0, lastActiveDate: null }
           };
         } else {
           // New cloud user: check if there is guest local storage data to migrate
@@ -65,6 +66,7 @@ export class ProgressRepository {
           totalAttempts: state.totalAttempts || 0,
           completedCount: state.completedCount || 0,
           overallAccuracy: state.overallAccuracy || 100,
+          streakData: state.streakData || { currentDailyStreak: 0, lastActiveDate: null },
           updatedAt: serverTimestamp()
         }, { merge: true });
         
@@ -112,11 +114,19 @@ export class ProgressRepository {
         }
       });
 
+      const localStreak = localData.streakData || { currentDailyStreak: 0, lastActiveDate: null };
+      const cloudStreak = cloudData.streakData || { currentDailyStreak: 0, lastActiveDate: null };
+      let mergedStreak = { ...cloudStreak };
+      if ((localStreak.currentDailyStreak || 0) > (cloudStreak.currentDailyStreak || 0)) {
+        mergedStreak = { ...localStreak };
+      }
+
       const mergedState = {
         lineStats: mergedLineStats,
         totalAttempts: Math.max(localData.totalAttempts || 0, cloudData.totalAttempts || 0),
         completedCount: Math.max(localData.completedCount || 0, cloudData.completedCount || 0),
-        overallAccuracy: cloudData.overallAccuracy || localData.overallAccuracy || 100
+        overallAccuracy: cloudData.overallAccuracy || localData.overallAccuracy || 100,
+        streakData: mergedStreak
       };
 
       // Persist merged state back to Firestore
@@ -134,6 +144,9 @@ export class ProgressRepository {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (parsed && typeof parsed === 'object' && parsed.lineStats) {
+          if (!parsed.streakData) {
+            parsed.streakData = { currentDailyStreak: 0, lastActiveDate: null };
+          }
           return parsed;
         }
       }
@@ -156,7 +169,11 @@ export class ProgressRepository {
       lineStats: {},
       totalAttempts: 0,
       completedCount: 0,
-      overallAccuracy: 100
+      overallAccuracy: 100,
+      streakData: {
+        currentDailyStreak: 0,
+        lastActiveDate: null
+      }
     };
   }
 }

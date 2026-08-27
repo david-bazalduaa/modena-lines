@@ -82,9 +82,69 @@ class UserProgress {
     return this.state.lineStats[lineId];
   }
 
+  /**
+   * Evaluates and updates the daily practice streak based on calendar activity.
+   */
+  checkAndUpdateDailyStreak() {
+    if (!this.state.streakData) {
+      this.state.streakData = {
+        currentDailyStreak: 0,
+        lastActiveDate: null
+      };
+    }
+
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    
+    const yDate = new Date();
+    yDate.setDate(yDate.getDate() - 1);
+    const yesterday = `${yDate.getFullYear()}-${String(yDate.getMonth() + 1).padStart(2, '0')}-${String(yDate.getDate()).padStart(2, '0')}`;
+
+    const last = this.state.streakData.lastActiveDate;
+
+    if (!last) {
+      this.state.streakData.currentDailyStreak = 1;
+      this.state.streakData.lastActiveDate = today;
+    } else if (last === today) {
+      if (this.state.streakData.currentDailyStreak === 0) {
+        this.state.streakData.currentDailyStreak = 1;
+      }
+    } else if (last === yesterday) {
+      this.state.streakData.currentDailyStreak = (this.state.streakData.currentDailyStreak || 0) + 1;
+      this.state.streakData.lastActiveDate = today;
+    } else {
+      // More than 1 day elapsed: reset streak
+      this.state.streakData.currentDailyStreak = 1;
+      this.state.streakData.lastActiveDate = today;
+    }
+
+    this.save();
+    return this.state.streakData.currentDailyStreak;
+  }
+
+  getDailyStreak() {
+    if (!this.state.streakData || !this.state.streakData.lastActiveDate) {
+      return 0;
+    }
+
+    const now = new Date();
+    const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+    
+    const yDate = new Date();
+    yDate.setDate(yDate.getDate() - 1);
+    const yesterday = `${yDate.getFullYear()}-${String(yDate.getMonth() + 1).padStart(2, '0')}-${String(yDate.getDate()).padStart(2, '0')}`;
+
+    const last = this.state.streakData.lastActiveDate;
+    if (last === today || last === yesterday) {
+      return this.state.streakData.currentDailyStreak || 0;
+    }
+    return 0;
+  }
+
   recordAttempt(lineId) {
     const st = this.getLineStat(lineId);
     st.attempts = (st.attempts || 0) + 1;
+    this.checkAndUpdateDailyStreak();
     this.save();
   }
 
@@ -113,6 +173,7 @@ class UserProgress {
     const acc = Math.max(0, Math.round(((moves - mistakes) / moves) * 100));
     st.accuracy = acc;
     st.mistakes = 0;
+    this.checkAndUpdateDailyStreak();
     this.save();
   }
 
@@ -122,13 +183,15 @@ class UserProgress {
     let accSum = 0;
     let accCount = 0;
 
-    (allLines || []).forEach(line => {
+    const linesList = allLines || [];
+    linesList.forEach(line => {
       const isCompleted = this.isLineCompleted(line);
       if (isCompleted) completedCount++;
+
       const st = this.state.lineStats[line.id];
       if (st) {
         attemptsTotal += (st.attempts || 0);
-        if (st.accuracy !== undefined) {
+        if (st.accuracy !== undefined && (st.attempts > 0 || st.completed)) {
           accSum += st.accuracy;
           accCount++;
         }
@@ -141,9 +204,10 @@ class UserProgress {
 
     return {
       completedCount,
-      totalCount: (allLines || []).length,
+      totalCount: linesList.length,
       attemptsTotal,
-      overallAccuracy: this.state.overallAccuracy
+      overallAccuracy: this.state.overallAccuracy,
+      dailyStreak: this.getDailyStreak()
     };
   }
 }

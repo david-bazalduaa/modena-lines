@@ -121,6 +121,10 @@ class App {
 
     $('#dash-total-mastered').text(metrics.completedCount);
     $('#dash-avg-accuracy').text(metrics.overallAccuracy + '%');
+    
+    const streak = metrics.dailyStreak || 0;
+    const streakUnit = streak === 1 ? 'Day' : 'Days';
+    $('#dash-daily-streak-num').text(`${streak} ${streakUnit}`);
     $('#dash-total-drills').text(metrics.attemptsTotal);
 
     $('#stat-lines').text(`${metrics.completedCount}/${metrics.totalCount}`);
