@@ -278,8 +278,8 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
   }
 
   const $boardContainer = $('#board .chessboard-63f37').length ? $('#board .chessboard-63f37') : $('#board');
-  const $from = $(`#board .square-${fromSquare}`);
-  const $to = $(`#board .square-${toSquare}`);
+  const $from = $(`#board .square-${fromSquare}, #board [data-square="${fromSquare}"]`);
+  const $to = $(`#board .square-${toSquare}, #board [data-square="${toSquare}"]`);
 
   // Fallback if square elements are not rendered in DOM
   if (!$boardContainer.length || !$from.length || !$to.length) {
@@ -288,14 +288,23 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
     return;
   }
 
-  const $originalPieceImg = $from.find('img');
-  if (!$originalPieceImg.length) {
+  const $originalPieceImg = $from.find('img, .piece-417db');
+  let pieceSrc = $originalPieceImg.attr('src');
+
+  if (!pieceSrc) {
+    const currentPos = typeof boardInstance.position === 'function' ? boardInstance.position() : {};
+    const pieceCode = currentPos && currentPos[fromSquare];
+    if (pieceCode) {
+      pieceSrc = getPieceDataURI(pieceCode);
+    }
+  }
+
+  if (!pieceSrc) {
     boardInstance.position(targetFen, false);
     if (typeof onComplete === 'function') onComplete();
     return;
   }
 
-  const pieceSrc = $originalPieceImg.attr('src');
   const boardRect = $boardContainer[0].getBoundingClientRect();
   const fromRect = $from[0].getBoundingClientRect();
   const toRect = $to[0].getBoundingClientRect();
@@ -305,8 +314,13 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
   const deltaX = toRect.left - fromRect.left;
   const deltaY = toRect.top - fromRect.top;
 
-  // 1. Hide original piece on origin square immediately
-  $originalPieceImg.css('opacity', '0');
+  // 1. Instantly hide static piece on source square (via CSS class and inline styles)
+  $from.addClass('animating-source-square');
+  $from.find('img, .piece-417db').css({
+    opacity: '0',
+    visibility: 'hidden',
+    display: 'none'
+  });
 
   // 2. Spawn sliding piece overlay element
   const $floatingPiece = $(`
@@ -340,7 +354,14 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
     if (completed) return;
     completed = true;
 
-    // Cleanly place piece at destination square in static board state
+    // Restore source square classes and place final piece at destination square in static board state
+    $from.removeClass('animating-source-square');
+    $from.find('img, .piece-417db').css({
+      opacity: '',
+      visibility: '',
+      display: ''
+    });
+
     boardInstance.position(targetFen, false);
     $floatingPiece.remove();
 
