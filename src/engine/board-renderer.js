@@ -259,3 +259,97 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   boardContainer.addEventListener('pointerdown', handler, true);
   boardContainer._boardClickHandler = handler;
 }
+
+/**
+ * Executes a hardware-accelerated 60 FPS piece glide animation across the chessboard
+ * with strict 1-to-1 piece rendering (guaranteeing zero ghosting on the destination square).
+ *
+ * @param {Object} boardInstance - Active chessboard.js instance.
+ * @param {string} fromSquare - Source square coordinate (e.g. 'e7').
+ * @param {string} toSquare - Destination square coordinate (e.g. 'e5').
+ * @param {string} targetFen - Target FEN position string.
+ * @param {number} durationMs - Animation duration in milliseconds (default: 400).
+ * @param {Function} [onComplete] - Callback fired strictly when the piece settles.
+ */
+export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen, durationMs = 400, onComplete) {
+  if (!boardInstance) {
+    if (typeof onComplete === 'function') onComplete();
+    return;
+  }
+
+  const $boardContainer = $('#board .chessboard-63f37').length ? $('#board .chessboard-63f37') : $('#board');
+  const $from = $(`#board .square-${fromSquare}`);
+  const $to = $(`#board .square-${toSquare}`);
+
+  // Fallback if square elements are not rendered in DOM
+  if (!$boardContainer.length || !$from.length || !$to.length) {
+    boardInstance.position(targetFen, false);
+    if (typeof onComplete === 'function') onComplete();
+    return;
+  }
+
+  const $originalPieceImg = $from.find('img');
+  if (!$originalPieceImg.length) {
+    boardInstance.position(targetFen, false);
+    if (typeof onComplete === 'function') onComplete();
+    return;
+  }
+
+  const pieceSrc = $originalPieceImg.attr('src');
+  const boardRect = $boardContainer[0].getBoundingClientRect();
+  const fromRect = $from[0].getBoundingClientRect();
+  const toRect = $to[0].getBoundingClientRect();
+
+  const startX = fromRect.left - boardRect.left;
+  const startY = fromRect.top - boardRect.top;
+  const deltaX = toRect.left - fromRect.left;
+  const deltaY = toRect.top - fromRect.top;
+
+  // 1. Hide original piece on origin square immediately
+  $originalPieceImg.css('opacity', '0');
+
+  // 2. Spawn sliding piece overlay element
+  const $floatingPiece = $(`
+    <img src="${pieceSrc}" class="gliding-piece-overlay" alt="moving piece" style="
+      position: absolute;
+      top: ${startY}px;
+      left: ${startX}px;
+      width: ${fromRect.width}px;
+      height: ${fromRect.height}px;
+      z-index: 999;
+      pointer-events: none;
+      user-select: none;
+      will-change: transform;
+      transform: translate3d(0, 0, 0);
+      transition: transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1);
+    " />
+  `);
+
+  $boardContainer.append($floatingPiece);
+
+  // 3. Initiate GPU translation on next animation frame
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      $floatingPiece.css('transform', `translate3d(${deltaX}px, ${deltaY}px, 0)`);
+    });
+  });
+
+  // 4. Clean animation handshake upon arrival
+  let completed = false;
+  const finishGlide = () => {
+    if (completed) return;
+    completed = true;
+
+    // Cleanly place piece at destination square in static board state
+    boardInstance.position(targetFen, false);
+    $floatingPiece.remove();
+
+    if (typeof onComplete === 'function') {
+      onComplete();
+    }
+  };
+
+  $floatingPiece.one('transitionend', finishGlide);
+  setTimeout(finishGlide, durationMs + 40);
+}
+

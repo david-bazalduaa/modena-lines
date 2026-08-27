@@ -11,7 +11,8 @@ import {
   clearAmbiguityHints,
   highlightAmbiguityHintSquare,
   highlightBoardSquare,
-  setSelectedSquare
+  setSelectedSquare,
+  glidePieceOnBoard
 } from '../engine/board-renderer.js';
 import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
 import { getCourseById } from '../data/courses.js';
@@ -674,7 +675,7 @@ export class TrainerView {
   }
 
   /**
-   * Executes Black's opponent response with a smooth 400ms piece glide and 300ms human pacing.
+   * Executes Black's opponent response with a clean, ghost-free 400ms piece glide and 300ms human pacing.
    * State synchronization and UI re-renders are scheduled strictly after the animation completes.
    */
   playBlackResponse() {
@@ -691,14 +692,15 @@ export class TrainerView {
 
     const animationDuration = APP_CONFIG.blackMoveSpeed || 400;
 
-    if (this.board) {
-      // Initiate 60 FPS hardware-accelerated piece glide across the board
-      this.board.position(this.game.fen(), true);
-    }
-
-    // Synchronize UI, move history, and line completion strictly AFTER the visual piece glide settles
-    setTimeout(() => {
-      requestAnimationFrame(() => {
+    // Execute ghost-free hardware-accelerated piece glide across the board
+    glidePieceOnBoard(
+      this.board,
+      blackMoveData.from,
+      blackMoveData.to,
+      this.game.fen(),
+      animationDuration,
+      () => {
+        // Handshake callback strictly after piece settles at destination square
         this.updateUI();
 
         if (this.moveIndex >= this.currentLine.moves.length) {
@@ -709,8 +711,8 @@ export class TrainerView {
         if (this.game.turn() === 'b') {
           setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
         }
-      });
-    }, animationDuration + 20);
+      }
+    );
   }
 
   requestHint() {
