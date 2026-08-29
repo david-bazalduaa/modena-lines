@@ -46,14 +46,32 @@
   box-shadow: var(--shadow-inset, inset 3px 3px 6px #b8c0cc, inset -3px -3px 6px #ffffff);
   z-index: 2;
   position: relative;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
 }
 
 /* Chessboard.js overrides & Square Themes */
-.chessboard-63f37 {
+.chessboard-63f37,
+.chessboard {
   border: none !important;
   border-radius: var(--radius-md);
   overflow: hidden;
   position: relative;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.square-55d63,
+.square-2b82a,
+[class*="square-"] {
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
 }
 
 .white-1e1d7 {
@@ -68,6 +86,8 @@
 
 /* GPU Hardware-Accelerated Piece Rendering & 60 FPS Gliding */
 .piece-417db,
+.piece,
+[class*="piece-"],
 #board img {
   will-change: transform, top, left;
   transform: translate3d(0, 0, 0);
@@ -75,6 +95,11 @@
   backface-visibility: hidden;
   image-rendering: -webkit-optimize-contrast;
   pointer-events: auto;
+  touch-action: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  -webkit-tap-highlight-color: transparent !important;
 }
 
 /* Smooth transition coordinates for active animated pieces */
@@ -87,6 +112,7 @@
   image-rendering: -webkit-optimize-contrast;
   z-index: 500 !important;
   pointer-events: none !important;
+  touch-action: none !important;
 }
 
 /* Instantly suppress static piece on source square during glide animation */

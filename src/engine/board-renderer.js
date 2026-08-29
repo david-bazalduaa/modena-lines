@@ -183,10 +183,34 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   const boardContainer = document.querySelector('#board-container') || document.querySelector(boardSelector);
   if (!boardContainer) return;
 
-  // Clean up previous listener
+  // Clean up previous event listeners
   if (boardContainer._boardClickHandler) {
     boardContainer.removeEventListener('pointerdown', boardContainer._boardClickHandler, true);
   }
+  if (boardContainer._boardTouchMoveHandler) {
+    boardContainer.removeEventListener('touchmove', boardContainer._boardTouchMoveHandler, { passive: false });
+  }
+  if (boardContainer._boardTouchStartHandler) {
+    boardContainer.removeEventListener('touchstart', boardContainer._boardTouchStartHandler, { passive: false });
+  }
+
+  // Intercept touchmove on the board canvas to prevent mobile window scrolling during piece drag & tap
+  const touchMoveHandler = function(e) {
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+  };
+
+  const touchStartHandler = function(e) {
+    if (e.touches && e.touches.length > 1 && e.cancelable) {
+      e.preventDefault();
+    }
+  };
+
+  boardContainer.addEventListener('touchmove', touchMoveHandler, { passive: false });
+  boardContainer.addEventListener('touchstart', touchStartHandler, { passive: false });
+  boardContainer._boardTouchMoveHandler = touchMoveHandler;
+  boardContainer._boardTouchStartHandler = touchStartHandler;
 
   const handler = function(e) {
     const clickedSquare = getSquareCoordinate(e.target);

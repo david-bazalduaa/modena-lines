@@ -178,6 +178,7 @@
 
 .card-action-btn {
   width: 100%;
+  min-height: 48px;
   padding: 0.8rem 1.2rem;
   border-radius: var(--radius-pill);
   border: none;
