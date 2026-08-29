@@ -115,14 +115,18 @@
   touch-action: none !important;
 }
 
-/* Instantly suppress static piece on source square during glide animation or active premove drag */
+/* Instantly suppress static piece on source square during glide animation */
 .animating-source-square img,
-.animating-source-square .piece-417db,
-.premove-dragging-source img,
-.premove-dragging-source .piece-417db {
+.animating-source-square .piece-417db {
   opacity: 0 !important;
   visibility: hidden !important;
   display: none !important;
+}
+
+/* Semi-transparent ghost on source square during active drag */
+.premove-dragging-source img,
+.premove-dragging-source .piece-417db {
+  opacity: 0.2 !important;
 }
 
 /* ============================================================

@@ -118,21 +118,34 @@ export function getSquareCoordinate(element) {
   return null;
 }
 
+let lastMoveExecutionTimestamp = 0;
+
 /**
  * Clears all click-to-move, hint, and premove highlights from the board and resets selection state.
  */
 export function clearBoardHighlights(boardSelector = '#board') {
   selectedSquare = null;
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst'
+  $(boardSelector).find('.square-55d63, [data-square], .square').removeClass(
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst premove-dragging-source'
   );
+  // Restore default opacity & visibility on all piece images
+  $(boardSelector).find('img, .piece-417db').css({ opacity: '', visibility: '', display: '' });
+}
+
+/**
+ * Explicitly clears selection state, restores piece visibility, and initiates debounce cooldown.
+ */
+export function resetClickToMoveState(boardSelector = '#board') {
+  selectedSquare = null;
+  lastMoveExecutionTimestamp = Date.now();
+  clearBoardHighlights(boardSelector);
 }
 
 /**
  * Clears highlight classes from the DOM WITHOUT resetting selectedSquare state.
  */
 export function clearBoardHighlightsKeepState(boardSelector = '#board') {
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
+  $(boardSelector).find('.square-55d63, [data-square], .square').removeClass(
     'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
   );
 }
@@ -268,6 +281,16 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     // Only handle primary left click/tap for selection and moves
     if (e.button && e.button !== 0) return;
 
+    // Synthetic touch event deduplication & cooldown guard:
+    // Mobile browsers emit delayed synthetic pointer/mouse events after touchend.
+    // If a move was executed within the last 350ms, ignore subsequent synthetic clicks.
+    const now = Date.now();
+    if (now - lastMoveExecutionTimestamp < 350) {
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+
     const clickedSquare = getSquareCoordinate(e.target);
     if (!clickedSquare) return;
 
@@ -320,14 +343,16 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     }
 
     // 2C. Clicked a target destination square (empty square or enemy piece)
-    e.preventDefault();
+    if (e.cancelable) e.preventDefault();
     e.stopPropagation();
 
     const fromSquare = selectedSquare;
     const toSquare = clickedSquare;
 
-    clearBoardHighlights(boardSelector);
+    // Reset selection state and set cooldown timestamp to block synthetic double-fires
     selectedSquare = null;
+    lastMoveExecutionTimestamp = Date.now();
+    clearBoardHighlights(boardSelector);
 
     if (typeof onMoveExecution === 'function') {
       onMoveExecution(fromSquare, toSquare, isBlackTurn);
