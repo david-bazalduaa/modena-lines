@@ -325,17 +325,42 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
 }
 
 /**
+ * Detects castling moves and returns associated Rook coordinates and piece code.
+ */
+function getCastlingRookInfo(fromSquare, toSquare) {
+  // White Kingside: King e1 -> g1, Rook h1 -> f1
+  if (fromSquare === 'e1' && toSquare === 'g1') {
+    return { rookFrom: 'h1', rookTo: 'f1', pieceCode: 'wR' };
+  }
+  // White Queenside: King e1 -> c1, Rook a1 -> d1
+  if (fromSquare === 'e1' && toSquare === 'c1') {
+    return { rookFrom: 'a1', rookTo: 'd1', pieceCode: 'wR' };
+  }
+  // Black Kingside: King e8 -> g8, Rook h8 -> f8
+  if (fromSquare === 'e8' && toSquare === 'g8') {
+    return { rookFrom: 'h8', rookTo: 'f8', pieceCode: 'bR' };
+  }
+  // Black Queenside: King e8 -> c8, Rook a8 -> d8
+  if (fromSquare === 'e8' && toSquare === 'c8') {
+    return { rookFrom: 'a8', rookTo: 'd8', pieceCode: 'bR' };
+  }
+  return null;
+}
+
+/**
  * Executes a hardware-accelerated 60 FPS piece glide animation across the chessboard
- * with strict 1-to-1 piece rendering (guaranteeing zero ghosting on the destination square).
+ * with strict 1-to-1 piece rendering (guaranteeing zero ghosting on destination squares).
+ * Automatically detects castling moves (O-O and O-O-O) and triggers synchronized dual-piece
+ * sliding transitions for both King and Rook simultaneously.
  *
  * @param {Object} boardInstance - Active chessboard.js instance.
- * @param {string} fromSquare - Source square coordinate (e.g. 'e7').
- * @param {string} toSquare - Destination square coordinate (e.g. 'e5').
+ * @param {string} fromSquare - Source square coordinate (e.g. 'e7' or 'e8').
+ * @param {string} toSquare - Destination square coordinate (e.g. 'e5' or 'g8').
  * @param {string} targetFen - Target FEN position string.
- * @param {number} durationMs - Animation duration in milliseconds (default: 400).
- * @param {Function} [onComplete] - Callback fired strictly when the piece settles.
+ * @param {number} durationMs - Animation duration in milliseconds (default: 300).
+ * @param {Function} [onComplete] - Callback fired strictly when all pieces settle.
  */
-export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen, durationMs = 400, onComplete) {
+export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen, durationMs = 300, onComplete) {
   if (!boardInstance) {
     if (typeof onComplete === 'function') onComplete();
     return;
@@ -378,7 +403,7 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
   const deltaX = toRect.left - fromRect.left;
   const deltaY = toRect.top - fromRect.top;
 
-  // 1. Instantly hide static piece on source square (via CSS class and inline styles)
+  // 1. Instantly hide static piece on source square
   $from.addClass('animating-source-square');
   $from.find('img, .piece-417db').css({
     opacity: '0',
@@ -386,7 +411,7 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
     display: 'none'
   });
 
-  // 2. Spawn sliding piece overlay element
+  // 2. Spawn sliding King/Primary piece overlay element
   const $floatingPiece = $(`
     <img src="${pieceSrc}" class="gliding-piece-overlay" alt="moving piece" style="
       position: absolute;
@@ -402,23 +427,79 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
       transition: transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1);
     " />
   `);
-
   $boardContainer.append($floatingPiece);
 
-  // 3. Initiate GPU translation on next animation frame
+  // 3. Handle Castling: Spawn synchronized Rook overlay if castling move detected
+  const castlingInfo = getCastlingRookInfo(fromSquare, toSquare);
+  let $fromRook = null;
+  let $floatingRook = null;
+  let rookDeltaX = 0;
+  let rookDeltaY = 0;
+
+  if (castlingInfo) {
+    $fromRook = $(`#board .square-${castlingInfo.rookFrom}, #board [data-square="${castlingInfo.rookFrom}"]`);
+    const $toRook = $(`#board .square-${castlingInfo.rookTo}, #board [data-square="${castlingInfo.rookTo}"]`);
+
+    if ($fromRook.length && $toRook.length) {
+      let rookPieceSrc = $fromRook.find('img, .piece-417db').attr('src');
+      if (!rookPieceSrc) {
+        rookPieceSrc = getPieceDataURI(castlingInfo.pieceCode);
+      }
+
+      if (rookPieceSrc) {
+        const rookFromRect = $fromRook[0].getBoundingClientRect();
+        const rookToRect = $toRook[0].getBoundingClientRect();
+        const rookStartX = rookFromRect.left - boardRect.left;
+        const rookStartY = rookFromRect.top - boardRect.top;
+        rookDeltaX = rookToRect.left - rookFromRect.left;
+        rookDeltaY = rookToRect.top - rookFromRect.top;
+
+        // Hide static rook on its starting square
+        $fromRook.addClass('animating-source-square');
+        $fromRook.find('img, .piece-417db').css({
+          opacity: '0',
+          visibility: 'hidden',
+          display: 'none'
+        });
+
+        // Spawn sliding Rook overlay element
+        $floatingRook = $(`
+          <img src="${rookPieceSrc}" class="gliding-piece-overlay gliding-rook-overlay" alt="castling rook" style="
+            position: absolute;
+            top: ${rookStartY}px;
+            left: ${rookStartX}px;
+            width: ${rookFromRect.width}px;
+            height: ${rookFromRect.height}px;
+            z-index: 998;
+            pointer-events: none;
+            user-select: none;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
+            transition: transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1);
+          " />
+        `);
+        $boardContainer.append($floatingRook);
+      }
+    }
+  }
+
+  // 4. Initiate GPU translation for both King and Rook simultaneously
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       $floatingPiece.css('transform', `translate3d(${deltaX}px, ${deltaY}px, 0)`);
+      if ($floatingRook) {
+        $floatingRook.css('transform', `translate3d(${rookDeltaX}px, ${rookDeltaY}px, 0)`);
+      }
     });
   });
 
-  // 4. Clean animation handshake upon arrival
+  // 5. Clean animation handshake upon arrival of both pieces
   let completed = false;
   const finishGlide = () => {
     if (completed) return;
     completed = true;
 
-    // Restore source square classes and remove sliding overlay
+    // Restore King source square
     $from.removeClass('animating-source-square');
     $from.find('img, .piece-417db').css({
       opacity: '',
@@ -426,6 +507,19 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
       display: ''
     });
     $floatingPiece.remove();
+
+    // Restore Rook source square if castling
+    if ($fromRook && $fromRook.length) {
+      $fromRook.removeClass('animating-source-square');
+      $fromRook.find('img, .piece-417db').css({
+        opacity: '',
+        visibility: '',
+        display: ''
+      });
+    }
+    if ($floatingRook) {
+      $floatingRook.remove();
+    }
 
     let handledByCallback = false;
     if (typeof onComplete === 'function') {

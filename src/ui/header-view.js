@@ -62,7 +62,7 @@ export class HeaderView {
   }
 
   /**
-   * Synchronously updates the top navigation header metric badge (Accuracy and Completed count).
+   * Synchronously updates the top navigation header metric badge (Accuracy and Completed count) if present.
    * @param {Object} metrics
    * @param {number} [metrics.overallAccuracy]
    * @param {number} [metrics.completedCount]
@@ -70,11 +70,13 @@ export class HeaderView {
    */
   updateProgressMetrics(metrics) {
     if (!metrics) return;
-    if (metrics.overallAccuracy !== undefined) {
-      $('#header-accuracy').text(metrics.overallAccuracy + '%');
+    const $acc = $('#header-accuracy');
+    if ($acc.length && metrics.overallAccuracy !== undefined) {
+      $acc.text(metrics.overallAccuracy + '%');
     }
-    if (metrics.completedCount !== undefined && metrics.totalCount !== undefined) {
-      $('#header-completed').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    const $comp = $('#header-completed');
+    if ($comp.length && metrics.completedCount !== undefined && metrics.totalCount !== undefined) {
+      $comp.text(`${metrics.completedCount}/${metrics.totalCount}`);
     }
   }
 }
