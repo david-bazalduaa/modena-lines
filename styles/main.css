@@ -399,29 +399,44 @@ body {
 .side-panel-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
   width: 380px;
   max-width: 400px;
   min-width: 340px;
   max-height: calc(100vh - 200px);
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 0.5rem 0.6rem 2.5rem 0.6rem;
+  padding: 0.6rem 0.8rem 3rem 0.8rem;
   background: transparent !important;
   background-color: transparent !important;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none !important;
+}
+
+#info-panel::-webkit-scrollbar,
+.side-panel-wrapper::-webkit-scrollbar,
+.panel-container::-webkit-scrollbar,
+.right-column::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
 .panel-card {
-  background: var(--bg-surface, #e8ecf1);
-  border-radius: var(--radius-lg, 16px);
-  box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff);
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  background: var(--bg-surface, #e0e5ec);
+  border-radius: var(--radius-lg, 18px);
+  box-shadow: 6px 6px 14px rgba(163, 177, 198, 0.4), -6px -6px 14px rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.65);
   padding: 1.25rem 1.4rem;
+  transition: transform var(--spring-transition), box-shadow var(--spring-transition);
+}
+
+.panel-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 8px 8px 18px rgba(163, 177, 198, 0.45), -8px -8px 18px rgba(255, 255, 255, 0.95);
 }
 
 .card-header {
@@ -439,10 +454,11 @@ body {
   font-weight: 800;
   letter-spacing: 0.05em;
   color: var(--primary-accent, #334155);
-  background: var(--bg-surface, #e8ecf1);
-  padding: 0.22rem 0.6rem;
+  background: var(--bg-surface, #e0e5ec);
+  padding: 0.25rem 0.65rem;
   border-radius: var(--radius-pill, 50px);
-  box-shadow: var(--shadow-extruded-sm, 2px 2px 5px #b8c0cc, -2px -2px 5px #ffffff);
+  box-shadow: 2px 2px 5px rgba(163, 177, 198, 0.35), -2px -2px 5px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.6);
   user-select: none;
   text-transform: uppercase;
 }
@@ -473,6 +489,22 @@ body {
   line-height: 1.55;
 }
 
+/* Variation Select Dropdown */
+#variation-select {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  background: var(--bg-surface, #e0e5ec) !important;
+  box-shadow: inset 2px 2px 4px rgba(163, 177, 198, 0.35), inset -2px -2px 4px rgba(255, 255, 255, 0.8) !important;
+  padding: 0.55rem 0.8rem;
+  border-radius: var(--radius-md, 12px);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
 /* Progress Tracker Card */
 .progress-header {
   display: flex;
@@ -482,7 +514,7 @@ body {
   margin-bottom: 0.6rem;
 }
 
-/* Coach Guidance Card - Uniform Neumorphic Card Styling */
+/* Coach Guidance Card */
 .coach-card,
 #commentary-card {
   position: relative;
@@ -502,17 +534,22 @@ body {
   max-height: 110px;
   overflow-y: auto;
   padding-right: 0.3rem;
+  scrollbar-width: none;
+}
+
+#move-history::-webkit-scrollbar {
+  display: none;
 }
 
 .history-pair {
   display: flex;
   align-items: center;
   gap: 0.3rem;
-  padding: 0.2rem 0.45rem;
-  background: var(--bg-surface, #e8ecf1);
+  padding: 0.22rem 0.5rem;
+  background: var(--bg-surface, #e0e5ec);
   border-radius: var(--radius-sm, 6px);
-  box-shadow: var(--shadow-inset, inset 2px 2px 4px #b8c0cc, inset -2px -2px 4px #ffffff);
-  border: 1px solid rgba(163, 177, 198, 0.15);
+  box-shadow: inset 1.5px 1.5px 3px rgba(163, 177, 198, 0.35), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.5);
 }
 
 .move-num {
@@ -552,23 +589,28 @@ body {
   max-height: 160px;
   overflow-y: auto;
   padding-right: 0.3rem;
+  scrollbar-width: none;
+}
+
+.step-tree-container::-webkit-scrollbar {
+  display: none;
 }
 
 .tree-step-row {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  padding: 0.35rem 0.6rem;
-  border-radius: var(--radius-sm, 6px);
-  background: var(--bg-surface, #e8ecf1);
-  box-shadow: var(--shadow-inset, inset 2px 2px 4px #b8c0cc, inset -2px -2px 4px #ffffff);
-  border: 1px solid rgba(163, 177, 198, 0.15);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm, 8px);
+  background: var(--bg-surface, #e0e5ec);
+  box-shadow: inset 1.5px 1.5px 3px rgba(163, 177, 198, 0.3), inset -1.5px -1.5px 3px rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   font-size: 0.8rem;
   transition: all 0.2s ease;
 }
 
 .tree-step-row.completed {
-  border-color: rgba(16, 185, 129, 0.3);
+  border-color: rgba(16, 185, 129, 0.4);
   background: rgba(16, 185, 129, 0.06);
 }
 

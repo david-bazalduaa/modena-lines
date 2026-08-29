@@ -258,9 +258,9 @@
 }
 
 .mode-deck-card {
-  background: var(--neumorphic-bg-flat);
-  border-radius: var(--radius-md);
-  box-shadow: var(--shadow-extruded-sm);
+  background: var(--bg-surface, #e0e5ec);
+  border-radius: var(--radius-md, 14px);
+  box-shadow: 3px 3px 8px rgba(163, 177, 198, 0.4), -3px -3px 8px rgba(255, 255, 255, 0.85);
   padding: 0.85rem 0.6rem;
   display: flex;
   flex-direction: column;
@@ -270,17 +270,17 @@
   user-select: none;
   transition: all var(--spring-transition);
   text-align: center;
-  border: 1.5px solid transparent;
+  border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
 .mode-deck-card:hover {
   transform: translateY(-2px);
-  box-shadow: var(--shadow-extruded);
+  box-shadow: 5px 5px 12px rgba(163, 177, 198, 0.45), -5px -5px 12px rgba(255, 255, 255, 0.95);
 }
 
 .mode-deck-card.active {
-  background: linear-gradient(135deg, rgba(51, 65, 85, 0.1) 0%, rgba(30, 41, 59, 0.06) 100%);
-  box-shadow: var(--shadow-inset);
+  background: var(--bg-surface, #e0e5ec);
+  box-shadow: inset 3px 3px 6px rgba(163, 177, 198, 0.5), inset -3px -3px 6px rgba(255, 255, 255, 0.85);
   border: 1.5px solid var(--primary-accent, #334155);
 }
 
@@ -291,7 +291,7 @@
 .mode-title {
   font-size: 0.82rem;
   font-weight: 800;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .mode-desc {
