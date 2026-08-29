@@ -668,51 +668,6 @@ body {
   50%      { background-color: rgba(16, 185, 129, 0.65); }
 }
 
-/* Move Text Input Bar */
-#move-input-area {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-#move-input-container {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.5rem 0.4rem 0.9rem;
-  background: var(--bg-deep);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-inset-carved);
-  border: var(--border-subtle);
-  transition: border-color var(--transition-fast);
-}
-
-#move-input-container:focus-within {
-  border-color: rgba(212, 175, 55, 0.6);
-  box-shadow: var(--shadow-inset-carved), var(--gold-glow);
-}
-
-.input-icon {
-  font-size: 1rem;
-  color: var(--text-muted);
-}
-
-#move-input {
-  flex: 1;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: var(--text-primary);
-  font-family: 'Fira Code', monospace;
-  font-size: 0.92rem;
-  font-weight: 500;
-}
-
-#move-input::placeholder {
-  color: var(--text-muted);
-  font-family: 'Inter', sans-serif;
-  font-size: 0.85rem;
-}
 
 .neumorphic-btn-sm {
   padding: 0.45rem 0.95rem;

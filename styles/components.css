@@ -405,6 +405,36 @@
   padding: 0.65rem 1rem;
 }
 
+@media (max-width: 767px) {
+  #controls-bar {
+    bottom: 0.5rem;
+    padding: 0 0.4rem;
+  }
+
+  .controls-container {
+    padding: 0.35rem 0.5rem;
+    gap: 0.3rem;
+    width: 100%;
+    max-width: 100%;
+    justify-content: space-between;
+  }
+
+  .ctrl-btn {
+    padding: 0.45rem 0.65rem;
+    font-size: 0.76rem;
+    gap: 0.25rem;
+  }
+
+  .ctrl-btn.icon-only {
+    padding: 0.45rem 0.6rem;
+  }
+
+  .button-group-divider {
+    height: 18px;
+    margin: 0 0.1rem;
+  }
+}
+
 /* Helper Utility Classes */
 .hidden {
   display: none !important;

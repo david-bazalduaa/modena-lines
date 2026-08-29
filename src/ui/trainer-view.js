@@ -266,17 +266,40 @@ export class TrainerView {
       if (this.board) {
         this.board.resize();
       }
+      this.bindResizeObserver();
     }, 100);
 
     this.initControls();
   }
 
-  initControls() {
-    $('#submit-move-btn').off('click').on('click', () => this.handleTextMoveSubmit());
-    $('#move-input').off('keydown').on('keydown', (e) => {
-      if (e.key === 'Enter') this.handleTextMoveSubmit();
-    });
+  bindResizeObserver() {
+    if (this._resizeObserverBound) return;
+    this._resizeObserverBound = true;
 
+    if (window.ResizeObserver) {
+      this.resizeObserver = new ResizeObserver(() => {
+        if (this.board && typeof this.board.resize === 'function') {
+          requestAnimationFrame(() => {
+            if (this.board && typeof this.board.resize === 'function') {
+              this.board.resize();
+            }
+          });
+        }
+      });
+      const boardWrapper = document.getElementById('board-wrapper');
+      if (boardWrapper) {
+        this.resizeObserver.observe(boardWrapper);
+      }
+    }
+
+    $(window).on('resize orientationchange', () => {
+      if (this.board && typeof this.board.resize === 'function') {
+        this.board.resize();
+      }
+    });
+  }
+
+  initControls() {
     $('#btn-start').off('click').on('click', () => this.resetDrill());
     $('#btn-hint').off('click').on('click', () => this.requestHint());
     $('#btn-reset').off('click').on('click', () => this.resetDrill());
@@ -652,26 +675,6 @@ export class TrainerView {
       setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
     }
     return testMove;
-  }
-
-  handleTextMoveSubmit() {
-    const $input = $('#move-input');
-    const sanText = $input.val().trim();
-    if (!sanText || !this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
-
-    $input.val('');
-
-    // Pre-validate SAN move
-    const testMove = this.game.move(sanText, { sloppy: true });
-    if (!testMove) {
-      this.showToast(`Invalid move notation: "${sanText}"`, 'error');
-      this.triggerErrorShake();
-      return;
-    }
-
-    // Undo temporary move so it routes through unified handleUserMove
-    this.game.undo();
-    this.handleUserMove(testMove.from, testMove.to, testMove.promotion);
   }
 
   /**
