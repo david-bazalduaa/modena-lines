@@ -784,36 +784,83 @@ export class TrainerView {
           this.isBlackAnimating = false;
         }
 
+        // ============================================================
+        // PREMOVE AUTOMATIC SYNCHRONOUS HANDSHAKE (0ms Instant Delay)
+        // ============================================================
+        if (this.hasPremoveQueued()) {
+          const queued = { ...this.premove };
+          this.clearPremove();
+
+          if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
+            const currentMoveIndex = this.moveIndex;
+            const expected = this.currentLine.moves[currentMoveIndex];
+
+            // 1. Verify move validity in chess.js
+            const testMove = this.game.move({
+              from: queued.from,
+              to: queued.to,
+              promotion: queued.promo || 'q'
+            });
+
+            if (testMove) {
+              if (testMove.san === expected.san) {
+                // Correct premove: advance move index, update board directly to final position
+                this.moveIndex++;
+                if (this.board) {
+                  this.board.position(this.game.fen(), false);
+                }
+                this.highlightSquares(testMove.from, testMove.to);
+                this.triggerSuccessGlow();
+                this.updateUI();
+
+                if (this.moveIndex >= this.currentLine.moves.length) {
+                  this.isBlackAnimating = false;
+                  this.onLineComplete();
+                  return true;
+                }
+
+                if (this.game.turn() === 'b') {
+                  this.isBlackAnimating = true;
+                  setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+                }
+                return true; // Signals finishGlide that board was positioned directly
+              } else {
+                // Incorrect move for the active line: revert move
+                this.game.undo();
+                this.triggerErrorShake();
+                this.clearHighlights();
+
+                $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
+                $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
+                userProgress.recordMistake(this.currentLine.id);
+
+                if (this.isBlindStreak) {
+                  this.streakScore = 0;
+                  this.updateUI();
+                  this.onBlindStreakEnd();
+                  return false;
+                }
+
+                this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
+              }
+            }
+          }
+        }
+
         this.updateUI();
 
         if (this.moveIndex >= this.currentLine.moves.length) {
           this.isBlackAnimating = false;
           this.clearPremove();
           this.onLineComplete();
-          return;
-        }
-
-        // ============================================================
-        // PREMOVE AUTOMATIC EXECUTION HANDSHAKE (0ms Instant Delay)
-        // ============================================================
-        if (this.hasPremoveQueued()) {
-          const queued = { ...this.premove };
-          this.clearPremove();
-
-          // Validate legality in the updated FEN position
-          const legalMoves = this.game.moves({ square: queued.from, verbose: true }) || [];
-          const isLegal = legalMoves.some(m => m.to === queued.to);
-
-          if (isLegal) {
-            // Instantly execute premove
-            this.handleUserMove(queued.from, queued.to, queued.promo || 'q', false);
-            return;
-          }
+          return false;
         }
 
         if (this.game.turn() === 'b') {
           setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
         }
+
+        return false;
       }
     );
   }

@@ -418,19 +418,22 @@ export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen
     if (completed) return;
     completed = true;
 
-    // Restore source square classes and place final piece at destination square in static board state
+    // Restore source square classes and remove sliding overlay
     $from.removeClass('animating-source-square');
     $from.find('img, .piece-417db').css({
       opacity: '',
       visibility: '',
       display: ''
     });
-
-    boardInstance.position(targetFen, false);
     $floatingPiece.remove();
 
+    let handledByCallback = false;
     if (typeof onComplete === 'function') {
-      onComplete();
+      handledByCallback = onComplete() === true;
+    }
+
+    if (!handledByCallback && boardInstance && typeof boardInstance.position === 'function') {
+      boardInstance.position(targetFen, false);
     }
   };
 
