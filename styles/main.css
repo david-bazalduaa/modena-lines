@@ -29,18 +29,21 @@ body {
 
 /* Custom Neumorphic Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: var(--bg-canvas);
+  background: transparent !important;
 }
 ::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: rgba(148, 163, 184, 0.4);
   border-radius: var(--radius-pill);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #94A3B8;
+  background: rgba(148, 163, 184, 0.7);
+}
+::-webkit-scrollbar-corner {
+  background: transparent !important;
 }
 
 /* ============================================================
@@ -398,8 +401,11 @@ body {
   border-radius: var(--radius-md, 14px);
 }
 
-/* ── Right Panel Column ── */
-#info-panel {
+/* ── Right Panel Column (Floating Cards Container) ── */
+#info-panel,
+.right-column,
+.side-panel-wrapper,
+.panel-container {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -410,10 +416,12 @@ body {
   overflow-y: auto;
   padding-right: 0.35rem;
   padding-bottom: 2rem;
-  scrollbar-gutter: stable;
-  background: transparent;
-  border: none;
-  box-shadow: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.4) transparent;
 }
 
 .panel-card {

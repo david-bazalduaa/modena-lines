@@ -127,13 +127,18 @@
    CHESS.COM STYLE HIGHLIGHTS & DESTINATION HINTS
    ============================================================ */
 
-/* Active Source, Selected, and Last-Move Soft Yellow Highlights */
+/* Active Source, Selected, and Last-Move Soft Yellow Highlights (Border-Free Seamless Fill) */
 .highlight-last-move,
 .highlight-selected-square,
 .highlight-selected,
-.highlight-hint-src {
-  background-color: rgba(247, 247, 105, 0.55) !important;
-  box-shadow: inset 0 0 0 2px rgba(186, 202, 68, 0.5) !important;
+.highlight-hint-src,
+.highlight-square,
+.square-selected,
+.last-move {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: rgba(247, 247, 105, 0.6) !important;
   position: relative !important;
 }
 
