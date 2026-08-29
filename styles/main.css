@@ -411,6 +411,9 @@ body {
   padding-right: 0.35rem;
   padding-bottom: 2rem;
   scrollbar-gutter: stable;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 .panel-card {

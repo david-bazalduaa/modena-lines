@@ -575,9 +575,9 @@ export class TrainerView {
     // Immediately clear ambiguity hint upon user interaction
     clearAmbiguityHints('#board');
 
-    // Synchronize selection state and legal destination highlights during drag
-    setSelectedSquare(source);
+    // Unified Gesture Engine: dragstart automatically overrides and resets prior click-selected square
     clearBoardHighlightsKeepState('#board');
+    setSelectedSquare(source);
     highlightBoardSquare(source, 'selected', '#board');
 
     const legalMoves = this.game.moves({ square: source, verbose: true }) || [];
@@ -592,9 +592,9 @@ export class TrainerView {
       return 'snapback';
     }
 
-    // User actually dragged piece to a different square
+    // User actually dragged piece to a different square: execute move immediately
     this.clearHighlights();
-    const move = this.handleUserMove(source, target);
+    const move = this.handleUserMove(source, target, 'q', true);
     if (!move) return 'snapback';
   }
 
@@ -613,7 +613,7 @@ export class TrainerView {
    * Validates user move strictly against the target line.
    * If incorrect, registers failure penalty immediately without auto-correction.
    */
-  handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
+  handleUserMove(fromSquare, toSquare, promoPiece = 'q', isDragDrop = false) {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
     if (this.game.turn() !== 'w') return null;
 
@@ -664,10 +664,12 @@ export class TrainerView {
       return null;
     }
 
-    // 3. Move is correct: advance index, play feedback, update UI, and trigger Black response
+    // 3. Move is correct: advance index, synchronously position board with no interim animation snapback
     this.moveIndex++;
 
-    if (this.board) this.board.position(this.game.fen());
+    if (this.board) {
+      this.board.position(this.game.fen(), false);
+    }
     this.highlightSquares(testMove.from, testMove.to);
     this.triggerSuccessGlow();
     this.updateUI();

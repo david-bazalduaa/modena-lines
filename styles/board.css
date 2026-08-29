@@ -123,104 +123,62 @@
   display: none !important;
 }
 
-/* Move highlight rings & markers */
-.highlight-last-move {
-  box-shadow: inset 0 0 0 3px var(--primary-accent, #334155) !important;
-}
-
-.highlight-hint-src {
-  box-shadow: inset 0 0 0 4px #F59E0B, 0 0 12px rgba(245, 158, 11, 0.6) !important;
-  animation: hint-pulse 1s ease-in-out infinite alternate;
-}
-
-.highlight-hint-dst {
-  box-shadow: inset 0 0 0 4px var(--accent-emerald, #10B981), 0 0 12px rgba(16, 185, 129, 0.6) !important;
-  animation: hint-pulse 1s ease-in-out infinite alternate;
-}
-
-/* On-Board Hint Exception: Protected Radiant Gold/Amber Glow */
-.square-hint,
-.highlight-ambiguity-hint {
-  box-shadow: inset 0 0 0 3.5px #F59E0B, 0 0 14px rgba(245, 158, 11, 0.65), inset 0 0 10px rgba(251, 191, 36, 0.35) !important;
-  animation: gold-hint-pulse 1.2s ease-in-out infinite alternate;
-  position: relative !important;
-  z-index: 5;
-}
-
-@keyframes gold-hint-pulse {
-  0% {
-    box-shadow: inset 0 0 0 3px rgba(245, 158, 11, 0.75), 0 0 8px rgba(245, 158, 11, 0.4), inset 0 0 6px rgba(251, 191, 36, 0.2) !important;
-  }
-  100% {
-    box-shadow: inset 0 0 0 4.5px rgba(251, 191, 36, 1), 0 0 20px rgba(245, 158, 11, 0.8), inset 0 0 14px rgba(251, 191, 36, 0.5) !important;
-  }
-}
-
 /* ============================================================
-   CLICK-TO-MOVE NEUMORPHIC SQUARE SELECTION & DESTINATION
+   CHESS.COM STYLE HIGHLIGHTS & DESTINATION HINTS
    ============================================================ */
 
+/* Active Source, Selected, and Last-Move Soft Yellow Highlights */
+.highlight-last-move,
 .highlight-selected-square,
-.highlight-selected {
-  box-shadow: inset 0 0 0 3.5px var(--primary-accent, #334155), inset 3px 3px 6px rgba(51, 65, 85, 0.35) !important;
-  background-color: rgba(51, 65, 85, 0.2) !important;
+.highlight-selected,
+.highlight-hint-src {
+  background-color: rgba(247, 247, 105, 0.55) !important;
+  box-shadow: inset 0 0 0 2px rgba(186, 202, 68, 0.5) !important;
   position: relative !important;
 }
 
+/* Destination Hint Markers (Chess.com Style Centered Subtle Grey Dot / Ring) */
 .highlight-dest-square,
-.highlight-target {
+.highlight-target,
+.square-hint,
+.highlight-ambiguity-hint,
+.highlight-hint-dst {
   position: relative !important;
-  box-shadow: inset 0 0 0 2.5px rgba(16, 185, 129, 0.6) !important;
+  box-shadow: none !important;
+  background-color: transparent !important;
 }
 
+/* Empty square destination dot */
 .highlight-dest-square::after,
-.highlight-target::after {
+.highlight-target::after,
+.square-hint::after,
+.highlight-ambiguity-hint::after,
+.highlight-hint-dst::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 26%;
-  height: 26%;
-  background: var(--accent-emerald, #10b981);
+  width: 30%;
+  height: 30%;
+  background-color: rgba(0, 0, 0, 0.16);
   border-radius: 50%;
-  opacity: 0.9;
   pointer-events: none;
-  box-shadow: 0 0 10px rgba(16, 185, 129, 0.7);
   z-index: 10;
-  animation: dest-dot-pulse 1.2s ease-in-out infinite alternate;
 }
 
+/* Occupied square (capture) destination ring */
 .highlight-dest-square:has(img)::after,
-.highlight-target:has(img)::after {
-  width: 86%;
-  height: 86%;
+.highlight-target:has(img)::after,
+.square-hint:has(img)::after,
+.highlight-ambiguity-hint:has(img)::after,
+.highlight-hint-dst:has(img)::after {
+  width: 82%;
+  height: 82%;
   background: transparent;
-  border: 4px solid var(--accent-emerald, #10b981);
+  border: 4.5px solid rgba(0, 0, 0, 0.16);
   border-radius: 50%;
-  box-shadow: inset 0 0 8px rgba(16, 185, 129, 0.5), 0 0 10px rgba(16, 185, 129, 0.6);
-}
-
-@keyframes dest-dot-pulse {
-  0% {
-    transform: translate(-50%, -50%) scale(0.85);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 1;
-  }
-}
-
-@keyframes hint-pulse {
-  0% {
-    opacity: 0.6;
-    transform: scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  box-shadow: none !important;
 }
 
 .neumorphic-shake {
