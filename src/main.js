@@ -39,15 +39,8 @@ class App {
       this.updateHeaderMetrics();
     });
 
-    // On mobile (< 768px), immediately mount Level 3 Study View so the chessboard renders on initial page load
-    const isMobile = window.innerWidth < 768;
-    if (isMobile && COURSES.length > 0) {
-      this.selectedCourse = COURSES[0];
-      const initialSubCourse = (COURSES[0].subCourses && COURSES[0].subCourses.length > 0) ? COURSES[0].subCourses[0] : null;
-      this.showStudyView(initialSubCourse);
-    } else {
-      this.showCatalogView();
-    }
+    // Default initial route: render Level 1 Course Catalog View on both desktop & mobile
+    this.showCatalogView();
 
     console.log('Modena Lines 3-Level Navigation Router & Cloud Sync Initialized!');
   }

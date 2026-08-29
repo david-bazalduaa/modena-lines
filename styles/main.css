@@ -242,8 +242,20 @@ body {
 
 
 /* ──────────────── 3. STUDY BOARD VIEW ──────────────── */
+.view-section {
+  display: none !important;
+}
+
+.view-section.active {
+  display: block !important;
+}
+
 #study-view {
-  display: flex;
+  display: none !important;
+}
+
+#study-view.active {
+  display: flex !important;
   flex-direction: row;
   justify-content: center;
   align-items: center;
@@ -253,6 +265,13 @@ body {
   min-height: calc(100vh - 120px);
   margin: 0 auto;
   padding-bottom: 1rem;
+}
+
+#study-view.hidden,
+#dashboard-view.hidden,
+#subcourse-view.hidden,
+.view-section.hidden {
+  display: none !important;
 }
 
 #board-section {
@@ -959,6 +978,10 @@ body {
 
   /* Level 3 Interactive Study Board: 100vh Single-Page Zero Scroll Stack */
   #study-view {
+    display: none !important;
+  }
+
+  #study-view.active {
     height: 100% !important;
     max-height: 100% !important;
     width: 100% !important;
@@ -967,10 +990,16 @@ body {
     flex-direction: column !important;
     justify-content: space-between !important;
     align-items: center !important;
-    padding: 6px 10px 8px 10px !important;
+    padding: 6px 10px 62px 10px !important;
     box-sizing: border-box !important;
     gap: 0 !important;
     touch-action: none !important;
+  }
+
+  #study-view.hidden,
+  #dashboard-view.hidden,
+  #subcourse-view.hidden {
+    display: none !important;
   }
 
   #board-section {
@@ -1054,8 +1083,8 @@ body {
 
   /* Fixed Viewport 1:1 Chessboard Placement */
   #board-wrapper {
-    width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 54px - 20px), 52vh, 400px) !important;
-    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 54px - 20px), 52vh, 400px) !important;
+    width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 60px - 20px), 50vh, 400px) !important;
+    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 60px - 20px), 50vh, 400px) !important;
     height: auto !important;
     aspect-ratio: 1 / 1 !important;
     padding: 6px !important;
@@ -1069,15 +1098,30 @@ body {
     border-radius: var(--radius-sm, 8px) !important;
   }
 
-  /* Fixed Bottom Navigation Control Bar */
-  #study-bottom-bar {
+  /* Fixed Mobile Trainer Toolbar (< 768px) */
+  #mobile-trainer-toolbar,
+  #study-bottom-bar,
+  .mobile-trainer-toolbar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    z-index: 999 !important;
     display: flex !important;
-    width: 100% !important;
-    max-width: 440px !important;
-    height: 52px !important;
-    min-height: 52px !important;
-    margin: 0 !important;
-    flex-shrink: 0 !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    background: var(--bg-surface, #e0e5ec) !important;
+    box-shadow: 0 -4px 16px rgba(163, 177, 198, 0.4), 0 -1px 3px rgba(255, 255, 255, 0.8) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    padding: 0 1rem !important;
+    box-sizing: border-box !important;
+  }
+
+  #study-view.hidden #mobile-trainer-toolbar,
+  #study-view:not(.active) #mobile-trainer-toolbar {
+    display: none !important;
   }
 
   /* Hide Desktop-Only Side Cards on Mobile Viewport to Prevent Scrolling */
