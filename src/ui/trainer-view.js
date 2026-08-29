@@ -344,15 +344,99 @@ export class TrainerView {
   }
 
   initControls() {
-    $('#btn-start').off('click').on('click', () => this.resetDrill());
-    $('#btn-hint').off('click').on('click', () => this.requestHint());
-    $('#btn-reset').off('click').on('click', () => this.resetDrill());
-    $('#btn-flip').off('click').on('click', () => {
+    $('#btn-start, #btn-reset, #btn-action-reset').off('click').on('click', () => this.resetDrill());
+    $('#btn-hint, #btn-action-hint').off('click').on('click', () => this.requestHint());
+    $('#btn-flip, #btn-action-flip').off('click').on('click', () => {
       if (this.board) this.board.flip();
+    });
+
+    $('#btn-action-mode').off('click').on('click', (e) => {
+      e.stopPropagation();
+      this.openModePopover();
+    });
+
+    $('#mode-popover-close').off('click').on('click', () => {
+      this.closeModePopover();
+    });
+
+    // Close mode popover when clicking overlay backdrop outside the card
+    $('#mode-popover-overlay').off('click').on('click', (e) => {
+      if ($(e.target).is('#mode-popover-overlay')) {
+        this.closeModePopover();
+      }
+    });
+
+    // Close popover on Esc key
+    $(document).off('keydown.modePopover').on('keydown.modePopover', (e) => {
+      if (e.key === 'Escape' && !$('#mode-popover-overlay').hasClass('hidden')) {
+        this.closeModePopover();
+      }
     });
 
     $('#btn-prev').off('click').on('click', () => this.stepPrev());
     $('#btn-next').off('click').on('click', () => this.stepNext());
+  }
+
+  openModePopover() {
+    const activePool = this.currentSubCourse || this.currentCourse;
+    renderModeDeck('mode-popover-deck-container', activePool, userProgress, (selectedMode) => {
+      this.selectMode(selectedMode);
+    }, this.currentMode);
+    $('#mode-popover-overlay').removeClass('hidden');
+  }
+
+  closeModePopover() {
+    $('#mode-popover-overlay').addClass('hidden');
+  }
+
+  /**
+   * Unified training mode switcher for both desktop mode deck and mobile popover modal.
+   */
+  selectMode(selectedMode) {
+    const activePool = this.currentSubCourse || this.currentCourse;
+    this.cancelAutoAdvance();
+    this.currentMode = selectedMode;
+    this.completedInLoop.clear();
+    this.closeModePopover();
+
+    const modeLabels = {
+      learn: 'Learn',
+      practice: 'Practice',
+      drill: 'Drill',
+      arena: 'Arena'
+    };
+    $('#bottom-mode-label').text(modeLabels[selectedMode] || 'Mode');
+    $('#coach-mode-badge').text(modeLabels[selectedMode] || 'Active');
+
+    if (selectedMode === 'drill' || selectedMode === 'arena') {
+      this.startBlindStreak(activePool, selectedMode);
+    } else if (selectedMode === 'practice') {
+      this.isBlindStreak = false;
+      const learned = this.getLearnedLines();
+      this.initLineQueue();
+      this.renderVariationDropdown();
+
+      if (learned.length === 0) {
+        this.renderPracticeEmptyState();
+      } else {
+        const lineToLoad = learned.find(l => l.id === this.currentLine?.id) || learned[0];
+        this.loadLine(lineToLoad, 'practice');
+      }
+    } else {
+      // Learn mode
+      this.isBlindStreak = false;
+      this.initLineQueue();
+      this.renderVariationDropdown();
+      const subLines = (activePool && activePool.lines) ? activePool.lines : [];
+      const lineToLoad = subLines.find(l => l.id === this.currentLine?.id) || (subLines[0] || null);
+      if (lineToLoad) {
+        this.loadLine(lineToLoad, 'learn');
+      } else {
+        this.resetDrill();
+      }
+    }
+
+    this.renderModeDeckPanel();
   }
 
   /**
@@ -430,38 +514,21 @@ export class TrainerView {
   renderModeDeckPanel() {
     const activePool = this.currentSubCourse || this.currentCourse;
     renderModeDeck('trainer-mode-deck-container', activePool, userProgress, (selectedMode) => {
-      this.cancelAutoAdvance();
-      this.currentMode = selectedMode;
-      this.completedInLoop.clear();
-
-      if (selectedMode === 'drill' || selectedMode === 'arena') {
-        this.startBlindStreak(activePool, selectedMode);
-      } else if (selectedMode === 'practice') {
-        this.isBlindStreak = false;
-        const learned = this.getLearnedLines();
-        this.initLineQueue();
-        this.renderVariationDropdown();
-
-        if (learned.length === 0) {
-          this.renderPracticeEmptyState();
-        } else {
-          const lineToLoad = learned.find(l => l.id === this.currentLine?.id) || learned[0];
-          this.loadLine(lineToLoad, 'practice');
-        }
-      } else {
-        // Learn mode
-        this.isBlindStreak = false;
-        this.initLineQueue();
-        this.renderVariationDropdown();
-        const subLines = (activePool && activePool.lines) ? activePool.lines : [];
-        const lineToLoad = subLines.find(l => l.id === this.currentLine?.id) || (subLines[0] || null);
-        if (lineToLoad) {
-          this.loadLine(lineToLoad, 'learn');
-        } else {
-          this.resetDrill();
-        }
-      }
+      this.selectMode(selectedMode);
     }, this.currentMode);
+
+    renderModeDeck('mode-popover-deck-container', activePool, userProgress, (selectedMode) => {
+      this.selectMode(selectedMode);
+    }, this.currentMode);
+
+    const modeLabels = {
+      learn: 'Learn',
+      practice: 'Practice',
+      drill: 'Drill',
+      arena: 'Arena'
+    };
+    $('#bottom-mode-label').text(modeLabels[this.currentMode] || 'Mode');
+    $('#coach-mode-badge').text(modeLabels[this.currentMode] || 'Active');
   }
 
   /**
@@ -1091,9 +1158,20 @@ export class TrainerView {
     this.renderMoveHistory();
     this.renderStepTree();
 
-    const st = userProgress.getLineStat(this.currentLine.id);
-    $('#stat-accuracy').text((st.accuracy !== undefined ? st.accuracy : 100) + '%');
-    $('#stat-attempts').text(st.attempts || 0);
+    const modeLabels = {
+      learn: 'Active Recall',
+      practice: 'Practice',
+      drill: 'Drill Streak',
+      arena: 'Arena Survival'
+    };
+    $('#coach-mode-badge').text(modeLabels[this.currentMode] || 'Active Recall');
+    const bottomLabels = {
+      learn: 'Learn',
+      practice: 'Practice',
+      drill: 'Drill',
+      arena: 'Arena'
+    };
+    $('#bottom-mode-label').text(bottomLabels[this.currentMode] || 'Mode');
 
     $('#btn-prev').prop('disabled', this.moveIndex <= 0);
     $('#btn-next').prop('disabled', this.moveIndex >= this.currentLine.totalHalfMoves);

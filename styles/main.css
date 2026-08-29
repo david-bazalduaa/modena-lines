@@ -518,6 +518,8 @@ body {
 #commentary-card {
   position: relative;
   border-left: none;
+  width: min(calc(100vh - 145px), 82vh, 100%);
+  max-width: min(calc(100vh - 145px), 82vh, 100%);
 }
 
 /* Interactive Move History */
@@ -761,35 +763,134 @@ body {
 
 /* Mobile / Smartphone Layout Optimization (< 768px) */
 @media (max-width: 767px) {
-  body {
-    padding-bottom: 90px;
+  html, body {
+    overflow: hidden !important;
+    height: 100vh !important;
+    height: 100dvh !important;
+    touch-action: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
 
+  /* Compact Mobile Header (48px max height, single horizontal flex row) */
   #app-header {
-    padding: 0.75rem 1rem;
+    height: 48px !important;
+    max-height: 48px !important;
+    min-height: 48px !important;
+    padding: 4px 12px !important;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
   }
 
   .header-content {
-    flex-wrap: wrap;
-    gap: 0.6rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    margin: 0 !important;
   }
 
-  .view-tabs {
-    width: 100%;
-    justify-content: center;
+  .header-brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
   }
 
-  .nav-tab {
-    min-height: 44px;
-    padding: 0.45rem 0.85rem;
-    font-size: 0.82rem;
+  .brand-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    flex-shrink: 0;
   }
 
+  .brand-icon-svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  #app-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .header-subtitle {
+    display: none !important;
+  }
+
+  #repertoire-filter-tabs {
+    display: none !important;
+  }
+
+  #header-auth-container {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+
+  #header-signin-btn,
+  .header-auth-btn {
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    min-height: 32px;
+    height: 32px;
+    border-radius: 20px;
+    gap: 5px;
+  }
+
+  .header-user-profile-btn {
+    padding: 3px 8px;
+    min-height: 32px;
+    height: 32px;
+    gap: 6px;
+  }
+
+  .user-avatar-badge {
+    width: 26px;
+    height: 26px;
+  }
+
+  .user-profile-name {
+    font-size: 0.8rem;
+    max-width: 80px;
+  }
+
+  /* Fixed 100vh Main App Canvas */
   #app-main {
-    padding: 0.6rem 0.6rem 5.5rem;
+    flex: 1;
+    height: calc(100dvh - 48px);
+    max-height: calc(100dvh - 48px);
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* Catalog & Sub-Course Hub Single-Column Collapsing */
+  /* Catalog & Sub-Course Hub Internal View Scroll */
+  #dashboard-view,
+  #subcourse-view {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    height: 100%;
+    max-height: 100%;
+    padding: 0.85rem 1rem 3.5rem 1rem;
+    box-sizing: border-box;
+  }
+
   .dashboard-hero {
     flex-direction: column;
     align-items: stretch;
@@ -856,67 +957,131 @@ body {
     width: 100%;
   }
 
-  /* Level 3 Interactive Study Board Single-Column Stack */
+  /* Level 3 Interactive Study Board: 100vh Single-Page Zero Scroll Stack */
   #study-view {
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
-    width: 100%;
+    height: 100% !important;
+    max-height: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 6px 10px 8px 10px !important;
+    box-sizing: border-box !important;
+    gap: 0 !important;
+    touch-action: none !important;
   }
 
   #board-section {
-    width: 100%;
-    gap: 0.5rem;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex: 1 !important;
+    min-height: 0 !important;
   }
 
   #board-header-bar {
-    width: 100%;
-    max-width: 100%;
-    padding: 0.5rem 0.85rem;
-    min-height: auto;
-    border-radius: var(--radius-sm, 10px);
+    display: none !important;
   }
 
-  #active-line-title {
-    font-size: 0.92rem;
+  /* Coach Guidance Box (Top Scrollable Card above chessboard) */
+  #commentary-card.coach-card {
+    width: 100% !important;
+    max-width: 440px !important;
+    min-height: 48px !important;
+    max-height: min(120px, 15vh) !important;
+    flex-shrink: 0 !important;
+    padding: 6px 10px !important;
+    border-radius: var(--radius-md, 12px) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    box-shadow: var(--shadow-extruded-sm, 3px 3px 6px #b8c0cc, -3px -3px 6px #ffffff) !important;
+    margin: 0 !important;
   }
 
-  .turn-indicator-pill {
-    min-width: 120px;
-    font-size: 0.7rem;
-    padding: 0.3rem 0.6rem;
+  .coach-card .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2px;
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
+  .coach-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .coach-heading {
+    font-size: 0.76rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--primary-accent, #334155);
+  }
+
+  .coach-badge {
+    font-size: 0.65rem;
+    padding: 2px 7px;
+  }
+
+  .coach-commentary-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
+    padding-right: 4px;
+    max-height: 80px;
+  }
+
+  #commentary-text {
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* Fixed Viewport 1:1 Chessboard Placement */
   #board-wrapper {
-    width: 100%;
-    max-width: 100%;
-    aspect-ratio: 1 / 1;
-    padding: 6px;
-    border-radius: var(--radius-md, 14px);
-    box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff);
+    width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 54px - 20px), 52vh, 400px) !important;
+    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 54px - 20px), 52vh, 400px) !important;
+    height: auto !important;
+    aspect-ratio: 1 / 1 !important;
+    padding: 6px !important;
+    border-radius: var(--radius-md, 14px) !important;
+    box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff) !important;
+    margin: auto 0 !important;
+    flex-shrink: 0 !important;
   }
 
   #board-container {
-    border-radius: var(--radius-sm, 8px);
+    border-radius: var(--radius-sm, 8px) !important;
   }
 
+  /* Fixed Bottom Navigation Control Bar */
+  #study-bottom-bar {
+    display: flex !important;
+    width: 100% !important;
+    max-width: 440px !important;
+    height: 52px !important;
+    min-height: 52px !important;
+    margin: 0 !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Hide Desktop-Only Side Cards on Mobile Viewport to Prevent Scrolling */
   #info-panel {
-    width: 100%;
-    max-width: 100%;
-    min-width: 0;
-    max-height: none;
-    overflow-y: visible;
-    padding-right: 0;
-    padding-bottom: 1rem;
-    gap: 0.75rem;
-  }
-
-  .panel-card {
-    padding: 0.95rem 1.05rem;
-    border-radius: var(--radius-md, 14px);
-  }
-
-  .card-header h3 {
-    font-size: 0.95rem;
+    display: none !important;
   }
 }

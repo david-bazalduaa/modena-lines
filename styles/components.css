@@ -1023,3 +1023,226 @@ body.modal-open {
   border: none !important;
 }
 
+/* ============================================================
+   CHESSREPS-STYLE STUDY BOTTOM CONTROL BAR & MODE POPOVER MODAL
+   ============================================================ */
+
+.study-bottom-bar {
+  display: none;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  max-width: 440px;
+  height: 52px;
+  background: var(--bg-surface, #e0e5ec);
+  border-radius: var(--radius-pill, 9999px);
+  box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff);
+  padding: 4px 8px;
+  box-sizing: border-box;
+  z-index: 100;
+  user-select: none;
+}
+
+.bottom-bar-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  padding: 4px 12px;
+  min-width: 58px;
+  height: 44px;
+  border-radius: var(--radius-md, 12px);
+  border: none;
+  background: transparent;
+  color: var(--text-secondary, #475569);
+  cursor: pointer;
+  transition: all var(--spring-transition);
+  font-family: inherit;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.bottom-bar-btn:hover {
+  color: var(--primary-accent, #334155);
+}
+
+.bottom-bar-btn:active {
+  box-shadow: var(--shadow-inset-sm, inset 2px 2px 4px #b8c0cc, inset -2px -2px 4px #ffffff);
+  transform: scale(0.96);
+  color: var(--primary-accent, #334155);
+}
+
+.bottom-bar-btn.mode-btn {
+  background: var(--bg-surface, #e0e5ec);
+  box-shadow: var(--shadow-extruded-sm, 2px 2px 5px #b8c0cc, -2px -2px 5px #ffffff);
+  color: var(--primary-accent, #334155);
+  font-weight: 700;
+}
+
+.bottom-bar-icon {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  display: block;
+}
+
+.bottom-bar-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: capitalize;
+}
+
+/* ── Mode Popover Modal Drawer ── */
+.mode-popover-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.mode-popover-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.mode-popover-card {
+  width: 100%;
+  max-width: 380px;
+  background: var(--bg-surface, #e0e5ec);
+  border-radius: var(--radius-lg, 20px);
+  box-shadow: var(--shadow-extruded-lg, 8px 8px 24px #b8c0cc, -8px -8px 24px #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 1.25rem;
+  transform: translateY(0);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+
+.mode-popover-overlay.hidden .mode-popover-card {
+  transform: translateY(30px);
+}
+
+.mode-popover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+.mode-popover-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.mode-popover-icon-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-md, 10px);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-extruded-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-accent, #334155);
+}
+
+.mode-popover-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.mode-popover-subtitle {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+}
+
+.mode-popover-close-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-extruded-sm);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--spring-transition);
+}
+
+.mode-popover-close-btn:hover {
+  color: var(--text-primary);
+}
+
+.mode-popover-close-btn:active {
+  box-shadow: var(--shadow-inset-sm);
+}
+
+.mode-popover-deck-container .training-deck-widget {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+}
+
+.mode-popover-deck-container .mode-deck-card {
+  padding: 0.85rem 0.65rem;
+  min-height: 90px;
+}
+
+/* ── Coach Guidance Card Specifics ── */
+.coach-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coach-heading {
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--primary-accent, #334155);
+}
+
+.coach-header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.coach-commentary-scroll {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  max-height: 90px;
+}
+
+.coach-commentary-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.coach-commentary-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.4);
+  border-radius: var(--radius-pill);
+}
+
+
