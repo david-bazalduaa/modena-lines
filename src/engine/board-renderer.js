@@ -245,16 +245,12 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     // CASE 2: A square is already selected (selectedSquare !== null)
     // ============================================================
 
-    // 2A. Clicked the same square -> Cancel selection
+    // 2A. Clicked the same square -> Keep selection and allow immediate drag initiation without canceling
     if (clickedSquare === selectedSquare) {
-      e.preventDefault();
-      e.stopPropagation();
-      clearBoardHighlights(boardSelector);
-      selectedSquare = null;
       return;
     }
 
-    // 2B. Clicked another friendly White piece -> Switch selection
+    // 2B. Clicked another friendly White piece -> Switch selection and allow immediate drag initiation
     if (clickedPiece && clickedPiece.color === 'w') {
       selectedSquare = clickedSquare;
       clearBoardHighlightsKeepState(boardSelector);

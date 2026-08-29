@@ -1129,3 +1129,16 @@ body.modal-open {
   margin: 0;
 }
 
+/* ============================================================
+   RIGHT PANEL COLUMN FLOATING CONTAINER
+   ============================================================ */
+#info-panel,
+.side-panel,
+.right-column,
+.panel-stack-wrapper,
+.side-panel-container {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+}
+
