@@ -146,12 +146,14 @@ class UserProgress {
     st.attempts = (st.attempts || 0) + 1;
     this.checkAndUpdateDailyStreak();
     this.save();
+    this.notifySubscribers();
   }
 
   recordMistake(lineId) {
     const st = this.getLineStat(lineId);
     st.mistakes = (st.mistakes || 0) + 1;
     this.save();
+    this.notifySubscribers();
   }
 
   isLineCompleted(line) {
@@ -175,6 +177,10 @@ class UserProgress {
     st.mistakes = 0;
     this.checkAndUpdateDailyStreak();
     this.save();
+    this.notifySubscribers();
+    try {
+      window.dispatchEvent(new CustomEvent('line-mastered', { detail: { lineId, accuracy: acc } }));
+    } catch (e) {}
   }
 
   recalculateMetrics(allLines) {

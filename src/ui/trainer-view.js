@@ -43,6 +43,9 @@ export class TrainerView {
     this.streakScore = 0;
     this.blindPool = [];
 
+    // Active CPU turn and glide animation guard
+    this.isBlackAnimating = false;
+
     // Auto-advance 2-second progression loop state
     this.autoAdvanceTimer = null;
     this.autoAdvanceInterval = null;
@@ -539,6 +542,9 @@ export class TrainerView {
 
   resetDrill() {
     this.cancelAutoAdvance();
+    this.isBlackAnimating = false;
+    $('#board').css('pointer-events', '');
+
     if (this.isBlindStreak) {
       this.streakScore = 0;
       this.pickNextBlindLine();
@@ -559,12 +565,12 @@ export class TrainerView {
   }
 
   onDragStart(source, piece) {
-    if (this.game.game_over()) return false;
-    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return false;
-
-    if (this.game.turn() !== 'w' || piece.search(/^b/) !== -1) {
+    // Input Guard: strictly disallow dragging while Black is thinking or piece animation is in flight
+    if (this.isBlackAnimating || this.game.turn() !== 'w' || piece.search(/^b/) !== -1) {
       return false;
     }
+    if (this.game.game_over()) return false;
+    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return false;
 
     // Immediately clear ambiguity hint upon user interaction
     clearAmbiguityHints('#board');
@@ -667,12 +673,16 @@ export class TrainerView {
     this.updateUI();
 
     if (this.moveIndex >= this.currentLine.moves.length) {
+      this.isBlackAnimating = false;
+      $('#board').css('pointer-events', '');
       this.onLineComplete();
       return testMove;
     }
 
     if (this.game.turn() === 'b') {
-      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs);
+      this.isBlackAnimating = true;
+      $('#board').css('pointer-events', 'none');
+      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
     }
     return testMove;
   }
@@ -682,7 +692,14 @@ export class TrainerView {
    * State synchronization and UI re-renders are scheduled strictly after the animation completes.
    */
   playBlackResponse() {
-    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
+    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
+      this.isBlackAnimating = false;
+      $('#board').css('pointer-events', '');
+      return;
+    }
+
+    this.isBlackAnimating = true;
+    $('#board').css('pointer-events', 'none');
 
     const blackMoveData = this.currentLine.moves[this.moveIndex];
     this.game.move(blackMoveData.san);
@@ -704,9 +721,16 @@ export class TrainerView {
       animationDuration,
       () => {
         // Handshake callback strictly after piece settles at destination square
+        if (this.game.turn() === 'w') {
+          this.isBlackAnimating = false;
+          $('#board').css('pointer-events', '');
+        }
+
         this.updateUI();
 
         if (this.moveIndex >= this.currentLine.moves.length) {
+          this.isBlackAnimating = false;
+          $('#board').css('pointer-events', '');
           this.onLineComplete();
           return;
         }
@@ -734,6 +758,9 @@ export class TrainerView {
   }
 
   onLineComplete() {
+    this.isBlackAnimating = false;
+    $('#board').css('pointer-events', '');
+
     if (this.isBlindStreak) {
       this.streakScore++;
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
@@ -748,6 +775,11 @@ export class TrainerView {
     userProgress.markCompleted(this.currentLine.id, this.currentLine.totalHalfMoves / 2);
     if (this.currentLine) {
       this.completedInLoop.add(this.currentLine.id);
+    }
+
+    // Immediately trigger reactive header update
+    if (window.appInstance && typeof window.appInstance.updateHeaderMetrics === 'function') {
+      window.appInstance.updateHeaderMetrics();
     }
 
     this.renderVariationDropdown();

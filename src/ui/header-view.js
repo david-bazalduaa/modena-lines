@@ -60,4 +60,21 @@ export class HeaderView {
   getActiveFilter() {
     return this.activeFilter;
   }
+
+  /**
+   * Synchronously updates the top navigation header metric badge (Accuracy and Completed count).
+   * @param {Object} metrics
+   * @param {number} [metrics.overallAccuracy]
+   * @param {number} [metrics.completedCount]
+   * @param {number} [metrics.totalCount]
+   */
+  updateProgressMetrics(metrics) {
+    if (!metrics) return;
+    if (metrics.overallAccuracy !== undefined) {
+      $('#header-accuracy').text(metrics.overallAccuracy + '%');
+    }
+    if (metrics.completedCount !== undefined && metrics.totalCount !== undefined) {
+      $('#header-completed').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    }
+  }
 }

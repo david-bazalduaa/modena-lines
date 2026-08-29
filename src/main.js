@@ -34,6 +34,11 @@ class App {
       this.refreshCurrentView();
     });
 
+    // Listen to real-time line mastery events for instant synchronous header pill updates
+    window.addEventListener('line-mastered', () => {
+      this.updateHeaderMetrics();
+    });
+
     // Default route: render Level 1 Course Catalog View
     this.showCatalogView();
 
@@ -116,8 +121,12 @@ class App {
   updateHeaderMetrics() {
     this.allLines = getAllLines();
     const metrics = userProgress.recalculateMetrics(this.allLines);
-    $('#header-accuracy').text(metrics.overallAccuracy + '%');
-    $('#header-completed').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    if (this.headerView && typeof this.headerView.updateProgressMetrics === 'function') {
+      this.headerView.updateProgressMetrics(metrics);
+    } else {
+      $('#header-accuracy').text(metrics.overallAccuracy + '%');
+      $('#header-completed').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    }
 
     $('#dash-total-mastered').text(metrics.completedCount);
     $('#dash-avg-accuracy').text(metrics.overallAccuracy + '%');
