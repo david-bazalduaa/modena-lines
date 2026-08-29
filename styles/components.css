@@ -317,125 +317,6 @@
   color: var(--primary-accent, #334155);
 }
 
-/* ── Bottom Floating Controls Deck (Seamless Neumorphic Island) ── */
-#controls-bar {
-  width: 100%;
-  position: fixed;
-  bottom: 1.25rem;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  z-index: 200;
-  padding: 0 1.2rem;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  display: flex;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.controls-container {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.6rem 1.1rem;
-  background: var(--bg-surface);
-  border-radius: var(--radius-pill);
-  box-shadow: var(--shadow-extruded-lg);
-  border: var(--border-subtle);
-  max-width: 960px;
-  overflow-x: auto;
-  pointer-events: auto;
-}
-
-.button-group-divider {
-  width: 1px;
-  height: 24px;
-  background: #CBD5E1;
-  flex-shrink: 0;
-}
-
-.ctrl-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.3rem;
-  border-radius: var(--radius-pill);
-  border: none;
-  background: var(--bg-surface);
-  box-shadow: var(--shadow-extruded-sm);
-  color: var(--text-primary);
-  font-size: 0.88rem;
-  font-weight: 700;
-  cursor: pointer;
-  user-select: none;
-  white-space: nowrap;
-  transition: all var(--spring-transition);
-}
-
-.ctrl-btn:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-extruded);
-}
-
-.ctrl-btn:active:not(:disabled) {
-  transform: translateY(0);
-  box-shadow: var(--shadow-pressed);
-}
-
-.ctrl-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  box-shadow: none;
-}
-
-.ctrl-btn.primary {
-  color: var(--primary-accent, #334155);
-}
-
-.ctrl-btn.hint-btn {
-  color: var(--accent-emerald);
-}
-
-.ctrl-btn.danger {
-  color: var(--accent-crimson);
-}
-
-.ctrl-btn.icon-only {
-  padding: 0.65rem 1rem;
-}
-
-@media (max-width: 767px) {
-  #controls-bar {
-    bottom: 0.5rem;
-    padding: 0 0.4rem;
-  }
-
-  .controls-container {
-    padding: 0.35rem 0.5rem;
-    gap: 0.3rem;
-    width: 100%;
-    max-width: 100%;
-    justify-content: space-between;
-  }
-
-  .ctrl-btn {
-    padding: 0.45rem 0.65rem;
-    font-size: 0.76rem;
-    gap: 0.25rem;
-  }
-
-  .ctrl-btn.icon-only {
-    padding: 0.45rem 0.6rem;
-  }
-
-  .button-group-divider {
-    height: 18px;
-    margin: 0 0.1rem;
-  }
-}
-
 /* Helper Utility Classes */
 .hidden {
   display: none !important;
@@ -444,7 +325,7 @@
 /* ── Toast Notifications ── */
 .toast {
   position: fixed;
-  bottom: 90px;
+  bottom: 2rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;

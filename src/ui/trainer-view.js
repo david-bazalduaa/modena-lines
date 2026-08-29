@@ -243,12 +243,12 @@ export class TrainerView {
 
   /**
    * Premove Management Engine: queues, clears, and validates intent.
+   * Premoves are kept purely visual via red square highlights without intrusive text toasts.
    */
   queuePremove(from, to, promo = 'q') {
     this.premove = { from, to, promo: promo || 'q', isQueued: true };
     this.clearHighlights();
     highlightPremoveSquares(from, to, '#board');
-    this.showToast(`Premove queued: ${from} → ${to}`, 'success');
   }
 
   clearPremove() {

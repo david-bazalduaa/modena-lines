@@ -145,10 +145,9 @@ class App {
   showCatalogView() {
     this.currentView = 'catalog';
 
-    // Hide Level 2 Sub-Course Hub, Level 3 Study View & floating bottom controls
+    // Hide Level 2 Sub-Course Hub & Level 3 Study View
     $('#subcourse-view').addClass('hidden').removeClass('active');
     $('#study-view').addClass('hidden').removeClass('active');
-    $('#controls-bar').addClass('hidden');
 
     // Show Level 1 Dashboard Catalog
     $('#dashboard-view').removeClass('hidden').addClass('active');
@@ -179,10 +178,9 @@ class App {
       return;
     }
 
-    // Hide Level 1 Catalog, Level 3 Study View & bottom controls
+    // Hide Level 1 Catalog & Level 3 Study View
     $('#dashboard-view').addClass('hidden').removeClass('active');
     $('#study-view').addClass('hidden').removeClass('active');
-    $('#controls-bar').addClass('hidden');
 
     // Show Level 2 Sub-Course Hub
     $('#subcourse-view').removeClass('hidden').addClass('active');
@@ -210,9 +208,8 @@ class App {
     $('#dashboard-view').addClass('hidden').removeClass('active');
     $('#subcourse-view').addClass('hidden').removeClass('active');
 
-    // Show Study Board & floating bottom controls deck
+    // Show Study Board
     $('#study-view').removeClass('hidden').addClass('active');
-    $('#controls-bar').removeClass('hidden');
 
     if (subCourse) {
       this.selectedSubCourse = subCourse;
