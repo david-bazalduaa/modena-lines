@@ -1010,9 +1010,9 @@ body {
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 8px !important;
     flex: 1 !important;
     min-height: 0 !important;
   }
@@ -1083,7 +1083,7 @@ body {
     font-weight: 500;
   }
 
-  /* Fixed Viewport 1:1 Chessboard Placement - Dynamically Sized for iOS Safari Viewports */
+  /* Fixed Viewport 1:1 Chessboard Placement - Positioned higher up with snug top alignment */
   #board-wrapper {
     width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
     max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
@@ -1092,7 +1092,7 @@ body {
     padding: 6px !important;
     border-radius: var(--radius-md, 14px) !important;
     box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff) !important;
-    margin: auto 0 !important;
+    margin: 4px 0 0 0 !important;
     flex-shrink: 1 !important;
   }
 
