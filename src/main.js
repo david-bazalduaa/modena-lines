@@ -149,6 +149,8 @@ class App {
    */
   showCatalogView() {
     this.currentView = 'catalog';
+    $('body').removeClass('study-active');
+    $('#mobile-trainer-toolbar').addClass('hidden');
 
     // Hide Level 2 Sub-Course Hub & Level 3 Study View
     $('#subcourse-view').addClass('hidden').removeClass('active');
@@ -176,6 +178,9 @@ class App {
    */
   showSubCourseHub(course) {
     this.currentView = 'subcourse';
+    $('body').removeClass('study-active');
+    $('#mobile-trainer-toolbar').addClass('hidden');
+
     this.selectedCourse = course || (COURSES.length > 0 ? COURSES[0] : null);
 
     if (!this.selectedCourse) {
@@ -208,6 +213,8 @@ class App {
    */
   showStudyView(subCourse = null) {
     this.currentView = 'study';
+    $('body').addClass('study-active');
+    $('#mobile-trainer-toolbar').removeClass('hidden');
 
     // Completely hide Level 1 and Level 2 views
     $('#dashboard-view').addClass('hidden').removeClass('active');

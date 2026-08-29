@@ -197,47 +197,6 @@
         </div>
       </div>
 
-      <!-- Mobile Trainer Fixed Bottom Action Bar (< 768px) -->
-      <nav id="mobile-trainer-toolbar" class="mobile-trainer-toolbar study-bottom-bar" aria-label="Trainer Controls">
-        <button id="btn-action-hint" class="bottom-bar-btn" type="button" title="Show Move Hint">
-          <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="9" y1="18" x2="15" y2="18"></line>
-            <line x1="10" y1="22" x2="14" y2="22"></line>
-            <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
-          </svg>
-          <span class="bottom-bar-label">Hint</span>
-        </button>
-
-        <button id="btn-action-mode" class="bottom-bar-btn mode-btn" type="button" title="Change Training Mode" aria-haspopup="dialog">
-          <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="6" width="20" height="12" rx="4"></rect>
-            <line x1="6" y1="12" x2="10" y2="12"></line>
-            <line x1="8" y1="10" x2="8" y2="14"></line>
-            <circle cx="15" cy="11" r="1"></circle>
-            <circle cx="18" cy="13" r="1"></circle>
-          </svg>
-          <span class="bottom-bar-label" id="bottom-mode-label">Learn</span>
-        </button>
-
-        <button id="btn-action-reset" class="bottom-bar-btn" type="button" title="Reset Drill Line">
-          <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
-            <path d="M3 3v5h5"></path>
-          </svg>
-          <span class="bottom-bar-label">Reset</span>
-        </button>
-
-        <button id="btn-action-flip" class="bottom-bar-btn" type="button" title="Flip Chessboard">
-          <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-            <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
-            <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
-            <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
-          </svg>
-          <span class="bottom-bar-label">Flip</span>
-        </button>
-      </nav>
-
       <!-- Right Column: Coach & ChessReps Mode Deck Panel -->
       <div id="info-panel">
 
@@ -375,6 +334,47 @@
       </div>
     </div>
   </div>
+
+  <!-- Mobile Trainer Fixed Bottom Action Bar (Fixed Direct Child of Body) -->
+  <nav id="mobile-trainer-toolbar" class="mobile-trainer-toolbar study-bottom-bar hidden" aria-label="Trainer Controls">
+    <button id="btn-action-hint" class="bottom-bar-btn" type="button" title="Show Move Hint">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="9" y1="18" x2="15" y2="18"></line>
+        <line x1="10" y1="22" x2="14" y2="22"></line>
+        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+      </svg>
+      <span class="bottom-bar-label">Hint</span>
+    </button>
+
+    <button id="btn-action-mode" class="bottom-bar-btn mode-btn" type="button" title="Change Training Mode" aria-haspopup="dialog">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="4"></rect>
+        <line x1="6" y1="12" x2="10" y2="12"></line>
+        <line x1="8" y1="10" x2="8" y2="14"></line>
+        <circle cx="15" cy="11" r="1"></circle>
+        <circle cx="18" cy="13" r="1"></circle>
+      </svg>
+      <span class="bottom-bar-label" id="bottom-mode-label">Learn</span>
+    </button>
+
+    <button id="btn-action-reset" class="bottom-bar-btn" type="button" title="Reset Drill Line">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+        <path d="M3 3v5h5"></path>
+      </svg>
+      <span class="bottom-bar-label">Reset</span>
+    </button>
+
+    <button id="btn-action-flip" class="bottom-bar-btn" type="button" title="Flip Chessboard">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+        <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+        <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+        <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+      </svg>
+      <span class="bottom-bar-label">Flip</span>
+    </button>
+  </nav>
 
   <!-- ==================== TOAST NOTIFICATIONS ==================== -->
   <div id="status-toast" class="toast hidden" role="alert" aria-live="polite">
