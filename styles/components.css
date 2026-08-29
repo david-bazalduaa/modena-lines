@@ -1037,7 +1037,8 @@ body.modal-open {
    CHESSREPS-STYLE STUDY BOTTOM CONTROL BAR & MODE POPOVER MODAL
    ============================================================ */
 
-.study-bottom-bar {
+.study-bottom-bar,
+.mobile-trainer-toolbar {
   display: none;
   align-items: center;
   justify-content: space-around;
@@ -1051,6 +1052,33 @@ body.modal-open {
   box-sizing: border-box;
   z-index: 100;
   user-select: none;
+}
+
+@media (max-width: 767px) {
+  #mobile-trainer-toolbar,
+  .mobile-trainer-toolbar,
+  .study-bottom-bar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 56px !important;
+    min-height: 56px !important;
+    z-index: 999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    background: var(--bg-surface, #e0e5ec) !important;
+    box-shadow: 0 -4px 16px rgba(163, 177, 198, 0.4), 0 -1px 3px rgba(255, 255, 255, 0.8) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
+    padding: 0 1rem !important;
+    box-sizing: border-box !important;
+  }
+
+  #study-view.hidden #mobile-trainer-toolbar,
+  #study-view:not(.active) #mobile-trainer-toolbar {
+    display: none !important;
+  }
 }
 
 .bottom-bar-btn {

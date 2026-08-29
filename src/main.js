@@ -114,7 +114,12 @@ class App {
         }
       );
     } else if (this.currentView === 'study' && this.trainer && this.trainer.currentSubCourse) {
-      this.trainer.renderLinesList();
+      if (typeof this.trainer.updateLineVariationSelector === 'function') {
+        this.trainer.updateLineVariationSelector();
+      }
+      if (typeof this.trainer.renderModeDeckPanel === 'function') {
+        this.trainer.renderModeDeckPanel();
+      }
     }
   }
 

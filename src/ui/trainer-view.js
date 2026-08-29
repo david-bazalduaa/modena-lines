@@ -538,7 +538,7 @@ export class TrainerView {
 
     renderModeDeck('mode-popover-deck-container', activePool, userProgress, (selectedMode) => {
       this.selectMode(selectedMode);
-    }, this.currentMode);
+    }, this.currentMode, true);
 
     const modeLabels = {
       learn: 'Learn',
