@@ -93,9 +93,25 @@ export function renderMiniBoard(containerElement, fen) {
    ============================================================ */
 
 let selectedSquare = null;
+let ignoreInputUntil = 0;
 
 export function getSelectedSquare() { return selectedSquare; }
 export function setSelectedSquare(sq) { selectedSquare = sq; }
+
+/**
+ * Enforces an input cooldown window (default: 120ms) to swallow trailing synthetic
+ * click events, delayed touch releases, and prevent accidental re-selection.
+ */
+export function setMoveCooldown(durationMs = 120) {
+  ignoreInputUntil = Date.now() + durationMs;
+}
+
+/**
+ * Checks whether the engine is currently within the post-move touch/click cooldown window.
+ */
+export function isMoveCooldownActive() {
+  return Date.now() < ignoreInputUntil;
+}
 
 /**
  * Extracts square coordinate from any DOM element inside the board.
@@ -124,7 +140,7 @@ export function getSquareCoordinate(element) {
 export function clearBoardHighlights(boardSelector = '#board') {
   selectedSquare = null;
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst'
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst square-selected active-piece premove-dragging-source'
   );
 }
 
@@ -133,7 +149,7 @@ export function clearBoardHighlights(boardSelector = '#board') {
  */
 export function clearBoardHighlightsKeepState(boardSelector = '#board') {
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint square-selected active-piece'
   );
 }
 
@@ -203,7 +219,7 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
   if (!square) return;
   const $sq = $(boardSelector).find('.square-' + square + ', [data-square="' + square + '"]');
   if (type === 'selected') {
-    $sq.addClass('highlight-selected-square');
+    $sq.addClass('highlight-selected-square square-selected');
   } else if (type === 'destination') {
     $sq.addClass('highlight-dest-square');
   } else if (type === 'ambiguity-hint' || type === 'hint') {
@@ -215,6 +231,7 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
  * Click-to-Move & Premove Handler using event delegation on board container.
  * Active throughout training sessions, enabling instant moves on White turns
  * and queued premoves with right-click / click cancellation during Black turns.
+ * Includes complete touch lifecycle deduplication and synthetic click swallowing.
  */
 export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution, onPremoveCancel) {
   const boardContainer = document.querySelector('#board-container') || document.querySelector(boardSelector);
@@ -223,6 +240,15 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   // Clean up previous event listeners
   if (boardContainer._boardClickHandler) {
     boardContainer.removeEventListener('pointerdown', boardContainer._boardClickHandler, true);
+  }
+  if (boardContainer._boardPointerUpHandler) {
+    boardContainer.removeEventListener('pointerup', boardContainer._boardPointerUpHandler, true);
+  }
+  if (boardContainer._boardTouchEndHandler) {
+    boardContainer.removeEventListener('touchend', boardContainer._boardTouchEndHandler, true);
+  }
+  if (boardContainer._boardSyntheticClickHandler) {
+    boardContainer.removeEventListener('click', boardContainer._boardSyntheticClickHandler, true);
   }
   if (boardContainer._boardContextMenuHandler) {
     boardContainer.removeEventListener('contextmenu', boardContainer._boardContextMenuHandler);
@@ -257,14 +283,41 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     }
   };
 
-  boardContainer.addEventListener('touchmove', touchMoveHandler, { passive: false });
-  boardContainer.addEventListener('touchstart', touchStartHandler, { passive: false });
-  boardContainer.addEventListener('contextmenu', contextMenuHandler);
-  boardContainer._boardTouchMoveHandler = touchMoveHandler;
-  boardContainer._boardTouchStartHandler = touchStartHandler;
-  boardContainer._boardContextMenuHandler = contextMenuHandler;
+  // Swallows trailing synthetic click and lingering touch events during cooldown
+  const suppressSyntheticHandler = function(e) {
+    if (isMoveCooldownActive()) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+      if (e.stopImmediatePropagation) {
+        e.stopImmediatePropagation();
+      }
+      return;
+    }
 
-  const handler = function(e) {
+    // Prevent default browser click handling on chess board squares to avoid duplicate events after pointerdown
+    if (e.type === 'click') {
+      const clickedSquare = getSquareCoordinate(e.target);
+      if (clickedSquare && e.cancelable) {
+        e.preventDefault();
+      }
+    }
+  };
+
+  const pointerDownHandler = function(e) {
+    // 0. If move cooldown is active, ignore all incoming tap/click input events immediately
+    if (isMoveCooldownActive()) {
+      if (e.cancelable) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+      if (e.stopImmediatePropagation) {
+        e.stopImmediatePropagation();
+      }
+      return;
+    }
+
     // Only handle primary left click/tap for selection and moves
     if (e.button && e.button !== 0) return;
 
@@ -320,22 +373,44 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     }
 
     // 2C. Clicked a target destination square (empty square or enemy piece)
-    e.preventDefault();
+    if (e.cancelable) {
+      e.preventDefault();
+    }
     e.stopPropagation();
+    if (e.stopImmediatePropagation) {
+      e.stopImmediatePropagation();
+    }
 
     const fromSquare = selectedSquare;
     const toSquare = clickedSquare;
 
-    clearBoardHighlights(boardSelector);
+    // Reset selection state and clear highlights
     selectedSquare = null;
+    clearBoardHighlights(boardSelector);
+
+    // Enforce 120ms cooldown to block trailing synthetic click and lingering touch events
+    setMoveCooldown(120);
 
     if (typeof onMoveExecution === 'function') {
       onMoveExecution(fromSquare, toSquare, isBlackTurn);
     }
   };
 
-  boardContainer.addEventListener('pointerdown', handler, true);
-  boardContainer._boardClickHandler = handler;
+  boardContainer.addEventListener('touchmove', touchMoveHandler, { passive: false });
+  boardContainer.addEventListener('touchstart', touchStartHandler, { passive: false });
+  boardContainer.addEventListener('contextmenu', contextMenuHandler);
+  boardContainer.addEventListener('pointerdown', pointerDownHandler, true);
+  boardContainer.addEventListener('pointerup', suppressSyntheticHandler, true);
+  boardContainer.addEventListener('touchend', suppressSyntheticHandler, true);
+  boardContainer.addEventListener('click', suppressSyntheticHandler, true);
+
+  boardContainer._boardTouchMoveHandler = touchMoveHandler;
+  boardContainer._boardTouchStartHandler = touchStartHandler;
+  boardContainer._boardContextMenuHandler = contextMenuHandler;
+  boardContainer._boardClickHandler = pointerDownHandler;
+  boardContainer._boardPointerUpHandler = suppressSyntheticHandler;
+  boardContainer._boardTouchEndHandler = suppressSyntheticHandler;
+  boardContainer._boardSyntheticClickHandler = suppressSyntheticHandler;
 }
 
 /**

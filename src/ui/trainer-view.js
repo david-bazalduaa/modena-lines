@@ -14,6 +14,8 @@ import {
   highlightPremoveSquares,
   clearPremoveHighlights,
   setSelectedSquare,
+  setMoveCooldown,
+  isMoveCooldownActive,
   glidePieceOnBoard
 } from '../engine/board-renderer.js';
 import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
@@ -748,6 +750,8 @@ export class TrainerView {
     // User actually dragged piece to a different square on White's turn: execute move immediately
     this.clearPremove();
     this.clearHighlights();
+    setSelectedSquare(null);
+    setMoveCooldown(120);
     const move = this.handleUserMove(source, target, 'q', true);
     if (!move) return 'snapback';
   }
@@ -758,6 +762,7 @@ export class TrainerView {
       $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
       this.activeDraggedSource = null;
     }
+    setSelectedSquare(null);
 
     if (this.board && this.game) {
       const currentPos = this.board.fen();
@@ -772,13 +777,21 @@ export class TrainerView {
    * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
    * Validates user move strictly against the target line.
    * If incorrect, registers failure penalty immediately without auto-correction.
+   * Enforces complete selection state and highlight reset upon move completion.
    */
   handleUserMove(fromSquare, toSquare, promoPiece = 'q', isDragDrop = false) {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
     if (this.game.turn() !== 'w') return null;
 
-    // Clear ambiguity visual hints immediately upon user move execution
+    // Reset selection state and enforce input cooldown immediately
+    setSelectedSquare(null);
+    setMoveCooldown(120);
+
+    // Clear ambiguity visual hints and all active selection classes immediately upon user move execution
     clearAmbiguityHints('#board');
+    $('#board .square-55d63, #board [data-square]').removeClass(
+      'highlight-selected-square highlight-dest-square highlight-selected highlight-target square-selected active-piece premove-dragging-source'
+    );
 
     const currentMoveIndex = this.moveIndex;
     const expected = this.currentLine.moves[currentMoveIndex];
@@ -791,6 +804,8 @@ export class TrainerView {
     });
 
     if (!testMove) {
+      setSelectedSquare(null);
+      setMoveCooldown(120);
       this.showToast('Illegal move!', 'error');
       this.triggerErrorShake();
       this.clearHighlights();
@@ -801,6 +816,8 @@ export class TrainerView {
     if (testMove.san !== expected.san) {
       // Revert incorrect move on chess board
       this.game.undo();
+      setSelectedSquare(null);
+      setMoveCooldown(120);
       this.triggerErrorShake();
       this.clearHighlights();
 
@@ -830,6 +847,8 @@ export class TrainerView {
     if (this.board) {
       this.board.position(this.game.fen(), false);
     }
+    setSelectedSquare(null);
+    setMoveCooldown(120);
     this.highlightSquares(testMove.from, testMove.to);
     this.triggerSuccessGlow();
     this.updateUI();
@@ -917,6 +936,8 @@ export class TrainerView {
                 if (this.board) {
                   this.board.position(this.game.fen(), false);
                 }
+                setSelectedSquare(null);
+                setMoveCooldown(120);
                 this.highlightSquares(testMove.from, testMove.to);
                 this.renderPremoveHighlights(); // Re-render remaining queued premoves in the chain
                 this.triggerSuccessGlow();
@@ -1268,12 +1289,15 @@ export class TrainerView {
   }
 
   clearHighlights() {
+    setSelectedSquare(null);
     clearBoardHighlights('#board');
     clearAmbiguityHints('#board');
     if (!this.hasPremoveQueued()) {
       clearPremoveHighlights('#board');
     }
-    $('#board .square-55d63').removeClass('highlight-last-move');
+    $('#board .square-55d63, #board [data-square]').removeClass(
+      'highlight-last-move highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint square-selected active-piece premove-dragging-source'
+    );
   }
 
   highlightSquares(from, to) {

@@ -136,6 +136,7 @@
 .highlight-hint-src,
 .highlight-square,
 .square-selected,
+.active-piece,
 .last-move {
   border: none !important;
   outline: none !important;
