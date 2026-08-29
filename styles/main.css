@@ -784,8 +784,10 @@ body {
 @media (max-width: 767px) {
   html, body {
     overflow: hidden !important;
+    height: 100% !important;
     height: 100vh !important;
     height: 100dvh !important;
+    min-height: -webkit-fill-available;
     touch-action: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -793,10 +795,10 @@ body {
 
   /* Compact Mobile Header (48px max height, single horizontal flex row) */
   #app-header {
-    height: 48px !important;
-    max-height: 48px !important;
+    height: calc(48px + env(safe-area-inset-top, 0px)) !important;
+    max-height: calc(48px + env(safe-area-inset-top, 0px)) !important;
     min-height: 48px !important;
-    padding: 4px 12px !important;
+    padding: env(safe-area-inset-top, 4px) 12px 4px 12px !important;
     position: sticky;
     top: 0;
     z-index: 200;
@@ -982,17 +984,17 @@ body {
   }
 
   #study-view.active {
-    height: 100% !important;
-    max-height: 100% !important;
+    height: calc(100dvh - 48px - env(safe-area-inset-top, 0px)) !important;
+    max-height: calc(100dvh - 48px - env(safe-area-inset-top, 0px)) !important;
     width: 100% !important;
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between !important;
+    justify-content: flex-start !important;
     align-items: center !important;
-    padding: 6px 10px 62px 10px !important;
+    padding: 6px 10px calc(58px + env(safe-area-inset-bottom, 16px)) 10px !important;
     box-sizing: border-box !important;
-    gap: 0 !important;
+    gap: 6px !important;
     touch-action: none !important;
   }
 
@@ -1023,10 +1025,10 @@ body {
   #commentary-card.coach-card {
     width: 100% !important;
     max-width: 440px !important;
-    min-height: 48px !important;
-    max-height: min(120px, 15vh) !important;
+    min-height: 40px !important;
+    max-height: min(76px, 10vh) !important;
     flex-shrink: 0 !important;
-    padding: 6px 10px !important;
+    padding: 4px 10px !important;
     border-radius: var(--radius-md, 12px) !important;
     display: flex !important;
     flex-direction: column !important;
@@ -1070,35 +1072,35 @@ body {
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     padding-right: 4px;
-    max-height: 80px;
+    max-height: 60px;
   }
 
   #commentary-text {
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     line-height: 1.35;
     color: var(--text-primary);
     margin: 0;
     font-weight: 500;
   }
 
-  /* Fixed Viewport 1:1 Chessboard Placement */
+  /* Fixed Viewport 1:1 Chessboard Placement - Dynamically Sized for iOS Safari Viewports */
   #board-wrapper {
-    width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 60px - 20px), 50vh, 400px) !important;
-    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 115px - 60px - 20px), 50vh, 400px) !important;
+    width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
+    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
     height: auto !important;
     aspect-ratio: 1 / 1 !important;
     padding: 6px !important;
     border-radius: var(--radius-md, 14px) !important;
     box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff) !important;
     margin: auto 0 !important;
-    flex-shrink: 0 !important;
+    flex-shrink: 1 !important;
   }
 
   #board-container {
     border-radius: var(--radius-sm, 8px) !important;
   }
 
-  /* Fixed Mobile Trainer Toolbar (< 768px) */
+  /* Fixed Mobile Trainer Toolbar (< 768px) with iOS Safe Area Insets */
   #mobile-trainer-toolbar,
   #study-bottom-bar,
   .mobile-trainer-toolbar {
@@ -1106,16 +1108,16 @@ body {
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    height: 56px !important;
-    min-height: 56px !important;
-    z-index: 999 !important;
+    height: calc(56px + env(safe-area-inset-bottom, 16px)) !important;
+    min-height: calc(56px + env(safe-area-inset-bottom, 16px)) !important;
+    z-index: 9999 !important;
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     justify-content: space-around !important;
     background: var(--bg-surface, #e0e5ec) !important;
     box-shadow: 0 -4px 16px rgba(163, 177, 198, 0.4), 0 -1px 3px rgba(255, 255, 255, 0.8) !important;
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-    padding: 0 1rem !important;
+    padding: 6px 1rem env(safe-area-inset-bottom, 16px) 1rem !important;
     box-sizing: border-box !important;
   }
 
