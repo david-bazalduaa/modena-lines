@@ -33,7 +33,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'learn',
       title: 'Learn',
-      icon: '📘',
+      iconSvg: `<svg class="mode-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>`,
       desc: 'Discover new lines',
       cssClass: 'learn-mode',
       unlocked: true,
@@ -42,7 +42,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'practice',
       title: 'Practice',
-      icon: '🎯',
+      iconSvg: `<svg class="mode-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>`,
       desc: 'Perfect learned lines',
       cssClass: 'practice-mode',
       unlocked: true,
@@ -51,7 +51,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'drill',
       title: 'Drill',
-      icon: '🔥',
+      iconSvg: `<svg class="mode-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"></path></svg>`,
       desc: 'Blind streak test',
       cssClass: 'drill-mode',
       unlocked: isDrillUnlocked,
@@ -60,7 +60,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'arena',
       title: 'Arena',
-      icon: '⚔️',
+      iconSvg: `<svg class="mode-icon-svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="9.5" y1="9" x2="14.5" y2="14"></line><line x1="14.5" y1="9" x2="9.5" y2="14"></line></svg>`,
       desc: 'Master survival',
       cssClass: 'arena-mode',
       unlocked: isArenaUnlocked,
@@ -80,7 +80,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
       html += `
         <div class="mode-popover-item ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" role="button" tabindex="0">
           <div class="popover-item-left">
-            <span class="popover-mode-icon">${mode.icon}</span>
+            <span class="popover-mode-icon">${mode.iconSvg}</span>
             <div class="popover-mode-info">
               <div class="popover-mode-title-row">
                 <span class="popover-mode-title">${mode.title}</span>
@@ -100,7 +100,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     } else {
       html += `
         <div class="mode-deck-card ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" data-default-badge="${mode.defaultBadge}">
-          <span class="mode-icon">${mode.icon}</span>
+          <span class="mode-icon">${mode.iconSvg}</span>
           <span class="mode-title">${mode.title}</span>
           <span class="mode-desc">${mode.desc}</span>
           <span class="coach-badge" style="font-size: 0.62rem; margin-top: 0.2rem;">${badgeText}</span>

@@ -285,7 +285,17 @@
 }
 
 .mode-icon {
-  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-accent, #334155);
+}
+
+.mode-icon-svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  display: block;
 }
 
 .mode-title {
