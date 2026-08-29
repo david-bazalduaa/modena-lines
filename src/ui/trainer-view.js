@@ -618,6 +618,11 @@ export class TrainerView {
     // Immediately clear ambiguity hint upon user interaction
     clearAmbiguityHints('#board');
 
+    // Instant source hiding: suppress static piece on source square to prevent ghosting during drag
+    this.isUserDragging = true;
+    this.activeDraggedSource = source;
+    $(`#board .square-${source}, #board [data-square="${source}"]`).addClass('premove-dragging-source');
+
     // Unified Gesture Engine: dragstart automatically overrides prior click-selected square
     clearBoardHighlightsKeepState('#board');
     setSelectedSquare(source);
@@ -630,6 +635,14 @@ export class TrainerView {
   }
 
   onDrop(source, target) {
+    // Release active drag state and remove source suppression
+    this.isUserDragging = false;
+    $(`#board .square-${source}, #board [data-square="${source}"]`).removeClass('premove-dragging-source');
+    if (this.activeDraggedSource) {
+      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
+      this.activeDraggedSource = null;
+    }
+
     if (source === target) {
       // User tapped/clicked without dragging
       if (this.hasPremoveQueued()) {
@@ -655,6 +668,12 @@ export class TrainerView {
   }
 
   onSnapEnd() {
+    this.isUserDragging = false;
+    if (this.activeDraggedSource) {
+      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
+      this.activeDraggedSource = null;
+    }
+
     if (this.board && this.game) {
       const currentPos = this.board.fen();
       const gamePos = this.game.fen();
