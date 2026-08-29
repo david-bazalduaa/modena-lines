@@ -119,12 +119,12 @@ export function getSquareCoordinate(element) {
 }
 
 /**
- * Clears all click-to-move and hint highlights from the board and resets selection state.
+ * Clears all click-to-move, hint, and premove highlights from the board and resets selection state.
  */
 export function clearBoardHighlights(boardSelector = '#board') {
   selectedSquare = null;
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
+    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst'
   );
 }
 
@@ -134,6 +134,28 @@ export function clearBoardHighlights(boardSelector = '#board') {
 export function clearBoardHighlightsKeepState(boardSelector = '#board') {
   $(boardSelector).find('.square-55d63, [data-square]').removeClass(
     'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint'
+  );
+}
+
+/**
+ * Highlights queued premove source and destination squares with distinct Chess.com red tint.
+ */
+export function highlightPremoveSquares(fromSquare, toSquare, boardSelector = '#board') {
+  clearPremoveHighlights(boardSelector);
+  if (fromSquare) {
+    $(boardSelector).find('.square-' + fromSquare + ', [data-square="' + fromSquare + '"]').addClass('highlight-premove highlight-premove-src');
+  }
+  if (toSquare) {
+    $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]').addClass('highlight-premove highlight-premove-dst');
+  }
+}
+
+/**
+ * Clears premove red highlights from the board.
+ */
+export function clearPremoveHighlights(boardSelector = '#board') {
+  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
+    'highlight-premove highlight-premove-src highlight-premove-dst'
   );
 }
 
@@ -176,16 +198,20 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
 }
 
 /**
- * Click-to-Move Handler using event delegation on board container.
- * Enabled throughout the entire practice/training session whenever it is White's turn.
+ * Click-to-Move & Premove Handler using event delegation on board container.
+ * Active throughout training sessions, enabling instant moves on White turns
+ * and queued premoves with right-click / click cancellation during Black turns.
  */
-export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution) {
+export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution, onPremoveCancel) {
   const boardContainer = document.querySelector('#board-container') || document.querySelector(boardSelector);
   if (!boardContainer) return;
 
   // Clean up previous event listeners
   if (boardContainer._boardClickHandler) {
     boardContainer.removeEventListener('pointerdown', boardContainer._boardClickHandler, true);
+  }
+  if (boardContainer._boardContextMenuHandler) {
+    boardContainer.removeEventListener('contextmenu', boardContainer._boardContextMenuHandler);
   }
   if (boardContainer._boardTouchMoveHandler) {
     boardContainer.removeEventListener('touchmove', boardContainer._boardTouchMoveHandler, { passive: false });
@@ -207,22 +233,36 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     }
   };
 
+  // Right-click anywhere on the board instantly cancels any active premove
+  const contextMenuHandler = function(e) {
+    e.preventDefault();
+    clearBoardHighlights(boardSelector);
+    clearPremoveHighlights(boardSelector);
+    if (typeof onPremoveCancel === 'function') {
+      onPremoveCancel();
+    }
+  };
+
   boardContainer.addEventListener('touchmove', touchMoveHandler, { passive: false });
   boardContainer.addEventListener('touchstart', touchStartHandler, { passive: false });
+  boardContainer.addEventListener('contextmenu', contextMenuHandler);
   boardContainer._boardTouchMoveHandler = touchMoveHandler;
   boardContainer._boardTouchStartHandler = touchStartHandler;
+  boardContainer._boardContextMenuHandler = contextMenuHandler;
 
   const handler = function(e) {
+    // Only handle primary left click/tap for selection and moves
+    if (e.button && e.button !== 0) return;
+
     const clickedSquare = getSquareCoordinate(e.target);
     if (!clickedSquare) return;
 
     const game = typeof getGameInstance === 'function' ? getGameInstance() : getGameInstance;
     if (!game || typeof game.get !== 'function') return;
 
-    // Check game turn: only active during White's turn and when game is not over
     if (typeof game.game_over === 'function' && game.game_over()) return;
-    if (typeof game.turn === 'function' && game.turn() !== 'w') return;
 
+    const isBlackTurn = typeof game.turn === 'function' && game.turn() === 'b';
     const clickedPiece = game.get(clickedSquare);
 
     // ============================================================
@@ -234,9 +274,13 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
         clearBoardHighlightsKeepState(boardSelector);
         highlightBoardSquare(clickedSquare, 'selected', boardSelector);
 
-        // Highlight all legal destination squares
+        // Highlight legal destination squares in current position
         const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
         legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', boardSelector));
+      } else if (typeof onPremoveCancel === 'function') {
+        // Tapped an empty square without selection -> cancel queued premove
+        onPremoveCancel();
+        clearPremoveHighlights(boardSelector);
       }
       return;
     }
@@ -272,7 +316,7 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
     selectedSquare = null;
 
     if (typeof onMoveExecution === 'function') {
-      onMoveExecution(fromSquare, toSquare);
+      onMoveExecution(fromSquare, toSquare, isBlackTurn);
     }
   };
 

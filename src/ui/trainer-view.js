@@ -11,6 +11,8 @@ import {
   clearAmbiguityHints,
   highlightAmbiguityHintSquare,
   highlightBoardSquare,
+  highlightPremoveSquares,
+  clearPremoveHighlights,
   setSelectedSquare,
   glidePieceOnBoard
 } from '../engine/board-renderer.js';
@@ -45,6 +47,14 @@ export class TrainerView {
 
     // Active CPU turn and glide animation guard
     this.isBlackAnimating = false;
+
+    // Premove State Engine
+    this.premove = {
+      from: null,
+      to: null,
+      promo: 'q',
+      isQueued: false
+    };
 
     // Auto-advance 2-second progression loop state
     this.autoAdvanceTimer = null;
@@ -232,6 +242,25 @@ export class TrainerView {
   }
 
   /**
+   * Premove Management Engine: queues, clears, and validates intent.
+   */
+  queuePremove(from, to, promo = 'q') {
+    this.premove = { from, to, promo: promo || 'q', isQueued: true };
+    this.clearHighlights();
+    highlightPremoveSquares(from, to, '#board');
+    this.showToast(`Premove queued: ${from} → ${to}`, 'success');
+  }
+
+  clearPremove() {
+    this.premove = { from: null, to: null, promo: 'q', isQueued: false };
+    clearPremoveHighlights('#board');
+  }
+
+  hasPremoveQueued() {
+    return Boolean(this.premove && this.premove.isQueued && this.premove.from && this.premove.to);
+  }
+
+  /**
    * Safely re-binds chessboard instance and binds unblocked click-to-move listener.
    */
   rebindBoard(fenPosition) {
@@ -261,10 +290,22 @@ export class TrainerView {
 
       this.board = Chessboard('board', config);
 
-      // Unblock and bind native delegated click-to-move handler
-      initClickToMove('#board', () => this.game, (fromSq, toSq) => {
-        this.handleUserMove(fromSq, toSq);
-      });
+      // Unblock and bind native delegated click-to-move and premove handlers
+      initClickToMove(
+        '#board',
+        () => this.game,
+        (fromSq, toSq, isPremove) => {
+          if (isPremove) {
+            this.queuePremove(fromSq, toSq);
+          } else {
+            this.clearPremove();
+            this.handleUserMove(fromSq, toSq);
+          }
+        },
+        () => {
+          this.clearPremove();
+        }
+      );
 
       if (this.board) {
         this.board.resize();
@@ -543,6 +584,7 @@ export class TrainerView {
   resetDrill() {
     this.cancelAutoAdvance();
     this.isBlackAnimating = false;
+    this.clearPremove();
     $('#board').css('pointer-events', '');
 
     if (this.isBlindStreak) {
@@ -565,17 +607,18 @@ export class TrainerView {
   }
 
   onDragStart(source, piece) {
-    // Input Guard: strictly disallow dragging while Black is thinking or piece animation is in flight
-    if (this.isBlackAnimating || this.game.turn() !== 'w' || piece.search(/^b/) !== -1) {
-      return false;
-    }
     if (this.game.game_over()) return false;
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return false;
+
+    // Strict White piece filter: only White pieces can be dragged / premoved
+    if (piece.search(/^w/) === -1) {
+      return false;
+    }
 
     // Immediately clear ambiguity hint upon user interaction
     clearAmbiguityHints('#board');
 
-    // Unified Gesture Engine: dragstart automatically overrides and resets prior click-selected square
+    // Unified Gesture Engine: dragstart automatically overrides prior click-selected square
     clearBoardHighlightsKeepState('#board');
     setSelectedSquare(source);
     highlightBoardSquare(source, 'selected', '#board');
@@ -588,11 +631,24 @@ export class TrainerView {
 
   onDrop(source, target) {
     if (source === target) {
-      // User tapped/clicked without dragging: preserve click-to-move highlights!
+      // User tapped/clicked without dragging
+      if (this.hasPremoveQueued()) {
+        this.clearPremove();
+      }
       return 'snapback';
     }
 
-    // User actually dragged piece to a different square: execute move immediately
+    // Check if it's currently Black's turn or CPU animation is in flight
+    const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
+
+    if (isBlackTurn) {
+      // Queue Premove with distinctive red square highlights and snap piece back cleanly
+      this.queuePremove(source, target, 'q');
+      return 'snapback';
+    }
+
+    // User actually dragged piece to a different square on White's turn: execute move immediately
+    this.clearPremove();
     this.clearHighlights();
     const move = this.handleUserMove(source, target, 'q', true);
     if (!move) return 'snapback';
@@ -676,6 +732,7 @@ export class TrainerView {
 
     if (this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
+      this.clearPremove();
       $('#board').css('pointer-events', '');
       this.onLineComplete();
       return testMove;
@@ -683,7 +740,6 @@ export class TrainerView {
 
     if (this.game.turn() === 'b') {
       this.isBlackAnimating = true;
-      $('#board').css('pointer-events', 'none');
       setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
     }
     return testMove;
@@ -696,21 +752,22 @@ export class TrainerView {
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
-      $('#board').css('pointer-events', '');
+      this.clearPremove();
       return;
     }
 
     this.isBlackAnimating = true;
-    $('#board').css('pointer-events', 'none');
 
     const blackMoveData = this.currentLine.moves[this.moveIndex];
     this.game.move(blackMoveData.san);
     this.moveIndex++;
 
-    // Immediate lightweight state transition
+    // Immediate lightweight state transition (preserve queued premove highlights if active)
     clearAmbiguityHints('#board');
     $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
-    this.highlightSquares(blackMoveData.from, blackMoveData.to);
+    if (!this.hasPremoveQueued()) {
+      this.highlightSquares(blackMoveData.from, blackMoveData.to);
+    }
 
     const animationDuration = APP_CONFIG.blackMoveSpeed || 400;
 
@@ -725,16 +782,33 @@ export class TrainerView {
         // Handshake callback strictly after piece settles at destination square
         if (this.game.turn() === 'w') {
           this.isBlackAnimating = false;
-          $('#board').css('pointer-events', '');
         }
 
         this.updateUI();
 
         if (this.moveIndex >= this.currentLine.moves.length) {
           this.isBlackAnimating = false;
-          $('#board').css('pointer-events', '');
+          this.clearPremove();
           this.onLineComplete();
           return;
+        }
+
+        // ============================================================
+        // PREMOVE AUTOMATIC EXECUTION HANDSHAKE (0ms Instant Delay)
+        // ============================================================
+        if (this.hasPremoveQueued()) {
+          const queued = { ...this.premove };
+          this.clearPremove();
+
+          // Validate legality in the updated FEN position
+          const legalMoves = this.game.moves({ square: queued.from, verbose: true }) || [];
+          const isLegal = legalMoves.some(m => m.to === queued.to);
+
+          if (isLegal) {
+            // Instantly execute premove
+            this.handleUserMove(queued.from, queued.to, queued.promo || 'q', false);
+            return;
+          }
         }
 
         if (this.game.turn() === 'b') {
@@ -1022,6 +1096,9 @@ export class TrainerView {
   clearHighlights() {
     clearBoardHighlights('#board');
     clearAmbiguityHints('#board');
+    if (!this.hasPremoveQueued()) {
+      clearPremoveHighlights('#board');
+    }
     $('#board .square-55d63').removeClass('highlight-last-move');
   }
 

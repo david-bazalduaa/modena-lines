@@ -142,6 +142,18 @@
   position: relative !important;
 }
 
+/* Premove Highlights (Chess.com Red Tint for Queued Moves) */
+.highlight-premove,
+.highlight-premove-src,
+.highlight-premove-dst {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: rgba(220, 38, 38, 0.42) !important;
+  position: relative !important;
+  z-index: 4;
+}
+
 /* Destination Hint Markers (Chess.com Style Centered Subtle Grey Dot / Ring) */
 .highlight-dest-square,
 .highlight-target,
