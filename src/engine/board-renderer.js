@@ -139,14 +139,28 @@ export function clearBoardHighlightsKeepState(boardSelector = '#board') {
 
 /**
  * Highlights queued premove source and destination squares with distinct Chess.com red tint.
+ * Supports both individual square arguments (fromSquare, toSquare) and ordered multi-premove queue arrays.
  */
-export function highlightPremoveSquares(fromSquare, toSquare, boardSelector = '#board') {
+export function highlightPremoveSquares(fromOrQueue, toSquare, boardSelector = '#board') {
   clearPremoveHighlights(boardSelector);
-  if (fromSquare) {
-    $(boardSelector).find('.square-' + fromSquare + ', [data-square="' + fromSquare + '"]').addClass('highlight-premove highlight-premove-src');
-  }
-  if (toSquare) {
-    $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]').addClass('highlight-premove highlight-premove-dst');
+  if (!fromOrQueue) return;
+
+  if (Array.isArray(fromOrQueue)) {
+    fromOrQueue.forEach(move => {
+      if (move && move.from) {
+        $(boardSelector).find('.square-' + move.from + ', [data-square="' + move.from + '"]').addClass('highlight-premove highlight-premove-src');
+      }
+      if (move && move.to) {
+        $(boardSelector).find('.square-' + move.to + ', [data-square="' + move.to + '"]').addClass('highlight-premove highlight-premove-dst');
+      }
+    });
+  } else {
+    if (fromOrQueue) {
+      $(boardSelector).find('.square-' + fromOrQueue + ', [data-square="' + fromOrQueue + '"]').addClass('highlight-premove highlight-premove-src');
+    }
+    if (toSquare) {
+      $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]').addClass('highlight-premove highlight-premove-dst');
+    }
   }
 }
 

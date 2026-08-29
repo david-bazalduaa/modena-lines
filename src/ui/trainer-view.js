@@ -48,13 +48,8 @@ export class TrainerView {
     // Active CPU turn and glide animation guard
     this.isBlackAnimating = false;
 
-    // Premove State Engine
-    this.premove = {
-      from: null,
-      to: null,
-      promo: 'q',
-      isQueued: false
-    };
+    // Multi-Premove Ordered Queue State Engine
+    this.premoveQueue = []; // Ordered array of { from, to, promo }
 
     // Auto-advance 2-second progression loop state
     this.autoAdvanceTimer = null;
@@ -242,22 +237,26 @@ export class TrainerView {
   }
 
   /**
-   * Premove Management Engine: queues, clears, and validates intent.
-   * Premoves are kept purely visual via red square highlights without intrusive text toasts.
+   * Multi-Premove Management Engine: queues, clears, and renders ordered premove chains.
+   * Premoves are kept purely visual via red square highlights across the chain.
    */
   queuePremove(from, to, promo = 'q') {
-    this.premove = { from, to, promo: promo || 'q', isQueued: true };
-    this.clearHighlights();
-    highlightPremoveSquares(from, to, '#board');
+    this.premoveQueue.push({ from, to, promo: promo || 'q' });
+    this.renderPremoveHighlights();
+  }
+
+  renderPremoveHighlights() {
+    clearBoardHighlightsKeepState('#board');
+    highlightPremoveSquares(this.premoveQueue, null, '#board');
   }
 
   clearPremove() {
-    this.premove = { from: null, to: null, promo: 'q', isQueued: false };
+    this.premoveQueue = [];
     clearPremoveHighlights('#board');
   }
 
   hasPremoveQueued() {
-    return Boolean(this.premove && this.premove.isQueued && this.premove.from && this.premove.to);
+    return Boolean(this.premoveQueue && this.premoveQueue.length > 0);
   }
 
   /**
@@ -890,22 +889,26 @@ export class TrainerView {
         }
 
         // ============================================================
-        // PREMOVE AUTOMATIC SYNCHRONOUS HANDSHAKE (0ms Instant Delay)
+        // MULTI-PREMOVE SEQUENTIAL EXECUTION HANDSHAKE (0ms Instant Delay)
         // ============================================================
         if (this.hasPremoveQueued()) {
-          const queued = { ...this.premove };
-          this.clearPremove();
+          const nextPremove = this.premoveQueue.shift();
 
           if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
             const currentMoveIndex = this.moveIndex;
             const expected = this.currentLine.moves[currentMoveIndex];
 
-            // 1. Verify move validity in chess.js
-            const testMove = this.game.move({
-              from: queued.from,
-              to: queued.to,
-              promotion: queued.promo || 'q'
-            });
+            // 1. Verify move legality in chess.js
+            let testMove = null;
+            try {
+              testMove = this.game.move({
+                from: nextPremove.from,
+                to: nextPremove.to,
+                promotion: nextPremove.promo || 'q'
+              });
+            } catch (e) {
+              testMove = null;
+            }
 
             if (testMove) {
               if (testMove.san === expected.san) {
@@ -915,11 +918,13 @@ export class TrainerView {
                   this.board.position(this.game.fen(), false);
                 }
                 this.highlightSquares(testMove.from, testMove.to);
+                this.renderPremoveHighlights(); // Re-render remaining queued premoves in the chain
                 this.triggerSuccessGlow();
                 this.updateUI();
 
                 if (this.moveIndex >= this.currentLine.moves.length) {
                   this.isBlackAnimating = false;
+                  this.clearPremove();
                   this.onLineComplete();
                   return true;
                 }
@@ -930,8 +935,9 @@ export class TrainerView {
                 }
                 return true; // Signals finishGlide that board was positioned directly
               } else {
-                // Incorrect move for the active line: revert move
+                // Incorrect move for the active line: revert move and invalidate whole queue
                 this.game.undo();
+                this.clearPremove();
                 this.triggerErrorShake();
                 this.clearHighlights();
 
@@ -948,7 +954,12 @@ export class TrainerView {
 
                 this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
               }
+            } else {
+              // Move is illegal in current position (e.g. CPU took piece or blocked): flush queue
+              this.clearPremove();
             }
+          } else {
+            this.clearPremove();
           }
         }
 
