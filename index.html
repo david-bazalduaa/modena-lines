@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="description" content="Modena Lines — Master your opening repertoire with interactive move-by-move master commentary, spaced active recall, and structured training decks.">
+  <title>Modena Lines | Interactive Opening Repertoire Trainer</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Chessboard.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+
+  <!-- Modular Design System Stylesheets -->
+
+  <!-- External Library Dependencies -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+  <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+  <script type="module" crossorigin src="./assets/index-BlrwLh96.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/firebase-D4V4YGNu.js">
+  <link rel="stylesheet" crossorigin href="./assets/index-CYWIFJ-C.css">
+</head>
+<body>
+
+  <!-- ==================== TOP NAVIGATION HEADER ==================== -->
+  <header id="app-header">
+    <div class="header-content">
+      <div class="header-brand" id="brand-home" role="button" tabindex="0" title="Return to Course Catalog">
+        <div class="brand-icon-wrapper" aria-label="Modena Lines Pawn Logo">
+          <svg class="brand-icon-svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 2.5a2.5 2.5 0 0 0-2.5 2.5c0 .67.27 1.28.7 1.73A4.5 4.5 0 0 0 8 11a4.49 4.49 0 0 0 2.22 3.89L10 18H8v2.5h8V18h-2l-.22-3.11A4.49 4.49 0 0 0 16 11a4.5 4.5 0 0 0-2.2-4.27c.43-.45.7-1.06.7-1.73A2.5 2.5 0 0 0 12 2.5z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 id="app-title">Modena Lines</h1>
+          <p class="header-subtitle">INTERACTIVE OPENING REPERTOIRE TRAINER</p>
+        </div>
+      </div>
+
+      <!-- Repertoire Filter Switch Tabs (White Openings vs Black Defenses) -->
+      <nav class="view-tabs repertoire-filter-nav" id="repertoire-filter-tabs" aria-label="Repertoire Category Filter">
+        <button id="nav-white-btn" class="nav-tab active" data-filter="white" title="White Openings & Repertoires">
+          <span class="tab-piece-icon">♔</span>
+          <span>White Openings</span>
+        </button>
+        <button id="nav-black-btn" class="nav-tab" data-filter="black" title="Black Defenses & Counter-Attacks">
+          <span class="tab-piece-icon">♚</span>
+          <span>Black Defenses</span>
+        </button>
+      </nav>
+
+      <!-- Header Auth Control Deck -->
+      <div id="header-auth-container" class="header-auth-container">
+        <!-- Dynamically rendered by auth-modal.js / main.js -->
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTENT AREA ==================== -->
+  <main id="app-main">
+
+    <!-- ──────────────── 1. CATALOG / DASHBOARD VIEW ──────────────── -->
+    <section id="dashboard-view" class="view-section active">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <h2>Master Your Opening Repertoire</h2>
+          <p>
+            Build deep muscle memory for your opening lines with structured practice, move-by-move master commentary, and interactive training modes.
+          </p>
+        </div>
+        <div class="hero-stats-card">
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-total-mastered">0</span>
+            <span class="stat-lbl">Lines Mastered</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-avg-accuracy">100%</span>
+            <span class="stat-lbl">Avg. Accuracy</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="dash-daily-streak" style="display: inline-flex; align-items: center; gap: 0.35rem;">
+              <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--primary-accent, #334155);"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
+              <span id="dash-daily-streak-num">0 Days</span>
+            </span>
+            <span class="stat-lbl">Daily Streak</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course Cards Grid -->
+      <div class="section-title-bar">
+        <h3 id="catalog-section-title">Master White Opening Repertoires</h3>
+      </div>
+
+      <div id="course-grid" class="course-grid">
+        <!-- Dynamically populated by dashboard-view.js -->
+      </div>
+    </section>
+
+    <!-- ──────────────── 2. SUB-COURSE SELECTION HUB VIEW (LEVEL 2) ──────────────── -->
+    <section id="subcourse-view" class="view-section hidden">
+      <div class="dashboard-hero">
+        <div class="hero-text">
+          <div style="margin-bottom: 0.85rem;">
+            <button id="btn-back-to-catalog" class="card-action-btn" style="width: auto; padding: 0.45rem 1rem; font-size: 0.82rem; display: inline-flex; align-items: center; gap: 0.4rem;" title="Back to Main Course Catalog">
+              &larr; Back to Main Catalog
+            </button>
+          </div>
+          <h2 id="subcourse-hero-title">Italian Game Master Repertoire</h2>
+          <p id="subcourse-hero-desc">
+            Explore focused sub-course modules with dedicated line pools and active recall training decks.
+          </p>
+        </div>
+        <div class="hero-stats-card">
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-total-mastered">0</span>
+            <span class="stat-lbl">Lines Mastered</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-modules-count">4</span>
+            <span class="stat-lbl">Sub-Courses</span>
+          </div>
+          <div class="hero-stat-divider"></div>
+          <div class="hero-stat">
+            <span class="stat-num" id="subcourse-overall-progress">0%</span>
+            <span class="stat-lbl">Overall Progress</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sub-Course Cards Grid -->
+      <div class="section-title-bar">
+        <h3 id="subcourse-grid-title">Sub-Course Modules</h3>
+        <span class="course-badge" id="subcourse-grid-badge">4 Sub-Course Modules</span>
+      </div>
+
+      <div id="subcourse-grid" class="course-grid">
+        <!-- Dynamically populated by subcourse-view.js -->
+      </div>
+    </section>
+
+    <!-- ──────────────── 3. INTERACTIVE STUDY BOARD VIEW (LEVEL 3) ──────────────── -->
+    <section id="study-view" class="view-section hidden">
+
+      <!-- Left Column: HD Board & Move Input -->
+      <div id="board-section">
+        
+        <!-- Board Top Bar Info (Desktop) -->
+        <div id="board-header-bar">
+          <div class="active-line-meta">
+            <span class="meta-tag" id="active-line-category">Main Line</span>
+            <h3 id="active-line-title">Giuoco Piano Center Attack</h3>
+          </div>
+          <div class="turn-indicator-pill" id="turn-indicator">
+            <span class="turn-dot white"></span>
+            <span id="turn-text">White to move</span>
+          </div>
+        </div>
+
+        <!-- Coach Guidance Card (Positioned directly above chessboard) -->
+        <div id="commentary-card" class="panel-card coach-card">
+          <div class="card-header">
+            <div class="coach-title-wrap">
+              <span class="card-icon" style="color: var(--primary-accent, #334155);">
+                <svg class="panel-icon-svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2v-2.26C6.19 13.47 5 11.38 5 9a7 7 0 0 1 7-7z"></path>
+                  <path d="M9 21h6"></path>
+                </svg>
+              </span>
+              <span class="coach-heading">Coach</span>
+            </div>
+            <div class="coach-header-right">
+              <span class="coach-badge" id="coach-mode-badge">Active Recall</span>
+            </div>
+          </div>
+          <div class="coach-commentary-scroll" id="commentary-scroll-container">
+            <p id="commentary-text" class="card-body-text">
+              Press <strong>Start Drill</strong> below to begin White's active recall training!
+            </p>
+          </div>
+        </div>
+
+        <!-- HD Board Wrapper -->
+        <div id="board-wrapper">
+          <div id="board-glow"></div>
+          <div id="board-container">
+            <div id="board"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Coach & ChessReps Mode Deck Panel -->
+      <div id="info-panel">
+
+        <!-- Line Header & Variation Selector Card -->
+        <div id="line-info-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="6" y1="3" x2="6" y2="15"></line>
+                <circle cx="18" cy="6" r="3"></circle>
+                <circle cx="6" cy="18" r="3"></circle>
+                <path d="M18 9a9 9 0 0 1-9 9"></path>
+              </svg>
+              LINE
+            </span>
+            <div style="flex: 1;">
+              <h3 id="line-name">Giuoco Piano – Center Attack</h3>
+              <p class="card-subtitle" id="line-eco">1. e4 e5 2. Nf3 Nc6 3. Bc4</p>
+            </div>
+          </div>
+          <!-- Variation Line Select Dropdown -->
+          <div style="margin-top: 0.5rem;">
+            <label for="variation-select" style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 0.3rem;">Repertoire Variation:</label>
+            <select id="variation-select" class="nav-tab" style="width: 100%; border: var(--border-subtle); background: var(--bg-surface); padding: 0.5rem; font-size: 0.85rem;">
+              <!-- Dynamically populated by trainer-view.js -->
+            </select>
+          </div>
+        </div>
+
+        <!-- ChessReps Interactive Mode Deck -->
+        <div id="trainer-mode-deck-card" class="panel-card">
+          <div class="card-header" style="margin-bottom: 0.4rem;">
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+              MODE
+            </span>
+            <h3>Training Mode</h3>
+          </div>
+          <div id="trainer-mode-deck-container">
+            <!-- Dynamically populated by mode-selector.js -->
+          </div>
+        </div>
+
+        <!-- Progress Tracker Card -->
+        <div id="progress-card" class="panel-card">
+          <div class="course-progress-header" style="margin-bottom: 0.6rem;">
+            <span id="progress-label">Lines Mastered: 0 / 25</span>
+            <span id="progress-percent" style="color: var(--primary-accent, #334155);">0% Mastered</span>
+          </div>
+          <div class="course-progress-track">
+            <div id="progress-bar" class="course-progress-fill"></div>
+          </div>
+        </div>
+
+        <!-- Interactive Move History -->
+        <div id="history-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              LOG
+            </span>
+            <h3>Move History</h3>
+          </div>
+          <div id="move-history" class="card-body-text mono-text">
+            <span class="empty-history">No moves played yet.</span>
+          </div>
+        </div>
+
+        <!-- Step Tree -->
+        <div id="tree-card" class="panel-card">
+          <div class="card-header">
+            <span class="card-icon">
+              <svg class="panel-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="15" y="3" width="6" height="6" rx="1.5"></rect>
+                <rect x="9" y="15" width="6" height="6" rx="1.5"></rect>
+                <path d="M6 9v3a3 3 0 0 0 3 3h3m6-6v3a3 3 0 0 1-3 3"></path>
+              </svg>
+              TREE
+            </span>
+            <h3>Full Line Sequence</h3>
+          </div>
+          <div id="line-step-tree" class="step-tree-container">
+            <!-- Populated by trainer-view.js -->
+          </div>
+        </div>
+
+        <!-- Session Stats -->
+        <div id="stats-card" class="panel-card stats-grid">
+          <div class="stat-item">
+            <span class="stat-value" id="stat-accuracy">100%</span>
+            <span class="stat-label">Accuracy</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="stat-lines">0/5</span>
+            <span class="stat-label">Completed</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value" id="stat-attempts">0</span>
+            <span class="stat-label">Attempts</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==================== MODE SELECTOR POPOVER MODAL ==================== -->
+  <div id="mode-popover-overlay" class="mode-popover-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="mode-popover-title">
+    <div class="mode-popover-card">
+      <div class="mode-popover-header">
+        <div class="mode-popover-title-row">
+          <div class="mode-popover-icon-badge">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+          </div>
+          <div>
+            <h3 id="mode-popover-title" class="mode-popover-title">Training Mode</h3>
+            <p class="mode-popover-subtitle">Select study method for this line</p>
+          </div>
+        </div>
+        <button id="mode-popover-close" class="mode-popover-close-btn" type="button" aria-label="Close Mode Popover">&times;</button>
+      </div>
+      <div id="mode-popover-deck-container" class="mode-popover-deck-container">
+        <!-- Rendered dynamically by mode-selector.js -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile Trainer Fixed Bottom Action Bar (Fixed Direct Child of Body) -->
+  <nav id="mobile-trainer-toolbar" class="mobile-trainer-toolbar study-bottom-bar hidden" aria-label="Trainer Controls">
+    <button id="btn-action-hint" class="bottom-bar-btn" type="button" title="Show Move Hint">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="9" y1="18" x2="15" y2="18"></line>
+        <line x1="10" y1="22" x2="14" y2="22"></line>
+        <path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 0 1 8.91 14"></path>
+      </svg>
+      <span class="bottom-bar-label">Hint</span>
+    </button>
+
+    <button id="btn-action-mode" class="bottom-bar-btn mode-btn" type="button" title="Change Training Mode" aria-haspopup="dialog">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="6" width="20" height="12" rx="4"></rect>
+        <line x1="6" y1="12" x2="10" y2="12"></line>
+        <line x1="8" y1="10" x2="8" y2="14"></line>
+        <circle cx="15" cy="11" r="1"></circle>
+        <circle cx="18" cy="13" r="1"></circle>
+      </svg>
+      <span class="bottom-bar-label" id="bottom-mode-label">Learn</span>
+    </button>
+
+    <button id="btn-action-reset" class="bottom-bar-btn" type="button" title="Reset Drill Line">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+        <path d="M3 3v5h5"></path>
+      </svg>
+      <span class="bottom-bar-label">Reset</span>
+    </button>
+
+    <button id="btn-action-flip" class="bottom-bar-btn" type="button" title="Flip Chessboard">
+      <svg class="bottom-bar-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+        <polyline points="7.5 4.21 12 6.81 16.5 4.21"></polyline>
+        <polyline points="7.5 19.79 7.5 14.6 3 12"></polyline>
+        <polyline points="21 12 16.5 14.6 16.5 19.79"></polyline>
+      </svg>
+      <span class="bottom-bar-label">Flip</span>
+    </button>
+  </nav>
+
+  <!-- ==================== TOAST NOTIFICATIONS ==================== -->
+  <div id="status-toast" class="toast hidden" role="alert" aria-live="polite">
+    <span id="toast-icon" class="hidden"></span>
+    <span id="toast-message">Move feedback</span>
+  </div>
+
+  <!-- ==================== ES MODULE APPLICATION MAIN ENTRY ==================== -->
+</body>
+</html>
