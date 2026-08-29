@@ -14,8 +14,7 @@ import {
   highlightPremoveSquares,
   clearPremoveHighlights,
   setSelectedSquare,
-  glidePieceOnBoard,
-  resetClickToMoveState
+  glidePieceOnBoard
 } from '../engine/board-renderer.js';
 import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
 import { getCourseById } from '../data/courses.js';
@@ -721,17 +720,19 @@ export class TrainerView {
   }
 
   onDrop(source, target) {
-    // Release active drag state and restore visibility/opacity across all board pieces
+    // Release active drag state and remove source suppression
     this.isUserDragging = false;
-    this.activeDraggedSource = null;
-    $('#board').find('.square-55d63, [data-square], img, .piece-417db').removeClass('premove-dragging-source').css({ opacity: '', visibility: '', display: '' });
+    $(`#board .square-${source}, #board [data-square="${source}"]`).removeClass('premove-dragging-source');
+    if (this.activeDraggedSource) {
+      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
+      this.activeDraggedSource = null;
+    }
 
     if (source === target) {
       // User tapped/clicked without dragging
       if (this.hasPremoveQueued()) {
         this.clearPremove();
       }
-      resetClickToMoveState('#board');
       return 'snapback';
     }
 
@@ -741,23 +742,22 @@ export class TrainerView {
     if (isBlackTurn) {
       // Queue Premove with distinctive red square highlights and snap piece back cleanly
       this.queuePremove(source, target, 'q');
-      resetClickToMoveState('#board');
       return 'snapback';
     }
 
     // User actually dragged piece to a different square on White's turn: execute move immediately
     this.clearPremove();
     this.clearHighlights();
-    resetClickToMoveState('#board');
     const move = this.handleUserMove(source, target, 'q', true);
     if (!move) return 'snapback';
   }
 
   onSnapEnd() {
     this.isUserDragging = false;
-    this.activeDraggedSource = null;
-    $('#board').find('.square-55d63, [data-square], img, .piece-417db').removeClass('premove-dragging-source').css({ opacity: '', visibility: '', display: '' });
-    resetClickToMoveState('#board');
+    if (this.activeDraggedSource) {
+      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
+      this.activeDraggedSource = null;
+    }
 
     if (this.board && this.game) {
       const currentPos = this.board.fen();
@@ -830,7 +830,6 @@ export class TrainerView {
     if (this.board) {
       this.board.position(this.game.fen(), false);
     }
-    resetClickToMoveState('#board');
     this.highlightSquares(testMove.from, testMove.to);
     this.triggerSuccessGlow();
     this.updateUI();
@@ -858,7 +857,6 @@ export class TrainerView {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
       this.clearPremove();
-      resetClickToMoveState('#board');
       return;
     }
 
@@ -889,7 +887,6 @@ export class TrainerView {
         if (this.game.turn() === 'w') {
           this.isBlackAnimating = false;
         }
-        resetClickToMoveState('#board');
 
         // ============================================================
         // MULTI-PREMOVE SEQUENTIAL EXECUTION HANDSHAKE (0ms Instant Delay)
@@ -920,7 +917,6 @@ export class TrainerView {
                 if (this.board) {
                   this.board.position(this.game.fen(), false);
                 }
-                resetClickToMoveState('#board');
                 this.highlightSquares(testMove.from, testMove.to);
                 this.renderPremoveHighlights(); // Re-render remaining queued premoves in the chain
                 this.triggerSuccessGlow();
@@ -942,7 +938,6 @@ export class TrainerView {
                 // Incorrect move for the active line: revert move and invalidate whole queue
                 this.game.undo();
                 this.clearPremove();
-                resetClickToMoveState('#board');
                 this.triggerErrorShake();
                 this.clearHighlights();
 
@@ -962,11 +957,9 @@ export class TrainerView {
             } else {
               // Move is illegal in current position (e.g. CPU took piece or blocked): flush queue
               this.clearPremove();
-              resetClickToMoveState('#board');
             }
           } else {
             this.clearPremove();
-            resetClickToMoveState('#board');
           }
         }
 
