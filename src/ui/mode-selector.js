@@ -2,7 +2,7 @@
    CHESSREPS TRAINING DECK MODES WIDGET & PROGRESSION RULES
    ============================================================ */
 
-export function renderModeDeck(containerId, course, userProgress, onSelectMode, activeModeId = 'learn') {
+export function renderModeDeck(containerId, course, userProgress, onSelectMode, activeModeId = 'learn', isPopover = false) {
   const $container = $(`#${containerId}`);
   if (!$container.length) return;
 
@@ -33,7 +33,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'learn',
       title: 'Learn',
-      icon: 'L',
+      icon: '📘',
       desc: 'Discover new lines',
       cssClass: 'learn-mode',
       unlocked: true,
@@ -42,7 +42,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'practice',
       title: 'Practice',
-      icon: 'P',
+      icon: '🎯',
       desc: 'Perfect learned lines',
       cssClass: 'practice-mode',
       unlocked: true,
@@ -51,7 +51,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'drill',
       title: 'Drill',
-      icon: 'D',
+      icon: '🔥',
       desc: 'Blind streak test',
       cssClass: 'drill-mode',
       unlocked: isDrillUnlocked,
@@ -60,7 +60,7 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     {
       id: 'arena',
       title: 'Arena',
-      icon: 'A',
+      icon: '⚔️',
       desc: 'Master survival',
       cssClass: 'arena-mode',
       unlocked: isArenaUnlocked,
@@ -68,27 +68,52 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
     }
   ];
 
-  let html = '<div class="training-deck-widget">';
+  const widgetClass = isPopover ? 'training-deck-widget popover-vertical-deck' : 'training-deck-widget';
+  let html = `<div class="${widgetClass}">`;
   modes.forEach(mode => {
     const lockClass = mode.unlocked ? '' : 'locked-mode';
     const isActive = mode.id === activeModeId;
     const activeClass = isActive ? 'active' : '';
     const badgeText = isActive ? 'Active' : mode.defaultBadge;
 
-    html += `
-      <div class="mode-deck-card ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" data-default-badge="${mode.defaultBadge}">
-        <span class="mode-icon">${mode.icon}</span>
-        <span class="mode-title">${mode.title}</span>
-        <span class="mode-desc">${mode.desc}</span>
-        <span class="coach-badge" style="font-size: 0.62rem; margin-top: 0.2rem;">${badgeText}</span>
-      </div>
-    `;
+    if (isPopover) {
+      html += `
+        <div class="mode-popover-item ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" role="button" tabindex="0">
+          <div class="popover-item-left">
+            <span class="popover-mode-icon">${mode.icon}</span>
+            <div class="popover-mode-info">
+              <div class="popover-mode-title-row">
+                <span class="popover-mode-title">${mode.title}</span>
+                ${isActive ? '<span class="popover-active-indicator">Active</span>' : ''}
+              </div>
+              <span class="popover-mode-desc">${mode.desc}</span>
+            </div>
+          </div>
+          <div class="popover-item-right">
+            ${mode.unlocked 
+              ? `<span class="coach-badge ${isActive ? 'active' : ''}">${badgeText}</span>`
+              : `<span class="locked-badge"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>${mode.defaultBadge}</span>`
+            }
+          </div>
+        </div>
+      `;
+    } else {
+      html += `
+        <div class="mode-deck-card ${mode.cssClass} ${lockClass} ${activeClass}" data-mode-id="${mode.id}" data-unlocked="${mode.unlocked}" data-default-badge="${mode.defaultBadge}">
+          <span class="mode-icon">${mode.icon}</span>
+          <span class="mode-title">${mode.title}</span>
+          <span class="mode-desc">${mode.desc}</span>
+          <span class="coach-badge" style="font-size: 0.62rem; margin-top: 0.2rem;">${badgeText}</span>
+        </div>
+      `;
+    }
   });
   html += '</div>';
 
   $container.html(html);
 
-  $container.find('.mode-deck-card').off('click').on('click', function () {
+  const itemSelector = isPopover ? '.mode-popover-item' : '.mode-deck-card';
+  $container.find(itemSelector).off('click').on('click', function () {
     const unlocked = $(this).data('unlocked');
     const modeId = $(this).data('mode-id');
 
@@ -101,23 +126,9 @@ export function renderModeDeck(containerId, course, userProgress, onSelectMode, 
       return;
     }
 
-    // 1. Remove active state styling from all mode cards and restore default status badges
-    $container.find('.mode-deck-card').each(function () {
-      $(this).removeClass('active');
-      $(this).removeAttr('style');
-      $(this).find('*').removeAttr('style');
-      const defBadge = $(this).attr('data-default-badge');
-      if (defBadge) {
-        $(this).find('.coach-badge').text(defBadge);
-      }
-    });
-
-    // 2. Apply active state styling and update status badge explicitly to "Active"
-    $(this).addClass('active');
-    $(this).find('.coach-badge').text('Active');
-
     if (onSelectMode) {
       onSelectMode(modeId);
     }
   });
 }
+

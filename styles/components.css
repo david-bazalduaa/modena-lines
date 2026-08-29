@@ -1198,14 +1198,119 @@ body.modal-open {
 }
 
 .mode-popover-deck-container .training-deck-widget {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  width: 100%;
 }
 
-.mode-popover-deck-container .mode-deck-card {
-  padding: 0.85rem 0.65rem;
-  min-height: 90px;
+/* ── Mode Popover Vertical List Items ── */
+.mode-popover-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 0.95rem;
+  background: var(--bg-surface, #e0e5ec);
+  border-radius: var(--radius-md, 14px);
+  box-shadow: var(--shadow-extruded-sm, 3px 3px 6px #b8c0cc, -3px -3px 6px #ffffff);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all var(--spring-transition);
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.mode-popover-item:hover {
+  box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff);
+}
+
+.mode-popover-item:active {
+  box-shadow: var(--shadow-inset-sm, inset 2px 2px 4px #b8c0cc, inset -2px -2px 4px #ffffff);
+  transform: scale(0.98);
+}
+
+.mode-popover-item.active {
+  box-shadow: var(--shadow-inset, inset 3px 3px 6px #b8c0cc, inset -3px -3px 6px #ffffff);
+  border: 1.5px solid var(--primary-accent, #334155);
+  background: rgba(224, 229, 236, 0.92);
+}
+
+.popover-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.popover-mode-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm, 10px);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-extruded-sm);
+  flex-shrink: 0;
+}
+
+.popover-mode-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.popover-mode-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.popover-mode-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+.popover-active-indicator {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.12);
+  padding: 1px 6px;
+  border-radius: var(--radius-pill);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.popover-mode-desc {
+  font-size: 0.73rem;
+  color: var(--text-muted);
+}
+
+.popover-item-right {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.locked-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  background: rgba(148, 163, 184, 0.15);
+  padding: 2px 7px;
+  border-radius: var(--radius-pill);
+}
+
+.mode-popover-item.locked-mode {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* ── Coach Guidance Card Specifics ── */

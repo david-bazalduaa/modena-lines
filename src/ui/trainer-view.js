@@ -264,6 +264,10 @@ export class TrainerView {
    * Safely re-binds chessboard instance and binds unblocked click-to-move listener.
    */
   rebindBoard(fenPosition) {
+    // Explicitly hide catalog/dashboard views so the study view board mounts immediately
+    $('#dashboard-view, #subcourse-view').addClass('hidden').removeClass('active');
+    $('#study-view').removeClass('hidden').addClass('active');
+
     const $boardContainer = $('#board');
     if ($boardContainer.length) {
       $boardContainer.empty();
@@ -274,7 +278,18 @@ export class TrainerView {
     }
     this.board = null;
 
-    setTimeout(() => {
+    let attempts = 0;
+    const mountBoard = () => {
+      const boardWrapper = document.getElementById('board-wrapper');
+      const boardEl = document.getElementById('board');
+
+      // Ensure layout dimensions are non-zero before initializing chessboard instance
+      if ((!boardWrapper || boardWrapper.clientWidth === 0 || !boardEl) && attempts < 20) {
+        attempts++;
+        requestAnimationFrame(mountBoard);
+        return;
+      }
+
       const config = {
         position: fenPosition || 'start',
         draggable: true,
@@ -307,12 +322,16 @@ export class TrainerView {
         }
       );
 
-      if (this.board) {
-        this.board.resize();
-      }
-      this.bindResizeObserver();
-    }, 100);
+      requestAnimationFrame(() => {
+        if (this.board && typeof this.board.resize === 'function') {
+          this.board.resize();
+        }
+      });
 
+      this.bindResizeObserver();
+    };
+
+    requestAnimationFrame(mountBoard);
     this.initControls();
   }
 
@@ -381,7 +400,7 @@ export class TrainerView {
     const activePool = this.currentSubCourse || this.currentCourse;
     renderModeDeck('mode-popover-deck-container', activePool, userProgress, (selectedMode) => {
       this.selectMode(selectedMode);
-    }, this.currentMode);
+    }, this.currentMode, true);
     $('#mode-popover-overlay').removeClass('hidden');
   }
 
