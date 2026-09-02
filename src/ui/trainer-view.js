@@ -270,8 +270,12 @@ export class TrainerView {
     if (!this.board) return;
     const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
     const dests = isWhiteTurn ? calculateLegalDests(this.game) : new Map();
-    this.board.setTurn(isWhiteTurn ? 'white' : 'black', 'white');
-    this.board.setDests(dests, 'white');
+    if (typeof this.board.syncTurnAndDests === 'function') {
+      this.board.syncTurnAndDests(isWhiteTurn ? 'white' : 'black', dests, 'white');
+    } else {
+      this.board.setTurn(isWhiteTurn ? 'white' : 'black', 'white');
+      this.board.setDests(dests, 'white');
+    }
   }
 
   /**
@@ -713,15 +717,13 @@ export class TrainerView {
     this.updateUI();
     this.showToast(`Drill started: ${stripEmojis(this.currentLine ? this.currentLine.name : 'Opening Line')}`, 'success');
   }
-
   /**
    * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
    * Validates user move strictly against the target repertoire line.
    * If incorrect, registers failure penalty immediately and reverts board position.
    */
-  handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
+  handleUserMove(fromSquare, toSquare, promoPiece = 'q', isPremove = false) {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
-    if (this.game.turn() !== 'w') return null;
 
     if (this.board) {
       this.board.clearCustomHighlights();
@@ -731,11 +733,16 @@ export class TrainerView {
     const expected = this.currentLine.moves[currentMoveIndex];
 
     // 1. Verify move validity in chess.js
-    const testMove = this.game.move({
-      from: fromSquare,
-      to: toSquare,
-      promotion: promoPiece || 'q'
-    });
+    let testMove = null;
+    try {
+      testMove = this.game.move({
+        from: fromSquare,
+        to: toSquare,
+        promotion: promoPiece || 'q'
+      });
+    } catch (e) {
+      testMove = null;
+    }
 
     if (!testMove) {
       if (this.board) this.board.setFen(this.game.fen());
@@ -774,16 +781,24 @@ export class TrainerView {
       return null;
     }
 
-    // 3. Move is correct: advance index, position board cleanly
+    // 3. Move is correct: advance index and update board
     this.moveIndex++;
 
     if (this.board) {
-      this.board.setFen(this.game.fen());
+      if (isPremove) {
+        // Premove was waiting in queue: execute hardware-accelerated piece glide onto target
+        this.board.move(testMove.from, testMove.to);
+      }
       this.board.setLastMove(testMove.from, testMove.to);
       this.board.clearCustomHighlights();
+
+      // Resync FEN only on special moves (castling, promotion, en-passant) to avoid DOM teardown flicker
+      if (testMove.flags && (testMove.flags.includes('k') || testMove.flags.includes('q') || testMove.flags.includes('p') || testMove.flags.includes('e'))) {
+        this.board.setFen(this.game.fen());
+      }
     }
     this.triggerSuccessGlow();
-    this.updateUI();
+    requestAnimationFrame(() => this.updateUI());
 
     if (this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
@@ -804,6 +819,7 @@ export class TrainerView {
 
   /**
    * Executes Black's opponent response with a smooth, hardware-accelerated piece glide.
+   * Handover to White and premove execution occurs synchronously with animation completion.
    */
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
@@ -821,32 +837,34 @@ export class TrainerView {
 
     $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
 
-    const animationDuration = APP_CONFIG.blackMoveSpeed || 300;
-
-    // Hardware-accelerated piece move with Chessground
+    // Hardware-accelerated piece glide with Chessground
     if (this.board) {
       this.board.move(blackMoveData.from, blackMoveData.to);
       this.board.setLastMove(blackMoveData.from, blackMoveData.to);
     }
 
-    setTimeout(() => {
-      // 1. Update board position and last move
-      if (this.board) {
+    // Precalculate legal move destinations in parallel during piece animation
+    const precomputedDests = calculateLegalDests(this.game);
+
+    const onComplete = () => {
+      // 1. Resync FEN only if a multi-piece special move occurred (castling or promotion)
+      if (this.board && (blackMoveData.san.includes('O-O') || blackMoveData.san.includes('='))) {
         this.board.setFen(this.game.fen());
-        this.board.setLastMove(blackMoveData.from, blackMoveData.to);
       }
 
-      // 2. Turn is now back to White
+      // 2. Handover turn to White
       if (this.game.turn() === 'w') {
         this.isBlackAnimating = false;
       }
 
-      // 3. Immediately synchronize board state for White (turn: white, dests: populated)
-      this.syncBoardState();
+      // 3. Atomically update board turn and legal move dests without redundant DOM redraws
+      if (this.board && typeof this.board.syncTurnAndDests === 'function') {
+        this.board.syncTurnAndDests('white', precomputedDests, 'white');
+      } else {
+        this.syncBoardState();
+      }
 
-      // ============================================================
-      // PREMOVE AUTOMATIC EXECUTION LIFECYCLE
-      // ============================================================
+      // 4. PREMOVE ZERO-STUTTER EXECUTION LIFECYCLE
       if (this.hasPremoveQueued()) {
         const nextPremove = (this.premoveQueue && this.premoveQueue.length > 0)
           ? this.premoveQueue.shift()
@@ -855,74 +873,13 @@ export class TrainerView {
         this.clearPremove();
 
         if (nextPremove && this.currentLine && this.moveIndex < this.currentLine.moves.length) {
-          const currentMoveIndex = this.moveIndex;
-          const expected = this.currentLine.moves[currentMoveIndex];
-
-          let testMove = null;
-          try {
-            testMove = this.game.move({
-              from: nextPremove.from,
-              to: nextPremove.to,
-              promotion: nextPremove.promo || 'q'
-            });
-          } catch (e) {
-            testMove = null;
-          }
-
-          if (testMove) {
-            if (testMove.san === expected.san) {
-              this.moveIndex++;
-              if (this.board) {
-                this.board.setFen(this.game.fen());
-                this.board.setLastMove(testMove.from, testMove.to);
-                this.board.clearCustomHighlights();
-              }
-              this.triggerSuccessGlow();
-              this.updateUI();
-
-              if (this.moveIndex >= this.currentLine.moves.length) {
-                this.isBlackAnimating = false;
-                this.clearPremove();
-                this.syncBoardState();
-                this.onLineComplete();
-                return;
-              }
-
-              if (this.game.turn() === 'b') {
-                this.isBlackAnimating = true;
-                this.syncBoardState();
-                setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
-                return;
-              }
-            } else {
-              this.game.undo();
-              this.clearPremove();
-              if (this.board) {
-                this.board.setFen(this.game.fen());
-                this.board.highlightHint(expected.from, expected.to);
-              }
-              this.triggerErrorShake();
-              userProgress.recordMistake(this.currentLine.id);
-
-              if (this.isBlindStreak) {
-                this.streakScore = 0;
-                this.updateUI();
-                this.onBlindStreakEnd();
-                return;
-              }
-
-              this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
-              this.syncBoardState();
-              return;
-            }
-          } else {
-            this.clearPremove();
-            this.syncBoardState();
-          }
+          const executed = this.handleUserMove(nextPremove.from, nextPremove.to, nextPremove.promo || 'q', true);
+          if (executed) return;
         }
       }
 
-      this.updateUI();
+      // 5. Asynchronously refresh peripheral UI decks (commentary, move tree) without blocking frame budget
+      requestAnimationFrame(() => this.updateUI());
 
       if (this.moveIndex >= this.currentLine.moves.length) {
         this.isBlackAnimating = false;
@@ -933,9 +890,17 @@ export class TrainerView {
       }
 
       if (this.game.turn() === 'b') {
+        this.isBlackAnimating = true;
+        this.syncBoardState();
         setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
       }
-    }, animationDuration);
+    };
+
+    if (this.board && typeof this.board.onAnimationComplete === 'function') {
+      this.board.onAnimationComplete(onComplete, (APP_CONFIG.blackMoveSpeed || 400) + 120);
+    } else {
+      setTimeout(onComplete, APP_CONFIG.blackMoveSpeed || 400);
+    }
   }
 
   requestHint() {
@@ -1201,6 +1166,7 @@ export class TrainerView {
 
   renderStepTree() {
     const $tree = $('#line-step-tree');
+    if (!$tree.length || !this.currentLine) return;
     $tree.empty();
 
     if (this.isBlindStreak) {
@@ -1208,6 +1174,7 @@ export class TrainerView {
       return;
     }
 
+    let html = '';
     for (let i = 0; i < this.currentLine.moves.length; i += 2) {
       const stepIdx = Math.floor(i / 2) + 1;
       const wSan = this.currentLine.moves[i] ? this.currentLine.moves[i].san : '';
@@ -1222,15 +1189,15 @@ export class TrainerView {
 
       const statusSymbol = isCompleted ? 'OK' : (isCurrent ? 'NOW' : 'NEXT');
 
-      const html = `
+      html += `
         <div class="${rowClass}">
           <span class="tree-step-idx">${stepIdx}.</span>
           <span class="tree-step-moves">${wSan} ${bSan}</span>
           <span class="tree-step-status">${statusSymbol}</span>
         </div>
       `;
-      $tree.append(html);
     }
+    $tree.html(html);
   }
 
   clearHighlights() {

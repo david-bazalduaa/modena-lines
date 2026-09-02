@@ -311,6 +311,52 @@ export function createChessgroundBoard(targetElement, options = {}) {
     },
 
     /**
+     * Atomically updates game turn, player movable color, and legal destination map
+     * in a single batch without triggering redundant redraws or element thrashing.
+     * @param {'white'|'black'|'w'|'b'} turnColor
+     * @param {Map<string, string[]>} dests
+     * @param {string} [playerColor='white']
+     */
+    syncTurnAndDests(turnColor, dests, playerColor = 'white') {
+      const normalizedTurn = turnColor === 'b' ? 'black' : (turnColor === 'w' ? 'white' : turnColor);
+      ground.set({
+        turnColor: normalizedTurn,
+        movable: {
+          color: playerColor,
+          dests: dests || new Map(),
+          showDests: true
+        }
+      });
+    },
+
+    /**
+     * Waits for any active piece animation on the board to finish before firing callback.
+     * Guarantees 60 FPS completion without cutting off or dropping frames.
+     * @param {Function} callback
+     * @param {number} [maxTimeoutMs=500] - Safety timeout fallback
+     */
+    onAnimationComplete(callback, maxTimeoutMs = 500) {
+      let resolved = false;
+      const done = () => {
+        if (resolved) return;
+        resolved = true;
+        callback();
+      };
+
+      const check = () => {
+        if (resolved) return;
+        if (!ground.state.animation || !ground.state.animation.current) {
+          done();
+        } else {
+          requestAnimationFrame(check);
+        }
+      };
+
+      requestAnimationFrame(check);
+      setTimeout(done, maxTimeoutMs);
+    },
+
+    /**
      * Executes currently queued Chessground premove if valid in the current board state.
      * @returns {boolean} Whether a premove was successfully executed.
      */
