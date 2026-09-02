@@ -233,7 +233,7 @@ export function highlightBoardSquare(square, type = 'selected', boardSelector = 
  * and queued premoves with right-click / click cancellation during Black turns.
  * Includes complete touch lifecycle deduplication and synthetic click swallowing.
  */
-export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution, onPremoveCancel) {
+export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution, onPremoveCancel, isOpponentAnimating) {
   const boardContainer = document.querySelector('#board-container') || document.querySelector(boardSelector);
   if (!boardContainer) return;
 
@@ -244,8 +244,14 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   if (boardContainer._boardPointerUpHandler) {
     boardContainer.removeEventListener('pointerup', boardContainer._boardPointerUpHandler, true);
   }
+  if (boardContainer._boardPointerCancelHandler) {
+    boardContainer.removeEventListener('pointercancel', boardContainer._boardPointerCancelHandler, true);
+  }
   if (boardContainer._boardTouchEndHandler) {
     boardContainer.removeEventListener('touchend', boardContainer._boardTouchEndHandler, true);
+  }
+  if (boardContainer._boardTouchCancelHandler) {
+    boardContainer.removeEventListener('touchcancel', boardContainer._boardTouchCancelHandler, { passive: false });
   }
   if (boardContainer._boardSyntheticClickHandler) {
     boardContainer.removeEventListener('click', boardContainer._boardSyntheticClickHandler, true);
@@ -276,6 +282,15 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   // Right-click anywhere on the board instantly cancels any active premove
   const contextMenuHandler = function(e) {
     e.preventDefault();
+    clearBoardHighlights(boardSelector);
+    clearPremoveHighlights(boardSelector);
+    if (typeof onPremoveCancel === 'function') {
+      onPremoveCancel();
+    }
+  };
+
+  // Handles gesture interruption from iOS notification banners, app switchers, or edge gestures
+  const cancelHandler = function(e) {
     clearBoardHighlights(boardSelector);
     clearPremoveHighlights(boardSelector);
     if (typeof onPremoveCancel === 'function') {
@@ -329,7 +344,8 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
 
     if (typeof game.game_over === 'function' && game.game_over()) return;
 
-    const isBlackTurn = typeof game.turn === 'function' && game.turn() === 'b';
+    const cpuAnimating = typeof isOpponentAnimating === 'function' ? isOpponentAnimating() : Boolean(isOpponentAnimating);
+    const isBlackTurn = (typeof game.turn === 'function' && game.turn() === 'b') || cpuAnimating;
     const clickedPiece = game.get(clickedSquare);
 
     // ============================================================
@@ -341,8 +357,10 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
         clearBoardHighlightsKeepState(boardSelector);
         highlightBoardSquare(clickedSquare, 'selected', boardSelector);
 
-        // Highlight legal destination squares in current position
-        const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
+        // Highlight legal destination squares if it is currently White's active turn
+        const legalMoves = (typeof game.turn === 'function' && game.turn() === 'w' && !cpuAnimating)
+          ? (game.moves({ square: clickedSquare, verbose: true }) || [])
+          : [];
         legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', boardSelector));
       } else if (typeof onPremoveCancel === 'function') {
         // Tapped an empty square without selection -> cancel queued premove
@@ -367,7 +385,9 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
       clearBoardHighlightsKeepState(boardSelector);
       highlightBoardSquare(clickedSquare, 'selected', boardSelector);
 
-      const legalMoves = game.moves({ square: clickedSquare, verbose: true }) || [];
+      const legalMoves = (typeof game.turn === 'function' && game.turn() === 'w' && !cpuAnimating)
+        ? (game.moves({ square: clickedSquare, verbose: true }) || [])
+        : [];
       legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', boardSelector));
       return;
     }
@@ -401,7 +421,9 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   boardContainer.addEventListener('contextmenu', contextMenuHandler);
   boardContainer.addEventListener('pointerdown', pointerDownHandler, true);
   boardContainer.addEventListener('pointerup', suppressSyntheticHandler, true);
+  boardContainer.addEventListener('pointercancel', cancelHandler, true);
   boardContainer.addEventListener('touchend', suppressSyntheticHandler, true);
+  boardContainer.addEventListener('touchcancel', cancelHandler, { passive: false });
   boardContainer.addEventListener('click', suppressSyntheticHandler, true);
 
   boardContainer._boardTouchMoveHandler = touchMoveHandler;
@@ -409,7 +431,9 @@ export function initClickToMove(boardSelector = '#board', getGameInstance, onMov
   boardContainer._boardContextMenuHandler = contextMenuHandler;
   boardContainer._boardClickHandler = pointerDownHandler;
   boardContainer._boardPointerUpHandler = suppressSyntheticHandler;
+  boardContainer._boardPointerCancelHandler = cancelHandler;
   boardContainer._boardTouchEndHandler = suppressSyntheticHandler;
+  boardContainer._boardTouchCancelHandler = cancelHandler;
   boardContainer._boardSyntheticClickHandler = suppressSyntheticHandler;
 }
 

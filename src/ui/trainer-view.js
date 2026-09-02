@@ -320,7 +320,8 @@ export class TrainerView {
         },
         () => {
           this.clearPremove();
-        }
+        },
+        () => this.isBlackAnimating
       );
 
       requestAnimationFrame(() => {
@@ -330,6 +331,7 @@ export class TrainerView {
       });
 
       this.bindResizeObserver();
+      this.bindTouchCancelRecovery();
     };
 
     requestAnimationFrame(mountBoard);
@@ -361,6 +363,29 @@ export class TrainerView {
         this.board.resize();
       }
     });
+  }
+
+  bindTouchCancelRecovery() {
+    if (this._touchCancelBound) return;
+    this._touchCancelBound = true;
+
+    const handleInterruption = () => {
+      if (this.isUserDragging) {
+        this.isUserDragging = false;
+        if (this.activeDraggedSource) {
+          $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
+          this.activeDraggedSource = null;
+        }
+        // Safely hide any orphaned dragged piece image created by chessboard.js
+        $('body > img.piece-417db').css('display', 'none');
+        if (this.board && this.game) {
+          this.board.position(this.game.fen(), false);
+        }
+      }
+    };
+
+    window.addEventListener('touchcancel', handleInterruption, { passive: true });
+    window.addEventListener('pointercancel', handleInterruption, { passive: true });
   }
 
   initControls() {
@@ -731,12 +756,14 @@ export class TrainerView {
     }
 
     if (source === target) {
-      // User tapped/clicked without dragging
+      // User tapped/clicked without dragging: track as tap so selection is retained
+      this.lastDropWasTap = true;
       if (this.hasPremoveQueued()) {
         this.clearPremove();
       }
       return 'snapback';
     }
+    this.lastDropWasTap = false;
 
     // Check if it's currently Black's turn or CPU animation is in flight
     const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
@@ -762,7 +789,12 @@ export class TrainerView {
       $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
       this.activeDraggedSource = null;
     }
-    setSelectedSquare(null);
+
+    // Preserve active selection state if the user simply tapped the piece in place for tap-to-move
+    if (!this.lastDropWasTap) {
+      setSelectedSquare(null);
+    }
+    this.lastDropWasTap = false;
 
     if (this.board && this.game) {
       const currentPos = this.board.fen();

@@ -358,6 +358,13 @@
   pointer-events: none;
 }
 
+@media (max-width: 767px) {
+  .toast {
+    z-index: 100001 !important;
+    bottom: calc(64px + env(safe-area-inset-bottom, 16px)) !important;
+  }
+}
+
 .toast.success {
   color: var(--accent-emerald);
 }
@@ -722,7 +729,7 @@ body.modal-open {
   background: rgba(45, 55, 72, 0.4);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  z-index: 1000;
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1055,9 +1062,14 @@ body.modal-open {
 }
 
 @media (max-width: 767px) {
-  #mobile-trainer-toolbar,
-  .mobile-trainer-toolbar,
-  .study-bottom-bar {
+  #mobile-trainer-toolbar.hidden,
+  body:not(.study-active) #mobile-trainer-toolbar,
+  #study-view.hidden ~ #mobile-trainer-toolbar,
+  #study-view:not(.active) ~ #mobile-trainer-toolbar {
+    display: none !important;
+  }
+
+  body.study-active #mobile-trainer-toolbar:not(.hidden) {
     position: fixed !important;
     bottom: 0 !important;
     left: 0 !important;
@@ -1073,11 +1085,6 @@ body.modal-open {
     border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
     padding: 6px 1rem env(safe-area-inset-bottom, 16px) 1rem !important;
     box-sizing: border-box !important;
-  }
-
-  #study-view.hidden #mobile-trainer-toolbar,
-  #study-view:not(.active) #mobile-trainer-toolbar {
-    display: none !important;
   }
 }
 
@@ -1099,6 +1106,7 @@ body.modal-open {
   font-family: inherit;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .bottom-bar-btn:hover {
@@ -1139,7 +1147,7 @@ body.modal-open {
   background: rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  z-index: 1500;
+  z-index: 100000;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1152,7 +1160,7 @@ body.modal-open {
 @media (max-width: 767px) {
   .mode-popover-overlay {
     align-items: flex-end;
-    padding-bottom: 72px;
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 16px));
   }
 }
 
@@ -1233,6 +1241,7 @@ body.modal-open {
   justify-content: center;
   cursor: pointer;
   transition: all var(--spring-transition);
+  touch-action: manipulation;
 }
 
 .mode-popover-close-btn:hover {
@@ -1264,6 +1273,7 @@ body.modal-open {
   transition: all var(--spring-transition);
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .mode-popover-item:hover {

@@ -788,7 +788,8 @@ body {
     height: 100vh !important;
     height: 100dvh !important;
     min-height: -webkit-fill-available;
-    touch-action: none !important;
+    touch-action: pan-y;
+    -webkit-overflow-scrolling: touch;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -869,6 +870,7 @@ body {
     height: 32px;
     border-radius: 20px;
     gap: 5px;
+    touch-action: manipulation;
   }
 
   .header-user-profile-btn {
@@ -876,6 +878,7 @@ body {
     min-height: 32px;
     height: 32px;
     gap: 6px;
+    touch-action: manipulation;
   }
 
   .user-avatar-badge {
@@ -888,16 +891,17 @@ body {
     max-width: 80px;
   }
 
-  /* Fixed 100vh Main App Canvas */
+  /* Fixed Viewport Main App Canvas with Safe Area Integration */
   #app-main {
     flex: 1;
-    height: calc(100dvh - 48px);
-    max-height: calc(100dvh - 48px);
+    height: calc(100dvh - 48px - env(safe-area-inset-top, 0px));
+    max-height: calc(100dvh - 48px - env(safe-area-inset-top, 0px));
     padding: 0 !important;
     margin: 0 !important;
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    box-sizing: border-box;
   }
 
   /* Catalog & Sub-Course Hub Internal View Scroll */
@@ -908,7 +912,7 @@ body {
     touch-action: pan-y;
     height: 100%;
     max-height: 100%;
-    padding: 0.85rem 1rem 3.5rem 1rem;
+    padding: 0.85rem 1rem calc(2.5rem + env(safe-area-inset-bottom, 16px)) 1rem;
     box-sizing: border-box;
   }
 

@@ -102,6 +102,20 @@
   -webkit-tap-highlight-color: transparent !important;
 }
 
+/* Floating Dragged Piece (appended to body by Chessboard.js) */
+body > img.piece-417db {
+  position: absolute !important;
+  z-index: 10000 !important;
+  pointer-events: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+  will-change: transform, top, left;
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
 /* Smooth transition coordinates for active animated pieces */
 .animated-63560,
 .gliding-piece-overlay {
