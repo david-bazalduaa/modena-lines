@@ -380,9 +380,9 @@ export class TrainerView {
   }
 
   initControls() {
-    $('#btn-start, #btn-reset, #btn-action-reset').off('click').on('click', () => this.resetDrill());
-    $('#btn-hint, #btn-action-hint').off('click').on('click', () => this.requestHint());
-    $('#btn-flip, #btn-action-flip').off('click').on('click', () => {
+    $('#btn-start, #btn-reset, #btn-action-reset, #btn-desktop-reset').off('click').on('click', () => this.resetDrill());
+    $('#btn-hint, #btn-action-hint, #btn-desktop-hint').off('click').on('click', () => this.requestHint());
+    $('#btn-flip, #btn-action-flip, #btn-desktop-flip').off('click').on('click', () => {
       if (this.board) this.board.flip();
     });
 

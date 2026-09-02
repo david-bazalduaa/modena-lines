@@ -258,13 +258,14 @@ body {
   display: flex !important;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   gap: 2.2rem;
   width: 100%;
   max-width: 1400px;
   min-height: calc(100vh - 120px);
   margin: 0 auto;
-  padding-bottom: 1rem;
+  padding: 1.25rem 1.5rem 3.5rem 1.5rem;
+  box-sizing: border-box;
 }
 
 #study-view.hidden,
@@ -278,10 +279,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
+  justify-content: flex-start;
+  gap: 0.75rem;
   flex: 1.35;
   min-width: 0;
+  padding-bottom: 2.5rem;
 }
 
 #board-header-bar {
@@ -289,9 +291,9 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 0.65rem 1.2rem;
-  min-height: 58px;
-  width: min(calc(100vh - 145px), 82vh, 100%);
-  max-width: min(calc(100vh - 145px), 82vh, 100%);
+  min-height: 52px;
+  width: min(calc(100vh - 240px), 66vh, 100%);
+  max-width: min(calc(100vh - 240px), 66vh, 100%);
   background: var(--bg-surface, #e8ecf1);
   border-radius: var(--radius-md, 14px);
   box-shadow: var(--shadow-extruded-sm, 3px 3px 6px #b8c0cc, -3px -3px 6px #ffffff);
@@ -358,11 +360,11 @@ body {
   border: 1px solid #555;
 }
 
-/* HD Board Wrapper — Maximize Viewport Dynamic Scaling */
+/* HD Board Wrapper — Maximize Viewport Dynamic Scaling with Elevated Clearance */
 #board-wrapper {
   position: relative;
-  width: min(calc(100vh - 145px), 82vh, 100%);
-  max-width: min(calc(100vh - 145px), 82vh, 100%);
+  width: min(calc(100vh - 240px), 66vh, 100%);
+  max-width: min(calc(100vh - 240px), 66vh, 100%);
   height: auto;
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-lg, 20px);
@@ -373,6 +375,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 0.35rem;
 }
 
 #board-glow {
@@ -405,6 +408,67 @@ body {
   width: 100%;
   height: 100%;
   border-radius: var(--radius-md, 14px);
+}
+
+/* Desktop Board Action Controls Toolbar */
+.desktop-board-toolbar {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  width: min(calc(100vh - 240px), 66vh, 100%);
+  max-width: min(calc(100vh - 240px), 66vh, 100%);
+  margin-top: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .desktop-board-toolbar {
+    display: flex;
+  }
+}
+
+.desktop-toolbar-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.35rem;
+  min-height: 42px;
+  background: var(--bg-surface, #e8ecf1);
+  color: var(--primary-accent, #334155);
+  border: var(--border-subtle, 1px solid rgba(255, 255, 255, 0.5));
+  border-radius: var(--radius-pill, 9999px);
+  box-shadow: var(--shadow-extruded-sm, 3px 3px 8px #b8c0cc, -3px -3px 8px #ffffff);
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.desktop-toolbar-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-extruded, 5px 5px 12px #b8c0cc, -5px -5px 12px #ffffff);
+  color: var(--text-primary, #1e293b);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+.desktop-toolbar-btn:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-inset, inset 2px 2px 5px #b8c0cc, inset -2px -2px 5px #ffffff);
+}
+
+.desktop-toolbar-icon {
+  flex-shrink: 0;
+  stroke: currentColor;
+  transition: transform 0.2s ease;
+}
+
+.desktop-toolbar-btn:hover .desktop-toolbar-icon {
+  transform: scale(1.12);
 }
 
 /* ── Right Panel Column (Floating Cards Container) ── */
@@ -537,8 +601,8 @@ body {
 #commentary-card {
   position: relative;
   border-left: none;
-  width: min(calc(100vh - 145px), 82vh, 100%);
-  max-width: min(calc(100vh - 145px), 82vh, 100%);
+  width: min(calc(100vh - 240px), 66vh, 100%);
+  max-width: min(calc(100vh - 240px), 66vh, 100%);
 }
 
 /* Interactive Move History */
@@ -757,8 +821,10 @@ body {
   }
 
   #board-header-bar,
-  #board-wrapper {
-    max-width: min(calc(100vh - 250px), 68vh, 100%);
+  #commentary-card,
+  #board-wrapper,
+  #desktop-board-toolbar {
+    max-width: min(calc(100vh - 250px), 66vh, 100%);
     width: 100%;
   }
 
