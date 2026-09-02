@@ -211,9 +211,9 @@ export function createChessgroundBoard(targetElement, options = {}) {
     },
     movable: {
       free: false, // Strict legal moves only
-      color: options.movableColor !== undefined ? options.movableColor : (initialTurn === 'white' ? 'white' : undefined),
+      color: options.movableColor !== undefined ? options.movableColor : 'white',
       dests: options.dests || new Map(),
-      showDests: options.showDests !== false,
+      showDests: true,
       events: {
         after: (orig, dest, metadata) => {
           if (typeof options.onMove === 'function') {
@@ -240,12 +240,6 @@ export function createChessgroundBoard(targetElement, options = {}) {
       }
     },
     events: {
-      move: (orig, dest, capturedPiece) => {
-        // Also fire unified events.move if bound
-        if (typeof options.onMove === 'function') {
-          options.onMove(orig, dest, { captured: capturedPiece });
-        }
-      },
       select: (key) => {
         if (typeof options.onSelect === 'function') {
           options.onSelect(key);
@@ -289,31 +283,69 @@ export function createChessgroundBoard(targetElement, options = {}) {
     /**
      * Updates legal move destinations map for the active player.
      * @param {Map<string, string[]>} dests
-     * @param {'white'|'black'|'both'|null} [color]
+     * @param {'white'|'black'|'both'} [playerColor='white']
      */
-    setDests(dests, color) {
-      const config = {
+    setDests(dests, playerColor = 'white') {
+      ground.set({
         movable: {
-          dests: dests || new Map()
+          dests: dests || new Map(),
+          color: playerColor,
+          showDests: true
         }
-      };
-      if (color !== undefined) {
-        config.movable.color = color;
-      }
-      ground.set(config);
+      });
     },
 
     /**
-     * Sets which color is allowed to move pieces.
-     * @param {'white'|'black'|'both'|null} color
+     * Sets active turn color while keeping the player's controllable color aligned.
+     * @param {'w'|'b'|'white'|'black'} turnColor
+     * @param {'white'|'black'} [playerColor='white']
      */
-    setTurn(color) {
+    setTurn(turnColor, playerColor = 'white') {
+      const normalizedTurn = turnColor === 'b' ? 'black' : (turnColor === 'w' ? 'white' : turnColor);
       ground.set({
-        turnColor: color === 'b' ? 'black' : (color === 'w' ? 'white' : color),
+        turnColor: normalizedTurn,
         movable: {
-          color: color === 'b' ? 'black' : (color === 'w' ? 'white' : color)
+          color: playerColor
         }
       });
+    },
+
+    /**
+     * Executes currently queued Chessground premove if valid in the current board state.
+     * @returns {boolean} Whether a premove was successfully executed.
+     */
+    playPremove() {
+      if (typeof ground.playPremove === 'function') {
+        return ground.playPremove();
+      }
+      return false;
+    },
+
+    /**
+     * Programmatically sets a premove onto Chessground's state.
+     * @param {string} orig
+     * @param {string} dest
+     */
+    setPremove(orig, dest) {
+      if (!orig || !dest) return;
+      ground.state.premovable.current = [orig, dest];
+      ground.state.dom.redraw();
+    },
+
+    /**
+     * Returns whether Chessground has a premove currently queued.
+     * @returns {boolean}
+     */
+    hasPremove() {
+      return Boolean(ground.state.premovable && ground.state.premovable.current);
+    },
+
+    /**
+     * Returns the currently queued premove coordinates [orig, dest] or null.
+     * @returns {[string, string]|null}
+     */
+    getPremove() {
+      return (ground.state.premovable && ground.state.premovable.current) || null;
     },
 
     /**

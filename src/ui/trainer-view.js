@@ -232,18 +232,20 @@ export class TrainerView {
    * Premoves are visualized via distinct red square highlights across the chain.
    */
   queuePremove(from, to, promo = 'q') {
-    this.premoveQueue.push({ from, to, promo: promo || 'q' });
-    this.renderPremoveHighlights();
+    this.premoveQueue = [{ from, to, promo: promo || 'q' }];
+    if (this.board && typeof this.board.setPremove === 'function') {
+      this.board.setPremove(from, to);
+    }
   }
 
   renderPremoveHighlights() {
-    if (!this.board || typeof this.board.highlightPremove !== 'function') return;
-    this.board.clearPremove();
-    this.premoveQueue.forEach(move => {
+    if (!this.board) return;
+    if (this.premoveQueue.length > 0 && typeof this.board.highlightPremove === 'function') {
+      const move = this.premoveQueue[0];
       if (move && move.from) {
         this.board.highlightPremove(move.from, move.to);
       }
-    });
+    }
   }
 
   clearPremove() {
@@ -254,7 +256,10 @@ export class TrainerView {
   }
 
   hasPremoveQueued() {
-    return Boolean(this.premoveQueue && this.premoveQueue.length > 0);
+    return Boolean(
+      (this.premoveQueue && this.premoveQueue.length > 0) ||
+      (this.board && typeof this.board.hasPremove === 'function' && this.board.hasPremove())
+    );
   }
 
   /**
@@ -265,15 +270,15 @@ export class TrainerView {
     if (!this.board) return;
     const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
     const dests = isWhiteTurn ? calculateLegalDests(this.game) : new Map();
-    this.board.setTurn(this.game.turn());
-    this.board.setDests(dests, isWhiteTurn ? 'white' : null);
+    this.board.setTurn(isWhiteTurn ? 'white' : 'black', 'white');
+    this.board.setDests(dests, 'white');
   }
 
   /**
    * Dispatches move events triggered natively by Chessground.
    * Maps tap-to-move and drag-and-drop actions directly into the repertoire game loop.
    */
-  handleBoardMove(orig, dest) {
+  handleBoardMove(orig, dest, metadata) {
     const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
     if (isBlackTurn) {
       this.queuePremove(orig, dest);
@@ -319,12 +324,12 @@ export class TrainerView {
       this.board = createChessgroundBoard('#board', {
         fen: initialFen,
         orientation: APP_CONFIG.defaultOrientation || 'white',
-        turnColor: this.game.turn() === 'b' ? 'black' : 'white',
-        movableColor: isWhiteTurn ? 'white' : undefined,
+        turnColor: isWhiteTurn ? 'white' : 'black',
+        movableColor: 'white',
         dests: isWhiteTurn ? calculateLegalDests(this.game) : new Map(),
         animationDuration: APP_CONFIG.blackMoveSpeed || 300,
-        onMove: (orig, dest) => {
-          this.handleBoardMove(orig, dest);
+        onMove: (orig, dest, metadata) => {
+          this.handleBoardMove(orig, dest, metadata);
         },
         onPremoveSet: (orig, dest) => {
           this.queuePremove(orig, dest);
@@ -825,18 +830,31 @@ export class TrainerView {
     }
 
     setTimeout(() => {
+      // 1. Update board position and last move
       if (this.board) {
         this.board.setFen(this.game.fen());
         this.board.setLastMove(blackMoveData.from, blackMoveData.to);
       }
 
+      // 2. Turn is now back to White
+      if (this.game.turn() === 'w') {
+        this.isBlackAnimating = false;
+      }
+
+      // 3. Immediately synchronize board state for White (turn: white, dests: populated)
+      this.syncBoardState();
+
       // ============================================================
-      // MULTI-PREMOVE SEQUENTIAL EXECUTION HANDSHAKE
+      // PREMOVE AUTOMATIC EXECUTION LIFECYCLE
       // ============================================================
       if (this.hasPremoveQueued()) {
-        const nextPremove = this.premoveQueue.shift();
+        const nextPremove = (this.premoveQueue && this.premoveQueue.length > 0)
+          ? this.premoveQueue.shift()
+          : (this.board && this.board.getPremove() ? { from: this.board.getPremove()[0], to: this.board.getPremove()[1] } : null);
 
-        if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
+        this.clearPremove();
+
+        if (nextPremove && this.currentLine && this.moveIndex < this.currentLine.moves.length) {
           const currentMoveIndex = this.moveIndex;
           const expected = this.currentLine.moves[currentMoveIndex];
 
@@ -894,19 +912,16 @@ export class TrainerView {
               }
 
               this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
+              this.syncBoardState();
+              return;
             }
           } else {
             this.clearPremove();
+            this.syncBoardState();
           }
-        } else {
-          this.clearPremove();
         }
       }
 
-      if (this.game.turn() === 'w') {
-        this.isBlackAnimating = false;
-      }
-      this.syncBoardState();
       this.updateUI();
 
       if (this.moveIndex >= this.currentLine.moves.length) {
