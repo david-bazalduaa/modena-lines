@@ -4,19 +4,10 @@
 
 import { APP_CONFIG } from '../config/settings.js';
 import {
-  getPieceDataURI,
-  initClickToMove,
-  clearBoardHighlights,
-  clearBoardHighlightsKeepState,
+  createChessgroundBoard,
+  calculateLegalDests,
   clearAmbiguityHints,
-  highlightAmbiguityHintSquare,
-  highlightBoardSquare,
-  highlightPremoveSquares,
-  clearPremoveHighlights,
-  setSelectedSquare,
-  setMoveCooldown,
-  isMoveCooldownActive,
-  glidePieceOnBoard
+  highlightAmbiguityHintSquare
 } from '../engine/board-renderer.js';
 import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
 import { getCourseById } from '../data/courses.js';
@@ -211,11 +202,9 @@ export class TrainerView {
 
   /**
    * Evaluates if White faces an ambiguous branching point and conditionally applies pulsing visual hints.
-   * Runs universally across ALL training modes (Learn, Practice, Drill, Arena) when true ambiguity exists.
+    * Runs universally across ALL training modes (Learn, Practice, Drill, Arena) when true ambiguity exists.
    */
   checkAndApplyAmbiguityHint() {
-    clearAmbiguityHints('#board');
-
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
     if (this.game.turn() !== 'w') return;
 
@@ -232,15 +221,15 @@ export class TrainerView {
 
     if (isAmbiguous) {
       const expected = this.currentLine.moves[this.moveIndex];
-      if (expected) {
-        highlightAmbiguityHintSquare(expected.from, expected.to, '#board');
+      if (expected && this.board && typeof this.board.highlightAmbiguity === 'function') {
+        this.board.highlightAmbiguity(expected.from, expected.to);
       }
     }
   }
 
   /**
    * Multi-Premove Management Engine: queues, clears, and renders ordered premove chains.
-   * Premoves are kept purely visual via red square highlights across the chain.
+   * Premoves are visualized via distinct red square highlights across the chain.
    */
   queuePremove(from, to, promo = 'q') {
     this.premoveQueue.push({ from, to, promo: promo || 'q' });
@@ -248,13 +237,20 @@ export class TrainerView {
   }
 
   renderPremoveHighlights() {
-    clearBoardHighlightsKeepState('#board');
-    highlightPremoveSquares(this.premoveQueue, null, '#board');
+    if (!this.board || typeof this.board.highlightPremove !== 'function') return;
+    this.board.clearPremove();
+    this.premoveQueue.forEach(move => {
+      if (move && move.from) {
+        this.board.highlightPremove(move.from, move.to);
+      }
+    });
   }
 
   clearPremove() {
     this.premoveQueue = [];
-    clearPremoveHighlights('#board');
+    if (this.board && typeof this.board.clearPremove === 'function') {
+      this.board.clearPremove();
+    }
   }
 
   hasPremoveQueued() {
@@ -262,7 +258,33 @@ export class TrainerView {
   }
 
   /**
-   * Safely re-binds chessboard instance and binds unblocked click-to-move listener.
+   * Synchronizes Chessground state (turn, movable colors, and legal destination moves)
+   * directly with the underlying chess.js game state.
+   */
+  syncBoardState() {
+    if (!this.board) return;
+    const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
+    const dests = isWhiteTurn ? calculateLegalDests(this.game) : new Map();
+    this.board.setTurn(this.game.turn());
+    this.board.setDests(dests, isWhiteTurn ? 'white' : null);
+  }
+
+  /**
+   * Dispatches move events triggered natively by Chessground.
+   * Maps tap-to-move and drag-and-drop actions directly into the repertoire game loop.
+   */
+  handleBoardMove(orig, dest) {
+    const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
+    if (isBlackTurn) {
+      this.queuePremove(orig, dest);
+      return;
+    }
+    this.clearPremove();
+    this.handleUserMove(orig, dest);
+  }
+
+  /**
+   * Safely mounts and configures the Chessground board instance.
    */
   rebindBoard(fenPosition) {
     // Explicitly hide catalog/dashboard views so the study view board mounts immediately
@@ -284,45 +306,33 @@ export class TrainerView {
       const boardWrapper = document.getElementById('board-wrapper');
       const boardEl = document.getElementById('board');
 
-      // Ensure layout dimensions are non-zero before initializing chessboard instance
+      // Ensure layout dimensions are non-zero before initializing Chessground instance
       if ((!boardWrapper || boardWrapper.clientWidth === 0 || !boardEl) && attempts < 20) {
         attempts++;
         requestAnimationFrame(mountBoard);
         return;
       }
 
-      const config = {
-        position: fenPosition || 'start',
-        draggable: true,
-        orientation: APP_CONFIG.defaultOrientation,
-        pieceTheme: getPieceDataURI,
-        moveSpeed: APP_CONFIG.blackMoveSpeed || 400,
-        snapbackSpeed: 50,
-        snapSpeed: 25,
-        onDragStart: this.onDragStart.bind(this),
-        onDrop: this.onDrop.bind(this),
-        onSnapEnd: this.onSnapEnd.bind(this)
-      };
+      const initialFen = fenPosition || 'start';
+      const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
 
-      this.board = Chessboard('board', config);
-
-      // Unblock and bind native delegated click-to-move and premove handlers
-      initClickToMove(
-        '#board',
-        () => this.game,
-        (fromSq, toSq, isPremove) => {
-          if (isPremove) {
-            this.queuePremove(fromSq, toSq);
-          } else {
-            this.clearPremove();
-            this.handleUserMove(fromSq, toSq);
-          }
+      this.board = createChessgroundBoard('#board', {
+        fen: initialFen,
+        orientation: APP_CONFIG.defaultOrientation || 'white',
+        turnColor: this.game.turn() === 'b' ? 'black' : 'white',
+        movableColor: isWhiteTurn ? 'white' : undefined,
+        dests: isWhiteTurn ? calculateLegalDests(this.game) : new Map(),
+        animationDuration: APP_CONFIG.blackMoveSpeed || 300,
+        onMove: (orig, dest) => {
+          this.handleBoardMove(orig, dest);
         },
-        () => {
+        onPremoveSet: (orig, dest) => {
+          this.queuePremove(orig, dest);
+        },
+        onPremoveUnset: () => {
           this.clearPremove();
-        },
-        () => this.isBlackAnimating
-      );
+        }
+      });
 
       requestAnimationFrame(() => {
         if (this.board && typeof this.board.resize === 'function') {
@@ -331,7 +341,6 @@ export class TrainerView {
       });
 
       this.bindResizeObserver();
-      this.bindTouchCancelRecovery();
     };
 
     requestAnimationFrame(mountBoard);
@@ -363,29 +372,6 @@ export class TrainerView {
         this.board.resize();
       }
     });
-  }
-
-  bindTouchCancelRecovery() {
-    if (this._touchCancelBound) return;
-    this._touchCancelBound = true;
-
-    const handleInterruption = () => {
-      if (this.isUserDragging) {
-        this.isUserDragging = false;
-        if (this.activeDraggedSource) {
-          $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
-          this.activeDraggedSource = null;
-        }
-        // Safely hide any orphaned dragged piece image created by chessboard.js
-        $('body > img.piece-417db').css('display', 'none');
-        if (this.board && this.game) {
-          this.board.position(this.game.fen(), false);
-        }
-      }
-    };
-
-    window.addEventListener('touchcancel', handleInterruption, { passive: true });
-    window.addEventListener('pointercancel', handleInterruption, { passive: true });
   }
 
   initControls() {
@@ -707,8 +693,13 @@ export class TrainerView {
 
     this.game.reset();
     this.moveIndex = 0;
-    if (this.board) this.board.position('start');
+    if (this.board) {
+      this.board.setFen('start');
+      this.board.setLastMove(null, null);
+      this.board.clearCustomHighlights();
+    }
     this.clearHighlights();
+    this.syncBoardState();
 
     if (this.currentLine) {
       userProgress.recordAttempt(this.currentLine.id);
@@ -718,112 +709,18 @@ export class TrainerView {
     this.showToast(`Drill started: ${stripEmojis(this.currentLine ? this.currentLine.name : 'Opening Line')}`, 'success');
   }
 
-  onDragStart(source, piece) {
-    if (this.game.game_over()) return false;
-    if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return false;
-
-    // Strict White piece filter: only White pieces can be dragged / premoved
-    if (piece.search(/^w/) === -1) {
-      return false;
-    }
-
-    // Immediately clear ambiguity hint upon user interaction
-    clearAmbiguityHints('#board');
-
-    // Instant source hiding: suppress static piece on source square to prevent ghosting during drag
-    this.isUserDragging = true;
-    this.activeDraggedSource = source;
-    $(`#board .square-${source}, #board [data-square="${source}"]`).addClass('premove-dragging-source');
-
-    // Unified Gesture Engine: dragstart automatically overrides prior click-selected square
-    clearBoardHighlightsKeepState('#board');
-    setSelectedSquare(source);
-    highlightBoardSquare(source, 'selected', '#board');
-
-    const legalMoves = this.game.moves({ square: source, verbose: true }) || [];
-    legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', '#board'));
-
-    return true;
-  }
-
-  onDrop(source, target) {
-    // Release active drag state and remove source suppression
-    this.isUserDragging = false;
-    $(`#board .square-${source}, #board [data-square="${source}"]`).removeClass('premove-dragging-source');
-    if (this.activeDraggedSource) {
-      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
-      this.activeDraggedSource = null;
-    }
-
-    if (source === target) {
-      // User tapped/clicked without dragging: track as tap so selection is retained
-      this.lastDropWasTap = true;
-      if (this.hasPremoveQueued()) {
-        this.clearPremove();
-      }
-      return 'snapback';
-    }
-    this.lastDropWasTap = false;
-
-    // Check if it's currently Black's turn or CPU animation is in flight
-    const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
-
-    if (isBlackTurn) {
-      // Queue Premove with distinctive red square highlights and snap piece back cleanly
-      this.queuePremove(source, target, 'q');
-      return 'snapback';
-    }
-
-    // User actually dragged piece to a different square on White's turn: execute move immediately
-    this.clearPremove();
-    this.clearHighlights();
-    setSelectedSquare(null);
-    setMoveCooldown(120);
-    const move = this.handleUserMove(source, target, 'q', true);
-    if (!move) return 'snapback';
-  }
-
-  onSnapEnd() {
-    this.isUserDragging = false;
-    if (this.activeDraggedSource) {
-      $(`#board .square-${this.activeDraggedSource}, #board [data-square="${this.activeDraggedSource}"]`).removeClass('premove-dragging-source');
-      this.activeDraggedSource = null;
-    }
-
-    // Preserve active selection state if the user simply tapped the piece in place for tap-to-move
-    if (!this.lastDropWasTap) {
-      setSelectedSquare(null);
-    }
-    this.lastDropWasTap = false;
-
-    if (this.board && this.game) {
-      const currentPos = this.board.fen();
-      const gamePos = this.game.fen();
-      if (currentPos !== gamePos) {
-        this.board.position(gamePos, false);
-      }
-    }
-  }
-
   /**
    * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
-   * Validates user move strictly against the target line.
-   * If incorrect, registers failure penalty immediately without auto-correction.
-   * Enforces complete selection state and highlight reset upon move completion.
+   * Validates user move strictly against the target repertoire line.
+   * If incorrect, registers failure penalty immediately and reverts board position.
    */
-  handleUserMove(fromSquare, toSquare, promoPiece = 'q', isDragDrop = false) {
+  handleUserMove(fromSquare, toSquare, promoPiece = 'q') {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return null;
     if (this.game.turn() !== 'w') return null;
 
-    // Reset selection state and enforce input cooldown immediately
-    setSelectedSquare(null);
-    setMoveCooldown(120);
-
-    // Clear ambiguity visual hints and all active selection classes immediately upon user move execution
-    clearAmbiguityHints('#board');
-    $('#board .square-55d63, #board [data-square]').removeClass(
-      'highlight-selected-square highlight-dest-square highlight-selected highlight-target square-selected active-piece premove-dragging-source'
-    );
+    if (this.board) {
+      this.board.clearCustomHighlights();
+    }
 
     const currentMoveIndex = this.moveIndex;
     const expected = this.currentLine.moves[currentMoveIndex];
@@ -836,11 +733,11 @@ export class TrainerView {
     });
 
     if (!testMove) {
-      setSelectedSquare(null);
-      setMoveCooldown(120);
+      if (this.board) this.board.setFen(this.game.fen());
       this.showToast('Illegal move!', 'error');
       this.triggerErrorShake();
       this.clearHighlights();
+      this.syncBoardState();
       return null;
     }
 
@@ -848,14 +745,12 @@ export class TrainerView {
     if (testMove.san !== expected.san) {
       // Revert incorrect move on chess board
       this.game.undo();
-      setSelectedSquare(null);
-      setMoveCooldown(120);
+      if (this.board) {
+        this.board.setFen(this.game.fen());
+        this.board.highlightHint(expected.from, expected.to);
+      }
       this.triggerErrorShake();
       this.clearHighlights();
-
-      // Highlight expected move coordinates to assist manual retry
-      $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
-      $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
 
       // Record mistake penalty in progress metrics
       userProgress.recordMistake(this.currentLine.id);
@@ -870,24 +765,25 @@ export class TrainerView {
 
       // In standard modes, show failure notification and require manual retry
       this.showToast(`Incorrect move! Expected ${expected.san}. Try again!`, 'error');
+      this.syncBoardState();
       return null;
     }
 
-    // 3. Move is correct: advance index, synchronously position board with no interim animation snapback
+    // 3. Move is correct: advance index, position board cleanly
     this.moveIndex++;
 
     if (this.board) {
-      this.board.position(this.game.fen(), false);
+      this.board.setFen(this.game.fen());
+      this.board.setLastMove(testMove.from, testMove.to);
+      this.board.clearCustomHighlights();
     }
-    setSelectedSquare(null);
-    setMoveCooldown(120);
-    this.highlightSquares(testMove.from, testMove.to);
     this.triggerSuccessGlow();
     this.updateUI();
 
     if (this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
       this.clearPremove();
+      this.syncBoardState();
       $('#board').css('pointer-events', '');
       this.onLineComplete();
       return testMove;
@@ -895,19 +791,20 @@ export class TrainerView {
 
     if (this.game.turn() === 'b') {
       this.isBlackAnimating = true;
+      this.syncBoardState();
       setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
     }
     return testMove;
   }
 
   /**
-   * Executes Black's opponent response with a clean, ghost-free 400ms piece glide and 300ms human pacing.
-   * State synchronization and UI re-renders are scheduled strictly after the animation completes.
+   * Executes Black's opponent response with a smooth, hardware-accelerated piece glide.
    */
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
       this.isBlackAnimating = false;
       this.clearPremove();
+      this.syncBoardState();
       return;
     }
 
@@ -917,121 +814,113 @@ export class TrainerView {
     this.game.move(blackMoveData.san);
     this.moveIndex++;
 
-    // Immediate lightweight state transition (preserve queued premove highlights if active)
-    clearAmbiguityHints('#board');
     $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
-    if (!this.hasPremoveQueued()) {
-      this.highlightSquares(blackMoveData.from, blackMoveData.to);
+
+    const animationDuration = APP_CONFIG.blackMoveSpeed || 300;
+
+    // Hardware-accelerated piece move with Chessground
+    if (this.board) {
+      this.board.move(blackMoveData.from, blackMoveData.to);
+      this.board.setLastMove(blackMoveData.from, blackMoveData.to);
     }
 
-    const animationDuration = APP_CONFIG.blackMoveSpeed || 400;
+    setTimeout(() => {
+      if (this.board) {
+        this.board.setFen(this.game.fen());
+        this.board.setLastMove(blackMoveData.from, blackMoveData.to);
+      }
 
-    // Execute ghost-free hardware-accelerated piece glide across the board
-    glidePieceOnBoard(
-      this.board,
-      blackMoveData.from,
-      blackMoveData.to,
-      this.game.fen(),
-      animationDuration,
-      () => {
-        // Handshake callback strictly after piece settles at destination square
-        if (this.game.turn() === 'w') {
-          this.isBlackAnimating = false;
-        }
+      // ============================================================
+      // MULTI-PREMOVE SEQUENTIAL EXECUTION HANDSHAKE
+      // ============================================================
+      if (this.hasPremoveQueued()) {
+        const nextPremove = this.premoveQueue.shift();
 
-        // ============================================================
-        // MULTI-PREMOVE SEQUENTIAL EXECUTION HANDSHAKE (0ms Instant Delay)
-        // ============================================================
-        if (this.hasPremoveQueued()) {
-          const nextPremove = this.premoveQueue.shift();
+        if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
+          const currentMoveIndex = this.moveIndex;
+          const expected = this.currentLine.moves[currentMoveIndex];
 
-          if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
-            const currentMoveIndex = this.moveIndex;
-            const expected = this.currentLine.moves[currentMoveIndex];
+          let testMove = null;
+          try {
+            testMove = this.game.move({
+              from: nextPremove.from,
+              to: nextPremove.to,
+              promotion: nextPremove.promo || 'q'
+            });
+          } catch (e) {
+            testMove = null;
+          }
 
-            // 1. Verify move legality in chess.js
-            let testMove = null;
-            try {
-              testMove = this.game.move({
-                from: nextPremove.from,
-                to: nextPremove.to,
-                promotion: nextPremove.promo || 'q'
-              });
-            } catch (e) {
-              testMove = null;
-            }
+          if (testMove) {
+            if (testMove.san === expected.san) {
+              this.moveIndex++;
+              if (this.board) {
+                this.board.setFen(this.game.fen());
+                this.board.setLastMove(testMove.from, testMove.to);
+                this.board.clearCustomHighlights();
+              }
+              this.triggerSuccessGlow();
+              this.updateUI();
 
-            if (testMove) {
-              if (testMove.san === expected.san) {
-                // Correct premove: advance move index, update board directly to final position
-                this.moveIndex++;
-                if (this.board) {
-                  this.board.position(this.game.fen(), false);
-                }
-                setSelectedSquare(null);
-                setMoveCooldown(120);
-                this.highlightSquares(testMove.from, testMove.to);
-                this.renderPremoveHighlights(); // Re-render remaining queued premoves in the chain
-                this.triggerSuccessGlow();
-                this.updateUI();
-
-                if (this.moveIndex >= this.currentLine.moves.length) {
-                  this.isBlackAnimating = false;
-                  this.clearPremove();
-                  this.onLineComplete();
-                  return true;
-                }
-
-                if (this.game.turn() === 'b') {
-                  this.isBlackAnimating = true;
-                  setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
-                }
-                return true; // Signals finishGlide that board was positioned directly
-              } else {
-                // Incorrect move for the active line: revert move and invalidate whole queue
-                this.game.undo();
+              if (this.moveIndex >= this.currentLine.moves.length) {
+                this.isBlackAnimating = false;
                 this.clearPremove();
-                this.triggerErrorShake();
-                this.clearHighlights();
+                this.syncBoardState();
+                this.onLineComplete();
+                return;
+              }
 
-                $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
-                $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
-                userProgress.recordMistake(this.currentLine.id);
-
-                if (this.isBlindStreak) {
-                  this.streakScore = 0;
-                  this.updateUI();
-                  this.onBlindStreakEnd();
-                  return false;
-                }
-
-                this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
+              if (this.game.turn() === 'b') {
+                this.isBlackAnimating = true;
+                this.syncBoardState();
+                setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+                return;
               }
             } else {
-              // Move is illegal in current position (e.g. CPU took piece or blocked): flush queue
+              this.game.undo();
               this.clearPremove();
+              if (this.board) {
+                this.board.setFen(this.game.fen());
+                this.board.highlightHint(expected.from, expected.to);
+              }
+              this.triggerErrorShake();
+              userProgress.recordMistake(this.currentLine.id);
+
+              if (this.isBlindStreak) {
+                this.streakScore = 0;
+                this.updateUI();
+                this.onBlindStreakEnd();
+                return;
+              }
+
+              this.showToast(`Incorrect premove! Expected ${expected.san}. Try again!`, 'error');
             }
           } else {
             this.clearPremove();
           }
-        }
-
-        this.updateUI();
-
-        if (this.moveIndex >= this.currentLine.moves.length) {
-          this.isBlackAnimating = false;
+        } else {
           this.clearPremove();
-          this.onLineComplete();
-          return false;
         }
-
-        if (this.game.turn() === 'b') {
-          setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
-        }
-
-        return false;
       }
-    );
+
+      if (this.game.turn() === 'w') {
+        this.isBlackAnimating = false;
+      }
+      this.syncBoardState();
+      this.updateUI();
+
+      if (this.moveIndex >= this.currentLine.moves.length) {
+        this.isBlackAnimating = false;
+        this.clearPremove();
+        this.syncBoardState();
+        this.onLineComplete();
+        return;
+      }
+
+      if (this.game.turn() === 'b') {
+        setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+      }
+    }, animationDuration);
   }
 
   requestHint() {
@@ -1039,8 +928,9 @@ export class TrainerView {
     const expected = this.currentLine.moves[this.moveIndex];
     this.clearHighlights();
 
-    $(`#board .square-${expected.from}`).addClass('highlight-hint-src');
-    $(`#board .square-${expected.to}`).addClass('highlight-hint-dst');
+    if (this.board) {
+      this.board.highlightHint(expected.from, expected.to);
+    }
 
     if (!this.isBlindStreak) {
       this.showToast(`Hint: Play ${expected.piece.toUpperCase()} to ${expected.to} (${expected.san})`, 'success');
@@ -1117,7 +1007,11 @@ export class TrainerView {
     if (this.moveIndex > 0) {
       this.moveIndex--;
       if (this.game.history().length > 0) this.game.undo();
-      if (this.board) this.board.position(this.game.fen());
+      if (this.board) {
+        this.board.position(this.game.fen());
+        this.board.setLastMove(null, null);
+      }
+      this.syncBoardState();
       this.updateUI();
     }
   }
@@ -1128,7 +1022,11 @@ export class TrainerView {
       const nextM = this.currentLine.moves[this.moveIndex];
       this.game.move(nextM.san);
       this.moveIndex++;
-      if (this.board) this.board.position(this.game.fen());
+      if (this.board) {
+        this.board.position(this.game.fen());
+        this.board.setLastMove(nextM.from, nextM.to);
+      }
+      this.syncBoardState();
       this.updateUI();
     }
   }
@@ -1321,21 +1219,18 @@ export class TrainerView {
   }
 
   clearHighlights() {
-    setSelectedSquare(null);
-    clearBoardHighlights('#board');
-    clearAmbiguityHints('#board');
-    if (!this.hasPremoveQueued()) {
-      clearPremoveHighlights('#board');
+    if (this.board && typeof this.board.clearCustomHighlights === 'function') {
+      this.board.clearCustomHighlights();
+      if (!this.hasPremoveQueued() && typeof this.board.clearPremove === 'function') {
+        this.board.clearPremove();
+      }
     }
-    $('#board .square-55d63, #board [data-square]').removeClass(
-      'highlight-last-move highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint square-selected active-piece premove-dragging-source'
-    );
   }
 
   highlightSquares(from, to) {
-    this.clearHighlights();
-    $(`#board .square-${from}`).addClass('highlight-last-move');
-    $(`#board .square-${to}`).addClass('highlight-last-move');
+    if (this.board && typeof this.board.setLastMove === 'function') {
+      this.board.setLastMove(from, to);
+    }
   }
 
   triggerSuccessGlow() {

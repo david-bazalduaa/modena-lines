@@ -1,7 +1,13 @@
 /* ============================================================
-   EMBEDDED NATIVE SVG CHESS PIECE ENGINE & BOARD RENDERER
+   CHESSGROUND INTEGRATION & BOARD RENDERER ENGINE
    ============================================================ */
 
+import { Chessground } from 'chessground';
+
+/**
+ * Embedded Native SVG Chess Piece Graphics.
+ * Pure vector definitions ensuring zero blur, sharp scaling, and rapid rendering.
+ */
 export const SVG_PIECES = {
   wP: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45"><path d="M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-5.41 3.48-5.41 7.47h19c0-3.99-2.41-6.41-5.41-7.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z" fill="#ffffff" stroke="#1b1c20" stroke-width="1.5" stroke-linecap="round"/></svg>`,
   wN: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 45 45"><path d="M 22,10 C 32.5,11 38.5,18 38,39 L 15,39 C 15,30 25,32.5 23,18" fill="#ffffff" stroke="#1b1c20" stroke-width="1.5"/><path d="M 24,18 C 24.38,20.91 18.45,25.37 16,27 C 13,29 13.18,31.34 11,31 C 9.958,30.06 12.41,27.96 11,28 C 10,28 11.19,29.23 10,30 C 9,30 5.997,31 6,26 C 6,24 12,14 12,14 C 12,14 13.89,12.1 14,10.5 C 13.27,9.506 13.5,8.5 13.5,8.5 C 14.5,9.5 16.5,9.5 16.5,9.5 C 17,8.5 16.5,7.5 16.5,7.5 C 17,7.5 18.5,8.5 19,9.5 C 20,9.5 21,9.5 21,9.5 C 21.5,8.5 22,8.5 22,8.5 C 22.5,9.5 21,10.5 22,10.5 C 22.5,10.5 23,9.5 24,9.5 Z" fill="#ffffff" stroke="#1b1c20" stroke-width="1.5"/><circle cx="15" cy="15" r="1.5" fill="#1b1c20"/></svg>`,
@@ -19,7 +25,9 @@ export const SVG_PIECES = {
 };
 
 /**
- * Returns data-URI for embedded SVG piece graphic.
+ * Generates data URI for embedded SVG piece graphic.
+ * @param {string} piece - Piece code like 'wP', 'bN'
+ * @returns {string} data URI string
  */
 export function getPieceDataURI(piece) {
   if (SVG_PIECES[piece]) {
@@ -29,7 +37,40 @@ export function getPieceDataURI(piece) {
 }
 
 /**
+ * Dynamically binds our custom piece SVG set into CSS variables on the document root.
+ * This allows Chessground piece elements to consume them cleanly via var(--piece-w-p), etc.
+ */
+export function injectPieceCSSVariables() {
+  if (typeof document === 'undefined') return;
+  const root = document.documentElement;
+
+  const roleMap = {
+    P: 'pawn',
+    N: 'knight',
+    B: 'bishop',
+    R: 'rook',
+    Q: 'queen',
+    K: 'king'
+  };
+
+  for (const [key, svg] of Object.entries(SVG_PIECES)) {
+    const colorChar = key[0]; // 'w' or 'b'
+    const roleChar = key[1];  // 'P', 'N', etc.
+    const colorName = colorChar === 'w' ? 'white' : 'black';
+    const roleName = roleMap[roleChar] || 'pawn';
+    const varName = `--piece-${roleName}-${colorName}`;
+    const uri = getPieceDataURI(key);
+    root.style.setProperty(varName, `url("${uri}")`);
+  }
+}
+
+// Ensure CSS variables are initialized immediately upon module load
+injectPieceCSSVariables();
+
+/**
  * Parses a FEN piece-placement string into an 8x8 matrix array.
+ * @param {string} fen
+ * @returns {Array<Array<Object|null>>}
  */
 export function parseFENPosition(fen) {
   const placement = (fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR').split(' ')[0];
@@ -53,6 +94,9 @@ export function parseFENPosition(fen) {
 
 /**
  * Generates lightweight, static 8x8 mini-board HTML string from a FEN string.
+ * Consumed by catalog and dashboard preview cards.
+ * @param {string} fen
+ * @returns {string}
  */
 export function generateMiniBoardHTML(fen) {
   try {
@@ -83,568 +127,397 @@ export function generateMiniBoardHTML(fen) {
   }
 }
 
+/**
+ * Renders static mini-board into target container.
+ */
 export function renderMiniBoard(containerElement, fen) {
-  const $el = $(containerElement);
-  if ($el.length) $el.html(generateMiniBoardHTML(fen));
+  const $el = typeof $ !== 'undefined' ? $(containerElement) : null;
+  if ($el && $el.length) {
+    $el.html(generateMiniBoardHTML(fen));
+  } else if (containerElement) {
+    containerElement.innerHTML = generateMiniBoardHTML(fen);
+  }
+}
+
+/**
+ * Calculates a legal destinations Map (Square -> Array of Target Squares)
+ * directly from a chess.js instance for Chessground's movable.dests config.
+ * @param {Object} game - chess.js instance
+ * @returns {Map<string, string[]>}
+ */
+export function calculateLegalDests(game) {
+  const dests = new Map();
+  if (!game || typeof game.moves !== 'function') return dests;
+
+  const moves = game.moves({ verbose: true });
+  for (let i = 0; i < moves.length; i++) {
+    const m = moves[i];
+    if (!dests.has(m.from)) {
+      dests.set(m.from, []);
+    }
+    dests.get(m.from).push(m.to);
+  }
+  return dests;
 }
 
 /* ============================================================
-   CLICK-TO-MOVE EVENT DELEGATION & HIGHLIGHT STATE SYSTEM
+   CHESSGROUND BOARD CONTROLLER WRAPPER
    ============================================================ */
 
-let selectedSquare = null;
-let ignoreInputUntil = 0;
-
-export function getSelectedSquare() { return selectedSquare; }
-export function setSelectedSquare(sq) { selectedSquare = sq; }
-
 /**
- * Enforces an input cooldown window (default: 120ms) to swallow trailing synthetic
- * click events, delayed touch releases, and prevent accidental re-selection.
+ * Factory that mounts and manages a Chessground board instance inside a DOM element.
+ * Provides unified, reactive methods for FEN synchronization, legal move restrictions,
+ * orientation toggles, hardware-accelerated piece animations, and premove handling.
+ *
+ * @param {HTMLElement|string} targetElement - DOM element or selector (e.g. '#board')
+ * @param {Object} [options] - Configuration options
+ * @returns {Object} Board controller instance
  */
-export function setMoveCooldown(durationMs = 120) {
-  ignoreInputUntil = Date.now() + durationMs;
-}
-
-/**
- * Checks whether the engine is currently within the post-move touch/click cooldown window.
- */
-export function isMoveCooldownActive() {
-  return Date.now() < ignoreInputUntil;
-}
-
-/**
- * Extracts square coordinate from any DOM element inside the board.
- */
-export function getSquareCoordinate(element) {
-  if (!element) return null;
-
-  let el = element;
-  for (let i = 0; i < 5 && el; i++) {
-    const ds = el.getAttribute ? el.getAttribute('data-square') : null;
-    if (ds && /^[a-h][1-8]$/.test(ds)) return ds;
-
-    const cls = el.className || '';
-    const clsStr = typeof cls === 'string' ? cls : (cls.baseVal || '');
-    const match = clsStr.match(/square-([a-h][1-8])\b/);
-    if (match) return match[1];
-
-    el = el.parentElement;
+export function createChessgroundBoard(targetElement, options = {}) {
+  const el = typeof targetElement === 'string' ? document.querySelector(targetElement) : targetElement;
+  if (!el) {
+    console.error('[BoardRenderer] Target element not found:', targetElement);
+    return null;
   }
-  return null;
+
+  // Clear existing contents to ensure clean mounting
+  el.innerHTML = '';
+  injectPieceCSSVariables();
+
+  const startFen = options.fen || 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+  const initialOrientation = options.orientation || 'white';
+  const initialTurn = options.turnColor || (startFen.includes(' b ') ? 'black' : 'white');
+
+  // Track active custom square highlight classes (hints, ambiguity, etc.)
+  const customHighlights = new Map();
+
+  const groundConfig = {
+    fen: startFen,
+    orientation: initialOrientation,
+    turnColor: initialTurn,
+    coordinates: false, // Clean minimal aesthetic
+    autoCastle: true,
+    viewOnly: Boolean(options.viewOnly),
+    disableContextMenu: true,
+    blockTouchScroll: true,
+    animation: {
+      enabled: options.animationEnabled !== false,
+      duration: options.animationDuration || 250
+    },
+    highlight: {
+      lastMove: options.highlightLastMove !== false,
+      check: true,
+      custom: customHighlights
+    },
+    movable: {
+      free: false, // Strict legal moves only
+      color: options.movableColor !== undefined ? options.movableColor : (initialTurn === 'white' ? 'white' : undefined),
+      dests: options.dests || new Map(),
+      showDests: options.showDests !== false,
+      events: {
+        after: (orig, dest, metadata) => {
+          if (typeof options.onMove === 'function') {
+            options.onMove(orig, dest, metadata);
+          }
+        }
+      }
+    },
+    premovable: {
+      enabled: options.premovesEnabled !== false,
+      showDests: true,
+      castle: true,
+      events: {
+        set: (orig, dest, metadata) => {
+          if (typeof options.onPremoveSet === 'function') {
+            options.onPremoveSet(orig, dest, metadata);
+          }
+        },
+        unset: () => {
+          if (typeof options.onPremoveUnset === 'function') {
+            options.onPremoveUnset();
+          }
+        }
+      }
+    },
+    events: {
+      move: (orig, dest, capturedPiece) => {
+        // Also fire unified events.move if bound
+        if (typeof options.onMove === 'function') {
+          options.onMove(orig, dest, { captured: capturedPiece });
+        }
+      },
+      select: (key) => {
+        if (typeof options.onSelect === 'function') {
+          options.onSelect(key);
+        }
+      }
+    }
+  };
+
+  const ground = Chessground(el, groundConfig);
+
+  // Return unified controller API
+  const controller = {
+    ground,
+    element: el,
+
+    /**
+     * Updates board position via FEN.
+     * @param {string} fen
+     * @param {boolean} [animate=false]
+     */
+    setFen(fen, animate = false) {
+      if (!fen) return;
+      const turn = fen.includes(' b ') ? 'black' : 'white';
+      ground.set({
+        fen: fen === 'start' ? 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' : fen,
+        turnColor: turn,
+        animation: { enabled: Boolean(animate) }
+      });
+    },
+
+    /**
+     * Drop-in compatibility alias matching chessboard.js .position()
+     */
+    position(fen, animate = false) {
+      if (typeof fen === 'undefined') {
+        return ground.getFen();
+      }
+      this.setFen(fen, animate);
+    },
+
+    /**
+     * Updates legal move destinations map for the active player.
+     * @param {Map<string, string[]>} dests
+     * @param {'white'|'black'|'both'|null} [color]
+     */
+    setDests(dests, color) {
+      const config = {
+        movable: {
+          dests: dests || new Map()
+        }
+      };
+      if (color !== undefined) {
+        config.movable.color = color;
+      }
+      ground.set(config);
+    },
+
+    /**
+     * Sets which color is allowed to move pieces.
+     * @param {'white'|'black'|'both'|null} color
+     */
+    setTurn(color) {
+      ground.set({
+        turnColor: color === 'b' ? 'black' : (color === 'w' ? 'white' : color),
+        movable: {
+          color: color === 'b' ? 'black' : (color === 'w' ? 'white' : color)
+        }
+      });
+    },
+
+    /**
+     * Programmatically executes an animated move on the board.
+     * @param {string} orig - Source square (e.g. 'e2')
+     * @param {string} dest - Target square (e.g. 'e4')
+     */
+    move(orig, dest) {
+      if (!orig || !dest) return;
+      ground.move(orig, dest);
+    },
+
+    /**
+     * Sets or clears last move highlighted squares.
+     * @param {string|null} from
+     * @param {string|null} to
+     */
+    setLastMove(from, to) {
+      if (from && to) {
+        ground.set({ lastMove: [from, to] });
+      } else {
+        ground.set({ lastMove: [] });
+      }
+    },
+
+    /**
+     * Sets board orientation perspective.
+     * @param {'white'|'black'} orientation
+     */
+    setOrientation(orientation) {
+      ground.set({ orientation: orientation === 'black' ? 'black' : 'white' });
+    },
+
+    /**
+     * Toggles board orientation between white and black.
+     */
+    flip() {
+      ground.toggleOrientation();
+    },
+
+    /**
+     * Returns current board orientation.
+     */
+    getOrientation() {
+      return ground.state.orientation;
+    },
+
+    /**
+     * Highlights move hint source and target squares.
+     * @param {string} fromSquare
+     * @param {string} toSquare
+     */
+    highlightHint(fromSquare, toSquare) {
+      if (fromSquare) customHighlights.set(fromSquare, 'highlight-hint-src');
+      if (toSquare) customHighlights.set(toSquare, 'highlight-hint-dst');
+      ground.set({ highlight: { custom: new Map(customHighlights) } });
+    },
+
+    /**
+     * Highlights candidate square with pulsing ambiguity indicator.
+     * @param {string} fromSquare
+     * @param {string} [toSquare]
+     */
+    highlightAmbiguity(fromSquare, toSquare) {
+      if (fromSquare) customHighlights.set(fromSquare, 'highlight-ambiguity-hint');
+      if (toSquare) customHighlights.set(toSquare, 'highlight-hint-dst');
+      ground.set({ highlight: { custom: new Map(customHighlights) } });
+    },
+
+    /**
+     * Clears all custom highlight markers from the board.
+     */
+    clearCustomHighlights() {
+      customHighlights.clear();
+      ground.set({ highlight: { custom: new Map() } });
+    },
+
+    /**
+     * Highlights premove source and destination squares.
+     * @param {string} fromSquare
+     * @param {string} [toSquare]
+     */
+    highlightPremove(fromSquare, toSquare) {
+      if (fromSquare) customHighlights.set(fromSquare, 'highlight-premove-src current-premove');
+      if (toSquare) customHighlights.set(toSquare, 'highlight-premove-dst premove-dest');
+      ground.set({ highlight: { custom: new Map(customHighlights) } });
+    },
+
+    /**
+     * Clears any pending premove on the board and removes premove highlight markers.
+     */
+    clearPremove() {
+      if (typeof ground.cancelPremove === 'function') {
+        ground.cancelPremove();
+      }
+      for (const [key, val] of customHighlights.entries()) {
+        if (val.includes('premove')) {
+          customHighlights.delete(key);
+        }
+      }
+      ground.set({ highlight: { custom: new Map(customHighlights) } });
+    },
+
+    /**
+     * Forces board dimension recalculation and redraw on resize.
+     */
+    resize() {
+      ground.redrawAll();
+    },
+
+    /**
+     * Destroys Chessground instance and detaches event listeners.
+     */
+    destroy() {
+      ground.destroy();
+    }
+  };
+
+  return controller;
 }
 
-/**
- * Clears all click-to-move, hint, and premove highlights from the board and resets selection state.
- */
+/* ============================================================
+   LEGACY / BACKWARD COMPATIBILITY ADAPTERS
+   ============================================================ */
+
 export function clearBoardHighlights(boardSelector = '#board') {
-  selectedSquare = null;
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst square-selected active-piece premove-dragging-source'
-  );
-}
-
-/**
- * Clears highlight classes from the DOM WITHOUT resetting selectedSquare state.
- */
-export function clearBoardHighlightsKeepState(boardSelector = '#board') {
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint square-selected active-piece'
-  );
-}
-
-/**
- * Highlights queued premove source and destination squares with distinct Chess.com red tint.
- * Supports both individual square arguments (fromSquare, toSquare) and ordered multi-premove queue arrays.
- */
-export function highlightPremoveSquares(fromOrQueue, toSquare, boardSelector = '#board') {
-  clearPremoveHighlights(boardSelector);
-  if (!fromOrQueue) return;
-
-  if (Array.isArray(fromOrQueue)) {
-    fromOrQueue.forEach(move => {
-      if (move && move.from) {
-        $(boardSelector).find('.square-' + move.from + ', [data-square="' + move.from + '"]').addClass('highlight-premove highlight-premove-src');
-      }
-      if (move && move.to) {
-        $(boardSelector).find('.square-' + move.to + ', [data-square="' + move.to + '"]').addClass('highlight-premove highlight-premove-dst');
-      }
-    });
-  } else {
-    if (fromOrQueue) {
-      $(boardSelector).find('.square-' + fromOrQueue + ', [data-square="' + fromOrQueue + '"]').addClass('highlight-premove highlight-premove-src');
-    }
-    if (toSquare) {
-      $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]').addClass('highlight-premove highlight-premove-dst');
-    }
+  const $board = typeof $ !== 'undefined' ? $(boardSelector) : null;
+  if ($board && $board.length) {
+    $board.find('square').removeClass(
+      'highlight-selected-square highlight-dest-square highlight-selected highlight-target highlight-hint-src highlight-hint-dst square-hint highlight-ambiguity-hint highlight-premove highlight-premove-src highlight-premove-dst square-selected active-piece premove-dragging-source'
+    );
   }
 }
 
-/**
- * Clears premove red highlights from the board.
- */
-export function clearPremoveHighlights(boardSelector = '#board') {
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'highlight-premove highlight-premove-src highlight-premove-dst'
-  );
+export function clearBoardHighlightsKeepState(boardSelector = '#board') {
+  clearBoardHighlights(boardSelector);
 }
 
-/**
- * Clears on-board ambiguity hints without affecting active selection state.
- */
 export function clearAmbiguityHints(boardSelector = '#board') {
-  $(boardSelector).find('.square-55d63, [data-square]').removeClass(
-    'square-hint highlight-ambiguity-hint'
-  );
+  const $board = typeof $ !== 'undefined' ? $(boardSelector) : null;
+  if ($board && $board.length) {
+    $board.find('square').removeClass('square-hint highlight-ambiguity-hint');
+  }
 }
 
-/**
- * Highlights candidate source/target square with pulsing amber ambiguity glow.
- */
 export function highlightAmbiguityHintSquare(fromSquare, toSquare, boardSelector = '#board') {
   if (!fromSquare) return;
-  const $from = $(boardSelector).find('.square-' + fromSquare + ', [data-square="' + fromSquare + '"]');
-  $from.addClass('square-hint highlight-ambiguity-hint');
-
-  if (toSquare) {
-    const $to = $(boardSelector).find('.square-' + toSquare + ', [data-square="' + toSquare + '"]');
-    $to.addClass('square-hint');
+  const $board = typeof $ !== 'undefined' ? $(boardSelector) : null;
+  if ($board && $board.length) {
+    $board.find(`square.${fromSquare}`).addClass('square-hint highlight-ambiguity-hint');
+    if (toSquare) {
+      $board.find(`square.${toSquare}`).addClass('square-hint');
+    }
   }
 }
 
-/**
- * Highlights selected source square or valid destination square.
- */
 export function highlightBoardSquare(square, type = 'selected', boardSelector = '#board') {
   if (!square) return;
-  const $sq = $(boardSelector).find('.square-' + square + ', [data-square="' + square + '"]');
-  if (type === 'selected') {
-    $sq.addClass('highlight-selected-square square-selected');
-  } else if (type === 'destination') {
-    $sq.addClass('highlight-dest-square');
-  } else if (type === 'ambiguity-hint' || type === 'hint') {
-    $sq.addClass('square-hint highlight-ambiguity-hint');
+  const $board = typeof $ !== 'undefined' ? $(boardSelector) : null;
+  if ($board && $board.length) {
+    const $sq = $board.find(`square.${square}`);
+    if (type === 'selected') $sq.addClass('highlight-selected-square');
+    else if (type === 'destination') $sq.addClass('highlight-dest-square');
   }
 }
 
-/**
- * Click-to-Move & Premove Handler using event delegation on board container.
- * Active throughout training sessions, enabling instant moves on White turns
- * and queued premoves with right-click / click cancellation during Black turns.
- * Includes complete touch lifecycle deduplication and synthetic click swallowing.
- */
-export function initClickToMove(boardSelector = '#board', getGameInstance, onMoveExecution, onPremoveCancel, isOpponentAnimating) {
-  const boardContainer = document.querySelector('#board-container') || document.querySelector(boardSelector);
-  if (!boardContainer) return;
-
-  // Clean up previous event listeners
-  if (boardContainer._boardClickHandler) {
-    boardContainer.removeEventListener('pointerdown', boardContainer._boardClickHandler, true);
-  }
-  if (boardContainer._boardPointerUpHandler) {
-    boardContainer.removeEventListener('pointerup', boardContainer._boardPointerUpHandler, true);
-  }
-  if (boardContainer._boardPointerCancelHandler) {
-    boardContainer.removeEventListener('pointercancel', boardContainer._boardPointerCancelHandler, true);
-  }
-  if (boardContainer._boardTouchEndHandler) {
-    boardContainer.removeEventListener('touchend', boardContainer._boardTouchEndHandler, true);
-  }
-  if (boardContainer._boardTouchCancelHandler) {
-    boardContainer.removeEventListener('touchcancel', boardContainer._boardTouchCancelHandler, { passive: false });
-  }
-  if (boardContainer._boardSyntheticClickHandler) {
-    boardContainer.removeEventListener('click', boardContainer._boardSyntheticClickHandler, true);
-  }
-  if (boardContainer._boardContextMenuHandler) {
-    boardContainer.removeEventListener('contextmenu', boardContainer._boardContextMenuHandler);
-  }
-  if (boardContainer._boardTouchMoveHandler) {
-    boardContainer.removeEventListener('touchmove', boardContainer._boardTouchMoveHandler, { passive: false });
-  }
-  if (boardContainer._boardTouchStartHandler) {
-    boardContainer.removeEventListener('touchstart', boardContainer._boardTouchStartHandler, { passive: false });
-  }
-
-  // Intercept touchmove on the board canvas to prevent mobile window scrolling during piece drag & tap
-  const touchMoveHandler = function(e) {
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-  };
-
-  const touchStartHandler = function(e) {
-    if (e.touches && e.touches.length > 1 && e.cancelable) {
-      e.preventDefault();
-    }
-  };
-
-  // Right-click anywhere on the board instantly cancels any active premove
-  const contextMenuHandler = function(e) {
-    e.preventDefault();
-    clearBoardHighlights(boardSelector);
-    clearPremoveHighlights(boardSelector);
-    if (typeof onPremoveCancel === 'function') {
-      onPremoveCancel();
-    }
-  };
-
-  // Handles gesture interruption from iOS notification banners, app switchers, or edge gestures
-  const cancelHandler = function(e) {
-    clearBoardHighlights(boardSelector);
-    clearPremoveHighlights(boardSelector);
-    if (typeof onPremoveCancel === 'function') {
-      onPremoveCancel();
-    }
-  };
-
-  // Swallows trailing synthetic click and lingering touch events during cooldown
-  const suppressSyntheticHandler = function(e) {
-    if (isMoveCooldownActive()) {
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-      e.stopPropagation();
-      if (e.stopImmediatePropagation) {
-        e.stopImmediatePropagation();
-      }
-      return;
-    }
-
-    // Prevent default browser click handling on chess board squares to avoid duplicate events after pointerdown
-    if (e.type === 'click') {
-      const clickedSquare = getSquareCoordinate(e.target);
-      if (clickedSquare && e.cancelable) {
-        e.preventDefault();
-      }
-    }
-  };
-
-  const pointerDownHandler = function(e) {
-    // 0. If move cooldown is active, ignore all incoming tap/click input events immediately
-    if (isMoveCooldownActive()) {
-      if (e.cancelable) {
-        e.preventDefault();
-      }
-      e.stopPropagation();
-      if (e.stopImmediatePropagation) {
-        e.stopImmediatePropagation();
-      }
-      return;
-    }
-
-    // Only handle primary left click/tap for selection and moves
-    if (e.button && e.button !== 0) return;
-
-    const clickedSquare = getSquareCoordinate(e.target);
-    if (!clickedSquare) return;
-
-    const game = typeof getGameInstance === 'function' ? getGameInstance() : getGameInstance;
-    if (!game || typeof game.get !== 'function') return;
-
-    if (typeof game.game_over === 'function' && game.game_over()) return;
-
-    const cpuAnimating = typeof isOpponentAnimating === 'function' ? isOpponentAnimating() : Boolean(isOpponentAnimating);
-    const isBlackTurn = (typeof game.turn === 'function' && game.turn() === 'b') || cpuAnimating;
-    const clickedPiece = game.get(clickedSquare);
-
-    // ============================================================
-    // CASE 1: No square currently selected (selectedSquare === null)
-    // ============================================================
-    if (selectedSquare === null) {
-      if (clickedPiece && clickedPiece.color === 'w') {
-        selectedSquare = clickedSquare;
-        clearBoardHighlightsKeepState(boardSelector);
-        highlightBoardSquare(clickedSquare, 'selected', boardSelector);
-
-        // Highlight legal destination squares if it is currently White's active turn
-        const legalMoves = (typeof game.turn === 'function' && game.turn() === 'w' && !cpuAnimating)
-          ? (game.moves({ square: clickedSquare, verbose: true }) || [])
-          : [];
-        legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', boardSelector));
-      } else if (typeof onPremoveCancel === 'function') {
-        // Tapped an empty square without selection -> cancel queued premove
-        onPremoveCancel();
-        clearPremoveHighlights(boardSelector);
-      }
-      return;
-    }
-
-    // ============================================================
-    // CASE 2: A square is already selected (selectedSquare !== null)
-    // ============================================================
-
-    // 2A. Clicked the same square -> Keep selection and allow immediate drag initiation without canceling
-    if (clickedSquare === selectedSquare) {
-      return;
-    }
-
-    // 2B. Clicked another friendly White piece -> Switch selection and allow immediate drag initiation
-    if (clickedPiece && clickedPiece.color === 'w') {
-      selectedSquare = clickedSquare;
-      clearBoardHighlightsKeepState(boardSelector);
-      highlightBoardSquare(clickedSquare, 'selected', boardSelector);
-
-      const legalMoves = (typeof game.turn === 'function' && game.turn() === 'w' && !cpuAnimating)
-        ? (game.moves({ square: clickedSquare, verbose: true }) || [])
-        : [];
-      legalMoves.forEach(m => highlightBoardSquare(m.to, 'destination', boardSelector));
-      return;
-    }
-
-    // 2C. Clicked a target destination square (empty square or enemy piece)
-    if (e.cancelable) {
-      e.preventDefault();
-    }
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) {
-      e.stopImmediatePropagation();
-    }
-
-    const fromSquare = selectedSquare;
-    const toSquare = clickedSquare;
-
-    // Reset selection state and clear highlights
-    selectedSquare = null;
-    clearBoardHighlights(boardSelector);
-
-    // Enforce 120ms cooldown to block trailing synthetic click and lingering touch events
-    setMoveCooldown(120);
-
-    if (typeof onMoveExecution === 'function') {
-      onMoveExecution(fromSquare, toSquare, isBlackTurn);
-    }
-  };
-
-  boardContainer.addEventListener('touchmove', touchMoveHandler, { passive: false });
-  boardContainer.addEventListener('touchstart', touchStartHandler, { passive: false });
-  boardContainer.addEventListener('contextmenu', contextMenuHandler);
-  boardContainer.addEventListener('pointerdown', pointerDownHandler, true);
-  boardContainer.addEventListener('pointerup', suppressSyntheticHandler, true);
-  boardContainer.addEventListener('pointercancel', cancelHandler, true);
-  boardContainer.addEventListener('touchend', suppressSyntheticHandler, true);
-  boardContainer.addEventListener('touchcancel', cancelHandler, { passive: false });
-  boardContainer.addEventListener('click', suppressSyntheticHandler, true);
-
-  boardContainer._boardTouchMoveHandler = touchMoveHandler;
-  boardContainer._boardTouchStartHandler = touchStartHandler;
-  boardContainer._boardContextMenuHandler = contextMenuHandler;
-  boardContainer._boardClickHandler = pointerDownHandler;
-  boardContainer._boardPointerUpHandler = suppressSyntheticHandler;
-  boardContainer._boardPointerCancelHandler = cancelHandler;
-  boardContainer._boardTouchEndHandler = suppressSyntheticHandler;
-  boardContainer._boardTouchCancelHandler = cancelHandler;
-  boardContainer._boardSyntheticClickHandler = suppressSyntheticHandler;
+export function highlightPremoveSquares(fromOrQueue, toSquare, boardSelector = '#board') {
+  // Managed natively by Chessground premovable state & current-premove class
 }
 
-/**
- * Detects castling moves and returns associated Rook coordinates and piece code.
- */
-function getCastlingRookInfo(fromSquare, toSquare) {
-  // White Kingside: King e1 -> g1, Rook h1 -> f1
-  if (fromSquare === 'e1' && toSquare === 'g1') {
-    return { rookFrom: 'h1', rookTo: 'f1', pieceCode: 'wR' };
-  }
-  // White Queenside: King e1 -> c1, Rook a1 -> d1
-  if (fromSquare === 'e1' && toSquare === 'c1') {
-    return { rookFrom: 'a1', rookTo: 'd1', pieceCode: 'wR' };
-  }
-  // Black Kingside: King e8 -> g8, Rook h8 -> f8
-  if (fromSquare === 'e8' && toSquare === 'g8') {
-    return { rookFrom: 'h8', rookTo: 'f8', pieceCode: 'bR' };
-  }
-  // Black Queenside: King e8 -> c8, Rook a8 -> d8
-  if (fromSquare === 'e8' && toSquare === 'c8') {
-    return { rookFrom: 'a8', rookTo: 'd8', pieceCode: 'bR' };
-  }
+export function clearPremoveHighlights(boardSelector = '#board') {
+  // Managed natively by Chessground premovable state
+}
+
+export function setSelectedSquare(sq) {
+  // Managed natively by Chessground selection
+}
+
+export function getSelectedSquare() {
   return null;
 }
 
+export function setMoveCooldown() {}
+export function isMoveCooldownActive() { return false; }
+
 /**
- * Executes a hardware-accelerated 60 FPS piece glide animation across the chessboard
- * with strict 1-to-1 piece rendering (guaranteeing zero ghosting on destination squares).
- * Automatically detects castling moves (O-O and O-O-O) and triggers synchronized dual-piece
- * sliding transitions for both King and Rook simultaneously.
- *
- * @param {Object} boardInstance - Active chessboard.js instance.
- * @param {string} fromSquare - Source square coordinate (e.g. 'e7' or 'e8').
- * @param {string} toSquare - Destination square coordinate (e.g. 'e5' or 'g8').
- * @param {string} targetFen - Target FEN position string.
- * @param {number} durationMs - Animation duration in milliseconds (default: 300).
- * @param {Function} [onComplete] - Callback fired strictly when all pieces settle.
+ * Executes a piece glide transition across the board.
+ * In Chessground, this delegates directly to controller.move(from, to) with native animation.
  */
-export function glidePieceOnBoard(boardInstance, fromSquare, toSquare, targetFen, durationMs = 300, onComplete) {
-  if (!boardInstance) {
-    if (typeof onComplete === 'function') onComplete();
+export function glidePieceOnBoard(boardController, fromSquare, toSquare, targetFen, durationMs = 250, onComplete) {
+  if (boardController && typeof boardController.move === 'function') {
+    boardController.move(fromSquare, toSquare);
+    setTimeout(() => {
+      if (typeof onComplete === 'function') onComplete();
+    }, durationMs);
     return;
   }
-
-  const $boardContainer = $('#board .chessboard-63f37').length ? $('#board .chessboard-63f37') : $('#board');
-  const $from = $(`#board .square-${fromSquare}, #board [data-square="${fromSquare}"]`);
-  const $to = $(`#board .square-${toSquare}, #board [data-square="${toSquare}"]`);
-
-  // Fallback if square elements are not rendered in DOM
-  if (!$boardContainer.length || !$from.length || !$to.length) {
-    boardInstance.position(targetFen, false);
-    if (typeof onComplete === 'function') onComplete();
-    return;
-  }
-
-  const $originalPieceImg = $from.find('img, .piece-417db');
-  let pieceSrc = $originalPieceImg.attr('src');
-
-  if (!pieceSrc) {
-    const currentPos = typeof boardInstance.position === 'function' ? boardInstance.position() : {};
-    const pieceCode = currentPos && currentPos[fromSquare];
-    if (pieceCode) {
-      pieceSrc = getPieceDataURI(pieceCode);
-    }
-  }
-
-  if (!pieceSrc) {
-    boardInstance.position(targetFen, false);
-    if (typeof onComplete === 'function') onComplete();
-    return;
-  }
-
-  const boardRect = $boardContainer[0].getBoundingClientRect();
-  const fromRect = $from[0].getBoundingClientRect();
-  const toRect = $to[0].getBoundingClientRect();
-
-  const startX = fromRect.left - boardRect.left;
-  const startY = fromRect.top - boardRect.top;
-  const deltaX = toRect.left - fromRect.left;
-  const deltaY = toRect.top - fromRect.top;
-
-  // 1. Instantly hide static piece on source square
-  $from.addClass('animating-source-square');
-  $from.find('img, .piece-417db').css({
-    opacity: '0',
-    visibility: 'hidden',
-    display: 'none'
-  });
-
-  // 2. Spawn sliding King/Primary piece overlay element
-  const $floatingPiece = $(`
-    <img src="${pieceSrc}" class="gliding-piece-overlay" alt="moving piece" style="
-      position: absolute;
-      top: ${startY}px;
-      left: ${startX}px;
-      width: ${fromRect.width}px;
-      height: ${fromRect.height}px;
-      z-index: 999;
-      pointer-events: none;
-      user-select: none;
-      will-change: transform;
-      transform: translate3d(0, 0, 0);
-      transition: transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1);
-    " />
-  `);
-  $boardContainer.append($floatingPiece);
-
-  // 3. Handle Castling: Spawn synchronized Rook overlay if castling move detected
-  const castlingInfo = getCastlingRookInfo(fromSquare, toSquare);
-  let $fromRook = null;
-  let $floatingRook = null;
-  let rookDeltaX = 0;
-  let rookDeltaY = 0;
-
-  if (castlingInfo) {
-    $fromRook = $(`#board .square-${castlingInfo.rookFrom}, #board [data-square="${castlingInfo.rookFrom}"]`);
-    const $toRook = $(`#board .square-${castlingInfo.rookTo}, #board [data-square="${castlingInfo.rookTo}"]`);
-
-    if ($fromRook.length && $toRook.length) {
-      let rookPieceSrc = $fromRook.find('img, .piece-417db').attr('src');
-      if (!rookPieceSrc) {
-        rookPieceSrc = getPieceDataURI(castlingInfo.pieceCode);
-      }
-
-      if (rookPieceSrc) {
-        const rookFromRect = $fromRook[0].getBoundingClientRect();
-        const rookToRect = $toRook[0].getBoundingClientRect();
-        const rookStartX = rookFromRect.left - boardRect.left;
-        const rookStartY = rookFromRect.top - boardRect.top;
-        rookDeltaX = rookToRect.left - rookFromRect.left;
-        rookDeltaY = rookToRect.top - rookFromRect.top;
-
-        // Hide static rook on its starting square
-        $fromRook.addClass('animating-source-square');
-        $fromRook.find('img, .piece-417db').css({
-          opacity: '0',
-          visibility: 'hidden',
-          display: 'none'
-        });
-
-        // Spawn sliding Rook overlay element
-        $floatingRook = $(`
-          <img src="${rookPieceSrc}" class="gliding-piece-overlay gliding-rook-overlay" alt="castling rook" style="
-            position: absolute;
-            top: ${rookStartY}px;
-            left: ${rookStartX}px;
-            width: ${rookFromRect.width}px;
-            height: ${rookFromRect.height}px;
-            z-index: 998;
-            pointer-events: none;
-            user-select: none;
-            will-change: transform;
-            transform: translate3d(0, 0, 0);
-            transition: transform ${durationMs}ms cubic-bezier(0.4, 0, 0.2, 1);
-          " />
-        `);
-        $boardContainer.append($floatingRook);
-      }
-    }
-  }
-
-  // 4. Initiate GPU translation for both King and Rook simultaneously
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      $floatingPiece.css('transform', `translate3d(${deltaX}px, ${deltaY}px, 0)`);
-      if ($floatingRook) {
-        $floatingRook.css('transform', `translate3d(${rookDeltaX}px, ${rookDeltaY}px, 0)`);
-      }
-    });
-  });
-
-  // 5. Clean animation handshake upon arrival of both pieces
-  let completed = false;
-  const finishGlide = () => {
-    if (completed) return;
-    completed = true;
-
-    // Restore King source square
-    $from.removeClass('animating-source-square');
-    $from.find('img, .piece-417db').css({
-      opacity: '',
-      visibility: '',
-      display: ''
-    });
-    $floatingPiece.remove();
-
-    // Restore Rook source square if castling
-    if ($fromRook && $fromRook.length) {
-      $fromRook.removeClass('animating-source-square');
-      $fromRook.find('img, .piece-417db').css({
-        opacity: '',
-        visibility: '',
-        display: ''
-      });
-    }
-    if ($floatingRook) {
-      $floatingRook.remove();
-    }
-
-    let handledByCallback = false;
-    if (typeof onComplete === 'function') {
-      handledByCallback = onComplete() === true;
-    }
-
-    if (!handledByCallback && boardInstance && typeof boardInstance.position === 'function') {
-      boardInstance.position(targetFen, false);
-    }
-  };
-
-  $floatingPiece.one('transitionend', finishGlide);
-  setTimeout(finishGlide, durationMs + 40);
+  if (typeof onComplete === 'function') onComplete();
 }
 
+/**
+ * Click-to-move initialization stub for backward compatibility.
+ * Native click-to-move, tap-to-move, and drag-and-drop are handled natively by Chessground.
+ */
+export function initClickToMove() {
+  // Handled natively by Chessground pointer events engine
+}
