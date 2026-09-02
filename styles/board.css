@@ -173,14 +173,16 @@ cg-board square.selected {
   z-index: 1;
 }
 
-/* Legal Move Destination Squares (Empty and Capture) */
-cg-board square.move-dest {
+/* Legal Move & Premove Destination Squares (Empty and Capture) */
+cg-board square.move-dest,
+cg-board square.premove-dest {
   pointer-events: auto;
   z-index: 3;
 }
 
-/* Empty Legal Destination Dot (Clean subtle circle) */
-cg-board square.move-dest:not(.oc)::after {
+/* Empty Legal Destination Dot (Clean neutral translucent grey circle for both moves & premoves) */
+cg-board square.move-dest:not(.oc)::after,
+cg-board square.premove-dest:not(.oc)::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -194,14 +196,17 @@ cg-board square.move-dest:not(.oc)::after {
   transition: transform 0.12s ease, background-color 0.12s ease;
 }
 
-cg-board square.move-dest:not(.oc):hover::after {
+cg-board square.move-dest:not(.oc):hover::after,
+cg-board square.premove-dest:not(.oc):hover::after {
   transform: translate(-50%, -50%) scale(1.2);
   background-color: rgba(30, 41, 59, 0.65);
 }
 
-/* Occupied (Capture) Legal Destination Ring */
+/* Occupied (Capture) Legal Destination Ring (Neutral Translucent Grey for both moves & premoves) */
 cg-board square.move-dest.oc::after,
-cg-board square.oc.move-dest::after {
+cg-board square.oc.move-dest::after,
+cg-board square.premove-dest.oc::after,
+cg-board square.oc.premove-dest::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -218,7 +223,9 @@ cg-board square.oc.move-dest::after {
 }
 
 cg-board square.move-dest.oc:hover::after,
-cg-board square.oc.move-dest:hover::after {
+cg-board square.oc.move-dest:hover::after,
+cg-board square.premove-dest.oc:hover::after,
+cg-board square.oc.premove-dest:hover::after {
   transform: translate(-50%, -50%) scale(1.05);
   border-color: rgba(30, 41, 59, 0.75);
 }
@@ -229,13 +236,22 @@ cg-board square.current-premove {
   z-index: 1;
 }
 
-/* Premove Destination Indicators */
-cg-board square.premove-dest {
-  pointer-events: auto;
-  z-index: 3;
+/* Custom Hint Markers (Centered Yellow Floating Dot Indicator) */
+cg-board square.highlight-hint-src {
+  background-color: transparent !important;
+  box-shadow: inset 0 0 0 2.5px rgba(245, 158, 11, 0.5);
+  z-index: 2;
 }
 
-cg-board square.premove-dest:not(.oc)::after {
+cg-board square.highlight-hint-dst {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* Centered Yellow Floating Circle/Dot in Middle of Target Square */
+cg-board square.highlight-hint-dst:not(.oc)::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -243,13 +259,16 @@ cg-board square.premove-dest:not(.oc)::after {
   transform: translate(-50%, -50%);
   width: 28%;
   height: 28%;
-  background-color: rgba(220, 38, 38, 0.55);
+  background-color: #F59E0B;
   border-radius: 50%;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.75);
   pointer-events: none;
+  animation: hint-yellow-pulse 1.6s ease-in-out infinite;
 }
 
-cg-board square.premove-dest.oc::after,
-cg-board square.oc.premove-dest::after {
+/* Occupied (Capture) Target Square Yellow Ring */
+cg-board square.highlight-hint-dst.oc::after,
+cg-board square.oc.highlight-hint-dst::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -258,21 +277,24 @@ cg-board square.oc.premove-dest::after {
   width: 82%;
   height: 82%;
   background: transparent;
-  border: 4px solid rgba(220, 38, 38, 0.65);
+  border: 4px solid #F59E0B;
   border-radius: 50%;
   box-sizing: border-box;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.75);
   pointer-events: none;
+  animation: hint-yellow-pulse 1.6s ease-in-out infinite;
 }
 
-/* Custom Hint Markers (Emerald Green) */
-cg-board square.highlight-hint-src {
-  background-color: var(--sq-hint-src, rgba(16, 185, 129, 0.35)) !important;
-  z-index: 1;
-}
-
-cg-board square.highlight-hint-dst {
-  background-color: var(--sq-hint-dst, rgba(16, 185, 129, 0.65)) !important;
-  z-index: 1;
+@keyframes hint-yellow-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.18);
+    opacity: 1;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.95);
+  }
 }
 
 /* Pulsing Ambiguity Candidate Marker (Amber Glow) */

@@ -679,25 +679,14 @@ body {
 }
 
 .highlight-hint-src {
-  box-shadow: inset 0 0 0 3px #10b981;
-  background-color: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: inset 0 0 0 2.5px rgba(245, 158, 11, 0.5);
+  background-color: transparent !important;
 }
 
 .highlight-hint-dst {
-  box-shadow: inset 0 0 0 3.5px #10b981;
-  animation: hint-pulse 1.2s ease-in-out infinite;
-}
-
-@keyframes hint-pulse {
-
-  0%,
-  100% {
-    background-color: rgba(16, 185, 129, 0.25);
-  }
-
-  50% {
-    background-color: rgba(16, 185, 129, 0.65);
-  }
+  background-color: transparent !important;
+  box-shadow: none !important;
+  animation: none !important;
 }
 
 
