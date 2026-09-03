@@ -1,0 +1,170 @@
+/* ============================================================
+   RUY LOPEZ – CLOSED SPANISH MAINLINE REPERTOIRE (6 LINES)
+   Classic elite systems: Chigorin, Breyer, Zaitsev, Smyslov, Keres.
+   All lines validated against chess.js.
+   ============================================================ */
+
+export const ruyLopezClosedLines = [
+  {
+    id: 'ruy-lopez-chigorin-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Chigorin Defense (9...Na5 & 12. Nbd2)',
+    shortName: 'Chigorin Defense',
+    category: 'Classical Battle',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Na5 10. Bc2 c5 11. d4 Qc7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Na5 10. Bc2 c5 11. d4 Qc7 12. Nbd2 cxd4 13. cxd4',
+    fullAnnotation: 'The most venerable pillar of Ruy Lopez theory. Black sidelines the knight with 9...Na5 to gain space with ...c5. White preserves the light-squared bishop with 10. Bc2, prepares knight maneuvers with 12. Nbd2, and maintains full central tension with 13. cxd4.',
+    previewFEN: 'r1b2rk1/2q1bppp/p2p1n2/np2p3/3PP3/5N1P/PPBN1PP1/R1BQR1K1 b - - 0 13',
+    annotations: {
+      0: "1. e4 — Classical king's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Retreat maintaining tension.",
+      8: "5. O-O — Castle early.",
+      10: "6. Re1 — Defend e4 and prepare center push.",
+      12: "7. Bb3 — Bishop aims at f7.",
+      14: "8. c3 — Prepare d4 center wedge.",
+      16: "9. h3 — The critical prophylaxis preventing ...Bg4.",
+      18: "10. Bc2 — Safely preserve the Spanish bishop.",
+      20: "11. d4 — Stake the full classical pawn duo.",
+      22: "12. Nbd2 — Knight maneuvers toward f1 and g3.",
+      24: "13. cxd4 — Maintain fluid central space with harmonious piece development!"
+    }
+  },
+  {
+    id: 'ruy-lopez-breyer-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Breyer Defense Knight Regrouping (9...Nb8 & 13. Nf1)',
+    shortName: 'Breyer Defense',
+    category: 'Hypermodern Maneuver',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1',
+    fullAnnotation: 'Gyula Breyer\'s genius concept: Black retreats 9...Nb8 to reroute the knight to d7, reinforcing the center and clearing c6 for pawns. White systematically counters with the Spanish knight tour 11. Nbd2 and 13. Nf1, heading for g3 or e3.',
+    previewFEN: 'r2qr1k1/1bpnbppp/p2p1n2/1p2p3/3PP3/2P2N1P/PPBN1PP1/R1BQR1K1 b - - 6 13',
+    annotations: {
+      0: "1. e4 — King's pawn stake.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. Re1 — Control the central e-file.",
+      12: "7. Bb3 — Secure diagonal.",
+      14: "8. c3 — Prepare d4.",
+      16: "9. h3 — Stop ...Bg4 pin.",
+      18: "10. d4 — The grand center.",
+      20: "11. Nbd2 — Knight begins the journey to the kingside.",
+      22: "12. Bc2 — Guard e4.",
+      24: "13. Nf1! — The legendary Spanish knight tour preparing Ng3 with a long-term strategic squeeze!"
+    }
+  },
+  {
+    id: 'ruy-lopez-zaitsev-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Zaitsev Defense Flank Counter (9...Bb7 & 12. a4)',
+    shortName: 'Zaitsev Defense',
+    category: 'Sharp Counterplay',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Bb7 10. d4 Re8',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Bb7 10. d4 Re8 11. Nbd2 Bf8 12. a4 h6 13. Bc2',
+    fullAnnotation: 'Igor Zaitsev\'s modern masterpiece, favored by Anatoly Karpov. Black posts the bishop aggressively on b7 exerting direct x-ray pressure against e4. White challenges Black’s queenside structure with 12. a4! and retreats the bishop to c2 to fortify the center.',
+    previewFEN: 'r2qr1k1/1bp2pp1/p1np1n1p/1p2p3/P2PP3/2P2N1P/1PBN1PP1/R1BQR1K1 b - - 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn opening.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Maintain tension.",
+      8: "5. O-O — Ensure king safety.",
+      10: "6. Re1 — Control e-file.",
+      12: "7. Bb3 — Target f7.",
+      14: "8. c3 — Prepare d4.",
+      16: "9. h3 — Essential prophylactic move.",
+      18: "10. d4 — Command the center.",
+      20: "11. Nbd2 — Flexible knight support.",
+      22: "12. a4! — Probe Black's queenside pawn chain.",
+      24: "13. Bc2 — Reinforce e4 with harmonious coordination!"
+    }
+  },
+  {
+    id: 'ruy-lopez-smyslov-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Smyslov Defense Kingside Wall (9...h6 & 13. Ng3)',
+    shortName: 'Smyslov Defense',
+    category: 'Solid Positional',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 h6 10. d4 Re8',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 h6 10. d4 Re8 11. Nbd2 Bf8 12. Nf1 Bd7 13. Ng3',
+    fullAnnotation: 'World Champion Vasily Smyslov’s ultra-resilient system with 9...h6. Black constructs an impenetrable fortress in the center while White navigates the knight tour 11. Nbd2-f1-g3, aiming all minor pieces squarely at Black’s kingside.',
+    previewFEN: 'r2qr1k1/2pb1pp1/p1np1n1p/1p2p3/3PP3/2P2NNP/PPB2PP1/R1BQR1K1 b - - 6 13',
+    annotations: {
+      0: "1. e4 — Central foundation.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. Re1 — Control the e-file.",
+      12: "7. Bb3 — Diagonal pressure.",
+      14: "8. c3 — Prepare d4.",
+      16: "9. h3 — Prophylactic air.",
+      18: "10. d4 — Stake full central control.",
+      20: "11. Nbd2 — Reroute knight toward the kingside.",
+      22: "12. Nf1 — Transfer knight toward g3.",
+      24: "13. Ng3 — Prime attacking post eyeing f5 and h5 with massive pressure!"
+    }
+  },
+  {
+    id: 'ruy-lopez-keres-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Keres System Space Clamp (9...Nd7 & 12. d5!)',
+    shortName: 'Keres System 12. d5',
+    category: 'Space Advantage',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nd7 10. d4 Bf6',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nd7 10. d4 Bf6 11. a4 Bb7 12. d5 Ne7 13. Be3',
+    fullAnnotation: 'Paul Keres\'s dynamic setup with 9...Nd7 and 10...Bf6, bolstering e5. White replies with spatial mastery: 11. a4! forces queenside commitments and 12. d5! locks Black\'s c6 knight out of the game, following up with 13. Be3 to dominate the dark squares.',
+    previewFEN: 'r2q1rk1/1bpnnppp/p2p1b2/1p1Pp3/P3P3/2P1BN1P/1P3PP1/RN1QR1K1 b - - 2 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Spanish retreat.",
+      8: "5. O-O — Quick castling.",
+      10: "6. Re1 — Central rook placement.",
+      12: "7. Bb3 — Target f7.",
+      14: "8. c3 — Prepare d4.",
+      16: "9. h3 — Prophylactic air.",
+      18: "10. d4 — Stake full center.",
+      20: "11. a4! — Undermine Black's b5 pawn.",
+      22: "12. d5! — The spatial wedge evicting Black's knight.",
+      24: "13. Be3 — Control dark squares with complete positional dominance!"
+    }
+  },
+  {
+    id: 'ruy-lopez-karpov-be6',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-closed-mainlines',
+    name: 'Closed Spanish – Karpov 9...Be6 Bishop Trade & Central Clamp (13. e5)',
+    shortName: 'Karpov 9...Be6 System',
+    category: 'Positional Precision',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Be6 10. d4 Bxb3',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Be6 10. d4 Bxb3 11. axb3 exd4 12. cxd4 d5 13. e5',
+    fullAnnotation: 'When Black attempts to neutralize White’s Spanish bishop immediately with 9...Be6, White recaptures 11. axb3 opening the a-file for the rook, and locks down the center with 13. e5!, claiming an enduring space and piece mobility advantage.',
+    previewFEN: 'r2q1rk1/2p1bppp/p1n2n2/1p1pP3/3P4/1P3N1P/1P3PP1/RNBQR1K1 b - - 0 13',
+    annotations: {
+      0: "1. e4 — Classical king's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. Re1 — Control e-file.",
+      12: "7. Bb3 — Spanish diagonal.",
+      14: "8. c3 — Prepare d4.",
+      16: "9. h3 — Prophylaxis.",
+      18: "10. d4 — Stake the center.",
+      20: "11. axb3! — Recapture towards the center while opening the a-file for the rook.",
+      22: "12. cxd4 — Rebuild the solid pawn duo.",
+      24: "13. e5! — Kick Black's f6 knight and secure a permanent spatial advantage!"
+    }
+  }
+];

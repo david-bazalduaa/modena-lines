@@ -12,7 +12,7 @@ export const londonClassicalLines = [
     shortName: 'Classical Main Line',
     category: 'Main Line',
     eco: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3',
-    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 b6 9. Ne5 Bb7 10. f4 Ne7 11. Qf3 Nf5 12. Bf2 Be7 13. g4 Nd6',
+    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 b6 9. Ne5 Bb7 10. f4 Ne7 11. Qf3 Nf5 12. Bf2 Be7 13. g4',
     fullAnnotation: 'The quintessential London System fortress against Black’s classical ...e6 and ...Bd6 setup. White anchors the knight on e5, fortifies with f4 (Pillsbury Attack formation), and prepares a kingside avalanche with g4.',
     previewFEN: 'r2q1rk1/pb2bppp/1p1npn2/2ppN3/3P1PP1/2PBPN2/PP1N1B1P/R3K2R w KQ - 1 14',
     annotations: {
@@ -39,7 +39,7 @@ export const londonClassicalLines = [
     shortName: 'h-File Exchange',
     category: 'Sharp Positional',
     eco: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 Bxg3',
-    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 Bxg3 8. hxg3 Qd6 9. Bb5 Bd7 10. Bxc6 Bxc6 11. Ne5 Nd7 12. f4 Nxe5 13. fxe5 Qe7',
+    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 Bxg3 8. hxg3 Qd6 9. Bb5 Bd7 10. Bxc6 Bxc6 11. Ne5 Nd7 12. f4 Nxe5 13. fxe5',
     fullAnnotation: 'When Black voluntarily captures on g3, White gains the open h-file for the h1-rook. White clamps down on the e5 square with Bb5 and Ne5, preventing Black from freeing their position.',
     previewFEN: 'r3k2r/pp2qppp/2b1p3/2ppP3/3P4/2P1P1P1/PP1N2P1/R2QK2R w KQkq - 1 14',
     annotations: {
@@ -94,7 +94,7 @@ export const londonClassicalLines = [
     shortName: 'Lasker 5...Bf5',
     category: 'Counter Attack',
     eco: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bf5 6. Qb3',
-    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bf5 6. Qb3 Qc8 7. Ngf3 e6 8. Nh4 Bg4 9. h3 Bh5 10. g4 Bg6 11. Nxg6 hxg6 12. Bg2 Be7 13. O-O O-O',
+    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bf5 6. Qb3 Qc8 7. Ngf3 e6 8. Nh4 Bg4 9. h3 Bh5 10. g4 Bg6 11. Nxg6 hxg6 12. Bg2 Be7 13. O-O',
     fullAnnotation: 'Emanuel Lasker’s idea of meeting Bf4 with an immediate ...Bf5. White targets the abandoned b7 pawn with 6. Qb3, forcing Black into passivity, then wins the bishop pair with Nh4 and g4.',
     previewFEN: 'r1q2rk1/pp2bpp1/2n1pnp1/2pp4/3P1PP1/1QP1P2P/PP1N1BB1/R4RK1 w - - 1 14',
     annotations: {
@@ -121,7 +121,7 @@ export const londonClassicalLines = [
     shortName: 'Early ...Qb6 Counter',
     category: 'Sharp Gambit',
     eco: '1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Qb6 5. Qb3 c4 6. Qc2 Bf5',
-    pgn: '1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Qb6 5. Qb3 c4 6. Qc2 Bf5 7. Qxf5 Qxb2 8. Qxd5 Qxa1 9. Qb5 O-O-O 10. Nf3 e6 11. Bxc4 a6 12. Qb6 Bd6 13. O-O Bxf4 14. exf4 Nge7',
+    pgn: '1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Qb6 5. Qb3 c4 6. Qc2 Bf5 7. Qxf5 Qxb2 8. Qxd5 Qxa1 9. Qb5 O-O-O 10. Nf3 e6 11. Bxc4 a6 12. Qb6 Bd6 13. O-O Bxf4 14. exf4',
     fullAnnotation: 'A razor-sharp tactical clash where Black targets b2 with ...Qb6 and ...Bf5. White boldly allows the queen infiltration onto b2/a1, trapping Black’s queen while dominating development.',
     previewFEN: '2kr3r/1p2nppp/pQN1p3/8/2BP1P2/2P2N2/P4PPP/q4RK1 w - - 1 15',
     annotations: {

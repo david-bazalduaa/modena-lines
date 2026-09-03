@@ -93,7 +93,7 @@ export const londonKingsIndianLines = [
     shortName: 'Grünfeld ...d5 & ...c5',
     category: 'Main Line',
     eco: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. Be2 c5 6. c3 Nc6',
-    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. Be2 c5 6. c3 Nc6 7. O-O Qb6 8. Qb3 c4 9. Qc2 Bf5 10. Qc1 O-O 11. Nbd2 Rfc8 12. h3 Qd8 13. Re1 b5',
+    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. Be2 c5 6. c3 Nc6 7. O-O Qb6 8. Qb3 c4 9. Qc2 Bf5 10. Qc1 O-O 11. Nbd2 Rfc8 12. h3 Qd8 13. Re1',
     fullAnnotation: 'Against the Grünfeld setup where Black plays both ...g6 and ...d5, White neutralizes Black’s queenside queen pressure by offering a queen trade with Qb3, then stabilizes with c3 and Nbd2.',
     previewFEN: 'r1rq2k1/p3ppbp/2n2np1/1p1p1b2/2pP1B2/2P1PN1P/PP1NBPP1/R1Q1R1K1 w - - 0 14',
     annotations: {
@@ -120,7 +120,7 @@ export const londonKingsIndianLines = [
     shortName: 'Double Fianchetto',
     category: 'Positional',
     eco: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. Be2 O-O 6. O-O b6',
-    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. Be2 O-O 6. O-O b6 7. h3 Bb7 8. a4 a5 9. c4 Nbd7 10. Nc3 Ne4 11. Nxe4 Bxe4 12. Bh2 e5 13. Rc1 Qe7',
+    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. Be2 O-O 6. O-O b6 7. h3 Bb7 8. a4 a5 9. c4 Nbd7 10. Nc3 Ne4 11. Nxe4 Bxe4 12. Bh2 e5 13. Rc1',
     fullAnnotation: 'Black counter-attacks in hypermodern fashion with a double fianchetto. White seizes queenside space with a4 and c4, exchanges the active e4-knight, and controls the center.',
     previewFEN: 'r4rk1/p1pnqpbp/1p1p2p1/4p3/P1PPb3/4PN1P/1P2BPPB/2RQ1RK1 w - - 2 14',
     annotations: {

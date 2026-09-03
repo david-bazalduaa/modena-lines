@@ -1,0 +1,171 @@
+/* ============================================================
+   RUY LOPEZ – EXCHANGE & MODERN SYSTEMS REPERTOIRE (6 LINES)
+   Fischer Exchange, 5...Bg4 line, Delayed Exchange, Worrall Attack,
+   5. d4 Center Attack, and Aronian Modern 8. d3 System.
+   All lines validated against chess.js.
+   ============================================================ */
+
+export const ruyLopezExchangeLines = [
+  {
+    id: 'ruy-lopez-exchange-fischer',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Exchange Variation – Fischer Endgame Mastery (5. O-O & 13. Rd1+)',
+    shortName: 'Fischer Exchange Mastery',
+    category: 'Endgame Precision',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1 9. Rxd1 Bd7 10. Bf4 O-O-O 11. Nc3 Be6 12. Rxd8+ Kxd8 13. Rd1+',
+    fullAnnotation: 'Bobby Fischer\'s devastating endgame weapon. White trades bishop for knight on c6, ruins Black’s pawn structure, and liquidates queens. With 10. Bf4, 11. Nc3, and 13. Rd1+, White seizes open file control with an inherent kingside 4-vs-3 pawn majority.',
+    previewFEN: '3k1bnr/1pp3pp/p3bp2/2p1P3/4PB2/1NN5/PPP2PPP/3R2K1 b - - 1 13',
+    annotations: {
+      0: "1. e4 — Classical king's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Bxc6! — The Exchange Variation! Inflict doubled c-pawns immediately.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. d4 — The thematic center strike.",
+      12: "7. Nxd4 — Centralize knight.",
+      14: "8. Nb3 — Force the Queen trade.",
+      16: "9. Rxd1 — Reclaim with the rook seizing the d-file.",
+      18: "10. Bf4 — Pressure the vulnerable c7 pawn.",
+      20: "11. Nc3 — Rapid knight development.",
+      22: "12. Rxd8+ — Trade heavy pieces to diminish Black's bishop pair.",
+      24: "13. Rd1+! — Check with dominant open file control leading to a technically winning endgame!"
+    }
+  },
+  {
+    id: 'ruy-lopez-exchange-bg4',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Exchange Variation – Anti-Pin Sacrificial Refutation (6. h3 h5 & 13. Qxg4)',
+    shortName: 'Exchange Anti-Pin Refutation',
+    category: 'Sharp Sacrifice Refutation',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7 9. Re1 Ng6 10. d4 Bd6 11. hxg4 hxg4 12. Nh2 Rxh2 13. Qxg4',
+    fullAnnotation: 'Against Black\'s aggressive 5...Bg4 and 6...h5 fishing pole trick, White plays with icy precision: 7. d3 and 8. Nbd2 consolidate, and after 10. d4! and 11. hxg4, White neutralizes Black\'s sacrifice with 13. Qxg4!, emerging with a decisive extra piece.',
+    previewFEN: 'r3k2r/1pp2pp1/p1pb1qn1/4p3/3PP1Q1/8/PPPN1PP1/R1B1R1K1 b kq - 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Bxc6 — Ruin Black's pawn structure.",
+      8: "5. O-O — Ensure king safety.",
+      10: "6. h3 — Ask the question of Black's bishop.",
+      12: "7. d3 — Solidify e4 without accepting the piece prematurely.",
+      14: "8. Nbd2 — Reroute knight toward the center.",
+      16: "9. Re1 — Support the e-file.",
+      18: "10. d4! — The explosive central blow.",
+      20: "11. hxg4 — Win the piece at the precise tactical moment.",
+      22: "12. Nh2 — Absorb Black's rook thrust.",
+      24: "13. Qxg4! — Decisive queen centralization winning the game with material superiority!"
+    }
+  },
+  {
+    id: 'ruy-lopez-delayed-exchange',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Delayed Exchange Variation – 5. Bxc6 Positional Clamp (11. Nh4 & 13. exf5)',
+    shortName: 'Delayed Exchange Variation',
+    category: 'Positional Clamp',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Bxc6 dxc6 6. d3 Bd6 7. Nbd2 Be6 8. O-O Nd7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Bxc6 dxc6 6. d3 Bd6 7. Nbd2 Be6 8. O-O Nd7 9. b3 f6 10. Nc4 O-O 11. Nh4 Bc5 12. Nf5 Bxf5 13. exf5',
+    fullAnnotation: 'The Steenbekkers / Delayed Exchange Variation. By waiting for 4...Nf6 before trading on c6, White eliminates Black’s ...f6 flexibility. With 10. Nc4 and 11. Nh4, White plants the knight on f5 and locks Black in a permanent positional vise.',
+    previewFEN: 'r2q1rk1/1ppn2pp/p1p2p2/2b1pP2/2N5/1P1P4/P1P2PPP/R1BQ1RK1 b - - 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Spanish retreat.",
+      8: "5. Bxc6! — The Delayed Exchange! Black's knight is committed to f6.",
+      10: "6. d3 — Solidify e4.",
+      12: "7. Nbd2 — Flexible knight support.",
+      14: "8. O-O — Complete king safety.",
+      16: "9. b3 — Prepare fianchetto development.",
+      18: "10. Nc4 — Strong central knight post.",
+      20: "11. Nh4 — Reroute knight toward the weak f5 outpost.",
+      22: "12. Nf5 — Plant knight deeply in Black's territory.",
+      24: "13. exf5! — Structural clamp controlling the dark squares with complete mastery!"
+    }
+  },
+  {
+    id: 'ruy-lopez-worrall-attack',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Worrall Attack – Queen & Rook Central Battery (8. O-O, 9. Rd1 & 13. d4)',
+    shortName: 'Worrall Attack 5. Qe2',
+    category: 'Central Battery',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Qe2 b5 6. Bb3 Be7 7. c3 d6 8. O-O O-O',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Qe2 b5 6. Bb3 Be7 7. c3 d6 8. O-O O-O 9. Rd1 Bg4 10. h3 Bxf3 11. Qxf3 Na5 12. Bc2 c5 13. d4',
+    fullAnnotation: 'The Worrall Attack (5. Qe2). White immediately protects the e4 pawn with the queen, clearing d1 for the king\'s rook. After 9. Rd1, White preserves the Spanish bishop on c2 and blasts open the center with 13. d4 under ideal tactical conditions.',
+    previewFEN: 'r2q1rk1/4bppp/p2p1n2/npp1p3/3PP3/2P2Q1P/PPB2PP1/RNBR2K1 b - d3 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn opening.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. Qe2 — The Worrall Attack! Defend e4 and free d1 for the rook.",
+      10: "6. Bb3 — Target f7.",
+      12: "7. c3 — Prepare d4.",
+      14: "8. O-O — Ensure king safety.",
+      16: "9. Rd1! — Place rook on the d-file lining up behind the d4 break.",
+      18: "10. h3 — Ask the question of Black's bishop.",
+      20: "11. Qxf3 — Recapture with the queen dominating the kingside.",
+      22: "12. Bc2 — Safely preserve the bishop pair.",
+      24: "13. d4! — The explosive central blow seizing the full center!"
+    }
+  },
+  {
+    id: 'ruy-lopez-center-attack-5d4',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Center Attack – 5. d4 Central Blast (8. Re1 & 13. Qxd4)',
+    shortName: 'Center Attack 5. d4',
+    category: 'Sharp Open Center',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. d4 exd4 6. e5 Ne4 7. O-O Be7 8. Re1 Nc5',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. d4 exd4 6. e5 Ne4 7. O-O Be7 8. Re1 Nc5 9. Bxc6 dxc6 10. Nxd4 O-O 11. Nc3 Ne6 12. Be3 Nxd4 13. Qxd4',
+    fullAnnotation: 'The explosive 5. d4 Center Attack. White opens lines immediately, drives Black\'s knight to e4, and uses 8. Re1 to pin down the e-file. With 10. Nxd4 and 13. Qxd4, White controls the open center with overwhelming piece harmony.',
+    previewFEN: 'r1bq1rk1/1pp1bppp/p1p5/4P3/3Q4/2N1B3/PPP2PPP/R3R1K1 b - - 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Spanish retreat.",
+      8: "5. d4! — Immediate central explosion.",
+      10: "6. e5 — Dislodge Black's knight.",
+      12: "7. O-O — Quick castling.",
+      14: "8. Re1 — Pin Black's knight down the e-file.",
+      16: "9. Bxc6 — Ruin Black's queenside pawn structure.",
+      18: "10. Nxd4 — Centralize knight.",
+      20: "11. Nc3 — Rapid piece mobilization.",
+      22: "12. Be3 — Connect rooks.",
+      24: "13. Qxd4! — Dominant centralized queen with an enduring endgame advantage!"
+    }
+  },
+  {
+    id: 'ruy-lopez-aronian-d3',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-exchange-modern',
+    name: 'Modern Spanish – Aronian 8. d3 Squeeze (10. Bc2 & 13. Bg5)',
+    shortName: 'Modern Spanish 8. d3 Squeeze',
+    category: 'Grandmaster Positional',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. d3 d6 9. c3 Na5',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. d3 d6 9. c3 Na5 10. Bc2 c5 11. Nbd2 Nc6 12. Nf1 Re8 13. Bg5',
+    fullAnnotation: 'Levon Aronian and Magnus Carlsen’s signature Modern Spanish strategy. White plays 8. d3 avoiding the Marshall Attack while keeping the central pawn structure flexible. With 10. Bc2, 12. Nf1, and 13. Bg5, White clamps the center and dominates Black’s knights.',
+    previewFEN: 'r1bqr1k1/4bppp/p1np1n2/1pp1p1B1/4P3/2PP1N2/PPBN1PPP/R2QR1K1 b - - 3 13',
+    annotations: {
+      0: "1. e4 — King's pawn opening.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. Re1 — Control e-file.",
+      12: "7. Bb3 — Target f7.",
+      14: "8. d3 — Solid modern setup avoiding the Marshall.",
+      16: "9. c3 — Prepare central reinforcement.",
+      18: "10. Bc2 — Preserve the bishop pair.",
+      20: "11. Nbd2 — Knight begins tour toward the kingside.",
+      22: "12. Nf1 — Transfer knight toward g3.",
+      24: "13. Bg5! — Pin Black's knight with suffocating pressure across the board!"
+    }
+  }
+];

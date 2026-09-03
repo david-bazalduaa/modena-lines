@@ -1,0 +1,171 @@
+/* ============================================================
+   RUY LOPEZ – SIDELINES & COUNTER-GAMBITS REPERTOIRE (6 LINES)
+   Classic critical refutations: Schliemann, Classical, Modern Steinitz,
+   Cozio, Bird's Defense, and Averbakh Defense.
+   All lines validated against chess.js.
+   ============================================================ */
+
+export const ruyLopezSidelinesLines = [
+  {
+    id: 'ruy-lopez-schliemann-gambit',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Schliemann / Jaenisch Gambit – 4. Nc3 Refutation (7. Nxc6 & 13. Bc4)',
+    shortName: 'Schliemann Gambit Refutation',
+    category: 'Sharp Tactical Firefight',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Nc3 fxe4 5. Nxe4 d5 6. Nxe5 dxe4 7. Nxc6 Qg5',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Nc3 fxe4 5. Nxe4 d5 6. Nxe5 dxe4 7. Nxc6 Qg5 8. Qe2 Nf6 9. f4 Qxf4 10. Ne5+ c6 11. d4 Qh4+ 12. g3 Qh3 13. Bc4',
+    fullAnnotation: 'The hyper-aggressive Schliemann Gambit (3...f5). White meets fire with fire: 4. Nc3! and 6. Nxe5! initiate a tactical vortex where White emerges with winning piece coordination, castling rights intact, and the lethal 13. Bc4 targeting f7.',
+    previewFEN: 'r1b1kb1r/pp4pp/2p2n2/4N3/2BPp3/6Pq/PPP1Q2P/R1B1K2R b KQkq - 2 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Nc3! — The most principled tactical refutation of 3...f5.",
+      8: "5. Nxe4 — Center recapture with tempo.",
+      10: "6. Nxe5! — Tactical liquidation in the center.",
+      12: "7. Nxc6 — Knight discovery attack.",
+      14: "8. Qe2 — Guard the bishop and pin down the e-file.",
+      16: "9. f4 — Solidify the e5 outpost.",
+      18: "10. Ne5+ — Discovered check gaining time.",
+      20: "11. d4 — Anchor the center.",
+      22: "12. g3 — Kick Black's intrusive queen.",
+      24: "13. Bc4! — Searing attack targeting the vulnerable f7 square with total domination!"
+    }
+  },
+  {
+    id: 'ruy-lopez-classical-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Classical Defense – 3...Bc5 Center Strike (5. d4 & 13. Rc1)',
+    shortName: 'Classical Defense 3...Bc5',
+    category: 'Center Domination',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Bc5 4. c3 Nf6 5. d4 exd4 6. e5 Ne4 7. O-O d5 8. cxd4 Bb6',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Bc5 4. c3 Nf6 5. d4 exd4 6. e5 Ne4 7. O-O d5 8. cxd4 Bb6 9. Be3 O-O 10. Nc3 Bg4 11. Bxc6 bxc6 12. h3 Bh5 13. Rc1',
+    fullAnnotation: 'Against Black\'s active 3...Bc5 Classical Defense, White strikes immediately in the center with 4. c3 and 5. d4! After 6. e5 Ne4 7. O-O, White constructs a granite central pawn duo, damages Black’s c-pawns with 11. Bxc6, and controls the c-file with 13. Rc1.',
+    previewFEN: 'r2q1rk1/p1p2ppp/1bp5/3pP2b/3Pn3/2N1BN1P/PP3PP1/2RQ1RK1 b - - 2 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Spanish bishop.",
+      6: "4. c3 — Prepare central breakthrough.",
+      8: "5. d4 — Explode the center!",
+      10: "6. e5 — Drive Black's knight into awkward territory.",
+      12: "7. O-O — Complete king safety.",
+      14: "8. cxd4 — Rebuild the solid pawn duo.",
+      16: "9. Be3 — Defend d4.",
+      18: "10. Nc3 — Develop knight toward the center.",
+      20: "11. Bxc6 — Inflict permanent doubled c-pawns on Black.",
+      22: "12. h3 — Ask the question of Black's bishop.",
+      24: "13. Rc1 — Command the open c-file targeting the backward c7 pawn!"
+    }
+  },
+  {
+    id: 'ruy-lopez-steinitz-modern',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Steinitz Modern Defense – 5. c3 & 6. d4 Dominance (10. dxe5 & 13. c4)',
+    shortName: 'Modern Steinitz Defense',
+    category: 'Positional Clamp',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 d6 5. c3 Bd7 6. d4 g6 7. O-O Bg7 8. Bg5 f6 9. Be3 Nh6',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 d6 5. c3 Bd7 6. d4 g6 7. O-O Bg7 8. Bg5 f6 9. Be3 Nh6 10. dxe5 Nxe5 11. Nxe5 fxe5 12. Bxd7+ Qxd7 13. c4',
+    fullAnnotation: 'Steinitz\'s solid 4...d6 defense. White responds with classical energy: 5. c3 and 6. d4 command the center. After 10. dxe5, White exchanges minor pieces to exploit the light-square weaknesses created by ...f6, clamping down with 13. c4.',
+    previewFEN: 'r3k2r/1ppq2bp/p2p2pn/4p3/2P1P3/4B3/PP3PPP/RN1Q1RK1 b kq - 0 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Maintain pin.",
+      8: "5. c3 — Prepare d4.",
+      10: "6. d4 — Stake the center.",
+      12: "7. O-O — Complete king safety.",
+      14: "8. Bg5 — Provoke weaknesses in Black's pawn structure.",
+      16: "9. Be3 — Calm bishop retreat.",
+      18: "10. dxe5 — Clarify the central tension.",
+      20: "11. Nxe5 — Remove Black's active knight.",
+      22: "12. Bxd7+ — Eliminate Black's defender of the light squares.",
+      24: "13. c4! — Clamp down on the d5 square with complete positional dominance!"
+    }
+  },
+  {
+    id: 'ruy-lopez-cozio-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Cozio Defense – 3...Nge7 Tactical Knight Domination (6. Nd5 & 13. Nd5)',
+    shortName: 'Cozio Defense 3...Nge7',
+    category: 'Tactical Domination',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. Nc3 g6 5. d4 exd4 6. Nd5 Bg7 7. Bg5 h6 8. Bf6 Bxf6 9. Nxf6+ Kf8',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. Nc3 g6 5. d4 exd4 6. Nd5 Bg7 7. Bg5 h6 8. Bf6 Bxf6 9. Nxf6+ Kf8 10. Qd2 Kg7 11. Nxd4 d6 12. Nxc6 Nxc6 13. Nd5',
+    fullAnnotation: 'Against the Cozio Defense (3...Nge7), White strikes with the venomous 6. Nd5! jump. Black is forced to lose castling rights after 9. Nxf6+ Kf8, and White repositions the knight to the immortal 13. Nd5 outpost, dominating the board completely.',
+    previewFEN: 'r1bq3r/ppp2pk1/2np2pp/1B1N4/4P3/8/PPPQ1PPP/R3K2R b KQ - 1 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Nc3 — Natural knight deployment.",
+      8: "5. d4 — Crack open the center.",
+      10: "6. Nd5! — Devastating knight leap exploiting the pinned e7 knight.",
+      12: "7. Bg5 — Double pin on Black's kingside pieces.",
+      14: "8. Bf6 — Provoke critical light-square concessions.",
+      16: "9. Nxf6+ — Strip Black's king of castling rights.",
+      18: "10. Qd2 — Coordinate queen and rooks.",
+      20: "11. Nxd4 — Central recapture.",
+      22: "12. Nxc6 — Eliminate Black's queenside defender.",
+      24: "13. Nd5! — Plant the knight into the permanent central monster outpost!"
+    }
+  },
+  {
+    id: 'ruy-lopez-birds-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Bird\'s Defense – 3...Nd4 Central Expropriation (4. Nxd4 & 13. Bf4)',
+    shortName: 'Bird\'s Defense 3...Nd4',
+    category: 'Positional Squeeze',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. O-O Bc5 6. d3 c6 7. Bc4 d5 8. exd5 cxd5 9. Bb3 Ne7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. O-O Bc5 6. d3 c6 7. Bc4 d5 8. exd5 cxd5 9. Bb3 Ne7 10. Nd2 O-O 11. h3 Be6 12. Nf3 Nc6 13. Bf4',
+    fullAnnotation: 'Henry Bird\'s eccentric 3...Nd4. White eliminates the knight immediately with 4. Nxd4!, saddles Black with a doubled, isolated d-pawn, castles safely, and develops harmony with 12. Nf3 and 13. Bf4 to dominate the endgame.',
+    previewFEN: 'r2q1rk1/pp3ppp/2n1b3/2bp4/3p1B2/1B1P1N1P/PPP2PP1/R2Q1RK1 b - - 2 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Spanish bishop.",
+      6: "4. Nxd4! — Eliminate the jumping knight cleanly.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. d3 — Solidify the center.",
+      12: "7. Bc4 — Retreat bishop eyeing f7.",
+      14: "8. exd5 — Clarify Black's central pawn structure.",
+      16: "9. Bb3 — Secure bishop along the a2-g8 diagonal.",
+      18: "10. Nd2 — Knight begins tour toward f3.",
+      20: "11. h3 — Stop ...Bg4 pins.",
+      22: "12. Nf3 — Apply direct pressure to Black's weak d4 pawn.",
+      24: "13. Bf4! — Harmonious piece activity with lasting positional pressure!"
+    }
+  },
+  {
+    id: 'ruy-lopez-averbakh-defense',
+    courseId: 'ruy-lopez',
+    subCourseId: 'ruy-lopez-sidelines-gambits',
+    name: 'Averbakh Defense – Modern Spanish Tour (8...Nb8 & 13. Ng3)',
+    shortName: 'Averbakh Defense',
+    category: 'Enduring Squeeze',
+    eco: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 d6 7. c3 O-O 8. h3 Nb8 9. d4 Nbd7',
+    pgn: '1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 d6 7. c3 O-O 8. h3 Nb8 9. d4 Nbd7 10. Nbd2 c6 11. Bc2 Qc7 12. Nf1 Re8 13. Ng3',
+    fullAnnotation: 'Yuri Averbakh\'s hybrid defense combining the Steinitz solid center with Breyer knight rerouting. White executes the classic Spanish template with total perfection: 10. Nbd2, 11. Bc2, 12. Nf1, and 13. Ng3, smothering Black’s counterplay.',
+    previewFEN: 'r1b1r1k1/1pqnbppp/p1pp1n2/4p3/3PP3/2P2NNP/PPB2PP1/R1BQR1K1 b - - 4 13',
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — The Ruy Lopez.",
+      6: "4. Ba4 — Spanish retreat.",
+      8: "5. O-O — Complete king safety.",
+      10: "6. Re1 — Control e-file.",
+      12: "7. c3 — Prepare d4.",
+      14: "8. h3 — Essential prophylaxis.",
+      16: "9. d4 — Establish the full pawn center.",
+      18: "10. Nbd2 — The Spanish knight begins its tour.",
+      20: "11. Bc2 — Preserve the bishop pair.",
+      22: "12. Nf1 — Knight maneuvers toward the kingside.",
+      24: "13. Ng3! — Dominant kingside post eyeing f5 with a total positional squeeze!"
+    }
+  }
+];
