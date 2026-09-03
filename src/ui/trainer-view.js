@@ -9,7 +9,7 @@ import {
   clearAmbiguityHints,
   highlightAmbiguityHintSquare
 } from '../engine/board-renderer.js';
-import { processLineData, isAmbiguousWhiteBranch } from '../engine/chess-logic.js';
+import { processLineData, isAmbiguousWhiteBranch, isAmbiguousBranch } from '../engine/chess-logic.js';
 import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
@@ -54,6 +54,16 @@ export class TrainerView {
 
     // Unified move execution alias
     this.attemptMove = this.handleUserMove.bind(this);
+  }
+
+  /**
+   * Determines active player color ('white' | 'black') based on current repertoire line/course.
+   */
+  getPlayerColor() {
+    if (this.currentLine && this.currentLine.side) return this.currentLine.side;
+    if (this.currentSubCourse && this.currentSubCourse.side) return this.currentSubCourse.side;
+    if (this.currentCourse && this.currentCourse.side) return this.currentCourse.side;
+    return 'white';
   }
 
   /**
@@ -212,11 +222,12 @@ export class TrainerView {
     const subCourseLines = activePool ? (activePool.lines || []) : [];
     const moveHistory = this.game.history();
 
-    const isAmbiguous = isAmbiguousWhiteBranch(
+    const isAmbiguous = isAmbiguousBranch(
       this.currentLine,
       this.moveIndex,
       subCourseLines,
-      moveHistory
+      moveHistory,
+      this.getPlayerColor()
     );
 
     if (isAmbiguous) {
@@ -264,17 +275,19 @@ export class TrainerView {
 
   /**
    * Synchronizes Chessground state (turn, movable colors, and legal destination moves)
-   * directly with the underlying chess.js game state.
+   * directly with the underlying chess.js game state and player perspective.
    */
   syncBoardState() {
     if (!this.board) return;
-    const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
-    const dests = isWhiteTurn ? calculateLegalDests(this.game) : new Map();
+    const playerColor = this.getPlayerColor();
+    const isUserTurn = (this.game.turn() === playerColor[0]) && !this.isBlackAnimating;
+    const dests = isUserTurn ? calculateLegalDests(this.game) : new Map();
+    const activeTurnColor = this.game.turn() === 'w' ? 'white' : 'black';
     if (typeof this.board.syncTurnAndDests === 'function') {
-      this.board.syncTurnAndDests(isWhiteTurn ? 'white' : 'black', dests, 'white');
+      this.board.syncTurnAndDests(activeTurnColor, dests, playerColor);
     } else {
-      this.board.setTurn(isWhiteTurn ? 'white' : 'black', 'white');
-      this.board.setDests(dests, 'white');
+      this.board.setTurn(activeTurnColor, playerColor);
+      this.board.setDests(dests, playerColor);
     }
   }
 
@@ -283,8 +296,9 @@ export class TrainerView {
    * Maps tap-to-move and drag-and-drop actions directly into the repertoire game loop.
    */
   handleBoardMove(orig, dest, metadata) {
-    const isBlackTurn = this.game.turn() === 'b' || this.isBlackAnimating;
-    if (isBlackTurn) {
+    const playerColor = this.getPlayerColor();
+    const isOpponentTurn = (this.game.turn() !== playerColor[0]) || this.isBlackAnimating;
+    if (isOpponentTurn) {
       this.queuePremove(orig, dest);
       return;
     }
@@ -323,14 +337,15 @@ export class TrainerView {
       }
 
       const initialFen = fenPosition || 'start';
-      const isWhiteTurn = this.game.turn() === 'w' && !this.isBlackAnimating;
+      const playerColor = this.getPlayerColor();
+      const isUserTurn = (this.game.turn() === playerColor[0]) && !this.isBlackAnimating;
 
       this.board = createChessgroundBoard('#board', {
         fen: initialFen,
-        orientation: APP_CONFIG.defaultOrientation || 'white',
-        turnColor: isWhiteTurn ? 'white' : 'black',
-        movableColor: 'white',
-        dests: isWhiteTurn ? calculateLegalDests(this.game) : new Map(),
+        orientation: playerColor,
+        turnColor: isUserTurn ? playerColor : (playerColor === 'white' ? 'black' : 'white'),
+        movableColor: playerColor,
+        dests: isUserTurn ? calculateLegalDests(this.game) : new Map(),
         animationDuration: APP_CONFIG.blackMoveSpeed || 300,
         onMove: (orig, dest, metadata) => {
           this.handleBoardMove(orig, dest, metadata);
@@ -702,8 +717,11 @@ export class TrainerView {
 
     this.game.reset();
     this.moveIndex = 0;
+    const playerColor = this.getPlayerColor();
+
     if (this.board) {
       this.board.setFen('start');
+      this.board.setOrientation(playerColor);
       this.board.setLastMove(null, null);
       this.board.clearCustomHighlights();
     }
@@ -716,6 +734,13 @@ export class TrainerView {
 
     this.updateUI();
     this.showToast(`Drill started: ${stripEmojis(this.currentLine ? this.currentLine.name : 'Opening Line')}`, 'success');
+
+    // If player is Black, White (opponent) makes move 0 automatically!
+    if (playerColor === 'black' && this.game.turn() === 'w' && this.currentLine && this.currentLine.moves && this.currentLine.moves.length > 0) {
+      this.isBlackAnimating = true;
+      this.syncBoardState();
+      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+    }
   }
   /**
    * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
@@ -809,7 +834,8 @@ export class TrainerView {
       return testMove;
     }
 
-    if (this.game.turn() === 'b') {
+    const playerColor = this.getPlayerColor();
+    if (this.game.turn() !== playerColor[0]) {
       this.isBlackAnimating = true;
       this.syncBoardState();
       setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
@@ -818,8 +844,8 @@ export class TrainerView {
   }
 
   /**
-   * Executes Black's opponent response with a smooth, hardware-accelerated piece glide.
-   * Handover to White and premove execution occurs synchronously with animation completion.
+   * Executes opponent response with a smooth, hardware-accelerated piece glide.
+   * Handover to player and premove execution occurs synchronously with animation completion.
    */
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
@@ -831,16 +857,19 @@ export class TrainerView {
 
     this.isBlackAnimating = true;
 
-    const blackMoveData = this.currentLine.moves[this.moveIndex];
-    this.game.move(blackMoveData.san);
+    const oppMoveData = this.currentLine.moves[this.moveIndex];
+    this.game.move(oppMoveData.san);
     this.moveIndex++;
 
-    $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
+    const playerColor = this.getPlayerColor();
+    const oppName = playerColor === 'white' ? 'Black' : 'White';
+    const oppDot = playerColor === 'white' ? 'black' : 'white';
+    $('#turn-indicator').html(`<span class="turn-dot ${oppDot}"></span><span>${oppName} Responding...</span>`);
 
     // Hardware-accelerated piece glide with Chessground
     if (this.board) {
-      this.board.move(blackMoveData.from, blackMoveData.to);
-      this.board.setLastMove(blackMoveData.from, blackMoveData.to);
+      this.board.move(oppMoveData.from, oppMoveData.to);
+      this.board.setLastMove(oppMoveData.from, oppMoveData.to);
     }
 
     // Precalculate legal move destinations in parallel during piece animation
@@ -848,18 +877,19 @@ export class TrainerView {
 
     const onComplete = () => {
       // 1. Resync FEN only if a multi-piece special move occurred (castling or promotion)
-      if (this.board && (blackMoveData.san.includes('O-O') || blackMoveData.san.includes('='))) {
+      if (this.board && (oppMoveData.san.includes('O-O') || oppMoveData.san.includes('='))) {
         this.board.setFen(this.game.fen());
       }
 
-      // 2. Handover turn to White
-      if (this.game.turn() === 'w') {
+      // 2. Handover turn to student
+      if (this.game.turn() === playerColor[0]) {
         this.isBlackAnimating = false;
       }
 
       // 3. Atomically update board turn and legal move dests without redundant DOM redraws
+      const activeTurn = this.game.turn() === 'w' ? 'white' : 'black';
       if (this.board && typeof this.board.syncTurnAndDests === 'function') {
-        this.board.syncTurnAndDests('white', precomputedDests, 'white');
+        this.board.syncTurnAndDests(activeTurn, precomputedDests, playerColor);
       } else {
         this.syncBoardState();
       }
@@ -889,7 +919,7 @@ export class TrainerView {
         return;
       }
 
-      if (this.game.turn() === 'b') {
+      if (this.game.turn() !== playerColor[0]) {
         this.isBlackAnimating = true;
         this.syncBoardState();
         setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
@@ -1093,12 +1123,19 @@ export class TrainerView {
       $('#progress-bar').css('width', `${progressPercent}%`);
     }
 
-    if (this.game.turn() === 'w') {
-      $('#turn-indicator').html('<span class="turn-dot white"></span><span>Your Turn: White</span>');
+    const playerColor = this.getPlayerColor();
+    const isPlayerTurn = this.game.turn() === playerColor[0];
+
+    if (isPlayerTurn) {
+      const dot = playerColor === 'white' ? 'white' : 'black';
+      const capName = playerColor === 'white' ? 'White' : 'Black';
+      $('#turn-indicator').html(`<span class="turn-dot ${dot}"></span><span>Your Turn: ${capName}</span>`);
       // Evaluate and trigger on-board ambiguity hint across all training modes
       this.checkAndApplyAmbiguityHint();
     } else {
-      $('#turn-indicator').html('<span class="turn-dot black"></span><span>Black Responding...</span>');
+      const oppDot = playerColor === 'white' ? 'black' : 'white';
+      const oppName = playerColor === 'white' ? 'Black' : 'White';
+      $('#turn-indicator').html(`<span class="turn-dot ${oppDot}"></span><span>${oppName} Responding...</span>`);
       clearAmbiguityHints('#board');
     }
 

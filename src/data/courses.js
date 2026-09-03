@@ -1,11 +1,23 @@
 /* ============================================================
-   MASTER COURSES REGISTRY & 3-LEVEL SUB-COURSE MODULES (100 LINES)
+   MASTER COURSES REGISTRY & 3-LEVEL SUB-COURSE MODULES
+   Tournament-Ready Opening Repertoires (Italian, London, Pirc)
    ============================================================ */
 
 import { giuocoPianoLines } from './lines/italian-giuoco.js';
 import { evansGambitLines } from './lines/italian-evans.js';
 import { twoKnightsLines } from './lines/italian-two-knights.js';
 import { pianissimoLines } from './lines/italian-pianissimo.js';
+
+import { londonClassicalLines } from './lines/london-classical.js';
+import { londonKingsIndianLines } from './lines/london-kings-indian.js';
+import { londonQueensIndianLines } from './lines/london-queens-indian.js';
+import { londonSharpJobavaLines } from './lines/london-sharp-jobava.js';
+
+import { pircClassicalLines } from './lines/pirc-classical.js';
+import { pircAustrianLines } from './lines/pirc-austrian.js';
+import { pirc150AttackLines } from './lines/pirc-150-attack.js';
+import { pircFianchettoLines } from './lines/pirc-fianchetto.js';
+import { pircSidelinesLines } from './lines/pirc-sidelines.js';
 
 export const COURSES = [
   {
@@ -56,6 +68,118 @@ export const COURSES = [
         description: 'Deep positional maneuvering favored by modern elite grandmasters with d3, c3, and kingside pawn storms.',
         previewFEN: 'r1bqk2r/pppp1ppp/2n2n2/4p3/2B1P3/3P1N2/PPP2PPP/RNBQK2R b KQkq - 0 4',
         lines: pianissimoLines
+      }
+    ]
+  },
+  {
+    id: 'london-system',
+    title: 'London System Master Repertoire',
+    subtitle: '1. d4 & 2. Bf4 Universal Repertoire (28 Master Lines)',
+    category: '1. d4 Openings',
+    side: 'white',
+    description: 'Master the premier solid yet aggressive opening with the thematic Bf4 bishop, granite center, and king-hunt attacks.',
+    previewFEN: 'rnbqkb1r/ppp1pppp/5n2/3p4/3P1B2/5N2/PPP1PPPP/RN1QKB1R b KQkq - 3 3',
+    subCourses: [
+      {
+        id: 'london-classical-symmetrical',
+        courseId: 'london-system',
+        title: 'London System – Classic Setups vs 1...d5',
+        subtitle: 'Symmetrical Lines, Lasker Counter & Semi-Slav (7 Variations)',
+        category: 'Main Line',
+        description: 'Command the classical symmetrical landscape against 1...d5 with the granite pawn pyramid, Pillsbury f4 attack, and thematic bishop retreats.',
+        previewFEN: 'r2q1rk1/pb2bppp/1p1npn2/2ppN3/3P1PP1/2PBPN2/PP1N1B1P/R3K2R w KQ - 1 14',
+        lines: londonClassicalLines
+      },
+      {
+        id: 'london-kings-indian-grunfeld',
+        courseId: 'london-system',
+        title: 'London System – vs King\'s Indian & Grünfeld',
+        subtitle: 'Caveman 5. h4, Classical Be2 & Central Clamps (7 Variations)',
+        category: 'Sharp Positional',
+        description: 'Dismantle Black\'s kingside fianchetto setups (...Nf6 and ...g6) using aggressive h4 pawn thrusts and classical space-squeezing clamps.',
+        previewFEN: 'r4rk1/pp2ppb1/2n2np1/q2p1b2/N2P1B2/P1P2N2/1P2BPP1/R2QK2R b KQ - 0 13',
+        lines: londonKingsIndianLines
+      },
+      {
+        id: 'london-queens-indian-benoni',
+        courseId: 'london-system',
+        title: 'London System – vs Queen\'s Indian & Benoni',
+        subtitle: 'Dynamic Counters, Benoni Wedges & QID Batteries (7 Variations)',
+        category: 'Space Advantage',
+        description: 'Counter Black\'s flank strategies (...b6, ...c5, and Benoni formations) with dominating central wedges and rapid queenside piece deployment.',
+        previewFEN: 'r4rk1/pb1qb1pp/1p2pp2/2pp4/3PnB2/2PBPN1P/PP2QPP1/R4RK1 b - - 1 13',
+        lines: londonQueensIndianLines
+      },
+      {
+        id: 'london-sharp-jobava-steinitz',
+        courseId: 'london-system',
+        title: 'London System – Sharp Steinitz & Jobava Lines',
+        subtitle: 'Steinitz 4. Nc3, Poisoned Pawns & Jobava Attacks (7 Variations)',
+        category: 'Tactical Firefight',
+        description: 'Unleash razor-sharp tactical refutations against 3...Qb6, conquer the poisoned b2 pawn, and execute Jobava London opposite-castling avalanches.',
+        previewFEN: 'r2r2k1/ppn2ppB/4pb2/1PqpN3/8/2P1P3/1P3PPP/R2QK2R b KQ - 0 15',
+        lines: londonSharpJobavaLines
+      }
+    ]
+  },
+  {
+    id: 'pirc-defense',
+    title: 'Pirc Defense Dynamic Counter-Attack',
+    subtitle: '1. e4 d6 2. d4 Nf6 Hypermodern Repertoire (28 Master Lines)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Shatter White\'s central ambitions with asymmetric counter-attacks, dragon fianchettoes, and razor-sharp queenside strikes.',
+    previewFEN: 'rnbqkb1r/ppp1pp1p/3p1np1/8/3PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 0 4',
+    subCourses: [
+      {
+        id: 'pirc-classical-system',
+        courseId: 'pirc-defense',
+        title: 'Pirc Defense – The Classical System',
+        subtitle: '4. Nf3 & 5. Be2 Main Lines & Wing Strikes (6 Variations)',
+        category: 'Main Line',
+        description: 'Neutralize White\'s classical setup with timely pins (...Bg4), central ruptures (...e5), and double fianchetto wing counterplay.',
+        previewFEN: 'r2q1rn1/pppbnpkp/3p2p1/3Pp3/4P3/2N2N1P/PPPQBPP1/3R1RK1 w - - 3 14',
+        lines: pircClassicalLines
+      },
+      {
+        id: 'pirc-austrian-attack',
+        courseId: 'pirc-defense',
+        title: 'Pirc Defense – The Austrian Attack (4. f4)',
+        subtitle: '6. Bd3 Nc6, 6...Na6 & Ljubojevic Counter-Gambits (6 Variations)',
+        category: 'Sharp Battle',
+        description: 'Tame White\'s ferocious three-pawn steamroller (f4/e4/d4) with dynamic piece sacrifices, Benko-style pawn breaks, and central counter-strikes.',
+        previewFEN: '3r1rk1/ppp1ppbp/6p1/4n3/2q1B3/2P2P2/PP4QP/R1B2RK1 b - - 1 15',
+        lines: pircAustrianLines
+      },
+      {
+        id: 'pirc-150-attack',
+        courseId: 'pirc-defense',
+        title: 'Pirc Defense – 150 Attack & Argentine Variations',
+        subtitle: 'Be3/Qd2 Opposite Castling & Robert Byrne Defense (6 Variations)',
+        category: 'Opposite Castling',
+        description: 'Win the opposite-side castling drag race against White\'s Be3/Qd2 battery using queenside pawn storms (...b5, ...a5) and Byrne\'s b-file attack.',
+        previewFEN: '2kr3r/p1q1pp1p/1n1p1npQ/2p5/1p1PP3/5P2/PPP1N1PP/1KN2R1R w - - 0 15',
+        lines: pirc150AttackLines
+      },
+      {
+        id: 'pirc-fianchetto-system',
+        courseId: 'pirc-defense',
+        title: 'Pirc Defense – Fianchetto Systems (4. g3)',
+        subtitle: 'Solid 5. Bg2 Setups, ...Nbd7 Maneuvers & Queenless Endgames (5 Variations)',
+        category: 'Positional Equality',
+        description: 'Dismantle White\'s hyper-solid 4. g3 fianchetto through central liquidation, masterfully simplified queenless middlegames, and knight outpost dominance.',
+        previewFEN: 'r2qr3/pppn1pkp/2bp2p1/8/4P3/2NQ2PP/PPP2P2/3RR1K1 b - - 1 15',
+        lines: pircFianchettoLines
+      },
+      {
+        id: 'pirc-aggressive-sidelines',
+        courseId: 'pirc-defense',
+        title: 'Pirc Defense – Aggressive Sidelines (Bc4, Bg5, h4)',
+        subtitle: 'Kholmov Queen Trap, Bayonet System & Caveman Refutations (5 Variations)',
+        category: 'Sharp Refutation',
+        description: 'Punish aggressive sideline attempts including the tricky Kholmov 4. Bc4 with 6...Nxd4!, the Chinese 4. Bg5 bishop hunt, and caveman 4. h4 attacks.',
+        previewFEN: 'r1bqk1r1/pp5p/2p1pp1B/3p4/2P1N3/1B6/PP2NPPP/2KRR3 b q - 0 15',
+        lines: pircSidelinesLines
       }
     ]
   },

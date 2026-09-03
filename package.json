@@ -26,6 +26,7 @@
     "vite": "^6.2.0"
   },
   "dependencies": {
+    "chess.js": "^0.10.3",
     "chessground": "^9.2.1",
     "firebase": "^12.18.0"
   }

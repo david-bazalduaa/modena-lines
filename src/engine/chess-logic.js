@@ -41,22 +41,24 @@ export function processLineData(rawLine) {
 }
 
 /**
- * Detects if the current position represents an ambiguous White branching point.
- * Returns true ONLY IF the active sub-course contains 2 or more distinct candidate moves for White
- * following the exact same prior move sequence played by Black and White.
+ * Detects if the current position represents an ambiguous branching point for the player.
+ * Returns true ONLY IF the active sub-course contains 2 or more distinct candidate moves for the player
+ * following the exact same prior move sequence played.
  *
  * @param {Object} currentLine - Active line object being trained.
- * @param {number} moveIndex - Current half-move index (must be White's turn: 0, 2, 4...).
+ * @param {number} moveIndex - Current half-move index.
  * @param {Array<Object>} subCourseLines - All lines in the active Sub-Course repertoire.
  * @param {Array<string>} moveHistory - Array of SAN move strings played so far in the game.
- * @returns {boolean} True if White faces an ambiguous branching point requiring a visual hint.
+ * @param {'white'|'black'} [playerColor='white'] - Player side being trained.
+ * @returns {boolean} True if player faces an ambiguous branching point requiring a visual hint.
  */
-export function isAmbiguousWhiteBranch(currentLine, moveIndex, subCourseLines, moveHistory) {
+export function isAmbiguousBranch(currentLine, moveIndex, subCourseLines, moveHistory, playerColor = 'white') {
   if (!currentLine || !subCourseLines || subCourseLines.length <= 1) return false;
-  if (moveIndex % 2 !== 0) return false; // Only active when it is White's turn
+  const isPlayerTurn = playerColor === 'black' ? (moveIndex % 2 === 1) : (moveIndex % 2 === 0);
+  if (!isPlayerTurn) return false;
 
   const prevMoveCount = moveHistory ? moveHistory.length : moveIndex;
-  const candidateWhiteMoves = new Set();
+  const candidateMoves = new Set();
 
   for (const rawLine of subCourseLines) {
     const line = processLineData(rawLine);
@@ -75,9 +77,13 @@ export function isAmbiguousWhiteBranch(currentLine, moveIndex, subCourseLines, m
     }
 
     if (matchesHistory && line.moves[moveIndex]) {
-      candidateWhiteMoves.add(line.moves[moveIndex].san);
+      candidateMoves.add(line.moves[moveIndex].san);
     }
   }
 
-  return candidateWhiteMoves.size >= 2;
+  return candidateMoves.size >= 2;
+}
+
+export function isAmbiguousWhiteBranch(currentLine, moveIndex, subCourseLines, moveHistory) {
+  return isAmbiguousBranch(currentLine, moveIndex, subCourseLines, moveHistory, 'white');
 }
