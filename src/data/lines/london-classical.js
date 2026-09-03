@@ -196,5 +196,89 @@ export const londonClassicalLines = [
       24: "13. Bh2 — Tucking the bishop away safely.",
       26: "14. f4 — Total central fortress with powerful kingside attacking chances!"
     }
+  },
+  {
+    id: 'london-classical-early-bf5',
+    courseId: 'london-system',
+    subCourseId: 'london-classical-symmetrical',
+    name: 'London System – Symmetrical Bishop Duel (2...Bf5 & 9. Nh4)',
+    shortName: 'Symmetrical 2...Bf5 Duel',
+    category: 'Bishop Duel',
+    eco: '1. d4 d5 2. Bf4 Bf5 3. e3 e6 4. Nf3 Nf6 5. c4 c6 6. Nc3 Nbd7 7. Be2 Bd6 8. O-O O-O 9. Nh4',
+    pgn: '1. d4 d5 2. Bf4 Bf5 3. e3 e6 4. Nf3 Nf6 5. c4 c6 6. Nc3 Nbd7 7. Be2 Bd6 8. O-O O-O 9. Nh4 Be4 10. f3 Bg6 11. Nxg6 hxg6 12. Bg5 Qc7 13. f4',
+    fullAnnotation: 'When Black plays 2...Bf5 challenging the London bishop on the same diagonal, White plays 9. Nh4 and 10. f3 to trap the bishop pair and clamp down on the central dark squares with f4.',
+    previewFEN: 'r4rk1/ppqn1pp1/2pbpnp1/3p2B1/2PP1P2/2N1P3/PP2B1PP/R2Q1RK1 b - - 0 13',
+    annotations: {
+      0: "1. d4 — Classic queen's pawn start.",
+      2: "2. Bf4 — London bishop outside the pawn chain.",
+      4: "3. e3 — Solid supporting foundation.",
+      6: "4. Nf3 — Natural knight development.",
+      8: "5. c4 — Challenge Black's d5 anchor directly.",
+      10: "6. Nc3 — Pressure on the central dark squares.",
+      12: "7. Be2 — Harmonious kingside development.",
+      14: "8. O-O — Ensure king safety.",
+      16: "9. Nh4! — Hunt down Black's active light-squared bishop.",
+      18: "10. f3 — Restrict Black's bishop and prepare central expansion.",
+      20: "11. Nxg6 — Secure the bishop pair.",
+      22: "12. Bg5 — Pin the f6 knight against Black's queen.",
+      24: "13. f4 — Total dark-square fortress locking down Black's counterplay!"
+    }
+  },
+  {
+    id: 'london-classical-capablanca-h4',
+    courseId: 'london-system',
+    subCourseId: 'london-classical-symmetrical',
+    name: 'London System – Capablanca Defense & Kingside Storm (10. h4 & 11. g4)',
+    shortName: 'Capablanca 10. h4 Storm',
+    category: 'Sharp Attack',
+    eco: '1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 Be7 5. Nbd2 O-O 6. Bd3 c5 7. c3 Nc6 8. Ne5',
+    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 e6 4. Nf3 Be7 5. Nbd2 O-O 6. Bd3 c5 7. c3 Nc6 8. Ne5 Nxe5 9. dxe5 Nd7 10. h4 f5 11. g4 c4 12. Bc2 Nc5 13. gxf5 exf5 14. Nf3',
+    fullAnnotation: 'A hyper-aggressive attacking line against Black\'s quiet Capablanca ...Be7 setup. White plants Ne5, launches 10. h4, and breaks open the kingside with 11. g4 to overwhelm Black’s king.',
+    previewFEN: 'r1bq1rk1/pp2b1pp/8/2npPp2/2p2B1P/2P1PN2/PPB2P2/R2QK2R b KQ - 1 14',
+    annotations: {
+      0: "1. d4 — Queen's pawn stake.",
+      2: "2. Bf4 — London bishop active.",
+      4: "3. e3 — Supporting d4.",
+      6: "4. Nf3 — Classic knight deployment.",
+      8: "5. Nbd2 — Flexible knight placement.",
+      10: "6. Bd3 — The key attacking bishop aiming at h7.",
+      12: "7. c3 — Granite pawn structure.",
+      14: "8. Ne5 — Dominant knight outpost.",
+      16: "9. dxe5 — Fix Black's f6 knight and gain kingside attacking momentum.",
+      18: "10. h4! — The thematic pawn thrust threatening Greek Gift sacrifices.",
+      20: "11. g4! — Rip open Black's kingside shelter.",
+      22: "12. Bc2 — Retreat bishop along the attacking b1-h7 diagonal.",
+      24: "13. gxf5 — Open lines toward Black's king.",
+      26: "14. Nf3 — Reroute knight to d4 with a crushing kingside offensive!"
+    }
+  },
+  {
+    id: 'london-classical-delayed-c5-e4',
+    courseId: 'london-system',
+    subCourseId: 'london-classical-symmetrical',
+    name: 'London System – Central Rupture Attack (9. Qe2 & 10. e4!)',
+    shortName: 'Central Break 10. e4',
+    category: 'Dynamic Center',
+    eco: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Bd3 Bd6 7. Bg3 O-O 8. Ngf3 b6 9. Qe2',
+    pgn: '1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Bd3 Bd6 7. Bg3 O-O 8. Ngf3 b6 9. Qe2 Bb7 10. e4 dxe4 11. Nxe4 Nxe4 12. Qxe4 g6 13. dxc5 bxc5 14. O-O-O',
+    fullAnnotation: 'Modern Grandmaster dynamic preparation. White lines up 9. Qe2 and detonates the center with 10. e4!, liquidating into a lethal queen battery on e4 that forces Black into a compromised pawn shelter.',
+    previewFEN: 'r2q1rk1/pb3p1p/2nbp1p1/2p5/4Q3/2PB1NB1/PP3PPP/2KR3R b - - 1 14',
+    annotations: {
+      0: "1. d4 — Center foundation.",
+      2: "2. Bf4 — Control central diagonals.",
+      4: "3. e3 — Solid base.",
+      6: "4. c3 — Supporting d4.",
+      8: "5. Nd2 — Flexible knight support.",
+      10: "6. Bd3 — Attacking post.",
+      12: "7. Bg3 — Prophylactic retreat.",
+      14: "8. Ngf3 — Connect kingside pieces.",
+      16: "9. Qe2 — The key preparatory move connecting rooks and preparing e4.",
+      18: "10. e4! — The explosive central rupture!",
+      20: "11. Nxe4 — Centralize knight with tempo.",
+      22: "12. Qxe4 — Queen battery threatening mate on h7!",
+      24: "13. dxc5 — Break Black's queenside pawn structure.",
+      26: "14. O-O-O — Opposite-side castling with total attacking initiative down the d-file!"
+    }
   }
 ];
+

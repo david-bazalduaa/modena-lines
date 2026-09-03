@@ -194,5 +194,87 @@ export const londonSharpJobavaLines = [
       22: "12. bxc3 — Solidify queenside pawn mass.",
       24: "13. Nf3 — Perfect central harmonization with total attacking mastery!"
     }
+  },
+  {
+    id: 'london-jobava-french-defense',
+    courseId: 'london-system',
+    subCourseId: 'london-sharp-jobava-steinitz',
+    name: 'Jobava London – vs French Setup (4...c5 5. Nb5 & 13. Qc2!)',
+    shortName: 'Jobava vs French Setup',
+    category: 'Sharp Jobava',
+    eco: '1. d4 d5 2. Nc3 Nf6 3. Bf4 e6 4. e3 c5 5. Nb5 Na6 6. c3 Be7 7. a4 O-O',
+    pgn: '1. d4 d5 2. Nc3 Nf6 3. Bf4 e6 4. e3 c5 5. Nb5 Na6 6. c3 Be7 7. a4 O-O 8. Bd3 Bd7 9. Nf3 Nh5 10. Be5 f6 11. Bg3 Nxg3 12. hxg3 g6 13. Qc2',
+    fullAnnotation: 'When Black employs a French-style ...e6 and ...c5 defense against the Jobava, White invades with 5. Nb5! forcing ...Na6, then shifts gears with 12. hxg3 opening the h-file and builds an overwhelming battery on c2 pointing straight at h7.',
+    previewFEN: 'r2q1rk1/pp1bb2p/n3ppp1/1NppB3/P2P4/2PBPNP1/1PQ2PP1/R3K2R b KQ - 1 13',
+    annotations: {
+      0: "1. d4 — Queen's pawn control.",
+      2: "2. Nc3 — Jobava knight deployment.",
+      4: "3. Bf4 — Outside the chain.",
+      6: "4. e3 — Supporting d4.",
+      8: "5. Nb5! — Immediate fork threat on c7 forcing Black's knight to the rim.",
+      10: "6. c3 — Solidify the knight's anchor.",
+      12: "7. a4 — Cement knight outpost.",
+      14: "8. Bd3 — The key attacking bishop.",
+      16: "9. Nf3 — Develop kingside knight.",
+      18: "10. Be5 — Provoke weaknesses in Black's pawn structure.",
+      20: "11. Bg3 — Induce knight trade.",
+      22: "12. hxg3 — Blasting open the h-file for the white rook!",
+      24: "13. Qc2! — Lethal queen-bishop battery threatening Greek Gift sacrifices on g6 and h7!"
+    }
+  },
+  {
+    id: 'london-jobava-modern-defense',
+    courseId: 'london-system',
+    subCourseId: 'london-sharp-jobava-steinitz',
+    name: 'Jobava London – vs Modern Defense (1...g6 & Opposite Castling)',
+    shortName: 'Jobava vs Modern Defense',
+    category: 'Opposite Castling',
+    eco: '1. d4 g6 2. Nc3 Bg7 3. Bf4 d6 4. e4 a6 5. Qd2 b5 6. f3 Nd7 7. h4 h5',
+    pgn: '1. d4 g6 2. Nc3 Bg7 3. Bf4 d6 4. e4 a6 5. Qd2 b5 6. f3 Nd7 7. h4 h5 8. O-O-O Bb7 9. Nh3 c5 10. d5 Ngf6 11. Kb1 Qa5 12. Ng5 b4 13. Ne2',
+    fullAnnotation: 'Against the hypermodern 1...g6 Modern Defense, White establishes a classical center with e4, castles queenside, and clamps down on Black\'s queenside counterplay while anchoring the knight on the glorious g5 outpost.',
+    previewFEN: 'r3k2r/1b1nppb1/p2p1np1/q1pP2Np/1p2PB1P/5P2/PPPQN1P1/1K1R1B1R b kq - 1 13',
+    annotations: {
+      0: "1. d4 — Open queen's pawn.",
+      2: "2. Nc3 — Rapid Jobava piece mobilization.",
+      4: "3. Bf4 — Control central diagonals.",
+      6: "4. e4 — Claim full central real estate.",
+      8: "5. Qd2 — Battery preparing queenside castling.",
+      10: "6. f3 — Solidify e4 against piece jumps.",
+      12: "7. h4 — Aggressive flank thrust probing Black's kingside.",
+      14: "8. O-O-O — Opposite-side castling fireworks.",
+      16: "9. Nh3 — Flexible knight rerouting.",
+      18: "10. d5! — Shut down Black's g7 bishop permanently.",
+      20: "11. Kb1 — Prophylactic king safety.",
+      22: "12. Ng5 — Dominant knight outpost.",
+      24: "13. Ne2 — Reroute knight toward d4 with total positional control!"
+    }
+  },
+  {
+    id: 'london-steinitz-d6-counter',
+    courseId: 'london-system',
+    subCourseId: 'london-sharp-jobava-steinitz',
+    name: 'London System – Steinitz 3...c5 Quiet Refutation (9...Bd7 & 13. Bg5)',
+    shortName: 'Steinitz Quiet Refutation',
+    category: 'Positional Mastery',
+    eco: '1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 cxd4 5. exd4 Nf6 6. a3 e6 7. Nf3 Be7 8. Bd3 O-O',
+    pgn: '1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 cxd4 5. exd4 Nf6 6. a3 e6 7. Nf3 Be7 8. Bd3 O-O 9. O-O Bd7 10. Re1 Nc6 11. h3 Rfe8 12. Qd2 Rad8 13. Bg5',
+    fullAnnotation: 'When Black responds to White\'s 4. Nc3 and 6. a3 with calm development (...e6 and ...Bd7) rather than grabbing b2, White smoothly castles, centralizes with 10. Re1, and pins Black with 13. Bg5 to completely dominate the position.',
+    previewFEN: '3rr1k1/pp1bbppp/1qn1pn2/3p2B1/3P4/P1NB1N1P/1PPQ1PP1/R3R1K1 b - - 4 13',
+    annotations: {
+      0: "1. d4 — Queen's pawn stake.",
+      2: "2. Bf4 — London bishop outside.",
+      4: "3. e3 — Supporting d4.",
+      6: "4. Nc3 — Rapid tactical development.",
+      8: "5. exd4 — Central recapture.",
+      10: "6. a3 — Rule out ...Bb4 and ...Nb4 jumps.",
+      12: "7. Nf3 — King's knight develops.",
+      14: "8. Bd3 — Powerful central post.",
+      16: "9. O-O — Ensure king safety.",
+      18: "10. Re1 — Control the semi-open e-file.",
+      20: "11. h3 — Prophylactic air for the king.",
+      22: "12. Qd2 — Connect rooks and prepare central operations.",
+      24: "13. Bg5! — Pin Black's knight with suffocating pressure across the board!"
+    }
   }
 ];
+

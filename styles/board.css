@@ -324,3 +324,119 @@ cg-board square.highlight-ambiguity-hint {
   30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
   40%, 60% { transform: translate3d(4px, 0, 0); }
 }
+
+/* ============================================================
+   CHESSGROUND ALGEBRAIC COORDINATES (1–8 RANKS & A–H FILES)
+   Clean, high-contrast, non-interfering rank and file labels
+   ============================================================ */
+
+.cg-wrap coords {
+  position: absolute;
+  display: flex;
+  pointer-events: none !important;
+  user-select: none !important;
+  font-family: var(--font-family-mono, 'Fira Code', ui-monospace, monospace);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 10;
+}
+
+/* Ranks: 1-8 vertically along the right edge */
+.cg-wrap coords.ranks {
+  right: 5px;
+  top: 0;
+  height: 100%;
+  width: 14px;
+  flex-direction: column-reverse;
+  pointer-events: none !important;
+}
+
+.cg-wrap coords.ranks.black {
+  flex-direction: column;
+}
+
+.cg-wrap coords.ranks coord {
+  flex: 1 1 12.5%;
+  height: 12.5%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding-top: 4px;
+  padding-right: 2px;
+}
+
+/* Files: a-h horizontally along the bottom edge */
+.cg-wrap coords.files {
+  bottom: 4px;
+  left: 0;
+  width: 100%;
+  height: 14px;
+  flex-direction: row;
+  pointer-events: none !important;
+  text-transform: uppercase;
+}
+
+.cg-wrap coords.files.black {
+  flex-direction: row-reverse;
+}
+
+.cg-wrap coords.files coord {
+  flex: 1 1 12.5%;
+  width: 12.5%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  padding-left: 5px;
+}
+
+/* Alternating color contrast against Olive / Sand checkerboard */
+.cg-wrap coords.ranks :nth-child(odd) {
+  color: #3b5040; /* Darker tone for light squares */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+.cg-wrap coords.ranks :nth-child(even) {
+  color: #f3ebd6; /* Lighter tone for dark squares */
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+.cg-wrap coords.files :nth-child(odd) {
+  color: #f3ebd6; /* Light tone for dark square a1 */
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+.cg-wrap coords.files :nth-child(even) {
+  color: #3b5040; /* Dark tone for light square b1 */
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+/* When board orientation is black, square parity inverts */
+.cg-wrap coords.ranks.black :nth-child(odd) {
+  color: #f3ebd6;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+.cg-wrap coords.ranks.black :nth-child(even) {
+  color: #3b5040;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+.cg-wrap coords.files.black :nth-child(odd) {
+  color: #3b5040;
+  text-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+.cg-wrap coords.files.black :nth-child(even) {
+  color: #f3ebd6;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+
+@media (max-width: 640px) {
+  .cg-wrap coords {
+    font-size: 9px;
+  }
+  .cg-wrap coords.ranks {
+    right: 3px;
+  }
+  .cg-wrap coords.files {
+    bottom: 2px;
+  }
+}
+

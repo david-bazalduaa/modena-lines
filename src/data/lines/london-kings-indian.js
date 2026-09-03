@@ -194,5 +194,89 @@ export const londonKingsIndianLines = [
       24: "13. Rc1 — Heavy piece alignment on c-file.",
       26: "14. c5! — Critical pawn break cracking open Black's defense!"
     }
+  },
+  {
+    id: 'london-kid-classical-e5-break',
+    courseId: 'london-system',
+    subCourseId: 'london-kings-indian-grunfeld',
+    name: 'London System – Classical KID ...e5 Break Neutralization (11. dxe5 & 14. Bxe5)',
+    shortName: 'Classical ...e5 Neutralization',
+    category: 'Endgame Precision',
+    eco: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 Nbd7 7. O-O c6',
+    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 Nbd7 7. O-O c6 8. a4 a5 9. Bh2 Re8 10. c3 e5 11. dxe5 dxe5 12. Nxe5 Nxe5 13. Qxd8 Rxd8 14. Bxe5',
+    fullAnnotation: 'When Black forces the thematic ...e5 central break, White neutralizes it with precision: 11. dxe5! opens the d-file, liquidates the queens, and wins a clean central pawn with 14. Bxe5, transitioning into a winning endgame.',
+    previewFEN: 'r1br2k1/1p3pbp/2p2np1/p3B3/P7/2P1P2P/1P2BPP1/RN3RK1 b - - 0 14',
+    annotations: {
+      0: "1. d4 — Center foundation.",
+      2: "2. Bf4 — Control c7-h2 diagonal.",
+      4: "3. e3 — Supporting d4.",
+      6: "4. Nf3 — Classic knight development.",
+      8: "5. Be2 — Solid bishop placement.",
+      10: "6. h3 — Escape square for bishop.",
+      12: "7. O-O — Ensure king safety.",
+      14: "8. a4 — Queenside territory gain.",
+      16: "9. Bh2 — Tucking the bishop away proactively.",
+      18: "10. c3 — Solidify d4.",
+      20: "11. dxe5 — Crack open the center.",
+      22: "12. Nxe5 — Initiate the simplifying liquidation.",
+      24: "13. Qxd8 — Eliminate queens and ruin Black's coordination.",
+      26: "14. Bxe5 — Snatch the central pawn with a dominant endgame advantage!"
+    }
+  },
+  {
+    id: 'london-grunfeld-d5-bf5',
+    courseId: 'london-system',
+    subCourseId: 'london-kings-indian-grunfeld',
+    name: 'London System – Grünfeld with ...Bf5 & Queenside Infiltration (11. Qb3)',
+    shortName: 'Grünfeld ...Bf5 & 11. Qb3',
+    category: 'Positional Squeeze',
+    eco: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. Be2 O-O 6. h3 c5 7. c3 Nc6 8. O-O Bf5',
+    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. Be2 O-O 6. h3 c5 7. c3 Nc6 8. O-O Bf5 9. Nbd2 Ne4 10. Nxe4 Bxe4 11. Qb3 Qb6 12. Rfd1 c4 13. Qxb6 axb6 14. Nd2',
+    fullAnnotation: 'Against Black\'s active Grünfeld setup with ...Bf5 and ...Ne4, White trades the knights and deploys 11. Qb3! Black is forced into doubling their b-pawns after 13. Qxb6 axb6, leaving White with an enduring endgame squeeze.',
+    previewFEN: 'r4rk1/1p2ppbp/1pn3p1/3p4/2pPbB2/2P1P2P/PP1NBPP1/R2R2K1 b - - 1 14',
+    annotations: {
+      0: "1. d4 — Queen's pawn stake.",
+      2: "2. Bf4 — London bishop outside.",
+      4: "3. e3 — Solid pawn structure.",
+      6: "4. Nf3 — Natural knight development.",
+      8: "5. Be2 — Solid kingside defense.",
+      10: "6. h3 — Prophylactic air.",
+      12: "7. c3 — Solidifying the center.",
+      14: "8. O-O — Complete development.",
+      16: "9. Nbd2 — Connect pieces.",
+      18: "10. Nxe4 — Eliminate Black's centralized knight.",
+      20: "11. Qb3! — Thematic double attack on b7 and d5.",
+      22: "12. Rfd1 — Central rook alignment.",
+      24: "13. Qxb6 — Inflict permanent damage on Black's pawn structure.",
+      26: "14. Nd2 — Question Black's bishop with a technically winning endgame!"
+    }
+  },
+  {
+    id: 'london-kid-b5-queenside',
+    courseId: 'london-system',
+    subCourseId: 'london-kings-indian-grunfeld',
+    name: 'London System – Anti-Queenside Storm (7...b5 & 13. d5!)',
+    shortName: 'Anti-KID Queenside Storm',
+    category: 'Space Advantage',
+    eco: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 c6 7. O-O b5',
+    pgn: '1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 O-O 5. Be2 d6 6. h3 c6 7. O-O b5 8. a4 b4 9. c4 a5 10. Nbd2 Nbd7 11. Bh2 Bb7 12. Rc1 c5 13. d5',
+    fullAnnotation: 'When Black tries early queenside expansion with ...c6 and ...b5, White halts it with 8. a4! and clamps down with 9. c4. After 13. d5!, White creates a permanent space bind completely locking out Black\'s minor pieces.',
+    previewFEN: 'r2q1rk1/1b1nppbp/3p1np1/p1pP4/PpP5/4PN1P/1P1NBPPB/2RQ1RK1 b - - 0 13',
+    annotations: {
+      0: "1. d4 — Classical opening move.",
+      2: "2. Bf4 — Control central dark squares.",
+      4: "3. e3 — Secure d4 anchor.",
+      6: "4. Nf3 — King's knight develops.",
+      8: "5. Be2 — Harmonious bishop post.",
+      10: "6. h3 — Escape route for bishop.",
+      12: "7. O-O — King safely tucked away.",
+      14: "8. a4! — Fix Black's queenside pawns immediately.",
+      16: "9. c4 — Claim central space.",
+      18: "10. Nbd2 — Reinforce c4 and e4.",
+      20: "11. Bh2 — Preempt ...c5 and ...e5 breaks.",
+      22: "12. Rc1 — Place rook on the c-file.",
+      24: "13. d5! — The space-clamping pawn wedge locking down the entire board!"
+    }
   }
 ];
+

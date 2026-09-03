@@ -195,7 +195,7 @@ export function createChessgroundBoard(targetElement, options = {}) {
     fen: startFen,
     orientation: initialOrientation,
     turnColor: initialTurn,
-    coordinates: false, // Clean minimal aesthetic
+    coordinates: options.coordinates !== undefined ? Boolean(options.coordinates) : true,
     autoCastle: true,
     viewOnly: Boolean(options.viewOnly),
     disableContextMenu: true,

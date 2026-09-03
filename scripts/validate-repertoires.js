@@ -103,7 +103,7 @@ validateRepertoire('Pirc Defense', pircLines, 'black');
 
 console.log(`\n========================================`);
 if (errors === 0) {
-  console.log(`SUCCESS: All 56 lines validated with 0 errors!`);
+  console.log(`SUCCESS: All ${londonLines.length + pircLines.length} lines validated with 0 errors!`);
   process.exit(0);
 } else {
   console.error(`FAILED: Found ${errors} validation errors.`);
