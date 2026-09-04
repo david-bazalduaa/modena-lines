@@ -186,5 +186,102 @@ export const caroKannModernLines = [
       27: "14... Bb7 — Searing long-diagonal bishop.",
       29: "15... Nc5! — Plant knight into White's territory with complete dynamic equality!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "caro-kann-punish-modern-f4-assault",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-modern-korchnoi",
+    name: "Caro-Kann Modern – 4...Nf6 / 8...Re8+ & 13...h4! Kingside Counter",
+    shortName: "Modern 13...h4! Kingside Strike",
+    category: "Counter-Attack",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. c3 Bd6 7. Bd3 O-O 8. Qc2 Re8+ 9. Ne2 h5 10. Be3 Nd7 11. O-O-O b5 12. Kb1 Nb6 13. Ng3 h4 14. Ne4 Nd5 15. Nxd6 Qxd6 16. Bd2 Be6",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. c3 Bd6 7. Bd3 O-O 8. Qc2 Re8+ 9. Ne2 h5 10. Be3 Nd7 11. O-O-O b5 12. Kb1 Nb6 13. Ng3 h4 14. Ne4 Nd5 15. Nxd6 Qxd6 16. Bd2 Be6",
+    fullAnnotation: "In the Modern Caro-Kann (4...Nf6 5. Nxf6+ exf6), White castles queenside into Black's advancing pawn storm. Black counters with 11...b5! and 14...Nd5, controlling the game.",
+    previewFEN: "r3r1k1/p4pp1/2pqbp2/1p1n4/3P3p/2PB4/PPQB1PPP/1K1R3R w - - 2 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central clash.",
+      5: "3...dxe4 — Open lines.",
+      7: "4...Nf6 — The Modern Tartakower/Korchnoi line.",
+      9: "5...exf6 — Thematic asymmetrical pawn structure with rapid piece play.",
+      11: "6...Bd6 — Ideal bishop placement.",
+      13: "7...O-O — Safe king.",
+      15: "8...Re8+ — Check seizing open e-file.",
+      17: "9...h5! — Flank clamp on White's kingside.",
+      19: "10...Nd7 — Reroute knight towards b6/d5.",
+      21: "11...b5! — Tactical Punishment: Launch crushing queenside attack against White's king!",
+      23: "12...Nb6 — Knight targets c4 and d5.",
+      25: "13...h4 — Chase the g3 knight.",
+      27: "14...Nd5 — Monster central knight outpost.",
+      29: "15...Qxd6 — Recapture queen.",
+      31: "16...Be6 — Black's bishops and rooks coordinate for a winning assault."
+    }
+  },
+  {
+    id: "caro-kann-punish-modern-early-g4",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-modern-korchnoi",
+    name: "Caro-Kann Modern – 7. Qh5?! Early Queen Attack Refuted",
+    shortName: "Modern 7. Qh5?! Refuted",
+    category: "Queen Harassment",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. Bc4 Bd6 7. Qh5 O-O 8. Ne2 Nd7 9. O-O Nb6 10. Bd3 g6 11. Qh6 Re8 12. c4 Bf8 13. Qh4 f5 14. Bg5 Be7 15. Bxe7 Qxe7 16. Qxe7 Rxe7",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. Bc4 Bd6 7. Qh5 O-O 8. Ne2 Nd7 9. O-O Nb6 10. Bd3 g6 11. Qh6 Re8 12. c4 Bf8 13. Qh4 f5 14. Bg5 Be7 15. Bxe7 Qxe7 16. Qxe7 Rxe7",
+    fullAnnotation: "White attempts a simplistic Scholar's-style attack with 7. Qh5?!. Black repels the queen easily, forces favorable trades, and enters an endgame with total dominance.",
+    previewFEN: "r1b3k1/pp2rp1p/1np3p1/5p2/2PP4/3B4/PP2NPPP/R4RK1 w - - 0 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central strike.",
+      5: "3...dxe4 — Open lines.",
+      7: "4...Nf6 — Modern line.",
+      9: "5...exf6 — Rapid piece mobilization.",
+      11: "6...Bd6 — Guard f7.",
+      12: "Inaccuracy: 7. Qh5?! makes a premature queen sortie easily parried by Black.",
+      13: "7...O-O — Castle into safety.",
+      15: "8...Nd7 — Flexible knight development.",
+      17: "9...Nb6 — Kick the c4 bishop with tempo.",
+      19: "10...g6 — Blunt White's queen and bishop battery.",
+      21: "11...Re8 — Seize the e-file.",
+      23: "12...Bf8 — Trap queen pathways.",
+      25: "13...f5 — Lock down kingside.",
+      27: "14...Be7 — Trade bishops.",
+      29: "15...Qxe7 — Queen recapture.",
+      31: "16...Rxe7 — Tactical Punishment: Liquidate into a dominant endgame with active rooks."
+    }
+  },
+  {
+    id: "caro-kann-punish-modern-h4-flank",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-modern-korchnoi",
+    name: "Caro-Kann Modern – 11. Rfe1 / 16...cxd5 & 17...Bxd5 Center Seizure",
+    shortName: "Modern 17...Bxd5 Seizure",
+    category: "Central Break",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. Nf3 Bd6 7. Be2 O-O 8. O-O Re8 9. Be3 Nd7 10. Qd2 Nf8 11. Rfe1 Ng6 12. Rad1 Bg4 13. h3 Be6 14. c4 Qd7 15. Bf1 Rad8 16. d5 cxd5 17. cxd5 Bxd5",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. Nf3 Bd6 7. Be2 O-O 8. O-O Re8 9. Be3 Nd7 10. Qd2 Nf8 11. Rfe1 Ng6 12. Rad1 Bg4 13. h3 Be6 14. c4 Qd7 15. Bf1 Rad8 16. d5 cxd5 17. cxd5 Bxd5",
+    fullAnnotation: "White plays 16. d5? trying to break through in the center. Black liquidates with 16...cxd5 and executes the pin-refutation 17...Bxd5! (18. Qxd5?? Bxh2+! wins the queen).",
+    previewFEN: "3rr1k1/pp1q1ppp/3b1pn1/3b4/8/4BN1P/PP1Q1PP1/3RRBK1 w - - 0 18",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central strike.",
+      5: "3...dxe4 — Open lines.",
+      7: "4...Nf6 — Modern setup.",
+      9: "5...exf6 — Rapid piece deployment.",
+      11: "6...Bd6 — Ideal bishop post.",
+      13: "7...O-O — Castle.",
+      15: "8...Re8 — Seize e-file.",
+      17: "9...Nd7 — Knight maneuver.",
+      19: "10...Nf8 — Standard knight reroute to g6.",
+      21: "11...Ng6 — Outpost on g6.",
+      23: "12...Bg4 — Pin f3 knight.",
+      25: "13...Be6 — Bishop steps back.",
+      27: "14...Qd7 — Connect rooks.",
+      29: "15...Rad8 — Centralize rooks.",
+      30: "Blunder: 16. d5? walks into a deadly discovered pin.",
+      31: "16...cxd5 — Open d-file.",
+      33: "17...Bxd5! — Tactical Punishment: Win clean pawn! If 18. Qxd5 Bxh2+! wins White's queen."
+    }
   }
 ];

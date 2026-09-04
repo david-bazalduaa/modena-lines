@@ -261,6 +261,102 @@ export const pirc150AttackLines = [
       27: "14... dxe5 — Liquidate the center.",
       29: "15... Ng4! — Decisive fork threat on e5 and h6 with total tactical supremacy!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "pirc-punish-150-premature-bh6",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-150-attack",
+    name: "Pirc 150 Attack – 7. Bh6?! / 10...b4! & 16...Qb6 Counter-Attack",
+    shortName: "150 Attack 10...b4! Counter",
+    category: "Queenside Counter-Attack",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. Bh6 Bxh6 8. Qxh6 Qa5 9. Qd2 Rb8 10. Nge2 b4 11. Nd1 c5 12. Ne3 Ba6 13. d5 O-O 14. Ng3 Bxf1 15. Kxf1 Ne5 16. Kf2 Qb6",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. Bh6 Bxh6 8. Qxh6 Qa5 9. Qd2 Rb8 10. Nge2 b4 11. Nd1 c5 12. Ne3 Ba6 13. d5 O-O 14. Ng3 Bxf1 15. Kxf1 Ne5 16. Kf2 Qb6",
+    fullAnnotation: "White tries the crude 150 Attack with 7. Bh6?!. Black ignores White's toothless queen, rolls the queenside with ...b4 and ...c5, and traps White in complete passivity.",
+    previewFEN: "1r3rk1/p3pp1p/1q1p1np1/2pPn3/1p2P3/4NPN1/PPPQ1KPP/R6R w - - 3 17",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...c6 — Thematic 150 Attack counter.",
+      9: "5...b5 — Queenside wing assault.",
+      11: "6...Nbd7 — Flexible knight development.",
+      12: "Inaccuracy: 7. Bh6?! trades bishops but wastes queen tempos.",
+      13: "7...Bxh6 — Trade dark-squared bishops.",
+      15: "8...Qa5 — Pin c3 knight.",
+      17: "9...Rb8 — Put rook on b-file.",
+      19: "10...b4! — Tactical Punishment: Kick White's knight away from center control.",
+      21: "11...c5 — Strike at d4 pawn.",
+      23: "12...Ba6 — Trade light-squared bishops.",
+      25: "13...O-O — Castle into safety.",
+      27: "14...Bxf1 — Eliminate knight.",
+      29: "15...Ne5 — Central knight outpost.",
+      31: "16...Qb6 — Dominating the a7-g1 diagonal with decisive initiative."
+    }
+  },
+  {
+    id: "pirc-punish-150-h4-h5-blunder",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-150-attack",
+    name: "Pirc 150 Attack – 11. O-O-O / 11...b4! & 16...Re8 Decisive Counter",
+    shortName: "150 Attack 11...b4! Strike",
+    category: "Opposite-Side Castling Attack",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Nbd7 7. h3 Bg7 8. Nf3 e5 9. Bh6 O-O 10. Bxg7 Kxg7 11. O-O-O b4 12. Ne2 a5 13. g4 exd4 14. Nexd4 Qb6 15. Qf4 Ne5 16. Be2 Re8",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Nbd7 7. h3 Bg7 8. Nf3 e5 9. Bh6 O-O 10. Bxg7 Kxg7 11. O-O-O b4 12. Ne2 a5 13. g4 exd4 14. Nexd4 Qb6 15. Qf4 Ne5 16. Be2 Re8",
+    fullAnnotation: "White castles queenside in the 150 Attack (11. O-O-O). Black's queenside avalanche arrives first with 11...b4! and 12...a5, completely shattering White's position.",
+    previewFEN: "r1b1r3/5pkp/1qpp1np1/p3n3/1p1NPQP1/5N1P/PPP1BP2/2KR3R w - - 5 17",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...c6 — Solid base.",
+      9: "5...b5 — Queenside counter-attack.",
+      11: "6...Nbd7 — Develop knight.",
+      13: "7...Bg7 — The sniper bishop.",
+      15: "8...e5 — Strike center.",
+      17: "9...O-O — Castle securely.",
+      19: "10...Kxg7 — King recaptures safely.",
+      20: "Inaccuracy: 11. O-O-O? castles directly into Black's open firing lines.",
+      21: "11...b4! — Tactical Punishment: Blast open the b-file against White's castled king!",
+      23: "12...a5 — Continue pawn avalanche.",
+      25: "13...exd4 — Liquidate center.",
+      27: "14...Qb6 — Coordinate queen on b-file.",
+      29: "15...Ne5 — Central knight pressure.",
+      31: "16...Re8 — Seize the e-file; White's king is under an irresistible siege."
+    }
+  },
+  {
+    id: "pirc-punish-150-g4-flank-assault",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-150-attack",
+    name: "Pirc 150 Attack – 7. g4 Nb6 / 11...Nc4! Piece Infiltration",
+    shortName: "150 Attack 11...Nc4! Infiltration",
+    category: "Knight Infiltration",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. g4 Nb6 8. Bd3 h5 9. g5 Nfd7 10. f4 Bg7 11. Nf3 Nc4 12. Bxc4 bxc4 13. O-O-O Rb8 14. e5 d5 15. Nh4 e6 16. Rdf1 Qb6",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. g4 Nb6 8. Bd3 h5 9. g5 Nfd7 10. f4 Bg7 11. Nf3 Nc4 12. Bxc4 bxc4 13. O-O-O Rb8 14. e5 d5 15. Nh4 e6 16. Rdf1 Qb6",
+    fullAnnotation: "White launches a wild g4-f4 assault. Black halts White with 8...h5!, plants a monster knight on c4, and blows open the b-file against White's king with 13...Rb8 and 16...Qb6.",
+    previewFEN: "1rb1k2r/p2n1pb1/1qp1p1p1/3pP1Pp/2pP1P1N/2N1B3/PPPQ3P/2K2R1R w k - 2 17",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Dragon setup.",
+      7: "4...c6 — Prepare ...b5.",
+      9: "5...b5 — Queenside wing strike.",
+      11: "6...Nbd7 — Develop knight.",
+      13: "7...Nb6 — Aim at the c4 weakness.",
+      15: "8...h5! — Prophylactic strike disrupting White's pawn chain.",
+      17: "9...Nfd7 — Reroute knight.",
+      19: "10...Bg7 — Fianchetto sniper bishop.",
+      21: "11...Nc4! — Tactical Punishment: Squeeze White's king and bishop on c4!",
+      23: "12...bxc4 — Open b-file.",
+      25: "13...Rb8 — Heavy artillery on b-file.",
+      27: "14...d5 — Lock central pawns.",
+      29: "15...e6 — Granite pawn wall blunts White's knight.",
+      31: "16...Qb6 — White's b2 pawn and king are facing an unavoidable mating attack."
+    }
   }
 ];
 

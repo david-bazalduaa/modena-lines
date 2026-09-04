@@ -238,6 +238,104 @@ export const pircSidelinesLines = [
       27: "14... dxc5 — Recapture towards the center.",
       29: "15... e5! — The devastating central fork driving White's bishop into submission!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "pirc-punish-sidelines-early-bc4",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-aggressive-sidelines",
+    name: "Pirc Sidelines – 2. Bc4?! / 14...Qa5! & 16...Bxe5 Queenside Annihilation",
+    shortName: "Sidelines 2. Bc4?! Annihilated",
+    category: "Center & Wing Domination",
+    eco: "1. e4 d6 2. Bc4 Nf6 3. d3 g6 4. Nf3 Bg7 5. O-O O-O 6. Re1 c5 7. c3 Nc6 8. Bb3 b5 9. a4 b4 10. h3 Rb8 11. Nbd2 bxc3 12. bxc3 Ba6 13. Bc2 Nd7 14. Ra3 Qa5 15. c4 Nde5 16. Nxe5 Bxe5",
+    pgn: "1. e4 d6 2. Bc4 Nf6 3. d3 g6 4. Nf3 Bg7 5. O-O O-O 6. Re1 c5 7. c3 Nc6 8. Bb3 b5 9. a4 b4 10. h3 Rb8 11. Nbd2 bxc3 12. bxc3 Ba6 13. Bc2 Nd7 14. Ra3 Qa5 15. c4 Nde5 16. Nxe5 Bxe5",
+    fullAnnotation: "White plays the toothless 2. Bc4?! sideline. Black seizes queenside space with ...b5, undermines c3, and dominates the dark squares with 14...Qa5! and 16...Bxe5.",
+    previewFEN: "1r3rk1/p3pp1p/b1np2p1/q1p1b3/P1P1P3/R2P3P/2BN1PP1/2BQR1K1 w - - 0 17",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      2: "Inaccuracy: 2. Bc4?! is an uninspired sideline easily countered by Black.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto setup.",
+      7: "4...Bg7 — The sniper bishop.",
+      9: "5...O-O — Castle.",
+      11: "6...c5 — Strike at d4.",
+      13: "7...Nc6 — Develop knight.",
+      15: "8...b5! — Queenside expansion.",
+      17: "9...b4 — Push pawn wedge.",
+      19: "10...Rb8 — Put rook on b-file.",
+      21: "11...bxc3 — Rip open b-file.",
+      23: "12...Ba6 — Target weak d3 pawn.",
+      25: "13...Nd7 — Unmask the bishop.",
+      27: "14...Qa5! — Tactical Punishment: Pin and pressure the weak c3 pawn.",
+      29: "15...Nde5 — Knight joins attack.",
+      31: "16...Bxe5 — Total dominance on the long diagonal."
+    }
+  },
+  {
+    id: "pirc-punish-sidelines-kholmov-be3-f3",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-aggressive-sidelines",
+    name: "Pirc Sidelines – Kholmov 4. Bg5 / 6...g5! & 14...Kb8 Counter-Pin",
+    shortName: "Kholmov 4. Bg5 Refuted",
+    category: "Queenside King Walk",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. Qd2 h6 6. Bf4 g5 7. Bg3 Nh5 8. Nge2 Nc6 9. O-O-O Nxg3 10. hxg3 e6 11. f4 Bd7 12. Kb1 Qe7 13. e5 O-O-O 14. Qe3 Kb8 15. Ne4 gxf4 16. gxf4 dxe5 17. fxe5 Bc8",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. Qd2 h6 6. Bf4 g5 7. Bg3 Nh5 8. Nge2 Nc6 9. O-O-O Nxg3 10. hxg3 e6 11. f4 Bd7 12. Kb1 Qe7 13. e5 O-O-O 14. Qe3 Kb8 15. Ne4 gxf4 16. gxf4 dxe5 17. fxe5 Bc8",
+    fullAnnotation: "White plays the aggressive Kholmov System (4. Bg5). Black traps the bishop with 6...g5! and 7...Nh5!, captures the bishop pair, and coordinates a winning counter-attack.",
+    previewFEN: "1kbr3r/ppp1qpb1/2n1p2p/4P3/3PN3/4Q3/PPP1N1P1/1K1R1B1R w - - 1 18",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...Bg7 — The sniper bishop.",
+      9: "5...h6 — Question bishop.",
+      11: "6...g5! — Chase bishop backwards.",
+      13: "7...Nh5! — Hunt down White's dark-squared bishop.",
+      15: "8...Nc6 — Pressure d4.",
+      17: "9...Nxg3 — Secure the bishop pair.",
+      19: "10...e6 — Solid center.",
+      21: "11...Bd7 — Prepare queenside castling.",
+      23: "12...Qe7 — Connect rooks.",
+      25: "13...O-O-O — Castle into safety.",
+      27: "14...Kb8 — Thematic king tuck on the semi-open file.",
+      29: "15...gxf4 — Trade pawns.",
+      31: "16...dxe5 — Liquidate center.",
+      33: "17...Bc8 — Tactical Punishment: Bishop coordinates with d-file rook to pin down White's entire army."
+    }
+  },
+  {
+    id: "pirc-punish-sidelines-overaggressive-g4",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-aggressive-sidelines",
+    name: "Pirc Sidelines – Overaggressive 6. g4?! / 11...h5! Flank Dismantling",
+    shortName: "Sidelines 6. g4?! Dismantled",
+    category: "Flank Overextension",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f3 c6 5. Be3 b5 6. g4 h6 7. Qd2 Nbd7 8. Nge2 Nb6 9. Ng3 b4 10. Nd1 a5 11. h4 h5 12. g5 Nfd7 13. f4 Bg7 14. Bd3 c5 15. c3 Ba6 16. Bxa6 Rxa6 17. Qe2 Ra8",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f3 c6 5. Be3 b5 6. g4 h6 7. Qd2 Nbd7 8. Nge2 Nb6 9. Ng3 b4 10. Nd1 a5 11. h4 h5 12. g5 Nfd7 13. f4 Bg7 14. Bd3 c5 15. c3 Ba6 16. Bxa6 Rxa6 17. Qe2 Ra8",
+    fullAnnotation: "White launches a wild early kingside assault with 6. g4?!. Black halts it dead with 11...h5!, rolls queenside pawns with 9...b4 and 10...a5, and completely outplays White.",
+    previewFEN: "r2qk2r/3nppb1/1n1p2p1/p1p3Pp/1p1PPP1P/2P1B1N1/PP2Q3/R2NK2R w KQk - 2 18",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...c6 — Flexible setup.",
+      9: "5...b5 — Queenside wing strike.",
+      10: "Inaccuracy: 6. g4?! overextends before completing development.",
+      11: "6...h6 — Prophylaxis.",
+      13: "7...Nbd7 — Develop knight.",
+      15: "8...Nb6 — Aim at c4.",
+      17: "9...b4 — Kick c3 knight.",
+      19: "10...a5 — Reinforce b4 pawn.",
+      21: "11...h5! — Tactical Punishment: Lock up and shatter White's kingside pawn structure.",
+      23: "12...Nfd7 — Reroute knight.",
+      25: "13...Bg7 — Fianchetto sniper bishop.",
+      27: "14...c5 — Strike at d4.",
+      29: "15...Ba6 — Trade off White's only good bishop.",
+      31: "16...Rxa6 — Rook active on 6th rank.",
+      33: "17...Ra8 — Black has completely dominated the board."
+    }
   }
 ];
 

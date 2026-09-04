@@ -277,6 +277,101 @@ export const londonKingsIndianLines = [
       22: "12. Rc1 — Place rook on the c-file.",
       24: "13. d5! — The space-clamping pawn wedge locking down the entire board!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "london-punish-kings-indian-raid",
+    courseId: "london-system",
+    subCourseId: "london-kings-indian-grunfeld",
+    name: "London System – KID 6...Nh5? Premature Bishop Hunt Punished",
+    shortName: "KID 6...Nh5? Hunt Punished",
+    category: "Bishop Preservation",
+    eco: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. h3 O-O 6. Be2 Nh5 7. Bh2 f5 8. O-O Nd7 9. c4 e5 10. Nc3 e4 11. Nd2 Nhf6 12. b4 Qe7 13. c5 dxc5 14. bxc5 c6 15. Bd6",
+    pgn: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. h3 O-O 6. Be2 Nh5 7. Bh2 f5 8. O-O Nd7 9. c4 e5 10. Nc3 e4 11. Nd2 Nhf6 12. b4 Qe7 13. c5 dxc5 14. bxc5 c6 15. Bd6",
+    fullAnnotation: "Black hunts White's London bishop prematurely with 6...Nh5?!. White preserves the bishop on h2, dominates the queenside, and skewers Black with 15. Bd6! winning the exchange.",
+    previewFEN: "r1b2rk1/pp1nq1bp/2pB1np1/2P2p2/3Pp3/2N1P2P/P2NBPP1/R2Q1RK1 b - - 1 15",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid pawn structure.",
+      6: "4. Nf3 — Develop knight.",
+      8: "5. h3! — Crucial escape square for the London bishop.",
+      10: "6. Be2 — Ready to castle.",
+      11: "Blunder: 6...Nh5?! wastes tempos chasing a bishop that easily tucks away.",
+      12: "7. Bh2! — The bishop retreats safely to its ideal bunker.",
+      14: "8. O-O — Castle securely.",
+      16: "9. c4 — Queenside counter-strike.",
+      18: "10. Nc3 — Rapid deployment.",
+      20: "11. Nd2 — Safe retreat while attacking e4.",
+      22: "12. b4 — Thematic queenside avalanche.",
+      24: "13. c5! — Blast through Black's pawn chain.",
+      26: "14. bxc5 — Open b-file.",
+      28: "15. Bd6! — Tactical Punishment: Skewer queen and rook, netting decisive material."
+    }
+  },
+  {
+    id: "london-punish-kid-premature-e5",
+    courseId: "london-system",
+    subCourseId: "london-kings-indian-grunfeld",
+    name: "London System – KID Premature 7...e5? Break Punished",
+    shortName: "KID Premature ...e5 Punished",
+    category: "Tactical Destruction",
+    eco: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. c3 O-O 6. Nbd2 Qe8 7. h3 e5",
+    pgn: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d6 5. c3 O-O 6. Nbd2 Qe8 7. h3 e5 8. dxe5 dxe5 9. Bh2 Nc6 10. Bb5 Nd7 11. Nc4 f6 12. Qd5+ Kh8 13. Bxc6 bxc6 14. Qxc6",
+    fullAnnotation: "Black rushes the ...e5 break without adequate preparation. White captures on e5 and exploits the pinned c6 knight to win a clean pawn.",
+    previewFEN: "r1b1qr1k/p1pn2bp/2Q2pp1/4p3/2N5/2P1PN1P/PP3PPB/R3K2R b KQ - 0 14",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid setup.",
+      6: "4. Nf3 — Development.",
+      8: "5. c3 — Reinforce d4.",
+      10: "6. Nbd2 — Reroute option.",
+      12: "7. h3 — Prophylaxis.",
+      13: "Blunder: 7...e5? opens the center prematurely while pieces remain uncoordinated.",
+      14: "8. dxe5! — Expose Black's e5 overextension.",
+      16: "9. Bh2 — Safe bishop retreat.",
+      18: "10. Bb5 — Pin c6 knight.",
+      20: "11. Nc4 — Pile on e5.",
+      22: "12. Qd5+ — Double attack on king and c6.",
+      24: "13. Bxc6 — Eliminate knight.",
+      26: "14. Qxc6 — Tactical Punishment: White nets a pawn and controls the board."
+    }
+  },
+  {
+    id: "london-punish-grunfeld-cxd4",
+    courseId: "london-system",
+    subCourseId: "london-kings-indian-grunfeld",
+    name: "London System – Grünfeld 4...c5 / Kingside Overextension Punished",
+    shortName: "Grünfeld 13. Nxg5! Strike",
+    category: "Kingside Destruction",
+    eco: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. c3 c5 6. Nbd2 cxd4 7. exd4 O-O 8. Bd3 Nc6 9. O-O Nh5 10. Be3 f5 11. Bg5 h6 12. Bh4 g5 13. Nxg5",
+    pgn: "1. d4 Nf6 2. Bf4 g6 3. e3 Bg7 4. Nf3 d5 5. c3 c5 6. Nbd2 cxd4 7. exd4 O-O 8. Bd3 Nc6 9. O-O Nh5 10. Be3 f5 11. Bg5 h6 12. Bh4 g5 13. Nxg5 hxg5 14. Qxh5 gxh4 15. Nf3 e6 16. Ng5 Rf6 17. Rae1",
+    fullAnnotation: "Black plays an unsound kingside overextension with 10...f5 and 12...g5?. White uncorks 13. Nxg5! sacrificing a knight to rip open Black's shattered king defenses with decisive mating threats on h7.",
+    previewFEN: "r1bq2k1/pp4b1/2n1pr2/3p1pNQ/3P3p/2PB4/PP3PPP/4RRK1 b - - 3 17",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      6: "4. Nf3 — Development.",
+      8: "5. c3 — Reinforce center.",
+      10: "6. Nbd2 — Standard setup.",
+      12: "7. exd4 — Maintain central clamp.",
+      14: "8. Bd3 — Aim directly at h7.",
+      16: "9. O-O — Castle safely.",
+      18: "10. Be3 — Bishop retreats flexibly.",
+      20: "11. Bg5 — Pin the queen.",
+      22: "12. Bh4 — Prophylactic retreat.",
+      23: "Blunder: 12...g5? fatally overextends Black's kingside pawn barrier.",
+      24: "13. Nxg5! — Tactical Punishment: Knight sacrifice demolishes Black's overextended pawns!",
+      26: "14. Qxh5 — Regain material and penetrate with queen.",
+      28: "15. Nf3 — Re-route attacker with tempo.",
+      30: "16. Ng5 — Threatening Qh7+ and mate.",
+      32: "17. Rae1 — Bring final rook to the assault."
+    }
   }
 ];
 

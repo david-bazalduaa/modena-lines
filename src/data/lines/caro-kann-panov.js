@@ -156,5 +156,102 @@ export const caroKannPanovLines = [
       27: "14... Bf6 — Searing diagonal pressure against b2 and c3.",
       29: "15... Qa5! — Queen pins White's pieces with complete dynamic equality!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "caro-kann-punish-panov-early-qb3",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-panov-attack",
+    name: "Caro-Kann Panov – 8. c5 O-O / 17...Qa1+! Queenside Decimation",
+    shortName: "Panov 17...Qa1+! Decimation",
+    category: "Tactical Pin",
+    eco: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Nf3 Be7 8. c5 O-O 9. Bb5 Ne4 10. Bxe7 Nxe7 11. Rc1 b6 12. b4 a5 13. a3 axb4 14. axb4 bxc5 15. bxc5 Qa5 16. Qd3 Nxc3 17. Rxc3 Qa1+",
+    pgn: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Bg5 e6 7. Nf3 Be7 8. c5 O-O 9. Bb5 Ne4 10. Bxe7 Nxe7 11. Rc1 b6 12. b4 a5 13. a3 axb4 14. axb4 bxc5 15. bxc5 Qa5 16. Qd3 Nxc3 17. Rxc3 Qa1+",
+    fullAnnotation: "In the Panov Attack, White closes the queenside with 8. c5. Black undermines White's chain with ...b6 and ...a5, and explodes with 17...Qa1+! winning the c3 rook.",
+    previewFEN: "r1b2rk1/4nppp/4p3/1BPp4/3P4/2RQ1N2/5PPP/q3K2R w K - 1 18",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central strike.",
+      5: "3...cxd5 — Symmetrical exchange.",
+      7: "4...Nf6 — Attack d4.",
+      9: "5...Nc6 — Pressure center.",
+      11: "6...e6 — Solid foundation.",
+      13: "7...Be7 — Neutralize Bg5 pin.",
+      14: "Inaccuracy: 8. c5? releases central tension prematurely.",
+      15: "8...O-O — Castle into safety.",
+      17: "9...Ne4 — Occupy central outpost.",
+      19: "10...Nxe7 — Recapture knight.",
+      21: "11...b6! — Strike at the base of White's pawn chain.",
+      23: "12...a5! — Undermine queenside structure.",
+      25: "13...axb4 — Open a-file.",
+      27: "14...bxc5 — Destroy c5 outpost.",
+      29: "15...Qa5! — Absolute pin on the c3 knight.",
+      31: "16...Nxc3 — Eliminate defender.",
+      33: "17...Qa1+! — Tactical Punishment: Skewer king and h1 rook; White loses decisive material."
+    }
+  },
+  {
+    id: "caro-kann-punish-panov-isolated-d4",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-panov-attack",
+    name: "Caro-Kann Panov – Isolated Queen's Pawn Blockade / 15...Nd5 Domination",
+    shortName: "Panov IQP Blockaded",
+    category: "Positional Masterclass",
+    eco: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 8. Bd3 Nc6 9. O-O O-O 10. Re1 Nf6 11. a3 b6 12. Bc2 Bb7 13. Qd3 Rc8 14. Bg5 g6 15. Rad1 Nd5 16. Bh6 Re8",
+    pgn: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 8. Bd3 Nc6 9. O-O O-O 10. Re1 Nf6 11. a3 b6 12. Bc2 Bb7 13. Qd3 Rc8 14. Bg5 g6 15. Rad1 Nd5 16. Bh6 Re8",
+    fullAnnotation: "Black demonstrates the textbook method against the Panov Isolated Queen's Pawn (IQP). Black establishes a permanent blockade on d5 and neutralizes White's mating threats.",
+    previewFEN: "2rqr1k1/pb2bp1p/1pn1p1pB/3n4/3P4/P1NQ1N2/1PB2PPP/3RR1K1 w - - 4 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central clash.",
+      5: "3...cxd5 — Open c-file.",
+      7: "4...Nf6 — Develop knight.",
+      9: "5...e6 — Solid base.",
+      11: "6...Be7 — Prepare castling.",
+      13: "7...Nxd5 — Capture with knight blockading d4.",
+      15: "8...Nc6 — Develop piece.",
+      17: "9...O-O — Castle into safety.",
+      19: "10...Nf6 — Maintain vigilance over e4/g4.",
+      21: "11...b6 — Prepare bishop fianchetto.",
+      23: "12...Bb7 — Sniper on the long diagonal.",
+      25: "13...Rc8 — Put rook on c-file.",
+      27: "14...g6! — Nullify White's Qh7 mate battery.",
+      29: "15...Nd5! — Tactical Punishment: Re-establish the iron blockade on d5.",
+      31: "16...Re8 — Calm rook step; White's isolated d4 pawn is a permanent losing liability."
+    }
+  },
+  {
+    id: "caro-kann-punish-panov-greedy-cxd5",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-panov-attack",
+    name: "Caro-Kann Panov – 8. Qb3 / 10...Nxd4! Queen Fork Refutation",
+    shortName: "Panov 10...Nxd4! Refutation",
+    category: "Tactical Destruction",
+    eco: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    pgn: "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    fullAnnotation: "White plays the greedy 8. Qb3 and 10. Qxb7? in the Panov. Black uncorks 10...Nxd4! threatening Nc2+ and enters a winning endgame where White's kingside pawns are wrecked.",
+    previewFEN: "r4b1r/p4ppp/4k3/3p4/8/4BP2/PP3P1P/R3K2R w KQ - 2 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central strike.",
+      5: "3...cxd5 — Open c-file.",
+      7: "4...Nf6 — Attack center.",
+      9: "5...Nc6 — Pressure d4.",
+      11: "6...Bg4 — Pin f3 knight.",
+      13: "7...Nxd5 — Capture with knight.",
+      15: "8...Bxf3! — Shatter White's kingside pawn structure.",
+      17: "9...e6 — Solidify center.",
+      18: "Blunder: 10. Qxb7? grabs a poisoned pawn while neglecting king safety.",
+      19: "10...Nxd4! — Tactical Punishment: Deadly threat of Nc2+ fork!",
+      21: "11...Nxb5 — Remove checking bishop.",
+      23: "12...Ke7 — Safe king step.",
+      25: "13...Qd7 — Force queen trade.",
+      27: "14...Qxd5 — Central queen dominance.",
+      29: "15...exd5 — Solid central pawn.",
+      31: "16...Ke6 — Active king dominates White's shattered pawns."
+    }
   }
 ];

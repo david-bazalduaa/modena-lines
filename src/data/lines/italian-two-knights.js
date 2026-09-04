@@ -458,6 +458,129 @@ export const twoKnightsLines = [
       18: "10. Bg5 — Pin e7.", 20: "11. Bxe7 — Trade piece.", 22: "12. O-O-O — Long castling.",
       24: "13. Rhe1 — Double heavy pieces on e-file.", 26: "14. Rxe5+ — Recapture with check.", 28: "15. gxf3 — Decisive material and positional advantage!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "italian-punish-blackburne",
+    courseId: "italian-game",
+    subCourseId: "italian-two-knights",
+    name: "Two Knights – Blackburne Shilling Refutation (4. Bxf7+!)",
+    shortName: "Blackburne Shilling Refuted",
+    category: "Trap Refutation",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nd4 4. Bxf7+ Kxf7 5. Nxe5+ Ke7",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nd4 4. Bxf7+ Kxf7 5. Nxe5+ Ke7 6. c3 d6 7. Nc4 Ne6 8. d4 Nf6 9. O-O Nxe4 10. d5 N6c5 11. Re1 Kd7 12. Qg4+ Ke8 13. Qh5+",
+    fullAnnotation: "Black sets the cheap Blackburne Shilling trap with 3...Nd4?!. White dismantles it completely by blasting open the center with Bxf7+! and d4.",
+    previewFEN: "r1bqkb1r/ppp3pp/3p4/2nP3Q/2N1n3/2P5/PP3PPP/RNB1R1K1 b - - 6 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      5: "Inaccuracy: 3...Nd4?! attempts the cheap Blackburne Shilling trap.",
+      6: "4. Bxf7+! — Tactical Punishment: Strike Black's king immediately!",
+      8: "5. Nxe5+ — Central fork.",
+      10: "6. c3 — Kick the tricky knight.",
+      12: "7. Nc4 — Reroute with tempo.",
+      14: "8. d4 — Full center expansion.",
+      16: "9. O-O — Complete king safety.",
+      18: "10. d5 — Push black pieces into disarray.",
+      20: "11. Re1 — Pin e4 knight to king.",
+      22: "12. Qg4+ — Deliver check with king stranded.",
+      24: "13. Qh5+ — Decisive attack."
+    }
+  },
+  {
+    id: "italian-punish-traxler",
+    courseId: "italian-game",
+    subCourseId: "italian-two-knights",
+    name: "Two Knights – Traxler Counter-Attack Refuted (5. Bxf7+!)",
+    shortName: "Traxler Counter Refuted",
+    category: "Tactical Precision",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 Bc5 5. Bxf7+ Ke7 6. Bd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 Bc5 5. Bxf7+ Ke7 6. Bd5 Rf8 7. O-O d6 8. Bxc6 bxc6 9. c3 h6 10. Nf3 Bg4 11. d4 exd4 12. cxd4 Bb6 13. Qd3",
+    fullAnnotation: "Black plays the wild Traxler Counter-Attack (4...Bc5?!). White refutes it cleanly with 5. Bxf7+! followed by safe consolidation.",
+    previewFEN: "r2q1r2/p1p1k1p1/1bpp1n1p/8/3PP1b1/3Q1N2/PP3PPP/RNB2RK1 b - - 2 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. Ng5 — Attack f7.",
+      7: "Blunder: 4...Bc5?! is the unsound Traxler Counter-Attack.",
+      8: "5. Bxf7+! — Tactical Punishment: Strip castling rights and win a clean pawn.",
+      10: "6. Bd5 — Safe retreat.",
+      12: "7. O-O — King safety.",
+      14: "8. Bxc6 — Ruin pawn structure.",
+      16: "9. c3 — Prepare center.",
+      18: "10. Nf3 — Knight retreats safely.",
+      20: "11. d4 — Break open center.",
+      22: "12. cxd4 — Control center.",
+      24: "13. Qd3 — Total positional and material dominance."
+    }
+  },
+  {
+    id: "italian-punish-fried-liver-ncb4",
+    courseId: "italian-game",
+    subCourseId: "italian-two-knights",
+    name: "Two Knights – Fried Liver 8...Ncb4? Knight Raid Crushed",
+    shortName: "Fried Liver 8...Ncb4 Crushed",
+    category: "Mating Attack",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nxd5 6. Nxf7 Kxf7 7. Qf3+ Ke6 8. Nc3 Ncb4",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. Ng5 d5 5. exd5 Nxd5 6. Nxf7 Kxf7 7. Qf3+ Ke6 8. Nc3 Ncb4 9. a3 Nxc2+ 10. Kd1 Nxa1 11. Nxd5 Kd6 12. d4 c6 13. dxe5+ Kd7 14. Qf7+ Be7 15. e6+ Kd6 16. Bf4+ Kc5 17. Be3+ Kd6 18. Qf4+ Kxe6 19. Qe4+ Kd7 20. Ke2",
+    fullAnnotation: "Black defends the Fried Liver greedily with 8...Ncb4? grabbing the c2 rook. White launches a relentless king hunt forcing mate.",
+    previewFEN: "r1bq3r/pp1kb1pp/2p5/3N4/2B1Q3/P3B3/1P2KPPP/n6R b - - 3 20",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. Ng5 — Target f7.",
+      8: "5. exd5 — Open lines.",
+      10: "6. Nxf7! — The legendary Fried Liver sacrifice!",
+      12: "7. Qf3+ — Triple attack on pinned d5 knight.",
+      14: "8. Nc3 — Pile fourth attacker on d5.",
+      15: "Blunder: 8...Ncb4? counter-attacks c2 greedily while the king is in mortal danger.",
+      16: "9. a3! — Kick knight.",
+      18: "10. Kd1 — Safe king step avoiding checks.",
+      20: "11. Nxd5 — Eliminate key defender.",
+      22: "12. d4! — Blow open central highways.",
+      24: "13. dxe5+ — Discover check.",
+      26: "14. Qf7+ — Penetrate into black camp.",
+      28: "15. e6+ — Tighten the noose.",
+      30: "16. Bf4+ — Bishop joins attack.",
+      32: "17. Be3+ — Drive king into mating net.",
+      34: "18. Qf4+ — Continuous checks.",
+      36: "19. Qe4+ — Precision king hunt.",
+      38: "20. Ke2! — White connects rooks with an unavoidable mating attack."
+    }
+  },
+  {
+    id: "italian-punish-f5-counter",
+    courseId: "italian-game",
+    subCourseId: "italian-two-knights",
+    name: "Two Knights – Dubious 4...f5?! Counter-Gambit Dismantled",
+    shortName: "Two Knights 4...f5 Refuted",
+    category: "Center Domination",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d3 d6 5. c3 Bg4 6. Nbd2 Be7 7. h3 Bh5 8. Nf1 O-O 9. Ng3 Bg6 10. Nh4 d5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Nf6 4. d3 d6 5. c3 Bg4 6. Nbd2 Be7 7. h3 Bh5 8. Nf1 O-O 9. Ng3 Bg6 10. Nh4 d5 11. exd5 Nxd5 12. Nxg6 hxg6 13. h4",
+    fullAnnotation: "Black tries a passive ...d6 setup with an early ...Bg4 pin. White reroutes the knight via f1 to g3/h4 and launches a crushing h-file attack.",
+    previewFEN: "r2q1rk1/ppp1bpp1/2n3p1/3np3/2B4P/2PP2N1/PP3PP1/R1BQK2R b KQ - 0 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. d3 — Solid foundation.",
+      8: "5. c3 — Prepare center expansion.",
+      10: "6. Nbd2 — Classical knight tour.",
+      12: "7. h3 — Kick bishop.",
+      14: "8. Nf1 — Knight heads for g3.",
+      16: "9. Ng3 — Bishop harassed.",
+      18: "10. Nh4! — Seize f5 and g6 squares.",
+      19: "Inaccuracy: 10...d5 opens the center while kingside pieces are trapped.",
+      20: "11. exd5 — Eliminate center pawn.",
+      22: "12. Nxg6 — Ruin Black pawn cover.",
+      24: "13. h4! — Unleash the h-file storm!"
+    }
   }
 ];
 

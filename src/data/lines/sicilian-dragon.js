@@ -216,5 +216,103 @@ export const sicilianDragonLines = [
       27: "14... Qc7 — Target White's shattered c3 and c2 pawns.",
       29: "15... Na4! — Decisive knight invasion with overwhelming attacking superiority!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "sicilian-punish-dragon-yugoslav-premature-h5",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-dragon-scheveningen",
+    name: "Sicilian Dragon – Yugoslav Attack / 17...Re8 & 18...Nc4 Destruction",
+    shortName: "Dragon Yugoslav Refutation",
+    category: "Kingside Destruction",
+    eco: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. Be3 Bg7 7. f3 O-O 8. Qd2 Nc6 9. Bc4 Bd7 10. O-O-O Rc8 11. Bb3 Ne5 12. h4 h5 13. Bg5 Rc5 14. Kb1 b5 15. g4 hxg4 16. h5 Nxh5 17. Nd5 Re8 18. f4 Nc4",
+    pgn: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. Be3 Bg7 7. f3 O-O 8. Qd2 Nc6 9. Bc4 Bd7 10. O-O-O Rc8 11. Bb3 Ne5 12. h4 h5 13. Bg5 Rc5 14. Kb1 b5 15. g4 hxg4 16. h5 Nxh5 17. Nd5 Re8 18. f4 Nc4",
+    fullAnnotation: "In the savage Yugoslav Attack, White tries a reckless kingside storm. Black uses the classic Dragon rook lift 13...Rc5! and counter-attacks on c4 to crush White.",
+    previewFEN: "3qr1k1/p2bppb1/3p2p1/1prN2Bn/2nNPPp1/1B6/PPPQ4/1K1R3R w - - 1 19",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...d6 — Prepare dragon fianchetto.",
+      5: "3...cxd4 — Open c-file.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...g6 — The fiery Dragon Variation!",
+      11: "6...Bg7 — The legendary Dragon Bishop.",
+      13: "7...O-O — Castle into safety.",
+      15: "8...Nc6 — Central pressure.",
+      17: "9...Bd7 — Connect heavy pieces.",
+      19: "10...Rc8 — Rook seizes the c-file.",
+      21: "11...Ne5 — Eye the c4 outpost.",
+      23: "12...h5! — Masterclass prophylaxis slowing down White's h-file attack.",
+      25: "13...Rc5! — The famous Dragon Rook Lift!",
+      27: "14...b5 — Launch queenside counter-attack.",
+      29: "15...hxg4 — Win pawn.",
+      31: "16...Nxh5 — Capture piece.",
+      33: "17...Re8 — Defend e7.",
+      35: "18...Nc4! — Tactical Punishment: Monster fork and blockade completely dismantles White's assault."
+    }
+  },
+  {
+    id: "sicilian-punish-dragon-levenfish-rebuttal",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-dragon-scheveningen",
+    name: "Sicilian Dragon – Levenfish 6. f4 / 15...Ne4! Central Explosion",
+    shortName: "Levenfish 15...Ne4! Explosion",
+    category: "Tactical Destruction",
+    eco: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. f4 Nc6 7. Nxc6 bxc6 8. e5 Nd7 9. exd6 exd6 10. Be3 Be7 11. Qd2 O-O 12. O-O-O d5 13. g4 Nf6 14. h3 Bb4 15. Bd4 Ne4 16. Qe3 Re8",
+    pgn: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. f4 Nc6 7. Nxc6 bxc6 8. e5 Nd7 9. exd6 exd6 10. Be3 Be7 11. Qd2 O-O 12. O-O-O d5 13. g4 Nf6 14. h3 Bb4 15. Bd4 Ne4 16. Qe3 Re8",
+    fullAnnotation: "White tries the aggressive Levenfish Attack with 6. f4. Black deflects White's premature e5 push and seizes the initiative with 15...Ne4! and 16...Re8.",
+    previewFEN: "r1bqr1k1/p4p1p/2p3p1/3p4/1b1BnPP1/2N1Q2P/PPP5/2KR1B1R w - - 5 17",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...d6 — Prepare dragon.",
+      5: "3...cxd4 — Open c-file.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...g6 — Dragon setup.",
+      11: "6...Nc6! — Challenge White's center.",
+      13: "7...bxc6 — Recapture towards the center.",
+      15: "8...Nd7 — Reroute knight safely.",
+      17: "9...exd6 — Open e-file lines.",
+      19: "10...Be7 — Develop with tempo.",
+      21: "11...O-O — Castle into safety.",
+      23: "12...d5! — Establish central pawn fortress.",
+      25: "13...Nf6 — Attack g4 pawn.",
+      27: "14...Bb4 — Pin the c3 knight.",
+      28: "Blunder: 15. Bd4? walks into a devastating discovered pin.",
+      29: "15...Ne4! — Tactical Punishment: Occupy dominant central outpost.",
+      31: "16...Re8 — Total domination along the central e-file."
+    }
+  },
+  {
+    id: "sicilian-punish-dragon-classical-9-f4",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-dragon-scheveningen",
+    name: "Sicilian Dragon – Classical 9. f4? / 9...Qb6! Double Threat",
+    shortName: "Dragon Classical 9. f4 Refuted",
+    category: "Double Attack",
+    eco: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. Be2 Bg7 7. Be3 O-O 8. O-O Nc6 9. f4 Qb6 10. Qd3 Ng4 11. Bxg4 Bxd4 12. Bxd4 Qxd4+ 13. Qxd4 Nxd4 14. Bxc8 Rfxc8 15. Rf2 Rc4 16. Rd1 Rac8",
+    pgn: "1. e4 c5 2. Nf3 d6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 g6 6. Be2 Bg7 7. Be3 O-O 8. O-O Nc6 9. f4 Qb6 10. Qd3 Ng4 11. Bxg4 Bxd4 12. Bxd4 Qxd4+ 13. Qxd4 Nxd4 14. Bxc8 Rfxc8 15. Rf2 Rc4 16. Rd1 Rac8",
+    fullAnnotation: "White plays 9. f4? in the Classical Dragon. Black strikes immediately with 9...Qb6! and 10...Ng4!, trading into a winning endgame where c2 collapses.",
+    previewFEN: "2r3k1/pp2pp1p/3p2p1/8/2rnPP2/2N5/PPP2RPP/3R2K1 w - - 4 17",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...d6 — Prepare dragon.",
+      5: "3...cxd4 — Open c-file.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...g6 — Dragon setup.",
+      11: "6...Bg7 — The Dragon bishop.",
+      13: "7...O-O — Castle.",
+      15: "8...Nc6 — Central pressure.",
+      16: "Blunder: 9. f4? weakens the e3 bishop and b2 pawn.",
+      17: "9...Qb6! — Tactical Punishment: Double attack on d4 and b2!",
+      19: "10...Ng4! — Deadly discovered attack on Be3.",
+      21: "11...Bxd4 — Capture bishop with check threat.",
+      23: "12...Qxd4+ — Force queen trade.",
+      25: "13...Nxd4 — Monster knight on d4.",
+      27: "14...Rfxc8 — Recapture bishop.",
+      29: "15...Rc4 — Pressure e4 pawn.",
+      31: "16...Rac8 — Double on the c-file; White's c2 pawn is doomed."
+    }
   }
 ];

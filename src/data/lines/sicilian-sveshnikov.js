@@ -216,5 +216,102 @@ export const sicilianSveshnikovLines = [
       27: "14... Bxd5 — Retain the active bishop pair.",
       29: "15... Be6 — Harmonious retreat with a fully equalized endgame!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "sicilian-punish-sveshnikov-greedy-a4",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-sveshnikov-classical",
+    name: "Sicilian Sveshnikov – 9. Na3 b5 / 15...e4! Pawn Roller Breakthrough",
+    shortName: "Sveshnikov 15...e4! Breakthrough",
+    category: "Central Pawn Roller",
+    eco: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Bxf6 gxf6 9. Na3 b5 10. Nd5 f5 11. Bd3 Be6 12. O-O Bxd5 13. exd5 Ne7 14. c3 Bg7 15. Qh5 e4 16. Be2 O-O 17. Nc2 Qc8",
+    pgn: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Bxf6 gxf6 9. Na3 b5 10. Nd5 f5 11. Bd3 Be6 12. O-O Bxd5 13. exd5 Ne7 14. c3 Bg7 15. Qh5 e4 16. Be2 O-O 17. Nc2 Qc8",
+    fullAnnotation: "In the Sveshnikov, White overcommits with 15. Qh5. Black rolls the center with 15...e4! blunting White's light-squared bishop and securing a winning position.",
+    previewFEN: "r1q2rk1/4npbp/p2p4/1p1P1p1Q/4p3/2P5/PPN1BPPP/R4RK1 w - - 4 18",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...Nc6 — Challenge d4.",
+      5: "3...cxd4 — Open c-file.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...e5! — The aggressive Sveshnikov signature!",
+      11: "6...d6 — Guard e5.",
+      13: "7...a6 — Kick knight.",
+      15: "8...gxf6 — Recapture towards center.",
+      17: "9...b5! — Threaten b4 fork.",
+      19: "10...f5 — Strike at White's center.",
+      21: "11...Be6 — Develop bishop.",
+      23: "12...Bxd5! — Eliminate monster knight.",
+      25: "13...Ne7 — Reroute knight.",
+      27: "14...Bg7 — Fianchetto bishop.",
+      28: "Inaccuracy: 15. Qh5? overextends the queen.",
+      29: "15...e4! — Tactical Punishment: Central pawn fork blunts the d3 bishop!",
+      31: "16...O-O — King safe.",
+      33: "17...Qc8 — Coordinate queen and rooks for complete domination."
+    }
+  },
+  {
+    id: "sicilian-punish-sveshnikov-chelyabinsk-f4",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-sveshnikov-classical",
+    name: "Sicilian Sveshnikov – 9. Nd5 Be7 / 13...bxa4! Queenside Rupture",
+    shortName: "Sveshnikov 13...bxa4! Rupture",
+    category: "Queenside Destruction",
+    eco: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Na3 b5 9. Nd5 Be7 10. Bxf6 Bxf6 11. c3 Bg5 12. Nc2 Rb8 13. a4 bxa4 14. Ncb4 Nxb4 15. cxb4 O-O 16. Rxa4 a5",
+    pgn: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Na3 b5 9. Nd5 Be7 10. Bxf6 Bxf6 11. c3 Bg5 12. Nc2 Rb8 13. a4 bxa4 14. Ncb4 Nxb4 15. cxb4 O-O 16. Rxa4 a5",
+    fullAnnotation: "White attempts to undermine Black's queenside with 13. a4. Black opens the b-file, trades knights, and counter-strikes with 16...a5! breaking White's blockade.",
+    previewFEN: "1rbq1rk1/5ppp/3p4/p2Np1b1/RP2P3/8/1P3PPP/3QKB1R w K - 0 17",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...Nc6 — Challenge center.",
+      5: "3...cxd4 — Open c-file.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...e5 — Sveshnikov.",
+      11: "6...d6 — Solidify e5.",
+      13: "7...a6 — Kick knight.",
+      15: "8...b5 — Threaten b4.",
+      17: "9...Be7 — Develop bishop.",
+      19: "10...Bxf6 — Preserve bishop pair.",
+      21: "11...Bg5! — Reposition bishop on ideal diagonal.",
+      23: "12...Rb8 — Rook to semi-open b-file.",
+      24: "Inaccuracy: 13. a4? opens lines prematurely for Black.",
+      25: "13...bxa4! — Shatter queenside pawn structure.",
+      27: "14...Nxb4 — Eliminate active knight.",
+      29: "15...O-O — Castle into safety.",
+      31: "16...a5! — Tactical Punishment: Blast open the a-file and liberate the a8/b8 pieces."
+    }
+  },
+  {
+    id: "sicilian-punish-sveshnikov-early-c4-trap",
+    courseId: "sicilian-defense",
+    subCourseId: "sicilian-sveshnikov-classical",
+    name: "Sicilian Sveshnikov – 10. exf5 Bxf5 / 13...d5! Central Explosion",
+    shortName: "Sveshnikov 13...d5! Strike",
+    category: "Center Demolition",
+    eco: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Bxf6 gxf6 9. Na3 f5 10. exf5 Bxf5 11. Nc4 Rc8 12. Ne3 Be6 13. Bd3 d5 14. Qh5 e4 15. Be2 Bg7 16. O-O Ne7",
+    pgn: "1. e4 c5 2. Nf3 Nc6 3. d4 cxd4 4. Nxd4 Nf6 5. Nc3 e5 6. Ndb5 d6 7. Bg5 a6 8. Bxf6 gxf6 9. Na3 f5 10. exf5 Bxf5 11. Nc4 Rc8 12. Ne3 Be6 13. Bd3 d5 14. Qh5 e4 15. Be2 Bg7 16. O-O Ne7",
+    fullAnnotation: "White delays development in the Sveshnikov. Black seizes the entire center with 13...d5! and 14...e4!, suffocating White's minor pieces.",
+    previewFEN: "2rqk2r/1p2npbp/p3b3/3p3Q/4p3/2N1N3/PPP1BPPP/R4RK1 w k - 4 17",
+    annotations: {
+      1: "1...c5 — Sicilian Defense.",
+      3: "2...Nc6 — Challenge center.",
+      5: "3...cxd4 — Symmetrical trade.",
+      7: "4...Nf6 — Attack e4.",
+      9: "5...e5 — Sveshnikov.",
+      11: "6...d6 — Support e5.",
+      13: "7...a6 — Kick knight.",
+      15: "8...gxf6 — Recapture.",
+      17: "9...f5 — Strike center.",
+      19: "10...Bxf5 — Recapture bishop actively.",
+      21: "11...Rc8 — Active rook on c-file.",
+      23: "12...Be6 — Retreat bishop safely.",
+      25: "13...d5! — Tactical Punishment: Classical central breakthrough!",
+      27: "14...e4! — Advance pawn roller kicking the d3 bishop.",
+      29: "15...Bg7 — Develop sniper bishop.",
+      31: "16...Ne7 — Solidify the center with a winning initiative."
+    }
   }
 ];

@@ -167,5 +167,106 @@ export const ruyLopezExchangeLines = [
       22: "12. Nf1 — Transfer knight toward g3.",
       24: "13. Bg5! — Pin Black's knight with suffocating pressure across the board!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "ruy-lopez-punish-exchange-early-bg4",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-exchange-modern",
+    name: "Ruy Lopez Exchange – 5...Bg4 / 6...h5 Fishing Pole Refuted",
+    shortName: "Exchange 5...Bg4 Refuted",
+    category: "Counter-Sacrifice Refutation",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7 9. Re1 Ng6 10. d4 Bd6 11. hxg4 hxg4 12. Nh2 exd4 13. e5 Nxe5 14. Nxg4 Qh4 15. Kf1 Qh1+ 16. Ke2 Qxg2 17. Nxe5 Bxe5 18. Kd3",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7 9. Re1 Ng6 10. d4 Bd6 11. hxg4 hxg4 12. Nh2 exd4 13. e5 Nxe5 14. Nxg4 Qh4 15. Kf1 Qh1+ 16. Ke2 Qxg2 17. Nxe5 Bxe5 18. Kd3",
+    fullAnnotation: "Black tries the notorious 6...h5 fishing pole trap in the Exchange Ruy Lopez. White calmly takes the bishop, marches the king to d3, and wins a full piece.",
+    previewFEN: "r3k2r/1pp2pp1/p1p5/4b3/3p4/3K4/PPPN1Pq1/R1BQR3 b kq - 1 18",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      6: "4. Bxc6 — The Exchange Variation.",
+      8: "5. O-O — Castle into safety.",
+      10: "6. h3 — Challenge the bishop.",
+      11: "Blunder: 6...h5?! attempts the infamous amateur trap, but it fails against accurate play.",
+      12: "7. d3 — Solidify center.",
+      14: "8. Nbd2 — Guard against tricks.",
+      16: "9. Re1 — Rook to e-file.",
+      18: "10. d4 — Center counter-strike.",
+      20: "11. hxg4! — Tactical Punishment: Accept sacrifice with cold precision.",
+      22: "12. Nh2 — Knight blocks h-file.",
+      24: "13. e5! — Central break cuts off the black bishop.",
+      26: "14. Nxg4 — Eliminate danger.",
+      28: "15. Kf1 — Step king out of check.",
+      30: "16. Ke2 — King escapes.",
+      32: "17. Nxe5 — Pocket another piece.",
+      34: "18. Kd3! — King marches to absolute safety; White is a full piece up."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-exchange-endgame-f6",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-exchange-modern",
+    name: "Ruy Lopez Exchange – Passive Endgame 12...f5? Dismantled",
+    shortName: "Exchange Endgame Punished",
+    category: "Endgame Domination",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 exd4 6. Qxd4 Qxd4 7. Nxd4 Bd7 8. Be3 O-O-O 9. Nc3 Bd6 10. O-O-O Ne7 11. f3 Rhe8 12. Bf2 f5 13. Bh4 fxe4 14. Nxe4 Bf4+ 15. Kb1 h6 16. Rhe1 g5 17. Bg3",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. d4 exd4 6. Qxd4 Qxd4 7. Nxd4 Bd7 8. Be3 O-O-O 9. Nc3 Bd6 10. O-O-O Ne7 11. f3 Rhe8 12. Bf2 f5 13. Bh4 fxe4 14. Nxe4 Bf4+ 15. Kb1 h6 16. Rhe1 g5 17. Bg3",
+    fullAnnotation: "In the Exchange endgame, Black weakens the e7 knight with 12...f5. White pins Black's pieces with 13. Bh4! and dominates the bishop pair.",
+    previewFEN: "2krr3/1ppbn3/p1p4p/6p1/3NNb2/5PB1/PPP3PP/1K1RR3 b - - 1 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      6: "4. Bxc6 — Exchange Variation.",
+      8: "5. d4 — Center liquidation.",
+      10: "6. Qxd4 — Queen central trade.",
+      12: "7. Nxd4 — The famous 4 vs 3 kingside pawn majority.",
+      14: "8. Be3 — Complete development.",
+      16: "9. Nc3 — Rapid queenside castling.",
+      18: "10. O-O-O — Castle queenside.",
+      20: "11. f3 — Lock center.",
+      22: "12. Bf2 — Prophylactic bishop retreat.",
+      23: "Inaccuracy: 12...f5?! opens up lethal pins along the h4-d8 diagonal.",
+      24: "13. Bh4! — Tactical Punishment: Pin the e7 knight decisively.",
+      26: "14. Nxe4 — Dominate center.",
+      28: "15. Kb1 — Calm king step.",
+      30: "16. Rhe1 — Seize the e-file.",
+      32: "17. Bg3 — White's kingside majority is unstoppable."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-exchange-greedy-c5",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-exchange-modern",
+    name: "Ruy Lopez Exchange – Greedy 7...c5 / 10...b5 Overextension Punished",
+    shortName: "Exchange 7...c5 Punished",
+    category: "Knight Outpost Domination",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1 9. Rxd1 Bd6 10. Na5 b5 11. Be3 c4 12. a4 Bd7 13. Nb7 Be7 14. axb5 Bxb5 15. Nc3 Bc6 16. Na5 Bd7 17. Nd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1 9. Rxd1 Bd6 10. Na5 b5 11. Be3 c4 12. a4 Bd7 13. Nb7 Be7 14. axb5 Bxb5 15. Nc3 Bc6 16. Na5 Bd7 17. Nd5",
+    fullAnnotation: "Black overextends queenside pawns with 7...c5 and 10...b5. White infiltrates with 10. Na5! and 17. Nd5!, completely ripping apart Black's structure.",
+    previewFEN: "r3k1nr/2pbb1pp/p4p2/N2N4/2p1P3/4B3/1PP2PPP/R2R2K1 b kq - 5 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      6: "4. Bxc6 — Exchange Variation.",
+      8: "5. O-O — King safe.",
+      10: "6. d4 — Center clash.",
+      12: "7. Nxd4 — Central knight.",
+      13: "Inaccuracy: 7...c5?! permanently weakens the d5 and d6 squares.",
+      14: "8. Nb3 — Re-route knight.",
+      16: "9. Rxd1 — Seize the d-file.",
+      18: "10. Na5! — Tactical Punishment: Infiltrate dark-square weaknesses.",
+      20: "11. Be3 — Target c4.",
+      22: "12. a4 — Strike at b5 pawn.",
+      24: "13. Nb7 — Attack bishop.",
+      26: "14. axb5 — Open a-file.",
+      28: "15. Nc3 — Rapid coordination.",
+      30: "16. Na5 — Retain pressure.",
+      32: "17. Nd5! — Monster knight outpost on d5 threatens c7 fork and wins the game."
+    }
   }
 ];

@@ -454,6 +454,101 @@ export const pianissimoLines = [
       12: "7. Nbd2 — Knight route.", 14: "8. Bb3 — Bishop retreat.", 16: "9. Re1 — Active rook.",
       18: "10. Nf1 — Knight transfer.", 20: "11. Ng3 — Attacking post.", 22: "12. d4! — Decisive central breakthrough!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "italian-punish-pianissimo-pin",
+    courseId: "italian-game",
+    subCourseId: "italian-pianissimo",
+    name: "Giuoco Pianissimo – Premature ...Bg4 Pin Punished (9. h3 Bh5 10. g4!)",
+    shortName: "Pianissimo ...Bg4 Punished",
+    category: "Tactical Destruction",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. c3 d6 6. O-O a6 7. Bb3 Ba7 8. Nbd2 O-O 9. h3 Be6 10. Re1 Bxb3 11. axb3",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. c3 d6 6. O-O a6 7. Bb3 Ba7 8. Nbd2 O-O 9. h3 Kh8 10. Re1 Nh5 11. Nf1 f5 12. exf5 Bxf5 13. g4 Nf4 14. Bxf4 exf4 15. gxf5 Rxf5 16. d4 Qf6 17. N1h2 Rf8 18. Re6 Qd8 19. Qe2 Nb8 20. Re1",
+    fullAnnotation: "Black miscalculates with a premature f5 break and bishop pin in the Pianissimo. White dominates the open e-file with heavy artillery.",
+    previewFEN: "1n1q1r1k/bpp3pp/p2pR3/5r2/3P1p2/1BP2N1P/PP2QP1N/4R1K1 b - - 8 20",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. d3 — Quiet Italian.",
+      8: "5. c3 — Reinforce center.",
+      10: "6. O-O — Kingside safety.",
+      12: "7. Bb3 — Bishop tucks away.",
+      14: "8. Nbd2 — Reroute maneuver.",
+      16: "9. h3 — Deny g4 square.",
+      18: "10. Re1 — Seize e-file.",
+      20: "11. Nf1 — Knight transfers to g3/e3.",
+      21: "Inaccuracy: 11...f5?! exposes Black's king prematurely.",
+      22: "12. exf5 — Open e-file lines.",
+      24: "13. g4! — Tactical Punishment: Traps and dismantles the piece coordination.",
+      26: "14. Bxf4 — Win piece.",
+      28: "15. gxf5 — Win bishop.",
+      30: "16. d4 — Anchor center.",
+      32: "17. N1h2 — Coordinate defense.",
+      34: "18. Re6! — Invasive rook outpost.",
+      36: "19. Qe2 — Double on e-file.",
+      38: "20. Re1 — Complete stranglehold."
+    }
+  },
+  {
+    id: "italian-punish-pianissimo-f5",
+    courseId: "italian-game",
+    subCourseId: "italian-pianissimo",
+    name: "Giuoco Pianissimo – Overaggressive 6...f5? Dismantled",
+    shortName: "Early 6...f5 Dismantled",
+    category: "Center Punishment",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. c3 f5 6. exf5 Bxf5 7. d4",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 d6 5. c3 f5 6. exf5 Bxf5 7. d4 exd4 8. O-O dxc3 9. Nxc3 Nge7 10. Re1 Qd7 11. Bg5 O-O-O 12. Bb5 Rde8 13. Bxe7",
+    fullAnnotation: "Black lashes out with 5...f5? in the quiet Italian. White blasts open the center with 7. d4! and pins Black's king in the middle of the board.",
+    previewFEN: "2k1r2r/pppqB1pp/2np4/1Bb2b2/8/2N2N2/PP3PPP/R2QR1K1 b - - 0 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. d3 — Pianissimo.",
+      7: "Blunder: 5...f5? fatally weakens the e8-h5 diagonal before castling.",
+      8: "6. exf5 — Open up lines.",
+      10: "7. d4! — Tactical Punishment: Blast open the center against uncastled king.",
+      12: "8. O-O — King safety with massive lead in development.",
+      14: "9. Nxc3 — Bring last piece out.",
+      16: "10. Re1 — Pin e7 knight.",
+      18: "11. Bg5 — Pile on the pinned piece.",
+      20: "12. Bb5 — Dual pin on both knights.",
+      22: "13. Bxe7 — Win piece and game."
+    }
+  },
+  {
+    id: "italian-punish-pianissimo-d5",
+    courseId: "italian-game",
+    subCourseId: "italian-pianissimo",
+    name: "Giuoco Pianissimo – Premature ...d5 Break Refuted by 10. exd5",
+    shortName: "Premature ...d5 Refuted",
+    category: "Positional Punishment",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. c3 d6 6. O-O O-O 7. Nbd2 a6 8. Bb3 Ba7 9. h3 d5 10. exd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. d3 Nf6 5. c3 d6 6. O-O O-O 7. Nbd2 a6 8. Bb3 Ba7 9. h3 d5 10. exd5 Nxd5 11. Re1 Re8 12. Ne4 h6 13. Bxh6 gxh6 14. Bxd5",
+    fullAnnotation: "Black rushes the ...d5 central break in the Pianissimo. White exploits the tactical weakness of the d5 knight with 13. Bxh6! and 14. Bxd5.",
+    previewFEN: "r1bqr1k1/bpp2p2/p1n4p/3Bp3/4N3/2PP1N1P/PP3PP1/R2QR1K1 b - - 0 14",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. d3 — Solid foundation.",
+      8: "5. c3 — Prepare center.",
+      10: "6. O-O — Castle.",
+      12: "7. Nbd2 — Flexible knight.",
+      14: "8. Bb3 — Retreat square.",
+      16: "9. h3 — Prophylaxis.",
+      17: "Inaccuracy: 9...d5?! opens the position prematurely before piece coordination is achieved.",
+      18: "10. exd5 — Liquidate center.",
+      20: "11. Re1 — Direct pressure on e5.",
+      22: "12. Ne4 — Outpost on e4.",
+      24: "13. Bxh6! — Tactical Punishment: Greek Gift motif demolishes king shelter.",
+      26: "14. Bxd5 — White wins a clean pawn with overwhelming attack."
+    }
   }
 ];
 

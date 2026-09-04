@@ -166,5 +166,104 @@ export const ruyLopezBerlinLines = [
       22: "12. Bxc4 — Recapture with overwhelming tactical pressure.",
       24: "13. Be3 — Block Black's bishop counter-attack with a winning grip!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "ruy-lopez-punish-berlin-greedy-nc6",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-berlin-open",
+    name: "Ruy Lopez – Berlin 5...Nd6 / 13. e6! Kingside Rip",
+    shortName: "Berlin 13. e6! Kingside Rip",
+    category: "Tactical Breakthrough",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 Nd6 6. Bxc6 dxc6 7. dxe5 Nf5 8. Qxd8+ Kxd8 9. Nc3 Be6 10. Rd1+ Ke8 11. Ng5 Bc4 12. b3 Ba6 13. e6",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 Nd6 6. Bxc6 dxc6 7. dxe5 Nf5 8. Qxd8+ Kxd8 9. Nc3 Be6 10. Rd1+ Ke8 11. Ng5 Bc4 12. b3 Ba6 13. e6 fxe6 14. Nxe6 Bd6 15. Re1 Kd7 16. Bb2 Rae8 17. Ng5",
+    fullAnnotation: "Black tries to consolidate the Berlin endgame passively. White shatters Black's pawn shelter with 13. e6! and dominates the open files.",
+    previewFEN: "4r2r/pppk2pp/b1pb4/5nN1/8/1PN5/PBP2PPP/R3R1K1 b - - 6 17",
+    annotations: {
+      0: "1. e4 — Open game.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez Bishop.",
+      6: "4. O-O — Castle into safety.",
+      8: "5. d4 — Center break.",
+      10: "6. Bxc6 — Ruin Black's pawn structure.",
+      12: "7. dxe5 — Outpost on e5.",
+      14: "8. Qxd8+ — Strip castling rights.",
+      16: "9. Nc3 — Rapid mobilization.",
+      18: "10. Rd1+ — Check driving king to e8.",
+      20: "11. Ng5 — Attack e6 bishop.",
+      22: "12. b3 — Drive bishop away.",
+      23: "Inaccuracy: 12...Ba6 leaves the bishop stranded on the queenside rim.",
+      24: "13. e6! — Tactical Punishment: Rip open Black's e-file defenses!",
+      26: "14. Nxe6 — Re-establish dominant knight outpost.",
+      28: "15. Re1 — Seize the e-file.",
+      30: "16. Bb2 — Coordinate heavy pieces.",
+      32: "17. Ng5 — Dominating position."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-berlin-early-d6",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-berlin-open",
+    name: "Ruy Lopez – Berlin 4...d6 Passive Defense Punished",
+    shortName: "Berlin 4...d6 Punished",
+    category: "Center Breakthrough",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O d6 5. d4 Bd7 6. Nc3 Be7 7. Bxc6 Bxc6 8. Qd3 exd4 9. Nxd4 Bd7 10. Bg5 O-O 11. Rae1 Re8 12. f4 h6 13. Bh4 Nh5 14. Bxe7 Qxe7 15. Nd5 Qd8 16. Qf3 Nf6 17. c4",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O d6 5. d4 Bd7 6. Nc3 Be7 7. Bxc6 Bxc6 8. Qd3 exd4 9. Nxd4 Bd7 10. Bg5 O-O 11. Rae1 Re8 12. f4 h6 13. Bh4 Nh5 14. Bxe7 Qxe7 15. Nd5 Qd8 16. Qf3 Nf6 17. c4",
+    fullAnnotation: "Black chooses the passive 4...d6 Steinitz setup in the Berlin. White blasts open the center, posts a monster knight on d5, and controls the board.",
+    previewFEN: "r2qr1k1/pppb1pp1/3p1n1p/3N4/2PNPP2/5Q2/PP4PP/4RRK1 b - c3 0 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      6: "4. O-O — Castle.",
+      7: "Inaccuracy: 4...d6?! is overly passive, locking the dark-squared bishop.",
+      8: "5. d4 — Center break.",
+      10: "6. Nc3 — Rapid deployment.",
+      12: "7. Bxc6 — Trade off active piece.",
+      14: "8. Qd3 — Defend e4.",
+      16: "9. Nxd4 — Central knight.",
+      18: "10. Bg5 — Pin knight.",
+      20: "11. Rae1 — Centralize rooks.",
+      22: "12. f4! — Tactical Punishment: Launch Kingside pawn storm.",
+      24: "13. Bh4 — Keep pressure.",
+      26: "14. Bxe7 — Trade bishops.",
+      28: "15. Nd5! — Irresistible knight outpost on d5.",
+      30: "16. Qf3 — Attack f6.",
+      32: "17. c4 — Solidify central clamp."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-berlin-fishing-pole",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-berlin-open",
+    name: "Ruy Lopez – Berlin 8...h6 Fishing Pole Trap Refuted",
+    shortName: "Berlin Fishing Pole Refuted",
+    category: "Trap Refutation",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. c3 O-O 6. d4 Bb6 7. Bg5 h6 8. Bh4 d6 9. Qd3 Bg4 10. Nbd2 Qe7 11. Rfe1 Rad8 12. h3 Bh5 13. Bxc6 bxc6 14. Nc4 Bxf3 15. Qxf3 g5 16. Bg3 exd4 17. e5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. c3 O-O 6. d4 Bb6 7. Bg5 h6 8. Bh4 d6 9. Qd3 Bg4 10. Nbd2 Qe7 11. Rfe1 Rad8 12. h3 Bh5 13. Bxc6 bxc6 14. Nc4 Bxf3 15. Qxf3 g5 16. Bg3 exd4 17. e5",
+    fullAnnotation: "Black tries to bait White with kingside fishing pole themes. White methodically dismantles Black's center with 17. e5! winning decisive material.",
+    previewFEN: "3r1rk1/p1p1qp2/1bpp1n1p/4P1p1/2Np4/2P2QBP/PP3PP1/R3R1K1 b - - 0 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      6: "4. O-O — Castle.",
+      8: "5. c3 — Prepare d4.",
+      10: "6. d4 — Strike center.",
+      12: "7. Bg5 — Pin knight.",
+      14: "8. Bh4 — Maintain pin.",
+      16: "9. Qd3 — Overprotect e4.",
+      18: "10. Nbd2 — Flexible development.",
+      20: "11. Rfe1 — Control e-file.",
+      22: "12. h3 — Question bishop.",
+      24: "13. Bxc6 — Ruin pawn structure.",
+      26: "14. Nc4 — Pressure e5 and b6.",
+      27: "Blunder: 15...g5? dangerously exposes Black's own castled king.",
+      28: "16. Bg3 — Bishop steps back safely.",
+      30: "17. e5! — Tactical Punishment: Central rip wins a piece on f6."
+    }
   }
 ];

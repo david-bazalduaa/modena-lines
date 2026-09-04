@@ -279,6 +279,92 @@ export const londonClassicalLines = [
       24: "13. dxc5 — Break Black's queenside pawn structure.",
       26: "14. O-O-O — Opposite-side castling with total attacking initiative down the d-file!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "london-punish-symmetrical-trade",
+    courseId: "london-system",
+    subCourseId: "london-classical-symmetrical",
+    name: "London System – Symmetrical 3...Bf5 / 7...Bxc1? Refuted",
+    shortName: "Symmetrical 7...Bxc1 Refuted",
+    category: "Development Advantage",
+    eco: "1. d4 d5 2. Bf4 Bf5 3. e3 e6 4. Nf3 Bd6 5. c4 Nf6 6. Nc3 dxc4 7. Bxc4 Bxf4 8. exf4 O-O 9. O-O c6 10. Ne5 Nbd7 11. Qe2 Nd5 12. g3",
+    pgn: "1. d4 d5 2. Bf4 Bf5 3. e3 e6 4. Nf3 Bd6 5. c4 Nf6 6. Nc3 dxc4 7. Bxc4 Bxf4 8. exf4 O-O 9. O-O c6 10. Ne5 Nbd7 11. Qe2 Nd5 12. g3",
+    fullAnnotation: "Black tries to copy White's setup with 2...Bf5 and trades prematurely on f4. White solidifies an iron grip on e5.",
+    previewFEN: "r2q1rk1/pp1n1ppp/2p1p3/3nNb2/2BP1P2/2N3P1/PP2QP1P/R4RK1 b - - 0 12",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      6: "4. Nf3 — Develop knight.",
+      8: "5. c4 — Challenge center.",
+      10: "6. Nc3 — Rapid deployment.",
+      12: "7. Bxc4 — Active bishop recapture.",
+      13: "Inaccuracy: 7...Bxf4?! cedes the bishop pair and opens the e-file for White.",
+      14: "8. exf4 — Control central e5 square.",
+      16: "9. O-O — Castle securely.",
+      18: "10. Ne5! — Tactical Punishment: Unshakeable knight outpost.",
+      20: "11. Qe2 — Connect rooks.",
+      22: "12. g3 — Solidify king and center."
+    }
+  },
+  {
+    id: "london-punish-early-c5-cxd4",
+    courseId: "london-system",
+    subCourseId: "london-classical-symmetrical",
+    name: "London System – Early 3...c5 / 4...Qb6 Overextension Punished",
+    shortName: "Early 4...Qb6 Punished",
+    category: "Pawn Trap",
+    eco: "1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 e6 5. Nf3 a6 6. Rb1 Nc6 7. Be2 cxd4 8. exd4 Nf6 9. O-O Be7 10. Na4 Qa7 11. Bc7 Nd7 12. c4 dxc4 13. Bxc4",
+    pgn: "1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 e6 5. Nf3 a6 6. Rb1 Nc6 7. Be2 cxd4 8. exd4 Nf6 9. O-O Be7 10. Na4 Qa7 11. Bc7 Nd7 12. c4 dxc4 13. Bxc4",
+    fullAnnotation: "Black raids the queenside with 3...c5 and 4...Qb6. White defends comfortably and traps Black with 11. Bc7! dominating the board.",
+    previewFEN: "r1b1k2r/qpBnbppp/p1n1p3/8/N1BP4/5N2/PP3PPP/1R1Q1RK1 b kq - 0 13",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid triangle.",
+      5: "Blunder: 3...c5 and 4...Qb6? targets b2 prematurely.",
+      6: "4. Nc3! — Tactical Punishment: Threaten Nb5 with a deadly c7 fork!",
+      8: "5. Nf3 — Natural development.",
+      10: "6. Rb1 — Defend b2 with tempo.",
+      12: "7. Be2 — Develop bishop.",
+      14: "8. exd4 — Maintain center clamp.",
+      16: "9. O-O — Safeguard king.",
+      18: "10. Na4 — Kick queen.",
+      20: "11. Bc7! — Paralyze Black's queen.",
+      22: "12. c4 — Central breakthrough.",
+      24: "13. Bxc4 — Decisive positional clamp."
+    }
+  },
+  {
+    id: "london-punish-c6-qb6",
+    courseId: "london-system",
+    subCourseId: "london-classical-symmetrical",
+    name: "London System – Slav 4...Qb6? Queenside Attack Dismantled",
+    shortName: "Slav 4...Qb6 Dismantled",
+    category: "Positional Trap",
+    eco: "1. d4 d5 2. Bf4 c6 3. e3 Qb6 4. Qc1 Bf5 5. Nf3 e6 6. Be2 Nf6 7. O-O Nbd7 8. c4 Be7 9. c5 Qd8 10. h3 O-O 11. Nbd2 b6 12. b4",
+    pgn: "1. d4 d5 2. Bf4 c6 3. e3 Qb6 4. Qc1 Bf5 5. Nf3 e6 6. Be2 Nf6 7. O-O Nbd7 8. c4 Be7 9. c5 Qd8 10. h3 O-O 11. Nbd2 b6 12. b4",
+    fullAnnotation: "Black tries a Slav queen sortie with 3...Qb6. White plays 4. Qc1!, secures the queenside, and traps Black in a suffocating bind with c5 and b4.",
+    previewFEN: "r2q1rk1/p2nbppp/1pp1pn2/2Pp1b2/1P1P1B2/4PN1P/P2NBPP1/R1Q2RK1 b - b3 0 12",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      5: "Inaccuracy: 3...Qb6?! leaves the queen misplaced.",
+      6: "4. Qc1! — Masterclass prophylaxis defending b2.",
+      8: "5. Nf3 — Develop knight.",
+      10: "6. Be2 — Prepare castling.",
+      12: "7. O-O — King safe.",
+      14: "8. c4 — Central expansion.",
+      16: "9. c5! — Tactical Punishment: Chase queen back into passivity.",
+      18: "10. h3 — Prophylaxis.",
+      20: "11. Nbd2 — Connect rooks.",
+      22: "12. b4 — White controls the entire queenside."
+    }
   }
 ];
 

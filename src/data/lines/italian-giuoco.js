@@ -466,6 +466,91 @@ export const giuocoPianoLines = [
       12: "7. dxc5 — Capture loose bishop.", 14: "8. Qxd8+ — Trade queens.", 16: "9. Nd2 — Knight develops.",
       18: "10. Ndxe4 — Capture e4 pawn.", 20: "11. Nxe4 — Solid positional superiority in the endgame!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "italian-punish-d6-pin",
+    courseId: "italian-game",
+    subCourseId: "italian-giuoco-piano",
+    name: "Giuoco Piano – Early ...d6 Pin Blunder (5...Nxe5??)",
+    shortName: "Lucchini Pin Blunder",
+    category: "Tactical Refutation",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 d6 4. d4 Bg4 5. dxe5 Nxe5 6. Nxe5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 d6 4. d4 Bg4 5. dxe5 Nxe5 6. Nxe5 Bxd1 7. Bxf7+ Ke7 8. Bg5+ Nf6 9. Nc3 dxe5 10. Rxd1",
+    fullAnnotation: "Black copies Legal's Mate blunder with 5...Nxe5??, walking into White's famous queen-sacrifice refutation.",
+    previewFEN: "r2q1b1r/ppp1kBpp/5n2/4p1B1/4P3/2N5/PPP2PPP/3RK2R b K - 0 10",
+    annotations: {
+      0: "1. e4 — King's pawn opening.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop targeting f7.",
+      6: "4. d4 — Direct strike at Black's center.",
+      8: "5. dxe5 — Opening d-file lines.",
+      9: "Blunder: 5...Nxe5?? walks straight into a devastating queen sacrifice.",
+      10: "6. Nxe5! — Tactical Punishment: Queen sacrifice! Black's king will be fatally smoked out.",
+      12: "7. Bxf7+ — King forced to e7 into a lethal pin.",
+      14: "8. Bg5+ — Crucial pin on the f6 knight.",
+      16: "9. Nc3! — Threatening Nd5+ with total devastation.",
+      18: "10. Rxd1 — White regains queen with +8.0 material and positional crush."
+    }
+  },
+  {
+    id: "italian-punish-giuoco-greed",
+    courseId: "italian-game",
+    subCourseId: "italian-giuoco-piano",
+    name: "Giuoco Piano – Central Pawn Greed Refutation (7...Nxe4?)",
+    shortName: "Central Greed Punished",
+    category: "King Hunt",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Bd2 Nxe4",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 exd4 6. cxd4 Bb4+ 7. Bd2 Nxe4 8. Bxb4 Nxb4 9. Bxf7+ Kxf7 10. Qb3+ d5 11. Ne5+ Ke6 12. Qxb4 c5 13. Qa3",
+    fullAnnotation: "Black greedily captures the e4 pawn, neglecting king safety. White uncorks 9. Bxf7+! dragging Black's king into the center.",
+    previewFEN: "r1bq3r/pp4pp/4k3/2ppN3/3Pn3/Q7/PP3PPP/RN2K2R b KQ - 1 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. c3 — Prepare central d4 pawn roller.",
+      8: "5. d4 — Center break.",
+      10: "6. cxd4 — Establish classical pawn duo.",
+      12: "7. Bd2 — Neutralize check.",
+      13: "Blunder: 7...Nxe4? grabs a hot pawn at the expense of king shelter.",
+      14: "8. Bxb4 — Eliminate dark-square bishop.",
+      16: "9. Bxf7+! — Tactical Punishment: Shatter king shelter.",
+      18: "10. Qb3+ — Fork king and b4 knight.",
+      20: "11. Ne5+ — Central outpost check.",
+      22: "12. Qxb4 — Regain piece.",
+      24: "13. Qa3 — Dominating Black's stranded king."
+    }
+  },
+  {
+    id: "italian-punish-scholar-queen",
+    courseId: "italian-game",
+    subCourseId: "italian-giuoco-piano",
+    name: "Giuoco Piano – Premature 4...Qf6? Scholar Queen Punished",
+    shortName: "Early ...Qf6 Punished",
+    category: "Development Punishment",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Qf6",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Qf6 5. d4 exd4 6. O-O dxc3 7. e5 Qg6 8. Nxc3 Nge7 9. Nd5 Nxd5 10. Bxd5 Be7 11. Re1 O-O 12. Be4 Qh5 13. Bf4",
+    fullAnnotation: "Black brings out the queen prematurely on f6. White accelerates development with e5 and Nd5, driving Black's queen into passivity.",
+    previewFEN: "r1b2rk1/ppppbppp/2n5/4P2q/4BB2/5N2/PP3PPP/R2QR1K1 b - - 6 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. c3 — Central preparation.",
+      7: "Blunder: 4...Qf6? commits the queen prematurely and blocks the f-pawn.",
+      8: "5. d4 — Punish premature queen by blowing open the center.",
+      10: "6. O-O — Castle with huge development lead.",
+      12: "7. e5! — Tactical Punishment: Kick Black's queen with tempo.",
+      14: "8. Nxc3 — Rapid knight development.",
+      16: "9. Nd5! — Dominate c7 and e7.",
+      18: "10. Bxd5 — Maintain central clamping bishop.",
+      20: "11. Re1 — Seize the e-file.",
+      22: "12. Be4 — Chase queen again.",
+      24: "13. Bf4 — Total central domination."
+    }
   }
 ];
 

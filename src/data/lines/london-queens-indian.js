@@ -301,6 +301,92 @@ export const londonQueensIndianLines = [
       24: "13. dxc5 — Isolate Black's hanging pawns.",
       26: "14. Rfd1 — Double heavy piece pressure on the d- and c-files!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "london-punish-benoni-raid",
+    courseId: "london-system",
+    subCourseId: "london-queens-indian-benoni",
+    name: "London System – Benoni Premature 3...b5 Overextension Punished",
+    shortName: "Benoni 3...b5 Refuted",
+    category: "Queenside Domination",
+    eco: "1. d4 Nf6 2. Bf4 c5 3. d5 b5 4. c4 bxc4 5. Nc3 d6 6. e4 g6 7. Bxc4 Bg7",
+    pgn: "1. d4 Nf6 2. Bf4 c5 3. d5 b5 4. c4 bxc4 5. Nc3 d6 6. e4 g6 7. Bxc4 Bg7 8. Nf3 O-O 9. O-O Ba6 10. Nd2 Bxc4 11. Nxc4 Nbd7 12. Re1 Nb6 13. Na5",
+    fullAnnotation: "Black tries an early Benoni wing expansion with 3...b5. White controls the c4 square and establishes a crippling knight outpost on a5/c6.",
+    previewFEN: "r2q1rk1/p3ppbp/1n1p1np1/N1pP4/4PB2/2N5/PP3PPP/R2QR1K1 b - - 4 13",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. d5 — Seize central space.",
+      5: "Blunder: 3...b5?! overextends queenside pawns before developing pieces.",
+      6: "4. c4! — Strike at b5 pawn.",
+      8: "5. Nc3 — Rapid development.",
+      10: "6. e4 — Build strong center.",
+      12: "7. Bxc4 — Recapture pawn.",
+      14: "8. Nf3 — Complete development.",
+      16: "9. O-O — Castle securely.",
+      18: "10. Nd2 — Prepare knight maneuver.",
+      20: "11. Nxc4 — Recapture on c4.",
+      22: "12. Re1 — Seize the e-file.",
+      24: "13. Na5! — Tactical Punishment: Dominating outpost on c6 incoming!"
+    }
+  },
+  {
+    id: "london-punish-qid-ne4",
+    courseId: "london-system",
+    subCourseId: "london-queens-indian-benoni",
+    name: "London System – QID Premature 7...Ne4? Leap Punished",
+    shortName: "QID 7...Ne4? Punished",
+    category: "Queen Harassment",
+    eco: "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. c3 Be7 6. Nbd2 O-O 7. Bd3 Ne4",
+    pgn: "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. c3 Be7 6. Nbd2 O-O 7. Bd3 Ne4 8. Nxe4 Bxe4 9. Nd2 Bb7 10. e4 d6 11. Bb5 c6 12. Bd3 Nd7 13. Qg4",
+    fullAnnotation: "Black leaps prematurely with 7...Ne4 in the Queen's Indian. White trades, gains tempo on the bishop, and launches a crushing Qg4 assault.",
+    previewFEN: "r2q1rk1/pb1nbppp/1pppp3/8/3PPBQ1/2PB4/PP1N1PPP/R3K2R b KQ - 3 13",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Granite wall.",
+      6: "4. Nf3 — Develop knight.",
+      8: "5. c3 — Solidify d4.",
+      10: "6. Nbd2 — Reroute option.",
+      12: "7. Bd3 — Aim at h7.",
+      13: "Blunder: 7...Ne4? leaps forward prematurely without supporting pieces.",
+      14: "8. Nxe4! — Eliminate premature knight.",
+      16: "9. Nd2 — Kick bishop with tempo.",
+      18: "10. e4 — Occupy center.",
+      20: "11. Bb5 — Provoke c6 weakening.",
+      22: "12. Bd3 — Safe retreat.",
+      24: "13. Qg4! — Tactical Punishment: Triple threat on g7 and h6."
+    }
+  },
+  {
+    id: "london-punish-dutch-defense",
+    courseId: "london-system",
+    subCourseId: "london-queens-indian-benoni",
+    name: "London System – Dutch 1...f5 Setup Dismantled by 8. g4!",
+    shortName: "Dutch 1...f5 Dismantled",
+    category: "Kingside Breakthrough",
+    eco: "1. d4 f5 2. Bf4 Nf6 3. e3 e6 4. Nf3 b6 5. h3 Bb7 6. Nbd2 Be7 7. Bd3 O-O 8. g4",
+    pgn: "1. d4 f5 2. Bf4 Nf6 3. e3 e6 4. Nf3 b6 5. h3 Bb7 6. Nbd2 Be7 7. Bd3 O-O 8. g4 Ne4 9. gxf5 exf5 10. Rg1 d6 11. Qe2 Nd7 12. O-O-O",
+    fullAnnotation: "Black plays a Dutch setup against the London. White uncorks the aggressive 8. g4! breakthrough, opening the g-file for a decisive attack.",
+    previewFEN: "r2q1rk1/pbpnb1pp/1p1p4/5p2/3PnB2/3BPN1P/PPPNQP2/2KR2R1 b - - 3 12",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      6: "4. Nf3 — Develop knight.",
+      8: "5. h3 — Prophylaxis.",
+      10: "6. Nbd2 — Develop pieces.",
+      12: "7. Bd3 — Aim at king.",
+      14: "8. g4! — Tactical Punishment: Blast open the g-file against the Dutch defense!",
+      16: "9. gxf5 — Clear lines.",
+      18: "10. Rg1 — Seize the open g-file.",
+      20: "11. Qe2 — Connect rooks.",
+      22: "12. O-O-O — Opposite-side castling gives White overwhelming attack."
+    }
   }
 ];
 

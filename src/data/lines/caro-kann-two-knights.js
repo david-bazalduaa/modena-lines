@@ -155,5 +155,102 @@ export const caroKannTwoKnightsLines = [
       27: "14... Kf8 — King safety preserved.",
       29: "15... Be6 — Harmonious piece development with a totally drawn endgame!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "caro-kann-punish-fantasy-3-f3-dxe4",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-two-knights-fantasy",
+    name: "Caro-Kann Fantasy – 3. f3 / 11...Qh4+! King Hunt Dismantling",
+    shortName: "Fantasy 11...Qh4+! Hunt",
+    category: "King Hunt Refutation",
+    eco: "1. e4 c6 2. d4 d5 3. f3 dxe4 4. fxe4 e5 5. Nf3 Bg4 6. Bc4 Nd7 7. c3 Ngf6 8. Qb3 Bh5 9. Qxb7 Nxe4 10. Qxc6 Bxf3 11. gxf3 Qh4+ 12. Ke2 Qf2+ 13. Kd1 Qxf3+ 14. Kc2 Qg2+ 15. Bd2 Rd8 16. Re1 f5",
+    pgn: "1. e4 c6 2. d4 d5 3. f3 dxe4 4. fxe4 e5 5. Nf3 Bg4 6. Bc4 Nd7 7. c3 Ngf6 8. Qb3 Bh5 9. Qxb7 Nxe4 10. Qxc6 Bxf3 11. gxf3 Qh4+ 12. Ke2 Qf2+ 13. Kd1 Qxf3+ 14. Kc2 Qg2+ 15. Bd2 Rd8 16. Re1 f5",
+    fullAnnotation: "White plays the aggressive Fantasy Variation (3. f3). Black blows open the e1-h4 diagonal and launches a devastating king hunt with 11...Qh4+! and 12...Qf2+.",
+    previewFEN: "3rkb1r/p2n2pp/2Q5/4pp2/2BPn3/2P5/PPKB2qP/RN2R3 w k f6 0 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central clash.",
+      4: "Gambit: 3. f3 is the sharp Fantasy Variation.",
+      5: "3...dxe4! — Blast open the center.",
+      7: "4...e5! — Strike at White's weakened king diagonals.",
+      9: "5...Bg4 — Pin f3 knight.",
+      11: "6...Nd7 — Overprotect e5.",
+      13: "7...Ngf6 — Develop piece.",
+      15: "8...Bh5 — Safe retreat maintaining pin.",
+      17: "9...Nxe4 — Grab e4 pawn.",
+      19: "10...Bxf3 — Shatter White's kingside shelter.",
+      21: "11...Qh4+! — Tactical Punishment: Deliver the crushing diagonal check!",
+      23: "12...Qf2+ — Penetrate into the king's lair.",
+      25: "13...Qxf3+ — Fork king and h1 rook.",
+      27: "14...Qg2+ — Continued assault.",
+      29: "15...Rd8 — Protect the corner rook.",
+      31: "16...f5 — White's king is stranded in the center and facing unavoidable collapse."
+    }
+  },
+  {
+    id: "caro-kann-punish-two-knights-early-d4",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-two-knights-fantasy",
+    name: "Caro-Kann Two Knights – 3...Bg4 / 16...e5! Central Counter-Strike",
+    shortName: "Two Knights 16...e5! Strike",
+    category: "Center Breakthrough",
+    eco: "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. h3 Bxf3 5. Qxf3 e6 6. d4 dxe4 7. Qxe4 Nf6 8. Qd3 Nbd7 9. Be2 Qc7 10. O-O Be7 11. Bg5 O-O 12. Bh4 Rad8 13. Bg3 Bd6 14. Bxd6 Qxd6 15. Rad1 Rfe8 16. Bf3 e5",
+    pgn: "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. h3 Bxf3 5. Qxf3 e6 6. d4 dxe4 7. Qxe4 Nf6 8. Qd3 Nbd7 9. Be2 Qc7 10. O-O Be7 11. Bg5 O-O 12. Bh4 Rad8 13. Bg3 Bd6 14. Bxd6 Qxd6 15. Rad1 Rfe8 16. Bf3 e5",
+    fullAnnotation: "In the Two Knights Caro-Kann, Black develops harmoniously and blasts open White's center with the thematic 16...e5!, seizing the initiative completely.",
+    previewFEN: "3rr1k1/pp1n1ppp/2pq1n2/4p3/3P4/2NQ1B1P/PPP2PP1/3R1RK1 w - - 0 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central clash.",
+      5: "3...Bg4 — The Two Knights pin.",
+      7: "4...Bxf3 — Trade bishop for knight.",
+      9: "5...e6 — Solid French-style structure.",
+      11: "6...dxe4 — Open d-file.",
+      13: "7...Nf6 — Develop knight with tempo on White's queen.",
+      15: "8...Nbd7 — Harmonious development.",
+      17: "9...Qc7 — Control key central squares.",
+      19: "10...Be7 — Prepare castling.",
+      21: "11...O-O — Castle into safety.",
+      23: "12...Rad8 — Rook to d-file opposite White's queen.",
+      25: "13...Bd6 — Offer trade of dark-square bishops.",
+      27: "14...Qxd6 — Queen central recapture.",
+      29: "15...Rfe8 — Coordinate rooks on central files.",
+      31: "16...e5! — Tactical Punishment: Blast open the center and shatter White's pawn structure."
+    }
+  },
+  {
+    id: "caro-kann-punish-two-knights-bc4",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-two-knights-fantasy",
+    name: "Caro-Kann Two Knights – 4. Nxe4 Nf6 / 8...Qxc2! Queen Raid Punished",
+    shortName: "Two Knights 8...Qxc2! Raid",
+    category: "Tactical Refutation",
+    eco: "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Qd5 7. Qf4 Qf5 8. Qe3 Qxc2 9. Bd3 Qa4 10. O-O Nd7 11. b3 Qa5 12. Bb2 e6 13. Rfe1 Be7 14. Bxg7 Rg8 15. Bc3 Qh5 16. Ne5 Nxe5 17. Bxe5 Bd7",
+    pgn: "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Qd5 7. Qf4 Qf5 8. Qe3 Qxc2 9. Bd3 Qa4 10. O-O Nd7 11. b3 Qa5 12. Bb2 e6 13. Rfe1 Be7 14. Bxg7 Rg8 15. Bc3 Qh5 16. Ne5 Nxe5 17. Bxe5 Bd7",
+    fullAnnotation: "White plays the tricky 5. Qe2. Black trades knights, captures the c2 pawn with 8...Qxc2!, and mounts an unstoppable kingside counter-attack with ...Qh5 and ...Rg8.",
+    previewFEN: "r3k1r1/pp1bbp1p/2p1p3/4B2q/8/1P1BQ3/P2P1PPP/R3R1K1 w q - 1 18",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Strike center.",
+      5: "3...dxe4 — Open lines.",
+      7: "4...Nf6 — Challenge e4 knight.",
+      9: "5...Nxe4 — Trade knights.",
+      11: "6...Qd5 — Centralize queen with tempo.",
+      13: "7...Qf5 — Offer queen exchange.",
+      14: "Inaccuracy: 8. Qe3? leaves the c2 pawn completely undefended.",
+      15: "8...Qxc2! — Tactical Punishment: Pocket the c2 pawn.",
+      17: "9...Qa4 — Safe queen retreat.",
+      19: "10...Nd7 — Develop knight.",
+      21: "11...Qa5 — Keep queen active.",
+      23: "12...e6 — Solid base.",
+      25: "13...Be7 — Prepare kingside activity.",
+      27: "14...Rg8! — Seize open g-file.",
+      29: "15...Qh5 — Queen joins the g-file attack.",
+      31: "16...Nxe5 — Trade active knight.",
+      33: "17...Bd7 — Black holds an extra pawn and an active attack on White's king."
+    }
   }
 ];

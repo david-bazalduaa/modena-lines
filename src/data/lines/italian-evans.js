@@ -459,6 +459,97 @@ export const evansGambitLines = [
       18: "10. Nxc3 — Knight development.", 20: "11. Nxb5 — Capture b5 pawn with tempo.", 22: "12. Qa4 — Queen pin on a-file.",
       24: "13. Nbd4 — Decisive knight centralization!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "italian-punish-evans-greed",
+    courseId: "italian-game",
+    subCourseId: "italian-evans-gambit",
+    name: "Evans Gambit – Greedy 7...dxc3? Pawn Grabbing Punished",
+    shortName: "Evans Greed Refuted",
+    category: "Tactical Destruction",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O dxc3",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 Ba5 6. d4 exd4 7. O-O dxc3 8. Qb3 Qf6 9. e5 Qg6 10. Nxc3 Nge7 11. Ba3 O-O 12. Nd5 Re8 13. Nf4 Qf5 14. Ng5 Nxe5 15. Bxe7 Rxe7 16. Bxf7+ Kh8 17. Ngh3",
+    fullAnnotation: "Black gobbles three pawns in the Evans Gambit while ignoring king safety. White develops overwhelming firepower on the f7 square.",
+    previewFEN: "r1b4k/pppprBpp/8/b3nq2/5N2/1Q5N/P4PPP/R4RK1 b - - 2 17",
+    annotations: {
+      0: "1. e4 — Open game.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. b4! — The Evans Gambit.",
+      8: "5. c3 — Gain tempo on bishop.",
+      10: "6. d4 — Blast open the center.",
+      12: "7. O-O — Safeguard king.",
+      13: "Blunder: 7...dxc3? grabs pawns while drastically lagging behind in development.",
+      14: "8. Qb3 — Tactical Punishment: Thematic f7 battery.",
+      16: "9. e5! — Disrupt queen.",
+      18: "10. Nxc3 — Bring last piece into battle.",
+      20: "11. Ba3 — Control long diagonal.",
+      22: "12. Nd5 — Pile up on e7.",
+      24: "13. Nf4 — Harass queen.",
+      26: "14. Ng5! — Triple attack on f7.",
+      28: "15. Bxe7 — Win the exchange.",
+      30: "16. Bxf7+ — Decisive blow.",
+      32: "17. Ngh3 — Completely winning position."
+    }
+  },
+  {
+    id: "italian-punish-evans-declined",
+    courseId: "italian-game",
+    subCourseId: "italian-evans-gambit",
+    name: "Evans Gambit – Passive 4...Bb6 Declined Punished",
+    shortName: "Evans Declined Punished",
+    category: "Space Advantage",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bb6 5. a4 a6 6. Nc3 Nf6 7. Nd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bb6 5. a4 a6 6. Nc3 Nf6 7. Nd5 Nxd5 8. exd5 Ne7 9. Nxe5 d6 10. Nf3 O-O 11. O-O Bg4 12. h3 Bh5 13. d4",
+    fullAnnotation: "Declining the Evans Gambit with 4...Bb6 allows White to seize immense queenside and central space with a4 and Nd5.",
+    previewFEN: "r2q1rk1/1pp1nppp/pb1p4/3P3b/PPBP4/5N1P/2P2PP1/R1BQ1RK1 b - d3 0 13",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. b4 — Evans Gambit.",
+      7: "Inaccuracy: 4...Bb6 declines passively without challenging White.",
+      8: "5. a4 — Threaten a5 trap.",
+      10: "6. Nc3 — Rapid deployment.",
+      12: "7. Nd5! — Outpost on d5.",
+      14: "8. exd5 — Open e-file pressure.",
+      16: "9. Nxe5! — Tactical Punishment: Seize central e5 pawn.",
+      18: "10. Nf3 — Safe retreat.",
+      20: "11. O-O — Complete development.",
+      22: "12. h3 — Question bishop.",
+      24: "13. d4 — Dominating center."
+    }
+  },
+  {
+    id: "italian-punish-evans-counter-d5",
+    courseId: "italian-game",
+    subCourseId: "italian-evans-gambit",
+    name: "Evans Gambit – Premature 5...d5 Counter-Strike Refuted",
+    shortName: "Premature 5...d5 Refuted",
+    category: "Tactical Destruction",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 d5 6. exd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. b4 Bxb4 5. c3 d5 6. exd5 e4 7. dxc6 exf3 8. Qxf3 Qe7+ 9. Kd1 bxc6 10. Re1 Be6 11. Qxc6+ Qd7 12. Qxa8+",
+    fullAnnotation: "Black attempts an uncoordinated central counter-strike with 5...d5? in the Evans Gambit. White blows through the center and wins a full rook.",
+    previewFEN: "Q3k1nr/p1pq1ppp/4b3/8/1bB5/2P5/P2P1PPP/RNBKR3 b k - 0 12",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bc4 — Italian Bishop.",
+      6: "4. b4 — Evans Gambit.",
+      8: "5. c3 — Attack bishop.",
+      9: "Blunder: 5...d5? leaves the bishop on b4 en prise and king unprotected.",
+      10: "6. exd5! — Expose e4 and c6.",
+      12: "7. dxc6 — Pocket piece on c6.",
+      14: "8. Qxf3 — Threaten Qxf7 mate and Qxc6+.",
+      16: "9. Kd1 — Safe king step.",
+      18: "10. Re1 — Pin e6 bishop.",
+      20: "11. Qxc6+ — Crushing fork.",
+      22: "12. Qxa8+ — Tactical Punishment: White captures corner rook with +9.0 advantage."
+    }
   }
 ];
 

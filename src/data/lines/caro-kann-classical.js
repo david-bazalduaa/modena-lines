@@ -186,5 +186,101 @@ export const caroKannClassicalLines = [
       27: "14... a5 — Halt White's queenside pawns.",
       29: "15... Rhe8 — Central rook coordination with tremendous attacking potential!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "caro-kann-punish-classical-greedy-h5",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-classical",
+    name: "Caro-Kann Classical – 6. h4 h6 7. h5 / 17...Qe4! Central Dominance",
+    shortName: "Classical 17...Qe4 Dominance",
+    category: "Positional Masterclass",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. h5 Bh7 8. Nf3 Nd7 9. Bd3 Bxd3 10. Qxd3 e6 11. Bd2 Ngf6 12. O-O-O Be7 13. Kb1 O-O 14. Ne4 Nxe4 15. Qxe4 Nf6 16. Qe2 Qd5 17. Ne5 Qe4",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. h5 Bh7 8. Nf3 Nd7 9. Bd3 Bxd3 10. Qxd3 e6 11. Bd2 Ngf6 12. O-O-O Be7 13. Kb1 O-O 14. Ne4 Nxe4 15. Qxe4 Nf6 16. Qe2 Qd5 17. Ne5 Qe4",
+    fullAnnotation: "White overextends on the kingside with h4-h5 in the Classical Caro-Kann. Black executes the thematic queen central centralization 16...Qd5 and 17...Qe4!, neutralizing White's pressure.",
+    previewFEN: "r4rk1/pp2bpp1/2p1pn1p/4N2P/3Pq3/8/PPPBQPP1/1K1R3R w - - 5 18",
+    annotations: {
+      1: "1...c6 — The solid Caro-Kann Defense.",
+      3: "2...d5 — Challenge the center immediately.",
+      5: "3...dxe4 — Liquidate center pawn.",
+      7: "4...Bf5 — Develop the light-squared bishop outside the pawn chain!",
+      9: "5...Bg6 — Retreat safely.",
+      11: "6...h6! — Create an essential escape bunker on h7.",
+      13: "7...Bh7 — Bishop tucks into the h7 fortress.",
+      15: "8...Nd7 — Prevent Ne5.",
+      17: "9...Bxd3 — Trade light-squared bishops.",
+      19: "10...e6 — Complete pawn chain.",
+      21: "11...Ngf6 — Develop knight.",
+      23: "12...Be7 — Prepare castling.",
+      25: "13...O-O — King safe.",
+      27: "14...Nxe4 — Trade knights.",
+      29: "15...Nf6 — Kick queen with tempo.",
+      31: "16...Qd5! — Monster central queen.",
+      33: "17...Qe4! — Tactical Punishment: Infiltrate e4, force queen trade, and secure endgame advantage."
+    }
+  },
+  {
+    id: "caro-kann-punish-classical-ne5-sacrifice",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-classical",
+    name: "Caro-Kann Classical – 7. Bc4 e6 / 13...b5! Queenside Avalanche",
+    shortName: "Classical 13...b5! Avalanche",
+    category: "Pawn Storm Counter",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. Nf3 Nd7 7. Bc4 e6 8. O-O Ngf6 9. Re1 Be7 10. Qe2 O-O 11. c3 Nd5 12. Ne5 Nxe5 13. dxe5 b5 14. Bb3 a5 15. a4 Qb6 16. axb5 cxb5",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. Nf3 Nd7 7. Bc4 e6 8. O-O Ngf6 9. Re1 Be7 10. Qe2 O-O 11. c3 Nd5 12. Ne5 Nxe5 13. dxe5 b5 14. Bb3 a5 15. a4 Qb6 16. axb5 cxb5",
+    fullAnnotation: "White plays a quiet Classical setup. Black seizes queenside space with 13...b5! and 14...a5!, dismantling White's bishop on b3 and dominating the b-file.",
+    previewFEN: "r4rk1/4bppp/1q2p1b1/pp1nP3/8/1BP3N1/1P2QPPP/R1B1R1K1 w - - 0 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Central strike.",
+      5: "3...dxe4 — Open d-file.",
+      7: "4...Bf5 — Active bishop.",
+      9: "5...Bg6 — Safe diagonal.",
+      11: "6...Nd7 — Control e5.",
+      13: "7...e6 — Solid triangle.",
+      15: "8...Ngf6 — Natural development.",
+      17: "9...Be7 — Prepare castling.",
+      19: "10...O-O — Castle securely.",
+      21: "11...Nd5 — Central knight outpost.",
+      23: "12...Nxe5 — Eliminate White's attacker.",
+      25: "13...b5! — Tactical Punishment: Queenside expansion pushes White's bishop backwards.",
+      27: "14...a5 — Threaten a4 trapping the bishop.",
+      29: "15...Qb6 — Pressure along the a7-g1 diagonal.",
+      31: "16...cxb5 — Black controls the queenside and b-file with complete initiative."
+    }
+  },
+  {
+    id: "caro-kann-punish-classical-f4-overreach",
+    courseId: "caro-kann",
+    subCourseId: "caro-kann-classical",
+    name: "Caro-Kann Classical – 6. f4?! Kingside Overreach Refuted",
+    shortName: "Classical 6. f4?! Refuted",
+    category: "Center Demolition",
+    eco: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. f4 e6 7. Nf3 Bd6 8. Bd3 Ne7 9. O-O O-O 10. Ne5 Bxd3 11. Qxd3 c5 12. dxc5 Bxc5+ 13. Be3 Qxd3 14. Nxd3 Bxe3+ 15. Kh1 Nbc6 16. Rf3 Bb6",
+    pgn: "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. f4 e6 7. Nf3 Bd6 8. Bd3 Ne7 9. O-O O-O 10. Ne5 Bxd3 11. Qxd3 c5 12. dxc5 Bxc5+ 13. Be3 Qxd3 14. Nxd3 Bxe3+ 15. Kh1 Nbc6 16. Rf3 Bb6",
+    fullAnnotation: "White plays the premature 6. f4?! in the Classical Caro-Kann. Black breaks in the center with 11...c5! and wins a clean piece with 13...Qxd3 and 14...Bxe3+.",
+    previewFEN: "r4rk1/pp2nppp/1bn1p3/8/5P2/3N1RN1/PPP3PP/R6K w - - 4 17",
+    annotations: {
+      1: "1...c6 — Caro-Kann Defense.",
+      3: "2...d5 — Strike center.",
+      5: "3...dxe4 — Liquidate center.",
+      7: "4...Bf5 — Active bishop.",
+      9: "5...Bg6 — Bishop retreats.",
+      10: "Inaccuracy: 6. f4?! weakens the e1-h4 and g1-a7 diagonals.",
+      11: "6...e6! — Blunt the f4 pawn.",
+      13: "7...Bd6 — Aim at White's weakened kingside.",
+      15: "8...Ne7 — Flexible development.",
+      17: "9...O-O — Castle into safety.",
+      19: "10...Bxd3 — Trade bishops.",
+      21: "11...c5! — Strike at White's overextended center.",
+      23: "12...Bxc5+ — Check with tempo.",
+      25: "13...Qxd3 — Trade queens.",
+      27: "14...Bxe3+! — Tactical Punishment: Win White's bishop with check!",
+      29: "15...Nbc6 — Bring knight into play.",
+      31: "16...Bb6 — Black is a full piece up with an easy win."
+    }
   }
 ];

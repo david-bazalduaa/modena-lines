@@ -260,6 +260,106 @@ export const pircClassicalLines = [
       27: "14... Nxe6 — Connect rooks.",
       29: "15... Ng4! — Harass White's e3 bishop and seize the initiative in the endgame!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "pirc-punish-classical-premature-e5",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-classical-system",
+    name: "Pirc Classical – Premature 8. e5? / 11...Ng4! Piece Grab Punished",
+    shortName: "Classical 8. e5? Refuted",
+    category: "Pawn Grab Punishment",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. O-O Bg4 7. Be3 Nc6 8. e5 dxe5 9. Nxe5 Bxe2 10. Nxe2 Nxe5 11. dxe5 Ng4 12. Bf4 Nxe5 13. c3 c6 14. Qb3 Qb6 15. Rfd1 Rfd8 16. Nd4 Qxb3 17. axb3 a6",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. O-O Bg4 7. Be3 Nc6 8. e5 dxe5 9. Nxe5 Bxe2 10. Nxe2 Nxe5 11. dxe5 Ng4 12. Bf4 Nxe5 13. c3 c6 14. Qb3 Qb6 15. Rfd1 Rfd8 16. Nd4 Qxb3 17. axb3 a6",
+    fullAnnotation: "White pushes 8. e5? prematurely in the Classical Pirc. Black trades on e5 and captures the overextended e5 pawn with 11...Ng4! and 12...Nxe5, netting a clean pawn and an easy endgame.",
+    previewFEN: "r2r2k1/1p2ppbp/p1p3p1/4n3/3N1B2/1PP5/1P3PPP/R2R2K1 w - - 0 18",
+    annotations: {
+      1: "1...d6 — The dynamic Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Prepare king fianchetto.",
+      7: "4...Bg7 — The legendary Pirc bishop.",
+      9: "5...O-O — Castle into safety.",
+      11: "6...Bg4 — Pin the f3 knight.",
+      13: "7...Nc6 — Central pressure on d4 and e5.",
+      14: "Blunder: 8. e5? overextends the center prematurely.",
+      15: "8...dxe5 — Open d-file.",
+      17: "9...Bxe2 — Trade off bishops.",
+      19: "10...Nxe5 — Trade knights.",
+      21: "11...Ng4! — Tactical Punishment: Double attack on e5 pawn and e3 bishop.",
+      23: "12...Nxe5 — Pocket the clean extra pawn.",
+      25: "13...c6 — Solidify queen's flank.",
+      27: "14...Qb6 — Trade queens.",
+      29: "15...Rfd8 — Seize d-file.",
+      31: "16...Qxb3 — Force queen exchange.",
+      33: "17...a6 — Black enters a winning endgame with an extra pawn."
+    }
+  },
+  {
+    id: "pirc-punish-classical-h3-overreach",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-classical-system",
+    name: "Pirc Classical – 9. e5?! Nd5 / 17...Ne4! Dark Square Domination",
+    shortName: "Classical 17...Ne4! Outpost",
+    category: "Positional Outpost",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. O-O c6 7. h3 Qc7 8. Bf4 Nbd7 9. e5 Nd5 10. Nxd5 cxd5 11. exd6 exd6 12. c3 Nf6 13. Qb3 Re8 14. Rfe1 Bd7 15. Bd3 Bc6 16. Qb4 Bf8 17. a4 Ne4",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. O-O c6 7. h3 Qc7 8. Bf4 Nbd7 9. e5 Nd5 10. Nxd5 cxd5 11. exd6 exd6 12. c3 Nf6 13. Qb3 Re8 14. Rfe1 Bd7 15. Bd3 Bc6 16. Qb4 Bf8 17. a4 Ne4",
+    fullAnnotation: "White plays an uncoordinated e5 break in the Classical Pirc. Black posts a monster knight on d5, secures the e-file, and lands 17...Ne4! with complete dark-square dominance.",
+    previewFEN: "r3rbk1/ppq2p1p/2bp2p1/3p4/PQ1PnB2/2PB1N1P/1P3PP1/R3R1K1 w - - 1 18",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto setup.",
+      7: "4...Bg7 — The sniper bishop.",
+      9: "5...O-O — Castle.",
+      11: "6...c6 — Prepare ...Qc7.",
+      13: "7...Qc7 — Control e5.",
+      15: "8...Nbd7 — Prepare center defense.",
+      16: "Inaccuracy: 9. e5?! allows Black's knight to establish a dream outpost on d5.",
+      17: "9...Nd5! — Monster knight on d5.",
+      19: "10...cxd5 — Recapture toward the center.",
+      21: "11...exd6 — Control e5.",
+      23: "12...Nf6 — Knight returns to active square.",
+      25: "13...Re8 — Seize the open e-file.",
+      27: "14...Bd7 — Develop bishop.",
+      29: "15...Bc6 — Anchor the d5 pawn.",
+      31: "16...Bf8 — Safeguard the d6 pawn.",
+      33: "17...Ne4! — Tactical Punishment: Dominating central knight outpost paralyzes White."
+    }
+  },
+  {
+    id: "pirc-punish-classical-be3-d5-trap",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-classical-system",
+    name: "Pirc Classical – 8. a3 Bb7 / 17...Bxe4! Pin Explosion",
+    shortName: "Classical 17...Bxe4! Explosion",
+    category: "Pin Exploitation",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. Be3 a6 7. Qd2 b5 8. a3 Bb7 9. d5 c6 10. dxc6 Nxc6 11. Bh6 Rc8 12. Bxg7 Kxg7 13. O-O Na5 14. Bd3 Nc4 15. Bxc4 Rxc4 16. Rfe1 Nxe4 17. Nxe4 Bxe4",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Nf3 Bg7 5. Be2 O-O 6. Be3 a6 7. Qd2 b5 8. a3 Bb7 9. d5 c6 10. dxc6 Nxc6 11. Bh6 Rc8 12. Bxg7 Kxg7 13. O-O Na5 14. Bd3 Nc4 15. Bxc4 Rxc4 16. Rfe1 Nxe4 17. Nxe4 Bxe4",
+    fullAnnotation: "White misplays the move order with 9. d5. Black counter-attacks on the queenside, trades off the defender of e4, and wins the e4 pawn with 17...Bxe4! with double threats.",
+    previewFEN: "3q1r2/4ppkp/p2p2p1/1p6/2r1b3/P4N2/1PPQ1PPP/R3R1K1 w - - 0 18",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto setup.",
+      7: "4...Bg7 — The sniper bishop.",
+      9: "5...O-O — Castle.",
+      11: "6...a6 — Prepare ...b5 expansion.",
+      13: "7...b5 — Queenside wing strike.",
+      15: "8...Bb7 — Target e4 pawn.",
+      16: "Inaccuracy: 9. d5? weakens the e4 pawn critically.",
+      17: "9...c6 — Strike at d5 pawn base.",
+      19: "10...Nxc6 — Bring knight to active square.",
+      21: "11...Rc8 — Put rook on c-file.",
+      23: "12...Kxg7 — Recapture king safely.",
+      25: "13...Na5 — Eye the c4 outpost.",
+      27: "14...Nc4 — Attack b2 and d2.",
+      29: "15...Rxc4 — Rook actively placed on 4th rank.",
+      31: "16...Nxe4 — Eliminate e4 defender.",
+      33: "17...Bxe4! — Tactical Punishment: Win the central e4 pawn with a double threat on c2 and f3."
+    }
   }
 ];
 

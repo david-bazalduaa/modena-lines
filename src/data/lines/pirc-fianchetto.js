@@ -237,6 +237,103 @@ export const pircFianchettoLines = [
       27: "14... Ba6! — Skewer the rook and dominate the light squares.",
       29: "15... dxe4 — Win back the central pawn with absolute dynamic equality!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "pirc-punish-fianchetto-early-e4-e5",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-fianchetto-system",
+    name: "Pirc Fianchetto – 6. Nge2 e5 / 17...Qxd4+! Endgame Squeeze",
+    shortName: "Fianchetto 17...Qxd4+! Squeeze",
+    category: "Endgame Conversion",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. h3 Nc6 8. Be3 exd4 9. Nxd4 Bd7 10. O-O Re8 11. Re1 Nxd4 12. Bxd4 Bc6 13. Qd3 Nd7 14. Bxg7 Kxg7 15. Rad1 Qf6 16. f4 Nc5 17. Qd4 Qxd4+ 18. Rxd4 a5",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. h3 Nc6 8. Be3 exd4 9. Nxd4 Bd7 10. O-O Re8 11. Re1 Nxd4 12. Bxd4 Bc6 13. Qd3 Nd7 14. Bxg7 Kxg7 15. Rad1 Qf6 16. f4 Nc5 17. Qd4 Qxd4+ 18. Rxd4 a5",
+    fullAnnotation: "Against the Fianchetto Pirc, Black liquidates the center with 8...exd4, trades dark-squared bishops, and forces an endgame with 17...Qxd4+!, holding a fortress and queen-side superiority.",
+    previewFEN: "r3r3/1pp2pkp/2bp2p1/p1n5/3RPP2/2N3PP/PPP3B1/4R1K1 w - a6 0 19",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...Bg7 — The sniper bishop.",
+      9: "5...O-O — Castle into safety.",
+      11: "6...e5! — Classical central strike.",
+      13: "7...Nc6 — Pressure d4.",
+      15: "8...exd4 — Liquidate center.",
+      17: "9...Bd7 — Develop bishop.",
+      19: "10...Re8 — Seize the e-file.",
+      21: "11...Nxd4 — Trade knights.",
+      23: "12...Bc6 — Put bishop on the central long diagonal.",
+      25: "13...Nd7 — Reroute knight to c5.",
+      27: "14...Kxg7 — King recaptures safely.",
+      29: "15...Qf6 — Active queen centralization.",
+      31: "16...Nc5 — Attack e4 pawn.",
+      33: "17...Qxd4+! — Tactical Punishment: Force queen trade into an advantageous endgame.",
+      35: "18...a5 — Complete control of the queenside with an effortless draw or win."
+    }
+  },
+  {
+    id: "pirc-punish-fianchetto-passive-f4",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-fianchetto-system",
+    name: "Pirc Fianchetto – 13. f3 / 14...Bc4! Skewer & 17...Qb6 Counter",
+    shortName: "Fianchetto 14...Bc4! Skewer",
+    category: "Skewer Tactics",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 c6 7. a4 a5 8. O-O Na6 9. h3 e5 10. Be3 exd4 11. Bxd4 Re8 12. Qd2 Nc5 13. f3 Be6 14. Rad1 Bc4 15. Rfe1 Nfd7 16. Bxg7 Kxg7 17. Qxd6 Qb6",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 c6 7. a4 a5 8. O-O Na6 9. h3 e5 10. Be3 exd4 11. Bxd4 Re8 12. Qd2 Nc5 13. f3 Be6 14. Rad1 Bc4 15. Rfe1 Nfd7 16. Bxg7 Kxg7 17. Qxd6 Qb6",
+    fullAnnotation: "In the Fianchetto Pirc, Black activates the light-squared bishop with 14...Bc4! and counter-attacks with 17...Qb6!, discovering a lethal discovered check with the c5 knight.",
+    previewFEN: "r3r3/1p1n1pkp/1qpQ2p1/p1n5/P1b1P3/2N2PPP/1PP1N1B1/3RR1K1 w - - 1 18",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...Bg7 — Sniper bishop.",
+      9: "5...O-O — Castle.",
+      11: "6...c6 — Solid base.",
+      13: "7...a5 — Block White's a4 push.",
+      15: "8...Na6 — Knight develops flexibly.",
+      17: "9...e5 — Strike at d4.",
+      19: "10...exd4 — Liquidate center.",
+      21: "11...Re8 — Seize e-file.",
+      23: "12...Nc5 — Attack e4 pawn.",
+      25: "13...Be6 — Complete piece development.",
+      27: "14...Bc4! — Tactical Punishment: Skewer White's d2 queen and e1 rook!",
+      29: "15...Nfd7 — Reposition knight.",
+      31: "16...Kxg7 — King recaptures.",
+      33: "17...Qb6! — Deadly discovered check threat on White's king; Black completely dominates."
+    }
+  },
+  {
+    id: "pirc-punish-fianchetto-queenside-break",
+    courseId: "pirc-defense",
+    subCourseId: "pirc-fianchetto-system",
+    name: "Pirc Fianchetto – 7...c5 / 13...b4! Queenside Destruction",
+    shortName: "Fianchetto 13...b4! Break",
+    category: "Queenside Breakthrough",
+    eco: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 Nbd7 7. O-O c5 8. h3 a6 9. a4 Rb8 10. Be3 b5 11. axb5 axb5 12. dxc5 dxc5 13. f4 b4 14. Nd5 Bb7 15. Nxf6+ Bxf6 16. c3 Qc7",
+    pgn: "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 Nbd7 7. O-O c5 8. h3 a6 9. a4 Rb8 10. Be3 b5 11. axb5 axb5 12. dxc5 dxc5 13. f4 b4 14. Nd5 Bb7 15. Nxf6+ Bxf6 16. c3 Qc7",
+    fullAnnotation: "Black counter-attacks with 7...c5 and 10...b5! against the Fianchetto system. The 13...b4! push dislodges White's c3 knight and dominates the board.",
+    previewFEN: "1r3rk1/1bqnpp1p/5bp1/2p5/1p2PP2/2P1B1PP/1P2N1B1/R2Q1RK1 w - - 1 17",
+    annotations: {
+      1: "1...d6 — Pirc Defense.",
+      3: "2...Nf6 — Attack e4.",
+      5: "3...g6 — Fianchetto.",
+      7: "4...Bg7 — Sniper bishop.",
+      9: "5...O-O — Castle.",
+      11: "6...Nbd7 — Flexible knight.",
+      13: "7...c5! — Sicilian-style center counter-blow.",
+      15: "8...a6 — Prepare ...b5.",
+      17: "9...Rb8 — Put rook on b-file.",
+      19: "10...b5! — Launch queenside counter-attack.",
+      21: "11...axb5 — Recapture toward the center.",
+      23: "12...dxc5 — Open d-file.",
+      25: "13...b4! — Tactical Punishment: Dislodge the c3 defender of e4.",
+      27: "14...Bb7 — Pressure e4 pawn.",
+      29: "15...Bxf6 — Preserve dark-squared bishop.",
+      31: "16...Qc7 — Connect rooks; Black holds total queenside dominance."
+    }
   }
 ];
 

@@ -167,5 +167,105 @@ export const ruyLopezSidelinesLines = [
       22: "12. Nf1 — Knight maneuvers toward the kingside.",
       24: "13. Ng3! — Dominant kingside post eyeing f5 with a total positional squeeze!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "ruy-lopez-punish-steinitz-trap",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-sidelines-gambits",
+    name: "Ruy Lopez – Old Steinitz 3...d6 Center Collapse Punished",
+    shortName: "Old Steinitz 3...d6 Punished",
+    category: "Center Demolition",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. d4 Bd7 5. Nc3 Nf6 6. O-O Be7 7. Re1 exd4 8. Nxd4 O-O 9. Bxc6 bxc6 10. Qf3 Re8 11. e5 dxe5 12. Nxc6 Bxc6 13. Qxc6 Bd6 14. Bg5 h6 15. Bxf6 Qxf6 16. Ne4 Qe6 17. Rad1",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. d4 Bd7 5. Nc3 Nf6 6. O-O Be7 7. Re1 exd4 8. Nxd4 O-O 9. Bxc6 bxc6 10. Qf3 Re8 11. e5 dxe5 12. Nxc6 Bxc6 13. Qxc6 Bd6 14. Bg5 h6 15. Bxf6 Qxf6 16. Ne4 Qe6 17. Rad1",
+    fullAnnotation: "Black chooses the cramped Old Steinitz Defense (3...d6). White explodes the center with 11. e5! winning a pawn and paralyzing Black.",
+    previewFEN: "r3r1k1/p1p2pp1/2Qbq2p/4p3/4N3/8/PPP2PPP/3RR1K1 b - - 3 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      5: "Inaccuracy: 3...d6?! leads to a passive, cramped position.",
+      6: "4. d4 — Immediate central strike.",
+      8: "5. Nc3 — Rapid deployment.",
+      10: "6. O-O — Castle securely.",
+      12: "7. Re1 — Control e-file.",
+      14: "8. Nxd4 — Central knight.",
+      16: "9. Bxc6 — Ruin pawn structure.",
+      18: "10. Qf3 — Double attack on c6 and f7.",
+      20: "11. e5! — Tactical Punishment: Central dynamite shatters Black.",
+      22: "12. Nxc6 — Win c6 square.",
+      24: "13. Qxc6 — Queen infiltrates.",
+      26: "14. Bg5 — Pin knight.",
+      28: "15. Bxf6 — Eliminate defender.",
+      30: "16. Ne4 — Central knight outpost.",
+      32: "17. Rad1 — Total positional crush."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-schliemann-gambit",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-sidelines-gambits",
+    name: "Ruy Lopez – Schliemann Gambit 3...f5 Refuted (4. Nc3!)",
+    shortName: "Schliemann 3...f5 Refuted",
+    category: "Gambit Refutation",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Nc3 fxe4 5. Nxe4 d5 6. Nxe5 dxe4 7. Nxc6 Qg5 8. Qe2 Nf6 9. f4 Qxf4 10. d4 Qh4+ 11. g3 Qh3 12. Ne5+ c6 13. Bc4 Be6 14. Bg5 O-O-O 15. O-O-O Bd5 16. Rhf1 Qe6 17. Bxd5",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. Nc3 fxe4 5. Nxe4 d5 6. Nxe5 dxe4 7. Nxc6 Qg5 8. Qe2 Nf6 9. f4 Qxf4 10. d4 Qh4+ 11. g3 Qh3 12. Ne5+ c6 13. Bc4 Be6 14. Bg5 O-O-O 15. O-O-O Bd5 16. Rhf1 Qe6 17. Bxd5",
+    fullAnnotation: "Black plays the radical Schliemann Gambit (3...f5?!). White refutes it with 4. Nc3! and 6. Nxe5!, completely conquering the center.",
+    previewFEN: "2kr1b1r/pp4pp/2p1qn2/3BN1B1/3Pp3/6P1/PPP1Q2P/2KR1R2 b - - 0 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      5: "Blunder: 3...f5?! is an overaggressive gambit exposing Black's uncastled king.",
+      6: "4. Nc3! — The most solid refutation.",
+      8: "5. Nxe4 — Recapture.",
+      10: "6. Nxe5! — Tactical Punishment: Exploit the pinned c6 knight.",
+      12: "7. Nxc6 — Discover check threat.",
+      14: "8. Qe2 — Pin e4 pawn.",
+      16: "9. f4 — Defend e4.",
+      18: "10. d4 — Center clash.",
+      20: "11. g3 — Kick queen.",
+      22: "12. Ne5+ — Check!",
+      24: "13. Bc4 — Target f7.",
+      26: "14. Bg5 — Pin f6 knight.",
+      28: "15. O-O-O — Castle into safety.",
+      30: "16. Rhf1 — Bring last rook into battle.",
+      32: "17. Bxd5 — White is a clean piece and pawn up with absolute king safety."
+    }
+  },
+  {
+    id: "ruy-lopez-punish-cozio-defense",
+    courseId: "ruy-lopez",
+    subCourseId: "ruy-lopez-sidelines-gambits",
+    name: "Ruy Lopez – Cozio 3...Nge7 / 8...Qh5? Queen Sorite Punished",
+    shortName: "Cozio 8...Qh5? Punished",
+    category: "Queen Harassment",
+    eco: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. c3 d5 5. exd5 Qxd5 6. d4 exd4 7. cxd4 Bd7 8. Nc3 Qh5 9. d5 Ne5 10. Nxe5 Qxe5+ 11. Be3 O-O-O 12. O-O Nf5 13. Re1 Nxe3 14. Rxe3 Qf4 15. Bxd7+ Rxd7 16. Re8+ Rd8 17. Qe2",
+    pgn: "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. c3 d5 5. exd5 Qxd5 6. d4 exd4 7. cxd4 Bd7 8. Nc3 Qh5 9. d5 Ne5 10. Nxe5 Qxe5+ 11. Be3 O-O-O 12. O-O Nf5 13. Re1 Nxe3 14. Rxe3 Qf4 15. Bxd7+ Rxd7 16. Re8+ Rd8 17. Qe2",
+    fullAnnotation: "Black tries the passive Cozio Defense with 3...Nge7 followed by an adventurous queen sortie. White pushes 9. d5! and invades on e8.",
+    previewFEN: "2krRb1r/ppp2ppp/8/3P4/5q2/2N5/PP2QPPP/R5K1 b - - 3 17",
+    annotations: {
+      0: "1. e4 — King's pawn.",
+      2: "2. Nf3 — Attack e5.",
+      4: "3. Bb5 — Ruy Lopez.",
+      5: "Inaccuracy: 3...Nge7 blocks the f8 bishop.",
+      6: "4. c3 — Prepare central d4 strike.",
+      8: "5. exd5 — Liquidate center.",
+      10: "6. d4 — Center clash.",
+      12: "7. cxd4 — Dominate center.",
+      14: "8. Nc3 — Attack queen.",
+      16: "9. d5! — Tactical Punishment: Central push drives Black's knight into exile.",
+      18: "10. Nxe5 — Eliminate defender.",
+      20: "11. Be3 — Develop with tempo.",
+      22: "12. O-O — Castle.",
+      24: "13. Re1 — Seize e-file.",
+      26: "14. Rxe3 — Rook active on 3rd rank.",
+      28: "15. Bxd7+ — Eliminate bishop.",
+      30: "16. Re8+! — Lethal back-rank penetration.",
+      32: "17. Qe2 — Double heavy pieces with decisive checkmating attack."
+    }
   }
 ];

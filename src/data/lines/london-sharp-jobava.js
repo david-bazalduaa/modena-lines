@@ -275,6 +275,98 @@ export const londonSharpJobavaLines = [
       22: "12. Qd2 — Connect rooks and prepare central operations.",
       24: "13. Bg5! — Pin Black's knight with suffocating pressure across the board!"
     }
+  },
+
+  // ============================================================
+  // TACTICAL PUNISHMENT & BLUNDER REFUTATION LINES
+  // ============================================================
+  {
+    id: "london-punish-b2-grab",
+    courseId: "london-system",
+    subCourseId: "london-sharp-jobava-steinitz",
+    name: "London System – Greedy 4...Qxb2? Poisoned Pawn Punished",
+    shortName: "Jobava 4...Qxb2 Trapped",
+    category: "Queen Trap",
+    eco: "1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 Qxb2 5. Nb5 Na6 6. a3",
+    pgn: "1. d4 d5 2. Bf4 c5 3. e3 Qb6 4. Nc3 Qxb2 5. Nb5 Na6 6. a3 Bf5 7. Rc1 c4 8. Rb1 Qxc2 9. Qxc2 Bxc2 10. Rb2 Ba4 11. Nc3 Bc6 12. e4 e6 13. exd5 exd5 14. Re2+ Kd8 15. Nf3",
+    fullAnnotation: "Black greedily snatches the b2 pawn with 4...Qxb2?. White traps the queen with 5. Nb5! and 7. Rc1, leaving Black hopelessly behind in development.",
+    previewFEN: "r2k1bnr/pp3ppp/n1b5/3p4/2pP1B2/P1N2N2/4RPPP/4KB1R b K - 3 15",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      6: "4. Nc3 — Aggressive knight deployment.",
+      7: "Blunder: 4...Qxb2? grabs the classic poisoned pawn while trailing in development.",
+      8: "5. Nb5! — Tactical Punishment: Threaten devastating Nc7+ fork.",
+      10: "6. a3! — Restrict queen escape.",
+      12: "7. Rc1 — Trap queen.",
+      14: "8. Rb1 — Kick queen.",
+      16: "9. Qxc2 — Queen trade forced.",
+      18: "10. Rb2 — Kick bishop.",
+      20: "11. Nc3 — Centralize knight.",
+      22: "12. e4! — Central breakthrough.",
+      24: "13. exd5 — Open e-file.",
+      26: "14. Re2+ — King driven to d8.",
+      28: "15. Nf3 — White has total piece coordination and an extra piece."
+    }
+  },
+  {
+    id: "london-punish-jobava-break",
+    courseId: "london-system",
+    subCourseId: "london-sharp-jobava-steinitz",
+    name: "London System – Jobava 4...c5 / 11. e6! Dark-Square Rupture",
+    shortName: "Jobava 11. e6! Rupture",
+    category: "Mating Attack",
+    eco: "1. d4 Nf6 2. Bf4 c5 3. d5 Qb6 4. Nc3 Qxb2 5. Bd2 Qb6 6. e4 d6 7. f4 g6 8. e5 dxe5 9. fxe5 Nfd7 10. Rb1 Qd8 11. e6",
+    pgn: "1. d4 Nf6 2. Bf4 c5 3. d5 Qb6 4. Nc3 Qxb2 5. Bd2 Qb6 6. e4 d6 7. f4 g6 8. e5 dxe5 9. fxe5 Nfd7 10. Rb1 Qd8 11. e6 fxe6 12. dxe6 Nf6 13. Bb5+ Nc6 14. Bxc6+ bxc6 15. Qe2",
+    fullAnnotation: "In the Jobava London, Black tries 3...c5 and 4...Qb6. White uncorks the devastating 11. e6! pawn sacrifice, destroying Black's king shelter.",
+    previewFEN: "r1bqkb1r/p3p2p/2p1Pnp1/2p5/8/2N5/P1PBQ1PP/1R2K1NR b Kkq - 1 15",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. d5 — Seize space.",
+      6: "4. Nc3 — Jobava knight.",
+      8: "5. Bd2 — Protect knight.",
+      10: "6. e4 — Control center.",
+      12: "7. f4 — Thematic pawn roller.",
+      14: "8. e5! — Disrupt knight.",
+      16: "9. fxe5 — Massive center.",
+      18: "10. Rb1 — Kick queen back to d8.",
+      20: "11. e6! — Tactical Punishment: Rupture dark squares!",
+      22: "12. dxe6 — Pawn wedge on e6.",
+      24: "13. Bb5+ — Force piece block.",
+      26: "14. Bxc6+ — Ruin pawn structure.",
+      28: "15. Qe2 — Dominating dark-square stranglehold."
+    }
+  },
+  {
+    id: "london-punish-steinitz-qxb2",
+    courseId: "london-system",
+    subCourseId: "london-sharp-jobava-steinitz",
+    name: "London System – Steinitz 7...Qxb2? Knight Sacrifice Refuted",
+    shortName: "Steinitz 7...Qxb2 Refuted",
+    category: "Rook Sacrifice Refutation",
+    eco: "1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 Qb6 5. Nc3 e6 6. Nf3 Qxb2 7. Nb5 Bb4+ 8. Nd2 Na6 9. Rb1",
+    pgn: "1. d4 d5 2. Bf4 c5 3. e3 cxd4 4. exd4 Qb6 5. Nc3 e6 6. Nf3 Qxb2 7. Nb5 Bb4+ 8. Nd2 Na6 9. Rb1 Qxa2 10. Rxb4 Nxb4 11. Nc7+ Kd8 12. Nxa8 Nxc2+ 13. Ke2 Nxd4+ 14. Ke1",
+    fullAnnotation: "Black plays Steinitz's greedy 6...Qxb2?. White traps the queen on the b-file and captures the corner rook with a winning advantage.",
+    previewFEN: "N1bk2nr/pp3ppp/4p3/3p4/3n1B2/8/q2N1PPP/3QKB1R b - - 1 14",
+    annotations: {
+      0: "1. d4 — Queen's pawn.",
+      2: "2. Bf4 — London Bishop.",
+      4: "3. e3 — Solid base.",
+      6: "4. exd4 — Center control.",
+      8: "5. Nc3 — Rapid knight deployment.",
+      10: "6. Nf3 — Complete development.",
+      11: "Blunder: 6...Qxb2? falls for the queen trap.",
+      12: "7. Nb5! — Tactical Punishment: Double threat on c7.",
+      14: "8. Nd2 — Safe block.",
+      16: "9. Rb1 — Attack queen.",
+      18: "10. Rxb4! — Tactical exchange sacrifice.",
+      20: "11. Nc7+ — Decisive fork.",
+      22: "12. Nxa8 — Pocket corner rook.",
+      24: "13. Ke2 — Step out of check.",
+      26: "14. Ke1 — White emerges with an extra rook and complete safety."
+    }
   }
 ];
 
