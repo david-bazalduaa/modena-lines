@@ -31,14 +31,22 @@ export function normalizeMoves(rawMoves) {
 }
 
 export function processLineData(rawLine) {
-  const rawMoves = parsePGN(rawLine.pgn);
+  if (!rawLine) return null;
+  const rawMoves = parsePGN(rawLine.pgn || '');
   const normMoves = normalizeMoves(rawMoves);
+  let side = rawLine.side;
+  if (!side && rawLine.courseId) {
+    const blackCourseIds = ['pirc-defense', 'sicilian-defense', 'caro-kann'];
+    side = blackCourseIds.includes(rawLine.courseId) ? 'black' : 'white';
+  }
   return {
     ...rawLine,
+    side: side || 'white',
     moves: normMoves,
     totalHalfMoves: normMoves.length
   };
 }
+
 
 /**
  * Detects if the current position represents an ambiguous branching point for the player.

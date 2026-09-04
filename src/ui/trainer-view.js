@@ -10,6 +10,11 @@ import {
   highlightAmbiguityHintSquare
 } from '../engine/board-renderer.js';
 import { processLineData, isAmbiguousWhiteBranch, isAmbiguousBranch } from '../engine/chess-logic.js';
+import {
+  resolvePlayerColor,
+  evaluatePositionZeroTurnState,
+  computeInitialGroundTurnConfig
+} from '../engine/game-loop.js';
 import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
@@ -40,6 +45,7 @@ export class TrainerView {
 
     // Active CPU turn and glide animation guard
     this.isBlackAnimating = false;
+    this.opponentMoveTimeout = null;
 
     // Multi-Premove Ordered Queue State Engine
     this.premoveQueue = []; // Ordered array of { from, to, promo }
@@ -60,11 +66,9 @@ export class TrainerView {
    * Determines active player color ('white' | 'black') based on current repertoire line/course.
    */
   getPlayerColor() {
-    if (this.currentLine && this.currentLine.side) return this.currentLine.side;
-    if (this.currentSubCourse && this.currentSubCourse.side) return this.currentSubCourse.side;
-    if (this.currentCourse && this.currentCourse.side) return this.currentCourse.side;
-    return 'white';
+    return resolvePlayerColor(this.currentLine, this.currentSubCourse, this.currentCourse);
   }
+
 
   /**
    * Returns all lines in the active Sub-Course marked as completed/mastered in Learn Mode.
@@ -308,15 +312,37 @@ export class TrainerView {
 
   /**
    * Safely mounts and configures the Chessground board instance.
+   * If the board is already mounted and active in the DOM, reconfigures it in place
+   * to eliminate teardown flickers and asynchronous race conditions.
+   *
+   * @param {string} [fenPosition='start']
+   * @param {Function} [onReady=null]
    */
-  rebindBoard(fenPosition) {
+  rebindBoard(fenPosition = 'start', onReady = null) {
     // Explicitly hide catalog/dashboard views so the study view board mounts immediately
     $('#dashboard-view, #subcourse-view').addClass('hidden').removeClass('active');
     $('#study-view').removeClass('hidden').addClass('active');
 
-    const $boardContainer = $('#board');
-    if ($boardContainer.length) {
-      $boardContainer.empty();
+    const boardEl = document.getElementById('board');
+    const playerColor = this.getPlayerColor();
+    const initialFen = fenPosition || 'start';
+
+    // If board instance already exists and is properly mounted in the DOM, reuse it directly
+    if (this.board && boardEl && boardEl.querySelector('.cg-wrap')) {
+      this.board.setFen(initialFen);
+      this.board.setOrientation(playerColor);
+      this.board.setLastMove(null, null);
+      this.board.clearCustomHighlights();
+      this.syncBoardState();
+      this.initControls();
+      if (typeof onReady === 'function') {
+        onReady();
+      }
+      return;
+    }
+
+    if (boardEl) {
+      boardEl.innerHTML = '';
     }
 
     if (this.board && typeof this.board.destroy === 'function') {
@@ -327,23 +353,21 @@ export class TrainerView {
     let attempts = 0;
     const mountBoard = () => {
       const boardWrapper = document.getElementById('board-wrapper');
-      const boardEl = document.getElementById('board');
+      const targetBoardEl = document.getElementById('board');
 
       // Ensure layout dimensions are non-zero before initializing Chessground instance
-      if ((!boardWrapper || boardWrapper.clientWidth === 0 || !boardEl) && attempts < 20) {
+      if ((!boardWrapper || boardWrapper.clientWidth === 0 || !targetBoardEl) && attempts < 20) {
         attempts++;
         requestAnimationFrame(mountBoard);
         return;
       }
 
-      const initialFen = fenPosition || 'start';
-      const playerColor = this.getPlayerColor();
       const isUserTurn = (this.game.turn() === playerColor[0]) && !this.isBlackAnimating;
 
       this.board = createChessgroundBoard('#board', {
         fen: initialFen,
         orientation: playerColor,
-        turnColor: isUserTurn ? playerColor : (playerColor === 'white' ? 'black' : 'white'),
+        turnColor: this.game.turn() === 'w' ? 'white' : 'black',
         movableColor: playerColor,
         dests: isUserTurn ? calculateLegalDests(this.game) : new Map(),
         animationDuration: APP_CONFIG.blackMoveSpeed || 300,
@@ -365,11 +389,16 @@ export class TrainerView {
       });
 
       this.bindResizeObserver();
+
+      if (typeof onReady === 'function') {
+        onReady();
+      }
     };
 
     requestAnimationFrame(mountBoard);
     this.initControls();
   }
+
 
   bindResizeObserver() {
     if (this._resizeObserverBound) return;
@@ -640,6 +669,95 @@ export class TrainerView {
     $('#btn-next').prop('disabled', true);
   }
 
+  /**
+   * Universal training session initializer for all modes (Learn, Practice, Drill, Arena).
+   * Robustly manages player perspective, board orientation, move 0 turn handshake,
+   * and automated CPU opening move execution for Black defense repertoires.
+   */
+  initTrainingSession(targetLine = null, options = {}) {
+    this.cancelAutoAdvance();
+    if (this.opponentMoveTimeout) {
+      clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = null;
+    }
+    this.isBlackAnimating = false;
+    this.clearPremove();
+    $('#board').css('pointer-events', '');
+
+    if (targetLine) {
+      this.currentLine = processLineData(targetLine);
+      if (this.currentLine && this.currentLine.courseId && !this.currentCourse) {
+        this.currentCourse = getCourseById(this.currentLine.courseId);
+      }
+    }
+
+    if (!this.currentLine) return;
+
+    const playerColor = this.getPlayerColor();
+    this.game.reset();
+    this.moveIndex = 0;
+
+    const onBoardReady = () => {
+      if (this.board) {
+        this.board.setFen('start');
+        this.board.setOrientation(playerColor);
+        this.board.setLastMove(null, null);
+        this.board.clearCustomHighlights();
+      }
+      this.clearHighlights();
+
+      if (!options.isBlind && this.currentLine) {
+        userProgress.recordAttempt(this.currentLine.id);
+      }
+
+      this.updateUI();
+
+      if (options.isBlind) {
+        const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+        this.showToast(`Blind Streak Active! Current Streak: ${this.streakScore} ${lineUnit}`, 'success');
+      } else {
+        this.showToast(`Drill started: ${stripEmojis(this.currentLine.name || 'Opening Line')}`, 'success');
+      }
+
+      // Turn Handshake at Position 0:
+      // When training Black defenses (playerColor === 'black'), position 0 is White's turn ('w').
+      // The board locks Black's input and immediately triggers the CPU to execute White's first move!
+      const turnState = evaluatePositionZeroTurnState(playerColor, this.game);
+
+      if (turnState.shouldTriggerOpponentFirstMove && this.currentLine.moves && this.currentLine.moves.length > 0) {
+        this.isBlackAnimating = true;
+        // Lock player input: movable color is black, but dests is empty Map and turnColor is white
+        this.syncBoardState();
+
+        this.opponentMoveTimeout = setTimeout(() => {
+          this.opponentMoveTimeout = null;
+          this.playOpponentMove();
+        }, APP_CONFIG.blackDelayMs || 300);
+      } else {
+        this.isBlackAnimating = false;
+        this.syncBoardState();
+      }
+    };
+
+    if (!this.board || !document.querySelector('#board .cg-wrap')) {
+      this.rebindBoard('start', onBoardReady);
+    } else {
+      onBoardReady();
+    }
+  }
+
+  /**
+   * Starts a drill for the specified line or current line in the active pool.
+   */
+  startDrill(targetLine = null) {
+    if (this.isBlindStreak) {
+      this.pickNextBlindLine();
+      return;
+    }
+    const lineToStart = targetLine || this.currentLine;
+    this.initTrainingSession(lineToStart, { isBlind: false });
+  }
+
   loadLine(rawLine, mode = 'learn') {
     this.cancelAutoAdvance();
     this.isBlindStreak = false;
@@ -652,9 +770,7 @@ export class TrainerView {
       return;
     }
 
-    this.currentLine = processLineData(rawLine);
-    this.rebindBoard('start');
-    this.resetDrill();
+    this.initTrainingSession(rawLine, { isBlind: false });
   }
 
   /**
@@ -667,10 +783,16 @@ export class TrainerView {
     this.streakScore = 0;
 
     const activePool = subCourse || this.currentSubCourse || this.currentCourse;
+    if (subCourse) {
+      this.currentSubCourse = subCourse;
+      if (subCourse.courseId && !this.currentCourse) {
+        this.currentCourse = getCourseById(subCourse.courseId);
+      }
+    }
     const lines = activePool ? (activePool.lines || []) : [];
 
     if (mode === 'drill') {
-      this.blindPool = lines.filter(line => userProgress.getLineStat(line.id).completed);
+      this.blindPool = lines.filter(line => userProgress.isLineCompleted(line));
     } else {
       this.blindPool = lines;
     }
@@ -689,59 +811,39 @@ export class TrainerView {
 
   pickNextBlindLine() {
     this.cancelAutoAdvance();
+    if (!this.blindPool || this.blindPool.length === 0) {
+      const activePool = this.currentSubCourse || this.currentCourse;
+      const lines = activePool ? (activePool.lines || []) : [];
+      if (this.currentMode === 'drill') {
+        this.blindPool = lines.filter(line => userProgress.isLineCompleted(line));
+      } else {
+        this.blindPool = lines;
+      }
+    }
+
+    if (!this.blindPool || this.blindPool.length === 0) {
+      alert('No learned lines available for this mode in this sub-course yet!');
+      this.isBlindStreak = false;
+      this.currentMode = 'learn';
+      this.renderModeDeckPanel();
+      this.resetDrill();
+      return;
+    }
+
     const randomIndex = Math.floor(Math.random() * this.blindPool.length);
     const rawLine = this.blindPool[randomIndex];
-    this.currentLine = processLineData(rawLine);
-    this.rebindBoard('start');
-
-    this.game.reset();
-    this.moveIndex = 0;
-    this.clearHighlights();
-
-    this.updateUI();
-    const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
-    this.showToast(`Blind Streak Active! Current Streak: ${this.streakScore} ${lineUnit}`, 'success');
+    this.initTrainingSession(rawLine, { isBlind: true });
   }
 
   resetDrill() {
-    this.cancelAutoAdvance();
-    this.isBlackAnimating = false;
-    this.clearPremove();
-    $('#board').css('pointer-events', '');
-
     if (this.isBlindStreak) {
       this.streakScore = 0;
       this.pickNextBlindLine();
       return;
     }
-
-    this.game.reset();
-    this.moveIndex = 0;
-    const playerColor = this.getPlayerColor();
-
-    if (this.board) {
-      this.board.setFen('start');
-      this.board.setOrientation(playerColor);
-      this.board.setLastMove(null, null);
-      this.board.clearCustomHighlights();
-    }
-    this.clearHighlights();
-    this.syncBoardState();
-
-    if (this.currentLine) {
-      userProgress.recordAttempt(this.currentLine.id);
-    }
-
-    this.updateUI();
-    this.showToast(`Drill started: ${stripEmojis(this.currentLine ? this.currentLine.name : 'Opening Line')}`, 'success');
-
-    // If player is Black, White (opponent) makes move 0 automatically!
-    if (playerColor === 'black' && this.game.turn() === 'w' && this.currentLine && this.currentLine.moves && this.currentLine.moves.length > 0) {
-      this.isBlackAnimating = true;
-      this.syncBoardState();
-      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
-    }
+    this.initTrainingSession(this.currentLine, { isBlind: false });
   }
+
   /**
    * STRICT MOVE EXECUTION & FAILURE PENALTY ENGINE
    * Validates user move strictly against the target repertoire line.
@@ -838,9 +940,20 @@ export class TrainerView {
     if (this.game.turn() !== playerColor[0]) {
       this.isBlackAnimating = true;
       this.syncBoardState();
-      setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+      if (this.opponentMoveTimeout) clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = setTimeout(() => {
+        this.opponentMoveTimeout = null;
+        this.playOpponentMove();
+      }, APP_CONFIG.blackDelayMs || 300);
     }
     return testMove;
+  }
+
+  /**
+   * Alias for executing the automated opponent response move across any repertoire side.
+   */
+  playOpponentMove() {
+    this.playBlackResponse();
   }
 
   /**
@@ -922,7 +1035,11 @@ export class TrainerView {
       if (this.game.turn() !== playerColor[0]) {
         this.isBlackAnimating = true;
         this.syncBoardState();
-        setTimeout(() => this.playBlackResponse(), APP_CONFIG.blackDelayMs || 300);
+        if (this.opponentMoveTimeout) clearTimeout(this.opponentMoveTimeout);
+        this.opponentMoveTimeout = setTimeout(() => {
+          this.opponentMoveTimeout = null;
+          this.playOpponentMove();
+        }, APP_CONFIG.blackDelayMs || 300);
       }
     };
 
@@ -932,6 +1049,7 @@ export class TrainerView {
       setTimeout(onComplete, APP_CONFIG.blackMoveSpeed || 400);
     }
   }
+
 
   requestHint() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) return;
@@ -1014,6 +1132,10 @@ export class TrainerView {
 
   stepPrev() {
     this.cancelAutoAdvance();
+    if (this.opponentMoveTimeout) {
+      clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = null;
+    }
     if (this.moveIndex > 0) {
       this.moveIndex--;
       if (this.game.history().length > 0) this.game.undo();
@@ -1028,6 +1150,10 @@ export class TrainerView {
 
   stepNext() {
     this.cancelAutoAdvance();
+    if (this.opponentMoveTimeout) {
+      clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = null;
+    }
     if (this.currentLine && this.moveIndex < this.currentLine.moves.length) {
       const nextM = this.currentLine.moves[this.moveIndex];
       this.game.move(nextM.san);
@@ -1052,6 +1178,7 @@ export class TrainerView {
     const subTitle = this.currentSubCourse ? stripEmojis(this.currentSubCourse.category || this.currentSubCourse.title) : 'Main Line';
     const activePool = this.currentSubCourse || this.currentCourse;
     const subCourseLines = activePool ? (activePool.lines || []) : [];
+    const playerColor = this.getPlayerColor();
 
     if (this.isBlindStreak) {
       if (this.currentMode === 'drill') {
@@ -1063,7 +1190,8 @@ export class TrainerView {
       }
       $('#line-name').text('??? Hidden Line');
       $('#line-eco').text('Blind Recall Test');
-      $('#line-description').text('Identify and execute the correct White repertoire moves without knowing the line name beforehand!');
+      const sideLabel = playerColor === 'black' ? "Black's defense" : "White's repertoire";
+      $('#line-description').text(`Identify and execute the correct ${sideLabel} moves without knowing the line name beforehand!`);
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
       $('#stat-lines').text(`${this.streakScore} ${lineUnit}`);
     } else {
@@ -1123,7 +1251,6 @@ export class TrainerView {
       $('#progress-bar').css('width', `${progressPercent}%`);
     }
 
-    const playerColor = this.getPlayerColor();
     const isPlayerTurn = this.game.turn() === playerColor[0];
 
     if (isPlayerTurn) {
@@ -1144,7 +1271,8 @@ export class TrainerView {
       commentary = `Line Completed! Next line loading in ${this.autoAdvanceSecondsRemaining}s...`;
     } else if (this.isBlindStreak) {
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
-      commentary = `Survival Streak: <strong>${this.streakScore} ${lineUnit}</strong>. Complete White's repertoire line without mistakes!`;
+      const sideLabel = playerColor === 'black' ? "Black's defense" : "White's repertoire";
+      commentary = `Survival Streak: <strong>${this.streakScore} ${lineUnit}</strong>. Complete ${sideLabel} line without mistakes!`;
     } else {
       commentary = this.currentLine.annotations[this.moveIndex] || this.currentLine.annotations[this.moveIndex - 1] || this.currentLine.fullAnnotation;
       if (this.moveIndex >= this.currentLine.totalHalfMoves) {
@@ -1152,6 +1280,7 @@ export class TrainerView {
       }
     }
     $('#commentary-text').html(stripEmojis(commentary));
+
 
     this.renderMoveHistory();
     this.renderStepTree();

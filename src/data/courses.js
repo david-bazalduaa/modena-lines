@@ -376,6 +376,17 @@ export const COURSES = [
   }
 ];
 
+// Ensure all subcourses explicitly inherit side property from parent course
+COURSES.forEach(course => {
+  if (course.subCourses && Array.isArray(course.subCourses)) {
+    course.subCourses.forEach(sub => {
+      if (!sub.side && course.side) {
+        sub.side = course.side;
+      }
+    });
+  }
+});
+
 /**
  * Returns a flat array of all repertoire lines across all courses and sub-courses.
  */
@@ -414,3 +425,5 @@ export function getSubCourseById(subCourseId) {
   }
   return null;
 }
+
+
