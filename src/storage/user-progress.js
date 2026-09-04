@@ -144,9 +144,44 @@ class UserProgress {
   recordAttempt(lineId) {
     const st = this.getLineStat(lineId);
     st.attempts = (st.attempts || 0) + 1;
+    this.state.totalAttempts = (this.state.totalAttempts || 0) + 1;
     this.checkAndUpdateDailyStreak();
     this.save();
     this.notifySubscribers();
+  }
+
+  getLineAttempts(lineId) {
+    if (!lineId) return 0;
+    const st = this.getLineStat(lineId);
+    return st.attempts || 0;
+  }
+
+  getSubCourseAttempts(subCourseLines = []) {
+    if (!Array.isArray(subCourseLines) || subCourseLines.length === 0) return 0;
+    return subCourseLines.reduce((total, line) => {
+      if (!line || !line.id) return total;
+      const st = this.getLineStat(line.id);
+      return total + (st.attempts || 0);
+    }, 0);
+  }
+
+  getSubCourseAccuracy(subCourseLines = []) {
+    if (!Array.isArray(subCourseLines) || subCourseLines.length === 0) return 100;
+    let sum = 0;
+    let count = 0;
+    subCourseLines.forEach((line) => {
+      if (!line || !line.id) return;
+      const st = this.getLineStat(line.id);
+      if (st && (st.attempts > 0 || st.completed)) {
+        sum += (st.accuracy !== undefined ? st.accuracy : 100);
+        count++;
+      }
+    });
+    return count > 0 ? Math.round(sum / count) : 100;
+  }
+
+  getTotalAttempts() {
+    return this.state.totalAttempts || 0;
   }
 
   recordMistake(lineId) {

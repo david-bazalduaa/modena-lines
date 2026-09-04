@@ -57,9 +57,25 @@ export class TrainerView {
     this.isAutoAdvancing = false;
     this.lineQueue = [];
     this.completedInLoop = new Set();
+    this.currentAttemptRegistered = false;
+    this.sessionAttempts = 0;
 
     // Unified move execution alias
     this.attemptMove = this.handleUserMove.bind(this);
+  }
+
+  /**
+   * Registers an attempt for the active line and updates session metrics telemetry.
+   * Prevents duplicate attempt inflation during the same line run unless forced.
+   * @param {boolean} force
+   */
+  registerLineAttempt(force = false) {
+    if (!this.currentLine || !this.currentLine.id) return;
+    if (this.currentAttemptRegistered && !force) return;
+
+    this.currentAttemptRegistered = true;
+    this.sessionAttempts = (this.sessionAttempts || 0) + 1;
+    userProgress.recordAttempt(this.currentLine.id);
   }
 
   /**
@@ -736,8 +752,9 @@ export class TrainerView {
       }
       this.clearHighlights();
 
-      if (!options.isBlind && this.currentLine) {
-        userProgress.recordAttempt(this.currentLine.id);
+      this.currentAttemptRegistered = false;
+      if (this.currentLine) {
+        this.registerLineAttempt();
       }
 
       this.updateUI();
@@ -841,6 +858,7 @@ export class TrainerView {
 
   pickNextBlindLine() {
     this.cancelAutoAdvance();
+    this.currentAttemptRegistered = false;
     if (!this.blindPool || this.blindPool.length === 0) {
       const activePool = this.currentSubCourse || this.currentCourse;
       const lines = activePool ? (activePool.lines || []) : [];
@@ -866,6 +884,7 @@ export class TrainerView {
   }
 
   resetDrill() {
+    this.currentAttemptRegistered = false;
     if (this.isBlindStreak) {
       this.streakScore = 0;
       this.pickNextBlindLine();
@@ -884,6 +903,11 @@ export class TrainerView {
 
     if (this.board) {
       this.board.clearCustomHighlights();
+    }
+
+    // Ensure active attempt is captured upon user move submission
+    if (!this.currentAttemptRegistered && this.currentLine) {
+      this.registerLineAttempt();
     }
 
     const currentMoveIndex = this.moveIndex;
@@ -920,6 +944,11 @@ export class TrainerView {
       }
       this.triggerErrorShake();
       this.clearHighlights();
+
+      // Ensure attempt was captured before recording mistake penalty
+      if (!this.currentAttemptRegistered && this.currentLine) {
+        this.registerLineAttempt();
+      }
 
       // Record mistake penalty in progress metrics
       userProgress.recordMistake(this.currentLine.id);
@@ -1101,6 +1130,11 @@ export class TrainerView {
     this.isBlackAnimating = false;
     $('#board').css('pointer-events', '');
 
+    // Ensure attempt was registered for completed line
+    if (!this.currentAttemptRegistered && this.currentLine) {
+      this.registerLineAttempt();
+    }
+
     if (this.isBlindStreak) {
       this.streakScore++;
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
@@ -1249,6 +1283,26 @@ export class TrainerView {
       $('#line-name').text(stripEmojis(this.currentLine.name));
       $('#line-eco').text(stripEmojis(this.currentLine.eco));
       $('#line-description').text(stripEmojis(this.currentLine.fullAnnotation));
+    }
+
+    // Reactive Session Stats Card (#stats-card: Accuracy, Completed, Attempts)
+    const currentLineStat = this.currentLine ? userProgress.getLineStat(this.currentLine.id) : null;
+    const currentLineAttempts = currentLineStat ? (currentLineStat.attempts || 0) : 0;
+    const subAttempts = userProgress.getSubCourseAttempts(subCourseLines);
+    const displayAttempts = subAttempts > 0 ? subAttempts : (this.sessionAttempts || currentLineAttempts);
+    const $statAttempts = $('#stat-attempts');
+    $statAttempts.text(displayAttempts);
+    if (typeof $statAttempts.attr === 'function') {
+      $statAttempts.attr('title', `Sub-Course Attempts: ${subAttempts} (This variation: ${currentLineAttempts})`);
+    }
+
+    const subAccuracy = userProgress.getSubCourseAccuracy(subCourseLines);
+    const lineAccuracy = currentLineStat && currentLineStat.accuracy !== undefined ? currentLineStat.accuracy : 100;
+    const displayAccuracy = subAccuracy !== undefined ? subAccuracy : lineAccuracy;
+    const $statAcc = $('#stat-accuracy');
+    $statAcc.text(`${displayAccuracy}%`);
+    if (typeof $statAcc.attr === 'function') {
+      $statAcc.attr('title', `Sub-Course Avg: ${subAccuracy}% (This variation: ${lineAccuracy}%)`);
     }
 
     // Calculate line-based progress metrics across the active Sub-Course session

@@ -120,6 +120,9 @@ class App {
       if (typeof this.trainer.renderModeDeckPanel === 'function') {
         this.trainer.renderModeDeckPanel();
       }
+      if (typeof this.trainer.updateUI === 'function') {
+        this.trainer.updateUI();
+      }
     }
   }
 
@@ -141,7 +144,12 @@ class App {
     $('#dash-daily-streak-num').text(`${streak} ${streakUnit}`);
     $('#dash-total-drills').text(metrics.attemptsTotal);
 
-    $('#stat-lines').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    // Guard against clobbering the active sub-module stats card when training in study view
+    if (this.currentView !== 'study') {
+      $('#stat-lines').text(`${metrics.completedCount}/${metrics.totalCount}`);
+    } else if (this.trainer && typeof this.trainer.updateUI === 'function') {
+      this.trainer.updateUI();
+    }
   }
 
   /**
