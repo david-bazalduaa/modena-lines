@@ -29,14 +29,29 @@ class App {
     this.initAuth();
 
     // Subscribe to progress changes from local or cloud synchronization
+    // Batch and frame-pace expensive metric aggregations over all 271 lines
+    let progressUpdateFrame = null;
     userProgress.subscribe(() => {
-      this.updateHeaderMetrics();
-      this.refreshCurrentView();
+      if (progressUpdateFrame) return;
+      const dispatch = () => {
+        progressUpdateFrame = null;
+        this.updateHeaderMetrics();
+        this.refreshCurrentView();
+      };
+      if (typeof requestAnimationFrame !== 'undefined') {
+        progressUpdateFrame = requestAnimationFrame(dispatch);
+      } else {
+        progressUpdateFrame = setTimeout(dispatch, 0);
+      }
     });
 
-    // Listen to real-time line mastery events for instant synchronous header pill updates
+    // Listen to real-time line mastery events for frame-paced header pill updates
     window.addEventListener('line-mastered', () => {
-      this.updateHeaderMetrics();
+      if (typeof requestAnimationFrame !== 'undefined') {
+        requestAnimationFrame(() => this.updateHeaderMetrics());
+      } else {
+        this.updateHeaderMetrics();
+      }
     });
 
     // Default initial route: render Level 1 Course Catalog View on both desktop & mobile

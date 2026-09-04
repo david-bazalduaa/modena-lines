@@ -257,14 +257,25 @@ export function createChessgroundBoard(targetElement, options = {}) {
 
     /**
      * Updates board position via FEN.
+     * Guards against redundant DOM teardown and piece reconstruction if the board
+     * position already matches the target FEN placement.
      * @param {string} fen
      * @param {boolean} [animate=false]
      */
     setFen(fen, animate = false) {
       if (!fen) return;
-      const turn = fen.includes(' b ') ? 'black' : 'white';
+      const normalizedFen = fen === 'start' ? 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' : fen;
+      const posOnly = normalizedFen.split(' ')[0];
+      const currentPos = typeof ground.getFen === 'function' ? ground.getFen() : null;
+      const turn = normalizedFen.includes(' b ') ? 'black' : 'white';
+
+      // If Chessground piece coordinates already match target position, bypass expensive DOM reconstruction
+      if (currentPos && currentPos === posOnly && ground.state.turnColor === turn) {
+        return;
+      }
+
       ground.set({
-        fen: fen === 'start' ? 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1' : fen,
+        fen: normalizedFen,
         turnColor: turn,
         animation: { enabled: Boolean(animate) }
       });
@@ -313,12 +324,26 @@ export function createChessgroundBoard(targetElement, options = {}) {
     /**
      * Atomically updates game turn, player movable color, and legal destination map
      * in a single batch without triggering redundant redraws or element thrashing.
+     * Guards against duplicate calls when turn and dests are already aligned.
      * @param {'white'|'black'|'w'|'b'} turnColor
      * @param {Map<string, string[]>} dests
      * @param {string} [playerColor='white']
      */
     syncTurnAndDests(turnColor, dests, playerColor = 'white') {
       const normalizedTurn = turnColor === 'b' ? 'black' : (turnColor === 'w' ? 'white' : turnColor);
+      const currentTurn = ground.state.turnColor;
+      const currentColor = ground.state.movable ? ground.state.movable.color : null;
+      const currentDests = ground.state.movable ? ground.state.movable.dests : null;
+
+      const sameTurn = currentTurn === normalizedTurn;
+      const sameColor = currentColor === playerColor;
+      const sameDests = (!dests || dests.size === 0) && (!currentDests || currentDests.size === 0);
+
+      // Skip redundant ground.set render pass if turn, color, and dests already match
+      if (sameTurn && sameColor && sameDests) {
+        return;
+      }
+
       ground.set({
         turnColor: normalizedTurn,
         movable: {
@@ -331,17 +356,35 @@ export function createChessgroundBoard(targetElement, options = {}) {
 
     /**
      * Waits for any active piece animation on the board to finish before firing callback.
-     * Guarantees 60 FPS completion without cutting off or dropping frames.
+     * Dynamically checks remaining animation time and synchronizes with the exact frame
+     * where hardware-accelerated CSS transforms settle.
      * @param {Function} callback
      * @param {number} [maxTimeoutMs=500] - Safety timeout fallback
      */
     onAnimationComplete(callback, maxTimeoutMs = 500) {
       let resolved = false;
+      let timerId = null;
+
       const done = () => {
         if (resolved) return;
         resolved = true;
+        if (timerId) {
+          clearTimeout(timerId);
+          timerId = null;
+        }
         callback();
       };
+
+      const animState = ground.state.animation;
+      if (!animState || animState.enabled === false || !animState.current) {
+        done();
+        return;
+      }
+
+      const cur = animState.current;
+      const durationMs = cur.frequency ? (1 / cur.frequency) : (animState.duration || 250);
+      const elapsed = (typeof performance !== 'undefined' ? performance.now() : Date.now()) - (cur.start || 0);
+      const remainingMs = Math.max(0, durationMs - elapsed);
 
       const check = () => {
         if (resolved) return;
@@ -353,7 +396,8 @@ export function createChessgroundBoard(targetElement, options = {}) {
       };
 
       requestAnimationFrame(check);
-      setTimeout(done, maxTimeoutMs);
+      const safetyMs = Math.min(maxTimeoutMs, Math.ceil(remainingMs + 32));
+      timerId = setTimeout(done, safetyMs);
     },
 
     /**
@@ -406,13 +450,17 @@ export function createChessgroundBoard(targetElement, options = {}) {
 
     /**
      * Sets or clears last move highlighted squares.
+     * Skips redundant ground.set if current lastMove is already aligned.
      * @param {string|null} from
      * @param {string|null} to
      */
     setLastMove(from, to) {
+      const current = ground.state.lastMove;
       if (from && to) {
+        if (current && current[0] === from && current[1] === to) return;
         ground.set({ lastMove: [from, to] });
       } else {
+        if (!current || current.length === 0) return;
         ground.set({ lastMove: [] });
       }
     },
@@ -463,8 +511,10 @@ export function createChessgroundBoard(targetElement, options = {}) {
 
     /**
      * Clears all custom highlight markers from the board.
+     * Skips render if custom highlights are already empty.
      */
     clearCustomHighlights() {
+      if (customHighlights.size === 0) return;
       customHighlights.clear();
       ground.set({ highlight: { custom: new Map() } });
     },
@@ -482,17 +532,22 @@ export function createChessgroundBoard(targetElement, options = {}) {
 
     /**
      * Clears any pending premove on the board and removes premove highlight markers.
+     * Only invokes ground.set if premove highlight markers were actually present.
      */
     clearPremove() {
       if (typeof ground.cancelPremove === 'function') {
         ground.cancelPremove();
       }
+      let changed = false;
       for (const [key, val] of customHighlights.entries()) {
         if (val.includes('premove')) {
           customHighlights.delete(key);
+          changed = true;
         }
       }
-      ground.set({ highlight: { custom: new Map(customHighlights) } });
+      if (changed) {
+        ground.set({ highlight: { custom: new Map(customHighlights) } });
+      }
     },
 
     /**

@@ -1026,9 +1026,6 @@ export class TrainerView {
         // Premove was waiting in queue: execute hardware-accelerated piece glide onto target
         this.board.move(testMove.from, testMove.to);
       }
-      this.board.setLastMove(testMove.from, testMove.to);
-      this.board.clearCustomHighlights();
-
       // Resync FEN only on special moves (castling, promotion, en-passant) to avoid DOM teardown flicker
       if (testMove.flags && (testMove.flags.includes('k') || testMove.flags.includes('q') || testMove.flags.includes('p') || testMove.flags.includes('e'))) {
         this.board.setFen(this.game.fen());
@@ -1068,7 +1065,8 @@ export class TrainerView {
 
   /**
    * Executes opponent response with a smooth, hardware-accelerated piece glide.
-   * Handover to player and premove execution occurs synchronously with animation completion.
+   * Handover to player and premove execution occurs instantaneously (0ms) upon animation completion
+   * without intermediate board redraws or synchronous thread blocking.
    */
   playBlackResponse() {
     if (!this.currentLine || this.moveIndex >= this.currentLine.moves.length) {
@@ -1092,11 +1090,14 @@ export class TrainerView {
     // Hardware-accelerated piece glide with Chessground
     if (this.board) {
       this.board.move(oppMoveData.from, oppMoveData.to);
-      this.board.setLastMove(oppMoveData.from, oppMoveData.to);
     }
 
     // Precalculate legal move destinations in parallel during piece animation
-    const precomputedDests = calculateLegalDests(this.game);
+    // only if no premove is currently queued
+    let precomputedDests = null;
+    if (!this.hasPremoveQueued()) {
+      precomputedDests = calculateLegalDests(this.game);
+    }
 
     const onComplete = () => {
       // 1. Resync FEN only if a multi-piece special move occurred (castling or promotion)
@@ -1104,20 +1105,11 @@ export class TrainerView {
         this.board.setFen(this.game.fen());
       }
 
-      // 2. Handover turn to student
-      if (this.game.turn() === playerColor[0]) {
-        this.isBlackAnimating = false;
-      }
+      // Handover CPU animation lock
+      this.isBlackAnimating = false;
 
-      // 3. Atomically update board turn and legal move dests without redundant DOM redraws
-      const activeTurn = this.game.turn() === 'w' ? 'white' : 'black';
-      if (this.board && typeof this.board.syncTurnAndDests === 'function') {
-        this.board.syncTurnAndDests(activeTurn, precomputedDests, playerColor);
-      } else {
-        this.syncBoardState();
-      }
-
-      // 4. PREMOVE ZERO-STUTTER EXECUTION LIFECYCLE
+      // 2. ZERO-LATENCY PREMOVE EXECUTION (0ms Handshake)
+      // Check immediately for queued premove to bypass intermediate DOM redraws & dest calculations
       if (this.hasPremoveQueued()) {
         const nextPremove = (this.premoveQueue && this.premoveQueue.length > 0)
           ? this.premoveQueue.shift()
@@ -1127,11 +1119,25 @@ export class TrainerView {
 
         if (nextPremove && this.currentLine && this.moveIndex < this.currentLine.moves.length) {
           const executed = this.handleUserMove(nextPremove.from, nextPremove.to, nextPremove.promo || 'q', true);
-          if (executed) return;
+          if (executed) {
+            // Premove successfully executed! handleUserMove has seamlessly transitioned state
+            // and queued the next opponent response or completed the line.
+            return;
+          }
         }
       }
 
-      // 5. Asynchronously refresh peripheral UI decks (commentary, move tree) without blocking frame budget
+      // 3. If NO premove was queued (or premove was invalid):
+      // Hand control back to the user by synchronizing turn and legal dests in a single batch
+      const activeTurn = this.game.turn() === 'w' ? 'white' : 'black';
+      const dests = precomputedDests || calculateLegalDests(this.game);
+      if (this.board && typeof this.board.syncTurnAndDests === 'function') {
+        this.board.syncTurnAndDests(activeTurn, dests, playerColor);
+      } else {
+        this.syncBoardState();
+      }
+
+      // 4. Asynchronously refresh peripheral UI decks (commentary, move tree) outside frame budget
       requestAnimationFrame(() => this.updateUI());
 
       if (this.moveIndex >= this.currentLine.moves.length) {

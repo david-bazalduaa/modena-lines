@@ -10,6 +10,13 @@ export class ProgressRepository {
   constructor() {
     this.storageKey = APP_CONFIG.storageKey || 'modena_lines_v3_state';
     this.listeners = [];
+    this._pendingState = null;
+    this._saveTimer = null;
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('beforeunload', () => this.flushSave());
+      window.addEventListener('pagehide', () => this.flushSave());
+    }
   }
 
   /**
@@ -139,7 +146,13 @@ export class ProgressRepository {
   }
 
   loadFromLocalStorage() {
+    if (this._pendingState) {
+      return this._pendingState;
+    }
     try {
+      if (typeof localStorage === 'undefined') {
+        return this.getEmptyState();
+      }
       const raw = localStorage.getItem(this.storageKey);
       if (raw) {
         const parsed = JSON.parse(raw);
@@ -157,10 +170,39 @@ export class ProgressRepository {
   }
 
   saveToLocalStorage(state) {
-    try {
-      localStorage.setItem(this.storageKey, JSON.stringify(state));
-    } catch (e) {
-      console.warn('[ProgressRepository] LocalStorage write warning:', e);
+    this._pendingState = state;
+    if (this._saveTimer) return;
+
+    const performSave = () => {
+      this._saveTimer = null;
+      try {
+        if (this._pendingState && typeof localStorage !== 'undefined') {
+          localStorage.setItem(this.storageKey, JSON.stringify(this._pendingState));
+        }
+      } catch (e) {
+        console.warn('[ProgressRepository] LocalStorage write warning:', e);
+      }
+    };
+
+    if (typeof requestAnimationFrame !== 'undefined') {
+      this._saveTimer = requestAnimationFrame(performSave);
+    } else {
+      this._saveTimer = setTimeout(performSave, 0);
+    }
+  }
+
+  flushSave() {
+    if (this._saveTimer) {
+      if (typeof cancelAnimationFrame !== 'undefined') {
+        cancelAnimationFrame(this._saveTimer);
+      }
+      clearTimeout(this._saveTimer);
+      this._saveTimer = null;
+    }
+    if (this._pendingState && typeof localStorage !== 'undefined') {
+      try {
+        localStorage.setItem(this.storageKey, JSON.stringify(this._pendingState));
+      } catch (e) {}
     }
   }
 
