@@ -138,7 +138,9 @@ export class TrainerView {
   }
 
   /**
-   * Retrieves the next available line index from the active mode's non-repeating queue.
+   * Retrieves the next available line index in strictly linear sequential order (0 -> 1 -> 2 -> 3...).
+   * Advances deterministically to currentLineIndex + 1 without erratic back-tracking or rogue resets.
+   * @returns {number} Next sequential line index, or -1 when all lines in the pool are completed.
    */
   getNextLineIndexFromQueue() {
     const poolLines = this.getActivePoolLines();
@@ -146,24 +148,43 @@ export class TrainerView {
       return -1;
     }
 
-    if (this.lineQueue.length === 0) {
-      this.initLineQueue();
-    }
-
-    // Check if the whole active pool loop has been finished
+    // Check if all lines in the active pool have been completed in this session
     if (this.completedInLoop.size >= poolLines.length) {
       return -1;
     }
 
     // Current line index within the active pool
     const currentIdx = poolLines.findIndex(l => l.id === this.currentLine?.id);
-    
-    // Find next index in queue (avoiding immediate repeat if possible)
-    let nextIndexPos = this.lineQueue.findIndex(idx => idx !== currentIdx);
-    if (nextIndexPos === -1) nextIndexPos = 0;
 
-    const [nextIndex] = this.lineQueue.splice(nextIndexPos, 1);
-    return nextIndex !== undefined ? nextIndex : -1;
+    // 1. Strict linear progression: next immediate sequential line
+    const candidateIdx = currentIdx >= 0 ? currentIdx + 1 : 0;
+
+    // Advance to next sequential line if within bounds and not already completed
+    if (candidateIdx < poolLines.length && !this.completedInLoop.has(poolLines[candidateIdx].id)) {
+      this.lineQueue = this.lineQueue.filter(idx => idx !== candidateIdx);
+      return candidateIdx;
+    }
+
+    // 2. Check forward sequentially for any remaining uncompleted line
+    if (candidateIdx < poolLines.length) {
+      for (let i = candidateIdx; i < poolLines.length; i++) {
+        if (!this.completedInLoop.has(poolLines[i].id)) {
+          this.lineQueue = this.lineQueue.filter(idx => idx !== i);
+          return i;
+        }
+      }
+    }
+
+    // 3. Loop back to check if any earlier skipped lines remain
+    for (let i = 0; i < poolLines.length; i++) {
+      if (!this.completedInLoop.has(poolLines[i].id)) {
+        this.lineQueue = this.lineQueue.filter(idx => idx !== i);
+        return i;
+      }
+    }
+
+    // All lines in the active pool have been completed
+    return -1;
   }
 
   /**
