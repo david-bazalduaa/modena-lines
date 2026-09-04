@@ -404,7 +404,7 @@ export class TrainerView {
     if (this._resizeObserverBound) return;
     this._resizeObserverBound = true;
 
-    if (window.ResizeObserver) {
+    if (typeof window !== 'undefined' && window.ResizeObserver) {
       this.resizeObserver = new ResizeObserver(() => {
         if (this.board && typeof this.board.resize === 'function') {
           requestAnimationFrame(() => {
@@ -420,12 +420,15 @@ export class TrainerView {
       }
     }
 
-    $(window).on('resize orientationchange', () => {
-      if (this.board && typeof this.board.resize === 'function') {
-        this.board.resize();
-      }
-    });
+    if (typeof window !== 'undefined') {
+      $(window).on('resize orientationchange', () => {
+        if (this.board && typeof this.board.resize === 'function') {
+          this.board.resize();
+        }
+      });
+    }
   }
+
 
   initControls() {
     $('#btn-start, #btn-reset, #btn-action-reset, #btn-desktop-reset').off('click').on('click', () => this.resetDrill());
@@ -524,10 +527,42 @@ export class TrainerView {
   }
 
   /**
+   * Cleans up active training session timers, streaks, and premoves upon route exit.
+   */
+  teardownActiveSession() {
+    this.cancelAutoAdvance();
+    if (this.opponentMoveTimeout) {
+      clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = null;
+    }
+    this.isBlackAnimating = false;
+    this.clearPremove();
+    this.isBlindStreak = false;
+    this.streakScore = 0;
+    this.currentMode = 'learn';
+    this.completedInLoop.clear();
+    this.closeModePopover();
+    $('#board').css('pointer-events', '');
+  }
+
+  /**
    * Loads a Sub-Course module into the trainer view with isolated line pools.
+   * Deterministically resets the training mode to default 'learn' on every sub-module entry.
    */
   loadSubCourse(subCourse, lineIndex = 0, parentCourse = null) {
     this.cancelAutoAdvance();
+    if (this.opponentMoveTimeout) {
+      clearTimeout(this.opponentMoveTimeout);
+      this.opponentMoveTimeout = null;
+    }
+    this.isBlackAnimating = false;
+    this.clearPremove();
+
+    // Deterministically enforce reset to default 'learn' mode upon entering any sub-module
+    this.isBlindStreak = false;
+    this.streakScore = 0;
+    this.currentMode = 'learn';
+
     this.currentSubCourse = subCourse;
     this.currentCourse = parentCourse || (subCourse ? getCourseById(subCourse.courseId) : null);
 
@@ -536,21 +571,16 @@ export class TrainerView {
     this.completedInLoop.clear();
     this.initLineQueue();
 
+    // Synchronize UI labels for default Learn mode
+    $('#bottom-mode-label').text('Learn');
+    $('#coach-mode-badge').text('Active Recall');
+
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
 
-    if (this.currentMode === 'practice') {
-      const learned = this.getLearnedLines();
-      if (learned.length === 0) {
-        this.renderPracticeEmptyState();
-        return;
-      }
-      const targetLine = learned[lineIndex] || learned[0];
-      this.loadLine(targetLine, 'practice');
-    } else {
-      this.loadLine(subCourse.lines[lineIndex], this.currentMode);
-    }
+    this.loadLine(subCourse.lines[lineIndex], 'learn');
   }
+
 
   loadCourse(course, lineIndex = 0) {
     if (course && course.subCourses && course.subCourses.length > 0) {

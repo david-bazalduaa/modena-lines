@@ -13,7 +13,8 @@ let auth = null;
 let db = null;
 let analytics = null;
 
-const isConfigured = Boolean(import.meta.env.VITE_FIREBASE_API_KEY) && isFirebaseConfigured();
+const isConfigured = Boolean(import.meta.env?.VITE_FIREBASE_API_KEY) && isFirebaseConfigured();
+
 
 if (isConfigured) {
   try {

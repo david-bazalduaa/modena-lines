@@ -149,6 +149,9 @@ class App {
    */
   showCatalogView() {
     this.currentView = 'catalog';
+    if (this.trainer && typeof this.trainer.teardownActiveSession === 'function') {
+      this.trainer.teardownActiveSession();
+    }
     $('body').removeClass('study-active');
     $('#mobile-trainer-toolbar').addClass('hidden');
 
@@ -178,6 +181,9 @@ class App {
    */
   showSubCourseHub(course) {
     this.currentView = 'subcourse';
+    if (this.trainer && typeof this.trainer.teardownActiveSession === 'function') {
+      this.trainer.teardownActiveSession();
+    }
     $('body').removeClass('study-active');
     $('#mobile-trainer-toolbar').addClass('hidden');
 
@@ -194,6 +200,7 @@ class App {
 
     // Show Level 2 Sub-Course Hub
     $('#subcourse-view').removeClass('hidden').addClass('active');
+
 
     this.updateHeaderMetrics();
     renderSubCourseHub(
