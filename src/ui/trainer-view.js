@@ -18,6 +18,7 @@ import {
 import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
+import { DrillDeckController } from '../engine/drill-controller.js';
 
 /**
  * Strips all emoji characters from a string for crisp, pure text rendering.
@@ -59,6 +60,7 @@ export class TrainerView {
     this.completedInLoop = new Set();
     this.currentAttemptRegistered = false;
     this.sessionAttempts = 0;
+    this.drillDeckController = new DrillDeckController();
 
     // Unified move execution alias
     this.attemptMove = this.handleUserMove.bind(this);
@@ -557,6 +559,7 @@ export class TrainerView {
     this.streakScore = 0;
     this.currentMode = 'learn';
     this.completedInLoop.clear();
+    this.drillDeckController.reset();
     this.closeModePopover();
     $('#board').css('pointer-events', '');
   }
@@ -578,13 +581,12 @@ export class TrainerView {
     this.isBlindStreak = false;
     this.streakScore = 0;
     this.currentMode = 'learn';
-
+    this.completedInLoop.clear();
+    this.drillDeckController.reset();
     this.currentSubCourse = subCourse;
     this.currentCourse = parentCourse || (subCourse ? getCourseById(subCourse.courseId) : null);
 
     if (!subCourse || !subCourse.lines || subCourse.lines.length === 0) return;
-
-    this.completedInLoop.clear();
     this.initLineQueue();
 
     // Synchronize UI labels for default Learn mode
@@ -822,6 +824,7 @@ export class TrainerView {
 
   /**
    * Starts Blind Streak mode exclusively isolated to the active sub-course line pool.
+   * In Drill Mode, utilizes the Fisher-Yates round-robin deck cycle for mastered lines.
    */
   startBlindStreak(subCourse, mode) {
     this.cancelAutoAdvance();
@@ -836,21 +839,26 @@ export class TrainerView {
         this.currentCourse = getCourseById(subCourse.courseId);
       }
     }
-    const lines = activePool ? (activePool.lines || []) : [];
 
     if (mode === 'drill') {
-      this.blindPool = lines.filter(line => userProgress.isLineCompleted(line));
+      this.drillDeckController.startDeck(activePool, userProgress);
+      const progressInfo = this.drillDeckController.getProgressInfo();
+      if (progressInfo.isFallback) {
+        this.showToast('Exploration Mode: No mastered lines yet. Shuffling all sub-course lines!', 'warning');
+      } else {
+        this.showToast(`Drill Mode Started • Round 1 (${progressInfo.total} Mastered Lines)`, 'success');
+      }
     } else {
+      const lines = activePool ? (activePool.lines || []) : [];
       this.blindPool = lines;
-    }
-
-    if (this.blindPool.length === 0) {
-      alert('No learned lines available for this mode in this sub-course yet!');
-      this.isBlindStreak = false;
-      this.currentMode = 'learn';
-      this.renderModeDeckPanel();
-      this.resetDrill();
-      return;
+      if (this.blindPool.length === 0) {
+        alert('No lines available for this mode in this sub-course yet!');
+        this.isBlindStreak = false;
+        this.currentMode = 'learn';
+        this.renderModeDeckPanel();
+        this.resetDrill();
+        return;
+      }
     }
 
     this.pickNextBlindLine();
@@ -859,18 +867,36 @@ export class TrainerView {
   pickNextBlindLine() {
     this.cancelAutoAdvance();
     this.currentAttemptRegistered = false;
-    if (!this.blindPool || this.blindPool.length === 0) {
-      const activePool = this.currentSubCourse || this.currentCourse;
-      const lines = activePool ? (activePool.lines || []) : [];
-      if (this.currentMode === 'drill') {
-        this.blindPool = lines.filter(line => userProgress.isLineCompleted(line));
-      } else {
-        this.blindPool = lines;
+
+    const activePool = this.currentSubCourse || this.currentCourse;
+
+    if (this.currentMode === 'drill') {
+      const drillItem = this.drillDeckController.popNextLine(activePool, userProgress);
+      if (!drillItem || !drillItem.line) {
+        this.showToast('No lines available for Drill Mode!', 'error');
+        this.isBlindStreak = false;
+        this.currentMode = 'learn';
+        this.renderModeDeckPanel();
+        this.resetDrill();
+        return;
       }
+
+      if (drillItem.isNewRound) {
+        this.showToast(`Round ${drillItem.round} Started! Fresh Mastered Line Shuffle.`, 'success');
+      }
+
+      this.initTrainingSession(drillItem.line, { isBlind: true });
+      return;
+    }
+
+    // Arena Mode or generic blind mode
+    if (!this.blindPool || this.blindPool.length === 0) {
+      const lines = activePool ? (activePool.lines || []) : [];
+      this.blindPool = lines;
     }
 
     if (!this.blindPool || this.blindPool.length === 0) {
-      alert('No learned lines available for this mode in this sub-course yet!');
+      alert('No lines available for this mode in this sub-course yet!');
       this.isBlindStreak = false;
       this.currentMode = 'learn';
       this.renderModeDeckPanel();
@@ -887,6 +913,10 @@ export class TrainerView {
     this.currentAttemptRegistered = false;
     if (this.isBlindStreak) {
       this.streakScore = 0;
+      if (this.currentMode === 'drill') {
+        const activePool = this.currentSubCourse || this.currentCourse;
+        this.drillDeckController.startDeck(activePool, userProgress);
+      }
       this.pickNextBlindLine();
       return;
     }
@@ -1138,7 +1168,12 @@ export class TrainerView {
     if (this.isBlindStreak) {
       this.streakScore++;
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
-      this.showToast(`Line Cleared! Continuing Survival Streak (${this.streakScore} ${lineUnit})!`, 'success');
+      if (this.currentMode === 'drill') {
+        const info = this.drillDeckController.getProgressInfo();
+        this.showToast(`Line Cleared! Round ${info.round} (${info.index}/${info.total})`, 'success');
+      } else {
+        this.showToast(`Line Cleared! Continuing Survival Streak (${this.streakScore} ${lineUnit})!`, 'success');
+      }
       this.updateUI();
       setTimeout(() => {
         this.pickNextBlindLine();
@@ -1246,8 +1281,13 @@ export class TrainerView {
 
     if (this.isBlindStreak) {
       if (this.currentMode === 'drill') {
-        $('#active-line-category').text('DRILL MODE');
-        $('#active-line-title').text('Blind Streak Challenge');
+        const progressInfo = this.drillDeckController.getProgressInfo();
+        $('#active-line-category').text(`DRILL MODE • ${progressInfo.label}`);
+        $('#active-line-title').text(
+          progressInfo.isFallback
+            ? 'Exploration Round (0 Mastered Lines)'
+            : 'Mastered Deck Shuffle'
+        );
       } else {
         $('#active-line-category').text('ARENA MODE');
         $('#active-line-title').text('Master Survival Challenge');
@@ -1307,11 +1347,21 @@ export class TrainerView {
 
     // Calculate line-based progress metrics across the active Sub-Course session
     if (this.isBlindStreak) {
-      const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
-      $('#progress-label').text(`Survival Streak: ${this.streakScore} ${lineUnit}`);
-      $('#progress-percent').text(`${this.streakScore} ${lineUnit} Streak`);
-      const streakPercent = Math.min(100, this.streakScore * 20);
-      $('#progress-bar').css('width', `${streakPercent}%`);
+      if (this.currentMode === 'drill') {
+        const progressInfo = this.drillDeckController.getProgressInfo();
+        const deckPercent = progressInfo.total > 0
+          ? Math.round((progressInfo.index / progressInfo.total) * 100)
+          : 0;
+        $('#progress-label').text(`Deck Progress: Line ${progressInfo.index} / ${progressInfo.total} (Round ${progressInfo.round})`);
+        $('#progress-percent').text(`${deckPercent}% Deck Complete`);
+        $('#progress-bar').css('width', `${deckPercent}%`);
+      } else {
+        const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
+        $('#progress-label').text(`Survival Streak: ${this.streakScore} ${lineUnit}`);
+        $('#progress-percent').text(`${this.streakScore} ${lineUnit} Streak`);
+        const streakPercent = Math.min(100, this.streakScore * 20);
+        $('#progress-bar').css('width', `${streakPercent}%`);
+      }
     } else if (this.currentMode === 'practice') {
       const learnedLines = this.getLearnedLines();
       const completedPracticeLines = this.completedInLoop.size;
@@ -1356,7 +1406,16 @@ export class TrainerView {
     } else if (this.isBlindStreak) {
       const lineUnit = this.streakScore === 1 ? 'Line' : 'Lines';
       const sideLabel = playerColor === 'black' ? "Black's defense" : "White's repertoire";
-      commentary = `Survival Streak: <strong>${this.streakScore} ${lineUnit}</strong>. Complete ${sideLabel} line without mistakes!`;
+      if (this.currentMode === 'drill') {
+        const progressInfo = this.drillDeckController.getProgressInfo();
+        if (progressInfo.isFallback) {
+          commentary = `Drilling in <strong>Exploration Mode</strong> (no mastered lines yet). Master lines in Learn Mode to unlock advanced randomized recall!`;
+        } else {
+          commentary = `Round ${progressInfo.round} • Line ${progressInfo.index} of ${progressInfo.total} (Non-repeating shuffle). Complete ${sideLabel} move without mistakes!`;
+        }
+      } else {
+        commentary = `Survival Streak: <strong>${this.streakScore} ${lineUnit}</strong>. Complete ${sideLabel} line without mistakes!`;
+      }
     } else {
       commentary = this.currentLine.annotations[this.moveIndex] || this.currentLine.annotations[this.moveIndex - 1] || this.currentLine.fullAnnotation;
       if (this.moveIndex >= this.currentLine.totalHalfMoves) {
