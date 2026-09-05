@@ -5,6 +5,11 @@
    ============================================================ */
 
 import { Chess } from 'chess.js';
+import { giuocoPianoLines } from '../src/data/lines/italian-giuoco.js';
+import { evansGambitLines } from '../src/data/lines/italian-evans.js';
+import { twoKnightsLines } from '../src/data/lines/italian-two-knights.js';
+import { pianissimoLines } from '../src/data/lines/italian-pianissimo.js';
+
 import { londonClassicalLines } from '../src/data/lines/london-classical.js';
 import { londonKingsIndianLines } from '../src/data/lines/london-kings-indian.js';
 import { londonQueensIndianLines } from '../src/data/lines/london-queens-indian.js';
@@ -32,6 +37,13 @@ import { caroKannAdvanceLines } from '../src/data/lines/caro-kann-advance.js';
 import { caroKannModernLines } from '../src/data/lines/caro-kann-modern.js';
 import { caroKannTwoKnightsLines } from '../src/data/lines/caro-kann-two-knights.js';
 import { caroKannPanovLines } from '../src/data/lines/caro-kann-panov.js';
+
+const italianLines = [
+  ...giuocoPianoLines,
+  ...evansGambitLines,
+  ...twoKnightsLines,
+  ...pianissimoLines
+];
 
 const londonLines = [
   ...londonClassicalLines,
@@ -74,6 +86,7 @@ const caroKannLines = [
 console.log(`\n========================================`);
 console.log(`VALIDATING MASTER OPENING REPERTOIRES`);
 console.log(`========================================`);
+console.log(`Italian Game:     ${italianLines.length} lines (Requirement: >= 25)`);
 console.log(`London System:    ${londonLines.length} lines (Requirement: >= 25)`);
 console.log(`Pirc Defense:     ${pircLines.length} lines (Requirement: >= 25)`);
 console.log(`Ruy Lopez:        ${ruyLopezLines.length} lines (Requirement: >= 25)`);
@@ -155,13 +168,14 @@ function validateRepertoire(name, lines, expectedSide) {
   });
 }
 
+validateRepertoire('Italian Game', italianLines, 'white');
 validateRepertoire('London System', londonLines, 'white');
 validateRepertoire('Pirc Defense', pircLines, 'black');
 validateRepertoire('Ruy Lopez', ruyLopezLines, 'white');
 validateRepertoire('Sicilian Defense', sicilianLines, 'black');
 validateRepertoire('Caro-Kann Defense', caroKannLines, 'black');
 
-const totalLines = londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length;
+const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length;
 
 console.log(`\n========================================`);
 if (errors === 0) {
