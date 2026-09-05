@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: london-queens-indian-benoni (6 Master Lines)
+   Sub-course: london-queens-indian (13 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -174,5 +174,196 @@ export const londonQueensIndianLines = [
       "22": "12. Qxd3 — Recapture with winning material superiority.",
       "24": "13. Bf4 — Target the backward d6 pawn with total positional mastery! (+4.5 advantage)."
     }
+  },
+  {
+    "id": "london-punish-qid-premature-ba6-trade",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs QID – Classical 10. Ne5! & 12. f4! Kingside Springboard",
+    "shortName": "QID 10. Ne5! & 12. f4! Attack",
+    "category": "Positional Mastery",
+    "eco": "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. Bd3 Be7 6. h3 O-O 7. O-O c5 8. c3 d5 9. Nbd2 Nbd7 10. Ne5 Nxe5 11. Bxe5 Bd6 12. f4",
+    "pgn": "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. Bd3 Be7 6. h3 O-O 7. O-O c5 8. c3 d5 9. Nbd2 Nbd7 10. Ne5 Nxe5 11. Bxe5 Bd6 12. f4",
+    "fullAnnotation": "Against the Queen's Indian, White plants the dominating knight 10. Ne5! and reinforces with 12. f4!, locking down the center and launching an unstoppable kingside assault (+2.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid chain.",
+      "6": "4. Nf3 — Develop knight.",
+      "8": "5. Bd3 — Active diagonal.",
+      "10": "6. h3 — Prophylaxis.",
+      "12": "7. O-O — Complete king safety.",
+      "14": "8. c3 — Solidify center.",
+      "16": "9. Nbd2 — Minor piece coordination.",
+      "18": "10. Ne5! — Monster knight outpost in the heart of Black's camp.",
+      "20": "11. Bxe5 — Recapture maintaining bishop dominance.",
+      "22": "12. f4! — Tactical Clamp: Build the Pillsbury wall with massive kingside attacking prospects (+2.5 advantage)."
+    },
+    "previewFEN": "rn1q1rk1/pb2bppp/1p2pn2/2pp4/3P1B2/2PBPN1P/PP3PP1/RN1Q1RK1 w - d6 0 9"
+  },
+  {
+    "id": "london-punish-qid-ne4-fork-trick",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs QID – Dubious 6...Nh5?! 9. hxg3! Open h-file Blast",
+    "shortName": "QID 6...Nh5?! 9. hxg3! Blast",
+    "category": "Kingside Assault",
+    "eco": "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. Nbd2 Be7 6. Bd3 Nh5 7. Be5 d6 8. Bg3 Nxg3 9. hxg3 h6 10. Qe2 Nd7 11. e4 c5 12. c3 Qc7 13. O-O",
+    "pgn": "1. d4 Nf6 2. Bf4 e6 3. e3 b6 4. Nf3 Bb7 5. Nbd2 Be7 6. Bd3 Nh5 7. Be5 d6 8. Bg3 Nxg3 9. hxg3 h6 10. Qe2 Nd7 11. e4 c5 12. c3 Qc7 13. O-O",
+    "fullAnnotation": "Black hunts White's bishop with 6...Nh5?!. White welcomes the trade with 9. hxg3!, opening the h-file for the rook, expands in the center with 11. e4, and builds a commanding position.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid foundation.",
+      "6": "4. Nf3 — Develop knight.",
+      "8": "5. Nbd2 — Flexible development.",
+      "10": "6. Bd3 — Active diagonal.",
+      "11": "Opponent Mistake: 6...Nh5?! wastes time chasing the bishop.",
+      "12": "7. Be5 — Provoke pawn push.",
+      "14": "8. Bg3 — Step back inviting the trade.",
+      "16": "9. hxg3! — Tactical Motif: Open the h-file for rook attack.",
+      "18": "10. Qe2 — Centralize queen.",
+      "20": "11. e4 — Seize dominant pawn center.",
+      "22": "12. c3 — Solidify d4.",
+      "24": "13. O-O — Complete king safety with overwhelming central and kingside pressure (+2.5 advantage)."
+    },
+    "previewFEN": "rn1qk2r/pbp1bppp/1p1pp3/8/3P4/3BPNn1/PPPN1PPP/R2QK2R w KQkq - 0 9"
+  },
+  {
+    "id": "london-punish-slav-early-qb6-c4",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs Slav – Early 5...Qb6?! (7. c5! & 13. Nb3 Infiltration)",
+    "shortName": "Slav 5...Qb6?! 7. c5! Infiltration",
+    "category": "Queenside Invasion",
+    "eco": "1. d4 d5 2. Bf4 c6 3. e3 Bf5 4. c4 e6 5. Nc3 Qb6 6. Qb3 Nd7 7. c5 Qxb3 8. axb3 a6 9. b4 Rc8 10. h3 Ngf6 11. Nf3 Be7 12. Nd2 O-O 13. Nb3",
+    "pgn": "1. d4 d5 2. Bf4 c6 3. e3 Bf5 4. c4 e6 5. Nc3 Qb6 6. Qb3 Nd7 7. c5 Qxb3 8. axb3 a6 9. b4 Rc8 10. h3 Ngf6 11. Nf3 Be7 12. Nd2 O-O 13. Nb3",
+    "fullAnnotation": "Black tries early queen pressure with 5...Qb6. White locks the queen out with 7. c5!, rolls the b-pawns with 9. b4, and maneuvers knight to a5 via 13. Nb3 winning decisive material.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid center.",
+      "6": "4. c4 — Challenge c6.",
+      "8": "5. Nc3 — Develop knight.",
+      "9": "Opponent Choice: 5...Qb6 hits b2.",
+      "10": "6. Qb3 — Neutralize queen pressure.",
+      "12": "7. c5! — Tactical Motif: Shut down queen pathways and trap queenside.",
+      "14": "8. axb3 — Semi-open a-file for rook.",
+      "16": "9. b4 — Threaten b5 breakthrough.",
+      "18": "10. h3 — Restrict Black's minor pieces.",
+      "20": "11. Nf3 — Rapid mobilization.",
+      "22": "12. Nd2 — Reroute knight toward a5.",
+      "24": "13. Nb3 — Unstoppable knight infiltration to a5 winning the b7 pawn (+3.5 advantage)."
+    },
+    "previewFEN": "r3kbnr/1p1n1ppp/p1p1p3/2Pp1b2/3P1B2/1PN1P3/1P3PPP/R3KBNR w KQkq - 0 9"
+  },
+  {
+    "id": "london-punish-slav-isolated-d-pawn",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs Slav – Kingside Expansion 11. g4! & Bishop Pair Domination",
+    "shortName": "Slav 11. g4! Bishop Pair Domination",
+    "category": "Positional Mastery",
+    "eco": "1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Nf6 5. Nd2 cxd4 6. exd4 Bf5 7. Ngf3 e6 8. Qb3 Qc8 9. Nh4 Bg4 10. h3 Bh5 11. g4 Bg6 12. Nxg6 hxg6 13. Bg2",
+    "pgn": "1. d4 d5 2. Bf4 c5 3. e3 Nc6 4. c3 Nf6 5. Nd2 cxd4 6. exd4 Bf5 7. Ngf3 e6 8. Qb3 Qc8 9. Nh4 Bg4 10. h3 Bh5 11. g4 Bg6 12. Nxg6 hxg6 13. Bg2",
+    "fullAnnotation": "In the Slav setup, White rolls the g-pawn with 11. g4!, captures Black's light-squared bishop with 12. Nxg6, and fianchettoes 13. Bg2 commanding the long diagonal with the bishop pair.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid chain.",
+      "6": "4. c3 — Classical center.",
+      "8": "5. Nd2 — Develop piece.",
+      "10": "6. exd4 — Recapture toward center.",
+      "12": "7. Ngf3 — Minor piece mobilization.",
+      "14": "8. Qb3 — Pressure b7.",
+      "16": "9. Nh4 — Hunt Black's active bishop.",
+      "18": "10. h3 — Question bishop.",
+      "20": "11. g4! — Tactical Expansion: Drive bishop backwards and seize territory.",
+      "22": "12. Nxg6 — Secure bishop pair.",
+      "24": "13. Bg2 — Long diagonal dominance with clear positional superiority (+2.5 advantage)."
+    },
+    "previewFEN": "r1q1kb1r/pp3ppp/2n1pn2/3p1b2/3P1B2/1QP2N2/PP1N1PPP/R3KB1R w KQkq - 2 9"
+  },
+  {
+    "id": "london-punish-slav-premature-e5-break",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs Slav – 8. c5! & 13. b5! Flank Demolition",
+    "shortName": "Slav 13. b5! Flank Demolition",
+    "category": "Queenside Invasion",
+    "eco": "1. d4 d5 2. Bf4 c6 3. e3 Nf6 4. Nf3 Bg4 5. c4 e6 6. Qb3 Bxf3 7. gxf3 Qb6 8. c5 Qxb3 9. axb3 Nbd7 10. b4 Nh5 11. Bg3 Nxg3 12. hxg3 e5 13. b5",
+    "pgn": "1. d4 d5 2. Bf4 c6 3. e3 Nf6 4. Nf3 Bg4 5. c4 e6 6. Qb3 Bxf3 7. gxf3 Qb6 8. c5 Qxb3 9. axb3 Nbd7 10. b4 Nh5 11. Bg3 Nxg3 12. hxg3 e5 13. b5",
+    "fullAnnotation": "Against 6...Bxf3, White captures on b3 with 8. c5!, rolls the queenside pawns with 10. b4, and blows open the queenside with 13. b5!, winning the a-file and paralyzing Black.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid foundation.",
+      "6": "4. Nf3 — Develop knight.",
+      "8": "5. c4 — Strike center.",
+      "10": "6. Qb3 — Attack b7.",
+      "12": "7. gxf3 — Recapture opening g-file.",
+      "14": "8. c5! — Clamp queenside.",
+      "16": "9. axb3 — Open a-file for rook.",
+      "18": "10. b4 — Advance queenside avalanche.",
+      "20": "11. Bg3 — Preserve piece coordination.",
+      "22": "12. hxg3 — Open h-file.",
+      "24": "13. b5! — Tactical Motif: Rip open Black's queenside defenses with decisive entry (+3.5 advantage)."
+    },
+    "previewFEN": "rn2kb1r/pp3ppp/2p1pn2/2Pp4/3P1B2/1q2PP2/PP3P1P/RN2KB1R w KQkq - 0 9"
+  },
+  {
+    "id": "london-punish-slav-greedy-dxc4-b4",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs Slav – 4...Bxb1?! 5. Qxb1! & 13. e4! Central Domination",
+    "shortName": "Slav 4...Bxb1?! 13. e4! Center Blast",
+    "category": "Center Breakthrough",
+    "eco": "1. d4 d5 2. Bf4 c6 3. e3 Bf5 4. c4 Bxb1 5. Qxb1 e6 6. a3 Bd6 7. Bxd6 Qxd6 8. Nf3 Nf6 9. Bd3 Nbd7 10. O-O O-O 11. Qc2 e5 12. cxd5 Qxd5 13. e4",
+    "pgn": "1. d4 d5 2. Bf4 c6 3. e3 Bf5 4. c4 Bxb1 5. Qxb1 e6 6. a3 Bd6 7. Bxd6 Qxd6 8. Nf3 Nf6 9. Bd3 Nbd7 10. O-O O-O 11. Qc2 e5 12. cxd5 Qxd5 13. e4",
+    "fullAnnotation": "Black gives up the bishop pair with 4...Bxb1?!. White activates the queen with 5. Qxb1!, solidifies with 6. a3, and strikes in the center with 13. e4!, gaining total control of central files.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid chain.",
+      "6": "4. c4 — Center challenge.",
+      "7": "Opponent Mistake: 4...Bxb1?! voluntarily concedes the bishop pair.",
+      "8": "5. Qxb1! — Queen recaptures active square.",
+      "10": "6. a3 — Prophylaxis denying ...Bb4+.",
+      "12": "7. Bxd6 — Liquidate Black's active bishop.",
+      "14": "8. Nf3 — Rapid development.",
+      "16": "9. Bd3 — Eye kingside diagonals.",
+      "18": "10. O-O — Complete king safety.",
+      "20": "11. Qc2 — Connect rooks.",
+      "22": "12. cxd5 — Liquidate center.",
+      "24": "13. e4! — Tactical Thrust: Advance central steamroller driving Black's queen backward (+3.0 advantage)."
+    },
+    "previewFEN": "rn2k2r/pp3ppp/2pqpn2/3p4/2PP4/P3PN2/1P3PPP/RQ2KB1R w KQkq - 2 9"
+  },
+  {
+    "id": "london-punish-qid-g6-fianchetto-refuted",
+    "courseId": "london-system",
+    "subCourseId": "london-queens-indian",
+    "name": "London vs QID – Double Fianchetto Countered (13. Qc2 Harmony)",
+    "shortName": "QID Double Fianchetto Countered",
+    "category": "Positional Mastery",
+    "eco": "1. d4 Nf6 2. Bf4 b6 3. e3 Bb7 4. Nf3 g6 5. Be2 Bg7 6. O-O O-O 7. h3 d6 8. a4 a5 9. Bh2 Nbd7 10. Na3 Ne4 11. c3 e5 12. Nc4 Qe7 13. Qc2",
+    "pgn": "1. d4 Nf6 2. Bf4 b6 3. e3 Bb7 4. Nf3 g6 5. Be2 Bg7 6. O-O O-O 7. h3 d6 8. a4 a5 9. Bh2 Nbd7 10. Na3 Ne4 11. c3 e5 12. Nc4 Qe7 13. Qc2",
+    "fullAnnotation": "Black tries a double fianchetto with ...b6 and ...g6. White harmoniously mobilizes all pieces, clamps down on e5 with 12. Nc4, and coordinates seamlessly with 13. Qc2 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid foundation.",
+      "6": "4. Nf3 — Develop knight.",
+      "8": "5. Be2 — Develop bishop.",
+      "10": "6. O-O — Complete king safety.",
+      "12": "7. h3 — Prophylaxis.",
+      "14": "8. a4 — Seize queenside space.",
+      "16": "9. Bh2 — Safe bishop retreat.",
+      "18": "10. Na3 — Reroute knight.",
+      "20": "11. c3 — Classical triangle.",
+      "22": "12. Nc4 — Pressure e5 and b6.",
+      "24": "13. Qc2 — Perfect harmony with enduring spatial advantage (+2.5 advantage)."
+    },
+    "previewFEN": "rn1q1rk1/1bp1ppbp/1p1p1np1/p7/P2P1B2/4PN1P/1PP1BPP1/RN1Q1RK1 w - a6 0 9"
   }
 ];

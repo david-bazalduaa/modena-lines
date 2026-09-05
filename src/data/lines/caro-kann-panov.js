@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: caro-kann-panov-attack (5 Master Lines)
+   Sub-course: caro-kann-panov (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -64,7 +64,8 @@ export const caroKannPanovLines = [
       "29": "15...Qa5! — Absolute pin on the c3 knight.",
       "31": "16...Nxc3 — Eliminate defender.",
       "33": "17...Qa1+! — Tactical Punishment: Skewer king and h1 rook; White loses decisive material."
-    }
+    },
+    "previewFEN": "r1bq1rk1/pp2bppp/2n1pn2/2Pp2B1/3P4/2N2N2/PP3PPP/R2QKB1R w KQ - 1 9"
   },
   {
     "id": "caro-kann-punish-panov-isolated-d4",
@@ -93,7 +94,8 @@ export const caroKannPanovLines = [
       "27": "14...g6! — Nullify White's Qh7 mate battery.",
       "29": "15...Nd5! — Tactical Punishment: Re-establish the iron blockade on d5.",
       "31": "16...Re8 — Calm rook step; White's isolated d4 pawn is a permanent losing liability."
-    }
+    },
+    "previewFEN": "r1bqk2r/pp2bppp/2n1p3/3n4/3P4/2NB1N2/PP3PPP/R1BQK2R w KQkq - 2 9"
   },
   {
     "id": "caro-kann-punish-panov-greedy-cxd5",
@@ -123,7 +125,8 @@ export const caroKannPanovLines = [
       "27": "14...Qxd5 — Central queen dominance.",
       "29": "15...exd5 — Solid central pawn.",
       "31": "16...Ke6 — Active king dominates White's shattered pawns."
-    }
+    },
+    "previewFEN": "r2qkb1r/pp2pppp/2n5/3n4/3P4/1QN2b2/PP3PPP/R1B1KB1R w KQkq - 0 9"
   },
   {
     "id": "caro-kann-punish-panov-g6-fianchetto",
@@ -155,6 +158,163 @@ export const caroKannPanovLines = [
       "31": "16...Nc4! — Tactical Motif: Monster knight outpost on c4.",
       "33": "17...Bxf6 — Secure bishop pair.",
       "35": "18...Rfe8 — Dominate the open e-file with total board control."
-    }
+    },
+    "previewFEN": "r1bq1rk1/pp1nppbp/5np1/3P4/3P4/1QN5/PP2BPPP/R1B1K1NR w KQ - 3 9"
+  },
+  {
+    "id": "caro-punish-panov-isolated-d4-blockade",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov",
+    "name": "Panov-Botvinnik – 6...Bb4 Pin (13...Nxd4! & 16...Rd8 Extra Pawn)",
+    "shortName": "Panov 13...Nxd4! Extra Pawn",
+    "category": "Pawn Grab Punishment",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Bb4 7. cxd5 Nxd5 8. Bd2 Nc6 9. Bd3 O-O 10. O-O Be7 11. a3 Bf6 12. Qc2 h6 13. Rad1 Nxd4 14. Nxd4 Bxd4 15. Nxd5 Qxd5 16. Bb4 Rd8",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Bb4 7. cxd5 Nxd5 8. Bd2 Nc6 9. Bd3 O-O 10. O-O Be7 11. a3 Bf6 12. Qc2 h6 13. Rad1 Nxd4 14. Nxd4 Bxd4 15. Nxd5 Qxd5 16. Bb4 Rd8",
+    "fullAnnotation": "Against the Panov IQP, Black pins on b4, attacks d4 with 11...Bf6!, pockets the d4 pawn with 13...Nxd4!, and maintains a solid extra pawn with 16...Rd8 (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...cxd5 — Symmetrical center.",
+      "7": "4...Nf6 — Develop knight.",
+      "9": "5...e6 — Solid chain.",
+      "11": "6...Bb4 — Pin the c3 knight.",
+      "13": "7...Nxd5 — Centralize knight.",
+      "15": "8...Nc6 — Develop minor pieces.",
+      "17": "9...O-O — Complete king safety.",
+      "19": "10...Be7 — Bishop steps back.",
+      "21": "11...Bf6! — Double attack on the isolated d4 pawn.",
+      "23": "12...h6 — Halt Bxh7+ threats.",
+      "25": "13...Nxd4! — Tactical Strike: Snatch the isolated d4 pawn.",
+      "27": "14...Bxd4 — Recapture with tempo.",
+      "29": "15...Qxd5 — Centralize queen.",
+      "31": "16...Rd8 — Consolidate clean extra pawn with winning endgame structure (+3.0 advantage)."
+    },
+    "previewFEN": "r1bqk2r/pp3ppp/2n1p3/3n4/1b1P4/2N2N2/PP1B1PPP/R2QKB1R w KQkq - 2 9"
+  },
+  {
+    "id": "caro-punish-panov-early-bg4-pin",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov",
+    "name": "Panov-Botvinnik – 6...Bg4 Pin (12...Ke7! & 16...Ke6 King March)",
+    "shortName": "Panov 6...Bg4 16...Ke6 Win",
+    "category": "King Hunt",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    "fullAnnotation": "In the sharp 6...Bg4 Panov line, Black sacrifices the b7 pawn for active king centralization 12...Ke7! and 16...Ke6, commanding the endgame with superior pawn structure (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...cxd5 — Open c-file.",
+      "7": "4...Nf6 — Develop knight.",
+      "9": "5...Nc6 — Develop pieces.",
+      "11": "6...Bg4 — Tactical Pin on f3 knight.",
+      "13": "7...Nxd5 — Centralize knight.",
+      "15": "8...Bxf3 — Shatter White's kingside pawns.",
+      "17": "9...e6 — Solidify d5.",
+      "19": "10...Nxd4 — Monster knight fork threatening c2.",
+      "21": "11...Nxb5 — Eliminate bishop.",
+      "23": "12...Ke7! — King steps into active defense.",
+      "25": "13...Qd7 — Challenge queen.",
+      "27": "14...Qxd5 — Recapture queen.",
+      "29": "15...exd5 — Recapture toward center.",
+      "31": "16...Ke6 — Active king dominates the endgame with superior pawn structure (+3.0 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pp2pppp/2n5/3n4/3P4/1QN2b2/PP3PPP/R1B1KB1R w KQkq - 0 9"
+  },
+  {
+    "id": "caro-punish-panov-fianchetto-g6-demolition",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov",
+    "name": "Panov-Botvinnik – 5...g6 Fianchetto (14...Bxd4! & 16...Nf6 Domination)",
+    "shortName": "Panov 5...g6 14...Bxd4! Win",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 g6 6. Qb3 Bg7 7. cxd5 O-O 8. Be2 Nbd7 9. Bf3 Nb6 10. Nge2 Bg4 11. Bxg4 Nxg4 12. O-O Qd7 13. a4 Rfd8 14. Nf4 Bxd4 15. a5 Nc8 16. h3 Nf6",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 g6 6. Qb3 Bg7 7. cxd5 O-O 8. Be2 Nbd7 9. Bf3 Nb6 10. Nge2 Bg4 11. Bxg4 Nxg4 12. O-O Qd7 13. a4 Rfd8 14. Nf4 Bxd4 15. a5 Nc8 16. h3 Nf6",
+    "fullAnnotation": "In the 5...g6 Panov line, Black recovers the d5 pawn with 14...Bxd4!, neutralizes White's queenside threats, and commands the board with the monster bishop pair (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...cxd5 — Open c-file.",
+      "7": "4...Nf6 — Develop knight.",
+      "9": "5...g6 — Fianchetto setup.",
+      "11": "6...Bg7 — Powerful dark-squared bishop.",
+      "13": "7...O-O — Complete king safety.",
+      "15": "8...Nbd7 — Develop knight.",
+      "17": "9...Nb6 — Challenge d5 pawn.",
+      "19": "10...Bg4 — Pin the e2 knight.",
+      "21": "11...Nxg4 — Recapture with tempo.",
+      "23": "12...Qd7 — Connect rooks.",
+      "25": "13...Rfd8 — Target d5 pawn.",
+      "27": "14...Bxd4! — Tactical Recapture: Win back central pawn with commanding piece activity.",
+      "29": "15...Nc8 — Knight regroups to d6.",
+      "31": "16...Nf6 — Solid minor piece coordination with extra central dominance (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/pp1nppbp/5np1/3P4/3P4/1QN5/PP2BPPP/R1B1K1NR w KQ - 3 9"
+  },
+  {
+    "id": "caro-punish-panov-endgame-knight-outpost",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov",
+    "name": "Panov-Botvinnik – Classical 6...Be7 (13...Bg7 & 16...Qxd5 Dominance)",
+    "shortName": "Panov Classical 16...Qxd5 Dominance",
+    "category": "Positional Mastery",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 8. Bd3 Nc6 9. O-O O-O 10. Re1 Bf6 11. Be4 Nce7 12. Qd3 g6 13. Bh6 Bg7 14. Bxg7 Kxg7 15. Bxd5 Nxd5 16. Nxd5 Qxd5",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. Nf3 Be7 7. cxd5 Nxd5 8. Bd3 Nc6 9. O-O O-O 10. Re1 Bf6 11. Be4 Nce7 12. Qd3 g6 13. Bh6 Bg7 14. Bxg7 Kxg7 15. Bxd5 Nxd5 16. Nxd5 Qxd5",
+    "fullAnnotation": "Against the Classical Panov, Black exchanges minor pieces into a dominant queen centralization 16...Qxd5, blockading White's isolated d4 pawn with a winning endgame advantage (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...cxd5 — Open c-file.",
+      "7": "4...Nf6 — Develop knight.",
+      "9": "5...e6 — Solid foundation.",
+      "11": "6...Be7 — Develop bishop.",
+      "13": "7...Nxd5 — Centralize knight.",
+      "15": "8...Nc6 — Develop minor pieces.",
+      "17": "9...O-O — Complete king safety.",
+      "19": "10...Bf6 — Pressure isolated d4 pawn.",
+      "21": "11...Nce7 — Solidify d5.",
+      "23": "12...g6 — Neutralize mating battery.",
+      "25": "13...Bg7 — Challenge White's bishop.",
+      "27": "14...Kxg7 — Recapture securely.",
+      "29": "15...Nxd5 — Eliminate White's bishop.",
+      "31": "16...Qxd5 — Centralized queen blockading the d4 pawn with clear endgame superiority (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqk2r/pp2bppp/2n1p3/3n4/3P4/2NB1N2/PP3PPP/R1BQK2R w KQkq - 2 9"
+  },
+  {
+    "id": "caro-punish-panov-greedy-c5-flank-grab",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov",
+    "name": "Panov-Botvinnik – 6. c5?! Lock (6...b6! & 11...e5! Central Rupture)",
+    "shortName": "Panov 6. c5?! 11...e5! Rupture",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. c5 b6 7. b4 a5 8. Na4 Nbd7 9. a3 axb4 10. axb4 bxc5 11. bxc5 e5 12. Bb2 exd4 13. Bxd4 Be7 14. Nf3 O-O 15. Bd3 Qa5+ 16. Bc3 Qc7",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 e6 6. c5 b6 7. b4 a5 8. Na4 Nbd7 9. a3 axb4 10. axb4 bxc5 11. bxc5 e5 12. Bb2 exd4 13. Bxd4 Be7 14. Nf3 O-O 15. Bd3 Qa5+ 16. Bc3 Qc7",
+    "fullAnnotation": "White prematurely locks the queenside with 6. c5?!. Black undermines with 6...b6! and 7...a5!, blows open the center with 11...e5!, and attacks c5 with 16...Qc7 winning material (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...cxd5 — Open c-file.",
+      "7": "4...Nf6 — Develop knight.",
+      "9": "5...e6 — Solid chain.",
+      "10": "Opponent Mistake: 6. c5?! prematurely closes tension inviting flank undermining.",
+      "11": "6...b6! — Tactical Motif: Strike the overextended pawn wedge.",
+      "13": "7...a5! — Undermine the b4 base.",
+      "15": "8...Nbd7 — Develop knight.",
+      "17": "9...axb4 — Open a-file for rook.",
+      "19": "10...bxc5 — Dismantle White's queenside.",
+      "21": "11...e5! — Tactical Breakthrough: Blow open central lines.",
+      "23": "12...exd4 — Liquidate center pawn.",
+      "25": "13...Be7 — Develop bishop.",
+      "27": "14...O-O — Complete king safety.",
+      "29": "15...Qa5+ — Checking fork forcing bishop retreat.",
+      "31": "16...Qc7 — Double attack against the isolated c5 pawn with decisive advantage (+3.5 advantage)."
+    },
+    "previewFEN": "r1bqkb1r/3n1ppp/1p2pn2/p1Pp4/NP1P4/8/P4PPP/R1BQKBNR w KQkq - 2 9"
   }
 ];

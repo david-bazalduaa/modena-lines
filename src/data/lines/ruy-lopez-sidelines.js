@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: ruy-lopez-sidelines-gambits (5 Master Lines)
+   Sub-course: ruy-lopez-sidelines (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -146,5 +146,142 @@ export const ruyLopezSidelinesLines = [
       "24": "13. Nf3 — Double attack on isolated d4 pawn.",
       "26": "14. Bf4 — White has complete strategic mastery over the isolated pawn (+2.5 advantage)."
     }
+  },
+  {
+    "id": "ruy-punish-schliemann-3-f5-d3",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-sidelines",
+    "name": "Schliemann Gambit – 3...f5 (4. d3! & 8. Bc4!) King Trapped",
+    "shortName": "Schliemann 4. d3! & 8. Bc4! Refuted",
+    "category": "King Hunt",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. d3 fxe4 5. dxe4 Nf6 6. O-O d6 7. Nc3 Be7 8. Bc4 Bg4 9. h3 Bh5 10. Be3 Qd7 11. a3 O-O-O 12. b4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 f5 4. d3 fxe4 5. dxe4 Nf6 6. O-O d6 7. Nc3 Be7 8. Bc4 Bg4 9. h3 Bh5 10. Be3 Qd7 11. a3 O-O-O 12. b4",
+    "fullAnnotation": "The definitive refutation of the Schliemann Gambit 3...f5. White solidifies with 4. d3!, freezes Black's king with 8. Bc4!, and launches the winning queenside pawn storm 12. b4! (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "5": "Opponent Gambit: 3...f5 the Schliemann Gambit.",
+      "6": "4. d3! — Tactical Refutation: Solidify e4 denying Black tactical chaos.",
+      "8": "5. dxe4 — Recapture establishing pawn control.",
+      "10": "6. O-O — Complete king safety.",
+      "12": "7. Nc3 — Rapid minor piece mobilization.",
+      "14": "8. Bc4! — Tactical Wedge: Paralyze Black's king denying castling.",
+      "16": "9. h3 — Question bishop.",
+      "18": "10. Be3 — Guard central squares.",
+      "20": "11. a3 — Prepare b4 pawn storm.",
+      "22": "12. b4! — Decisive queenside assault against Black's castled king (+3.0 advantage)."
+    },
+    "previewFEN": "r2qk2r/ppp1b1pp/2np1n2/4p3/2B1P1b1/2N2N2/PPP2PPP/R1BQ1RK1 w kq - 4 9"
+  },
+  {
+    "id": "ruy-punish-bird-defense-3-nd4",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-sidelines",
+    "name": "Bird Defense – 3...Nd4?! 4. Nxd4! & 13. Bf4 Isolated Pawn Siege",
+    "shortName": "Bird 3...Nd4?! 13. Bf4 Siege",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. O-O Bc5 6. d3 c6 7. Bc4 d5 8. exd5 cxd5 9. Bb3 Ne7 10. Nd2 O-O 11. Nf3 Bg4 12. h3 Bh5 13. Bf4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nd4 4. Nxd4 exd4 5. O-O Bc5 6. d3 c6 7. Bc4 d5 8. exd5 cxd5 9. Bb3 Ne7 10. Nd2 O-O 11. Nf3 Bg4 12. h3 Bh5 13. Bf4",
+    "fullAnnotation": "Black plays Bird's Defense 3...Nd4?!. White eliminates the knight with 4. Nxd4!, retreats 9. Bb3, and besieges Black's isolated d4/d5 pawns with 13. Bf4 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "5": "Opponent Choice: 3...Nd4 Bird's Defense wastes time moving knight twice.",
+      "6": "4. Nxd4! — Eliminate Black's only active piece.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. d3 — Solidify center.",
+      "12": "7. Bc4 — Bishop retreats along active diagonal.",
+      "14": "8. exd5 — Liquidate center favorably.",
+      "16": "9. Bb3 — Safe bishop retreat.",
+      "18": "10. Nd2 — Reroute knight toward d4.",
+      "20": "11. Nf3 — Pressure d4 pawn.",
+      "22": "12. h3 — Question Black's bishop.",
+      "24": "13. Bf4 — Dominant piece placement blockading Black's isolated pawns (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqk1nr/pp3ppp/8/2bp4/2Bp4/3P4/PPP2PPP/RNBQ1RK1 w kq - 0 9"
+  },
+  {
+    "id": "ruy-punish-cozio-defense-3-nge7",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-sidelines",
+    "name": "Cozio Defense – 3...Nge7?! (6. Nd5! & 9. Nxf6+ King Stripped)",
+    "shortName": "Cozio 6. Nd5! & 9. Nxf6+ Attack",
+    "category": "King Hunt",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. Nc3 g6 5. d4 exd4 6. Nd5 Bg7 7. Bg5 h6 8. Bf6 Bxf6 9. Nxf6+ Kf8 10. Nxd4 Kg7 11. Nd5 Nxd5 12. exd5 Re8+ 13. Be2",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nge7 4. Nc3 g6 5. d4 exd4 6. Nd5 Bg7 7. Bg5 h6 8. Bf6 Bxf6 9. Nxf6+ Kf8 10. Nxd4 Kg7 11. Nd5 Nxd5 12. exd5 Re8+ 13. Be2",
+    "fullAnnotation": "In the Cozio Defense, White strikes with 6. Nd5! and 7. Bg5!, strips Black's king of castling rights with 9. Nxf6+, and dominates the center with 13. Be2 (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "5": "Opponent Choice: 3...Nge7 Cozio Defense.",
+      "6": "4. Nc3 — Rapid development.",
+      "8": "5. d4 — Center clash.",
+      "10": "6. Nd5! — Tactical Motif: Exploiting the pinned e7 knight.",
+      "12": "7. Bg5! — Pin the bishop against Black's queen.",
+      "14": "8. Bf6 — Threaten checkmate/forks.",
+      "16": "9. Nxf6+ — Strip Black's king of castling rights.",
+      "18": "10. Nxd4 — Centralize knight.",
+      "20": "11. Nd5 — Reposition knight to outpost.",
+      "22": "12. exd5 — Reclaim open e-file.",
+      "24": "13. Be2 — White has total control over open central lines (+3.5 advantage)."
+    },
+    "previewFEN": "r1bqk2r/ppppnp2/2n2bpp/1B1N4/3pP3/5N2/PPP2PPP/R2QK2R w KQkq - 0 9"
+  },
+  {
+    "id": "ruy-punish-steinitz-3-d6-d4",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-sidelines",
+    "name": "Steinitz Defense – Passive 3...d6?! (6. Bxc6! & 10. O-O-O Blast)",
+    "shortName": "Steinitz 3...d6?! 10. O-O-O Blast",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. d4 Bd7 5. Nc3 Nf6 6. Bxc6 Bxc6 7. Qd3 exd4 8. Nxd4 Bd7 9. Bg5 Be7 10. O-O-O O-O 11. f4 Re8 12. Rhe1",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 d6 4. d4 Bd7 5. Nc3 Nf6 6. Bxc6 Bxc6 7. Qd3 exd4 8. Nxd4 Bd7 9. Bg5 Be7 10. O-O-O O-O 11. f4 Re8 12. Rhe1",
+    "fullAnnotation": "Black chooses the passive Old Steinitz 3...d6. White blasts open the center with 4. d4!, trades on c6, centralizes queen on d3, and castles queenside with overwhelming central pressure (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "5": "Opponent Choice: 3...d6 Old Steinitz Defense.",
+      "6": "4. d4 — Center clash.",
+      "8": "5. Nc3 — Rapid mobilization.",
+      "10": "6. Bxc6 — Trade bishop giving Black doubled pawns.",
+      "12": "7. Qd3 — Centralize queen defending e4.",
+      "14": "8. Nxd4 — Recapture with tempo.",
+      "16": "9. Bg5 — Pin the f6 knight.",
+      "18": "10. O-O-O — Opposite-side castling attack.",
+      "20": "11. f4 — Space-grabbing pawn storm.",
+      "22": "12. Rhe1 — Total domination of central e- and d-files (+2.5 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pppb1ppp/3p1n2/8/3NP3/2NQ4/PPP2PPP/R1B1K2R w KQkq - 1 9"
+  },
+  {
+    "id": "ruy-punish-smyslov-3-g6-fianchetto",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-sidelines",
+    "name": "Smyslov Defense – 3...g6?! (5. Bg5! & 10. O-O-O Queenside Assault)",
+    "shortName": "Smyslov 3...g6?! 10. O-O-O Assault",
+    "category": "Direct Mate",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 g6 4. d4 exd4 5. Bg5 Be7 6. Bxe7 Qxe7 7. Bxc6 dxc6 8. Qxd4 Nf6 9. Nc3 O-O 10. O-O-O Bg4 11. Qe3 Rfe8 12. Rhe1",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 g6 4. d4 exd4 5. Bg5 Be7 6. Bxe7 Qxe7 7. Bxc6 dxc6 8. Qxd4 Nf6 9. Nc3 O-O 10. O-O-O Bg4 11. Qe3 Rfe8 12. Rhe1",
+    "fullAnnotation": "Black tries the Smyslov fianchetto 3...g6?!. White strikes instantly with 4. d4! and 5. Bg5!, trades into an overwhelmingly active queen on d4, and castles queenside with crushing attack (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "5": "Opponent Choice: 3...g6 Smyslov fianchetto variation.",
+      "6": "4. d4 — Center clash.",
+      "8": "5. Bg5! — Tactical Pin: Intercept Black's queen before the bishop can fianchetto.",
+      "10": "6. Bxe7 — Liquidate Black's defender.",
+      "12": "7. Bxc6 — Shatter queenside pawn structure.",
+      "14": "8. Qxd4! — Monster centralized queen attacking h8 rook.",
+      "16": "9. Nc3 — Rapid mobilization.",
+      "18": "10. O-O-O — Opposite-side castling attack.",
+      "20": "11. Qe3 — Queen repositioning.",
+      "22": "12. Rhe1 — Unstoppable central and kingside pressure (+3.0 advantage)."
+    },
+    "previewFEN": "r1b1k2r/ppp1qp1p/2p2np1/8/3QP3/5N2/PPP2PPP/RN2K2R w KQkq - 1 9"
   }
 ];

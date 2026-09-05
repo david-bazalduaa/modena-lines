@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: italian-giuoco-piano (7 Master Lines)
+   Sub-course: italian-giuoco-piano (13 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -193,5 +193,176 @@ export const giuocoPianoLines = [
       "22": "12. Re1 — Seize the open e-file against uncoordinated defense.",
       "24": "13. Bf4 — Crushing positional stranglehold (+5.0 advantage)."
     }
+  },
+  {
+    "id": "giuoco-punish-early-qf6",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – Dubious 4...Qf6?! Punished (6. e5!)",
+    "shortName": "4...Qf6?! Refuted",
+    "category": "Queen Harassment",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Qf6 5. d4 exd4 6. e5 Qg6 7. O-O Nge7 8. cxd4 Bb6 9. d5 Na5 10. Bd3 Qh5 11. Nc3 O-O 12. Bg5 Re8 13. Re1",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Qf6 5. d4 exd4 6. e5 Qg6 7. O-O Nge7 8. cxd4 Bb6 9. d5 Na5 10. Bd3 Qh5 11. Nc3 O-O 12. Bg5 Re8 13. Re1",
+    "fullAnnotation": "Black brings the queen out prematurely with 4...Qf6?!. White seizes the center with 5. d4 and 6. e5!, banishing the queen and suffocating Black with 9. d5! and 12. Bg5.",
+    "annotations": {
+      "0": "1. e4 — King's pawn opening.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Italian Bishop.",
+      "6": "4. c3 — Prepare d4.",
+      "7": "Opponent Mistake: 4...Qf6?! blocks the f6 knight and invites central harassment.",
+      "8": "5. d4 — Center break.",
+      "10": "6. e5! — Tactical Motif: Attack the queen and seize central space.",
+      "12": "7. O-O — Complete king safety.",
+      "14": "8. cxd4 — Reclaim central duo.",
+      "16": "9. d5! — Kick the c6 knight to the rim.",
+      "18": "10. Bd3 — Trap queen pathways.",
+      "20": "11. Nc3 — Consolidate piece activity.",
+      "22": "12. Bg5 — Skewer queen and rook.",
+      "24": "13. Re1 — Complete dominance on open central files (+4.5 advantage)."
+    },
+    "previewFEN": "r1b1k2r/ppppnppp/1bn3q1/4P3/2BP4/5N2/PP3PPP/RNBQ1RK1 w kq - 1 9"
+  },
+  {
+    "id": "giuoco-punish-early-qg6",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – 7...Qf6 & 8...Qg6?! Trapped (11. d5!)",
+    "shortName": "7...Qf6 & ...Qg6?! Refuted",
+    "category": "Development Punishment",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb6 7. O-O Qf6 8. e5 Qg6 9. exd6 cxd6 10. Re1+ Nge7 11. d5 Ne5 12. Nxe5 dxe5 13. Rxe5 Qf6 14. Qe2",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb6 7. O-O Qf6 8. e5 Qg6 9. exd6 cxd6 10. Re1+ Nge7 11. d5 Ne5 12. Nxe5 dxe5 13. Rxe5 Qf6 14. Qe2",
+    "fullAnnotation": "Black wastes queen tempos with 7...Qf6 and 8...Qg6?!. White opens the center with 8. e5! and dominates the e-file with 10. Re1+ and 14. Qe2, pinning Black decisively.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Target f7.",
+      "6": "4. c3 — Prepare center.",
+      "8": "5. d4 — Center break.",
+      "10": "6. cxd4 — Reclaim pawn center.",
+      "12": "7. O-O — Complete king safety.",
+      "14": "8. e5! — Tactical Motif: Attack queen and open central lines.",
+      "16": "9. exd6 — Liquidate center favorably.",
+      "18": "10. Re1+ — Check driving king and pieces into pins.",
+      "20": "11. d5! — Kick the defending c6 knight.",
+      "22": "12. Nxe5 — Shatter Black's defense.",
+      "24": "13. Rxe5 — Central rook invasion.",
+      "26": "14. Qe2 — Double on e-file with overwhelming attack (+4.0 advantage)."
+    },
+    "previewFEN": "r1b1k1nr/ppp2ppp/1bnp2q1/4P3/2BP4/5N2/PP3PPP/RNBQ1RK1 w kq - 1 9"
+  },
+  {
+    "id": "giuoco-punish-premature-bg4",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – Premature 7...Bg4?! Pin Shattered (10. Qa4+!)",
+    "shortName": "7...Bg4?! Shattered",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Bg4 8. O-O Nf6 9. d5 Ne5 10. Qa4+ Qd7 11. Qxb4 Nxf3+ 12. gxf3 Bxf3 13. Bb5 c6 14. dxc6 bxc6 15. Bxc6 Qxc6 16. Bf4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Bg4 8. O-O Nf6 9. d5 Ne5 10. Qa4+ Qd7 11. Qxb4 Nxf3+ 12. gxf3 Bxf3 13. Bb5 c6 14. dxc6 bxc6 15. Bxc6 Qxc6 16. Bf4",
+    "fullAnnotation": "Black pins on g4 prematurely. White kicks the knight with 9. d5! and uncorks the double attack 10. Qa4+!, winning the b4 bishop and leaving Black hopelessly behind.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Italian bishop.",
+      "6": "4. c3 — Prepare d4.",
+      "8": "5. d4 — Center clash.",
+      "10": "6. cxd4 — Massive pawn center.",
+      "12": "7. Nc3 — Develop knight.",
+      "14": "8. O-O — Complete king safety.",
+      "16": "9. d5! — Dislodge the c6 knight.",
+      "18": "10. Qa4+! — Tactical Motif: Checking fork winning the b4 bishop.",
+      "20": "11. Qxb4 — Pocket the clean bishop.",
+      "22": "12. gxf3 — Recapture piece.",
+      "24": "13. Bb5 — Pin the queen.",
+      "26": "14. dxc6 — Open lines.",
+      "28": "15. Bxc6 — Win queen.",
+      "30": "16. Bf4 — White emerges a full piece up with total dominance (+5.0 advantage)."
+    },
+    "previewFEN": "r2qk2r/ppp2ppp/2np1n2/8/1bBPP1b1/2N2N2/PP3PPP/R1BQ1RK1 w kq - 5 9"
+  },
+  {
+    "id": "giuoco-punish-passive-pawn-center",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – Passive 4...d6 Pawn Structure Punished",
+    "shortName": "Passive 4...d6 Punished",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nf6 8. O-O Bxc3 9. bxc3 Nxe4 10. d5 Ne7 11. Re1 Nf6 12. Bg5 O-O 13. Bxf6 gxf6 14. Qd4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb4+ 7. Nc3 Nf6 8. O-O Bxc3 9. bxc3 Nxe4 10. d5 Ne7 11. Re1 Nf6 12. Bg5 O-O 13. Bxf6 gxf6 14. Qd4",
+    "fullAnnotation": "Black plays passively with 4...d6 and gets greedy with 9...Nxe4. White uncorks 10. d5! and 11. Re1, shatters Black's kingside with 13. Bxf6!, and launches a winning assault.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Italian bishop.",
+      "6": "4. c3 — Prepare d4.",
+      "8": "5. d4 — Center break.",
+      "10": "6. cxd4 — Dominant center.",
+      "12": "7. Nc3 — Develop piece.",
+      "14": "8. O-O — Complete king safety.",
+      "16": "9. bxc3 — Pawn toward center.",
+      "18": "10. d5! — Tactical Motif: Dislodge c6 defender of e5.",
+      "20": "11. Re1 — Pin the e4 knight against king.",
+      "22": "12. Bg5 — Pin the f6 knight.",
+      "24": "13. Bxf6! — Shatter Black's kingside shelter.",
+      "26": "14. Qd4 — Centralize queen with double threat on f6 and e7 (+4.0 advantage)."
+    },
+    "previewFEN": "r1bqk2r/ppp2ppp/2np1n2/8/2BPP3/2b2N2/PP3PPP/R1BQ1RK1 w kq - 0 9"
+  },
+  {
+    "id": "giuoco-punish-dubious-be6-trade",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – 5...Bb6 & 8...Qf6?! Counter Refuted",
+    "shortName": "5...Bb6 & 8...Qf6?! Refuted",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb6 7. O-O Bg4 8. Be3 Qf6 9. e5 dxe5 10. dxe5 Nxe5 11. Qa4+ Bd7 12. Bb5 Nxf3+ 13. gxf3 O-O-O 14. Bxd7+ Rxd7 15. Nc3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 d6 5. d4 exd4 6. cxd4 Bb6 7. O-O Bg4 8. Be3 Qf6 9. e5 dxe5 10. dxe5 Nxe5 11. Qa4+ Bd7 12. Bb5 Nxf3+ 13. gxf3 O-O-O 14. Bxd7+ Rxd7 15. Nc3",
+    "fullAnnotation": "Black tries the aggressive 8...Qf6 counter. White uncorks the thematic 9. e5! central clearance, checks with 11. Qa4+, eliminates Black's bishop, and mounts a crushing queenside attack.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Italian bishop.",
+      "6": "4. c3 — Prepare d4.",
+      "8": "5. d4 — Center clash.",
+      "10": "6. cxd4 — Reclaim center.",
+      "12": "7. O-O — King safe.",
+      "14": "8. Be3 — Guard d4.",
+      "16": "9. e5! — Tactical Motif: Clearance sacrifice opening files against Black's king.",
+      "18": "10. dxe5 — Recapture toward center.",
+      "20": "11. Qa4+ — Check forcing Black's bishop backward.",
+      "22": "12. Bb5 — Pin the c6 knight.",
+      "24": "13. gxf3 — Reclaim piece with open g-file.",
+      "26": "14. Bxd7+ — Eliminate key defender.",
+      "28": "15. Nc3 — Bring knight into the assault (+3.5 advantage)."
+    },
+    "previewFEN": "r3k1nr/ppp2ppp/1bnp1q2/8/2BPP1b1/4BN2/PP3PPP/RN1Q1RK1 w kq - 5 9"
+  },
+  {
+    "id": "giuoco-punish-center-overreach-qe7",
+    "courseId": "italian-game",
+    "subCourseId": "italian-giuoco-piano",
+    "name": "Giuoco Piano – Premature 5...Qe7?! Blockade Refuted",
+    "shortName": "5...Qe7?! Blockade Refuted",
+    "category": "Space Advantage",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 Qe7 6. O-O Bb6 7. Re1 d6 8. h3 O-O 9. a4 a5 10. Na3 h6 11. Nc2 Re8 12. Ne3 exd4 13. cxd4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bc4 Bc5 4. c3 Nf6 5. d4 Qe7 6. O-O Bb6 7. Re1 d6 8. h3 O-O 9. a4 a5 10. Na3 h6 11. Nc2 Re8 12. Ne3 exd4 13. cxd4",
+    "fullAnnotation": "Black tries 5...Qe7?! to hold the center. White castles, locks down the queenside with 9. a4, and repositions the knight via a3-c2-e3, establishing an unstoppable central clamp.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bc4 — Italian bishop.",
+      "6": "4. c3 — Prepare d4.",
+      "8": "5. d4 — Strike center.",
+      "9": "Opponent Inaccuracy: 5...Qe7?! misplaces the queen and blocks the f8 bishop's escape.",
+      "10": "6. O-O — King safe.",
+      "12": "7. Re1 — Dominate e-file.",
+      "14": "8. h3 — Deny ...Bg4 pin.",
+      "16": "9. a4 — Queenside expansion.",
+      "18": "10. Na3 — Maneuver knight toward d5.",
+      "20": "11. Nc2 — Central rerouting.",
+      "22": "12. Ne3 — Eye the monster d5 outpost.",
+      "24": "13. cxd4 — White possesses the perfect central duo with clear positional superiority (+3.0 advantage)."
+    },
+    "previewFEN": "r1b2rk1/ppp1qppp/1bnp1n2/4p3/2BPP3/2P2N1P/PP3PP1/RNBQR1K1 w - - 1 9"
   }
 ];

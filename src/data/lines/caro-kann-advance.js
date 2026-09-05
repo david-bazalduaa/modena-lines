@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: caro-kann-advance (5 Master Lines)
+   Sub-course: caro-kann-advance (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -65,7 +65,8 @@ export const caroKannAdvanceLines = [
       "31": "16...Bxc3 — Trade pieces.",
       "33": "17...Rxc3 — Double rooks.",
       "35": "18...O-O — Black has complete spatial superiority and safer king."
-    }
+    },
+    "previewFEN": "r3kbnr/pp1b1ppp/1qn1p3/2ppP3/3P2P1/2P1BN1P/PP3P2/RN1QKB1R w KQkq - 2 9"
   },
   {
     "id": "caro-kann-punish-advance-short-system-overreach",
@@ -94,7 +95,8 @@ export const caroKannAdvanceLines = [
       "27": "14...Qb2 — Queen retreats safely.",
       "29": "15...Kf8 — Calm king step.",
       "31": "16...exf5 — Black is two clean pawns up with winning advantage."
-    }
+    },
+    "previewFEN": "r3kbnr/pp3ppp/2n1p3/2ppPb2/3P4/2N1BN2/PqP1BPPP/R2Q1RK1 w kq - 0 9"
   },
   {
     "id": "caro-kann-punish-advance-tal-h4",
@@ -123,7 +125,8 @@ export const caroKannAdvanceLines = [
       "27": "14...Qxc4 — Recapture queen.",
       "29": "15...Bc5 — Pin d4 knight to queen.",
       "31": "16...Ne7 — Black is two pawns up and completely consolidated."
-    }
+    },
+    "previewFEN": "rn2kbnr/pp3pp1/1q2p3/2ppP1Bp/3P3P/3Q4/PPPN1PP1/R3K1NR w KQkq - 0 9"
   },
   {
     "id": "caro-kann-punish-advance-c4-break",
@@ -154,6 +157,163 @@ export const caroKannAdvanceLines = [
       "27": "14...Nd7 — Coordinate knights.",
       "29": "15...Qb6 — Pressure b2 and d4.",
       "31": "16...Qa6! — Tactical Motif: Force queen trade leaving White with crippled queen's bishop."
-    }
+    },
+    "previewFEN": "r2qkb1r/pp2nppp/1np1p3/4Pb2/2BP4/2N2N2/PP3PPP/R1BQK2R w KQkq - 1 9"
+  },
+  {
+    "id": "caro-punish-advance-wing-rush-4-g4",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Overextended 4. g4?! (9...h5! & 16...Nf5 Clamp)",
+    "shortName": "Advance 4. g4?! 16...Nf5 Clamp",
+    "category": "Positional Mastery",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. g4 Bd7 5. f4 e6 6. Nf3 c5 7. c3 Nc6 8. Be3 Qb6 9. Qd2 h5 10. g5 g6 11. Bd3 Rc8 12. O-O cxd4 13. cxd4 Nb4 14. Nc3 Nxd3 15. Qxd3 Ne7 16. Rf2 Nf5",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. g4 Bd7 5. f4 e6 6. Nf3 c5 7. c3 Nc6 8. Be3 Qb6 9. Qd2 h5 10. g5 g6 11. Bd3 Rc8 12. O-O cxd4 13. cxd4 Nb4 14. Nc3 Nxd3 15. Qxd3 Ne7 16. Rf2 Nf5",
+    "fullAnnotation": "White overextends with 4. g4?!. Black retreats 4...Bd7, challenges with 6...c5 and 9...h5!, trades off White's light-squared bishop, and plants an invincible knight on 16...Nf5 (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bf5 — Active bishop in Advance.",
+      "6": "Opponent Mistake: 4. g4?! weakens White's kingside critically.",
+      "7": "4...Bd7 — Calm retreat preserving bishop.",
+      "9": "5...e6 — Solid foundation.",
+      "11": "6...c5 — Challenge White's center.",
+      "13": "7...Nc6 — Develop knight.",
+      "15": "8...Qb6 — Attack b2 and d4.",
+      "17": "9...h5! — Tactical Motif: Shatter White's overextended pawn chain.",
+      "19": "10...g6 — Lock down kingside dark squares.",
+      "21": "11...Rc8 — Active rook on c-file.",
+      "23": "12...cxd4 — Open c-file.",
+      "25": "13...Nb4 — Infiltrate d3 square.",
+      "27": "14...Nxd3 — Eliminate White's key defending bishop.",
+      "29": "15...Ne7 — Knight tour to f5.",
+      "31": "16...Nf5 — Untouchable monster outpost dominating the board (+3.5 advantage)."
+    },
+    "previewFEN": "r3kbnr/pp1b1ppp/1qn1p3/2ppP3/3P1PP1/2P1BN2/PP5P/RN1QKB1R w KQkq - 3 9"
+  },
+  {
+    "id": "caro-punish-advance-4-h4-h5-refuted",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Tal 4. h4 h5! (9...Qa6! & 16...Qb7 Domination)",
+    "shortName": "Tal 4. h4 h5! Refuted",
+    "category": "Positional Mastery",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. h4 h5 5. Bd3 Bxd3 6. Qxd3 e6 7. Bg5 Qb6 8. Nd2 c5 9. c4 Qa6 10. Ngf3 Nc6 11. O-O cxd4 12. a3 Nge7 13. b4 dxc4 14. Nxc4 Nf5 15. Rfb1 b5 16. Ncd2 Qb7",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. h4 h5 5. Bd3 Bxd3 6. Qxd3 e6 7. Bg5 Qb6 8. Nd2 c5 9. c4 Qa6 10. Ngf3 Nc6 11. O-O cxd4 12. a3 Nge7 13. b4 dxc4 14. Nxc4 Nf5 15. Rfb1 b5 16. Ncd2 Qb7",
+    "fullAnnotation": "Tal's 4. h4 is halted by 4...h5!. Black undermines White's center with 8...c5 and 9...Qa6!, blockades the d4 pawn with 14...Nf5, and secures complete positional dominance (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bf5 — Active bishop.",
+      "7": "4...h5! — Prophylactic freeze denying White's intended g4 push.",
+      "9": "5...Bxd3 — Trade light-squared bishops.",
+      "11": "6...e6 — Solid center.",
+      "13": "7...Qb6 — Queen hits b2.",
+      "15": "8...c5 — Central strike.",
+      "17": "9...Qa6! — Pin the c4 pawn against queen.",
+      "19": "10...Nc6 — Develop knight.",
+      "21": "11...cxd4 — Open c-file.",
+      "23": "12...Nge7 — Reroute knight toward f5.",
+      "25": "13...dxc4 — Liquidate center favorably.",
+      "27": "14...Nf5 — Blockade the central pawn.",
+      "29": "15...b5 — Drive White's knight backwards.",
+      "31": "16...Qb7 — Complete queenside harmony with decisive positional control (+2.5 advantage)."
+    },
+    "previewFEN": "rn2kbnr/pp3pp1/1q2p3/2ppP1Bp/3P3P/3Q4/PPPN1PP1/R3K1NR w KQkq - 0 9"
+  },
+  {
+    "id": "caro-punish-advance-short-system-c5",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Short 4. Nf3 (8...Qxb2! & 16...exf5 Extra Material)",
+    "shortName": "Advance Short 8...Qxb2! Win",
+    "category": "Pawn Grab Punishment",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Be2 c5 6. Be3 Qb6 7. Nc3 Nc6 8. O-O Qxb2 9. Qe1 cxd4 10. Bxd4 Nxd4 11. Nxd4 Bb4 12. Ndb5 Ba5 13. Rb1 Qxc2 14. Rc1 Qb2 15. Nd6+ Kf8 16. Nxf5 exf5",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nf3 e6 5. Be2 c5 6. Be3 Qb6 7. Nc3 Nc6 8. O-O Qxb2 9. Qe1 cxd4 10. Bxd4 Nxd4 11. Nxd4 Bb4 12. Ndb5 Ba5 13. Rb1 Qxc2 14. Rc1 Qb2 15. Nd6+ Kf8 16. Nxf5 exf5",
+    "fullAnnotation": "In the Short Advance, Black snares the b2 pawn with 8...Qxb2!, pins White's pieces with 11...Bb4, survives the check on d6, and emerges an extra pawn ahead with a crushing position (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bf5 — Active bishop.",
+      "7": "4...e6 — Solid foundation.",
+      "9": "5...c5 — Challenge d4.",
+      "11": "6...Qb6 — Double attack on b2 and d4.",
+      "13": "7...Nc6 — Develop knight.",
+      "15": "8...Qxb2! — Pocket clean queenside pawn.",
+      "17": "9...cxd4 — Open c-file.",
+      "19": "10...Nxd4 — Liquidate piece.",
+      "21": "11...Bb4! — Absolute pin on the c3 knight.",
+      "23": "12...Ba5 — Bishop steps back safely.",
+      "25": "13...Qxc2 — Capture second pawn.",
+      "27": "14...Qb2 — Queen steps back.",
+      "29": "15...Kf8 — King steps into safety.",
+      "31": "16...exf5 — White's attack collapses completely; Black is two clean pawns ahead (+3.5 advantage)."
+    },
+    "previewFEN": "r3kbnr/pp3ppp/2n1p3/2ppPb2/3P4/2N1BN2/PqP1BPPP/R2Q1RK1 w kq - 0 9"
+  },
+  {
+    "id": "caro-punish-advance-shirov-4-nc3-e6",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Shirov 5. g4?! 12...hxg4 & 16...Bxd4 Discovery",
+    "shortName": "Shirov 5. g4?! 16...Bxd4 Win",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nc3 e6 5. g4 Bg6 6. Nge2 c5 7. h4 h5 8. Nf4 Nc6 9. Nxg6 fxg6 10. Bd3 cxd4 11. Bxg6+ Kd7 12. Ne2 hxg4 13. Nxd4 Nxe5 14. Bd3 Bc5 15. Bb5+ Kd6 16. Bf4 Bxd4",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. Nc3 e6 5. g4 Bg6 6. Nge2 c5 7. h4 h5 8. Nf4 Nc6 9. Nxg6 fxg6 10. Bd3 cxd4 11. Bxg6+ Kd7 12. Ne2 hxg4 13. Nxd4 Nxe5 14. Bd3 Bc5 15. Bb5+ Kd6 16. Bf4 Bxd4",
+    "fullAnnotation": "Shirov's ultra-sharp 5. g4 refuted! Black captures 12...hxg4, centralizes knight on e5, and uncorks 16...Bxd4!, discovering the fatal queen check 17. Qxd4 Nf3+ winning queen and game (+4.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bf5 — Active bishop.",
+      "7": "4...e6 — Solid chain.",
+      "9": "5...Bg6 — Retreat bishop.",
+      "11": "6...c5 — Strike back in center.",
+      "13": "7...h5 — Question g4 pawn.",
+      "15": "8...Nc6 — Develop knight.",
+      "17": "9...fxg6 — Open f-file.",
+      "19": "10...cxd4 — Open central files.",
+      "21": "11...Kd7 — King moves into safety.",
+      "23": "12...hxg4 — Win pawn.",
+      "25": "13...Nxe5 — Centralize knight.",
+      "27": "14...Bc5 — Active bishop.",
+      "29": "15...Kd6 — Centralize king.",
+      "31": "16...Bxd4! — Tactical Motifs: Discovered fork on White's queen via ...Nf3+ winning decisive material (+4.0 advantage)."
+    },
+    "previewFEN": "r2qkbnr/pp3pp1/2n1p1b1/2ppP2p/3P1NPP/2N5/PPP2P2/R1BQKB1R w KQkq - 2 9"
+  },
+  {
+    "id": "caro-punish-advance-bayonet-c4-break",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Bayonet 4. c4 (9...Ned5 & 16...Rfc8 Domination)",
+    "shortName": "Bayonet 4. c4 16...Rfc8 Domination",
+    "category": "Positional Mastery",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. c4 e6 5. Nc3 Ne7 6. Nf3 Nd7 7. Be2 dxc4 8. Bxc4 Nb6 9. Bb3 Ned5 10. O-O Be7 11. Re1 O-O 12. Ne4 a5 13. a3 a4 14. Ba2 Nd7 15. Bd2 Qb6 16. Qc2 Rfc8",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. c4 e6 5. Nc3 Ne7 6. Nf3 Nd7 7. Be2 dxc4 8. Bxc4 Nb6 9. Bb3 Ned5 10. O-O Be7 11. Re1 O-O 12. Ne4 a5 13. a3 a4 14. Ba2 Nd7 15. Bd2 Qb6 16. Qc2 Rfc8",
+    "fullAnnotation": "Against the Bayonet 4. c4, Black captures on c4, establishes monster knight on d5, drives White's bishop back with 13...a4!, and dominates the c-file with 16...Rfc8 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bf5 — Active bishop.",
+      "7": "4...e6 — Solid foundation.",
+      "9": "5...Ne7 — Knight development.",
+      "11": "6...Nd7 — Coordinate minor pieces.",
+      "13": "7...dxc4 — Liquidate White's c4 pawn.",
+      "15": "8...Nb6 — Attack bishop with tempo.",
+      "17": "9...Ned5 — Monster central knight outpost.",
+      "19": "10...Be7 — Develop bishop.",
+      "21": "11...O-O — Complete king safety.",
+      "23": "12...a5 — Queenside space grab.",
+      "25": "13...a4! — Banished bishop backward.",
+      "27": "14...Nd7 — Reposition knight.",
+      "29": "15...Qb6 — Hit b2 and connect rooks.",
+      "31": "16...Rfc8 — Complete control of open c-file with total board dominance (+2.5 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pp2nppp/1np1p3/4Pb2/2BP4/2N2N2/PP3PPP/R1BQK2R w KQkq - 1 9"
   }
 ];

@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: pirc-aggressive-sidelines (5 Master Lines)
+   Sub-course: pirc-sidelines (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -62,7 +62,8 @@ export const pircSidelinesLines = [
       "27": "14...Qa5! — Tactical Punishment: Pin and pressure the weak c3 pawn.",
       "29": "15...Nde5 — Knight joins attack.",
       "31": "16...Bxe5 — Total dominance on the long diagonal."
-    }
+    },
+    "previewFEN": "r1bq1rk1/p3ppbp/2np1np1/1pp5/4P3/1BPP1N2/PP3PPP/RNBQR1K1 w - b6 0 9"
   },
   {
     "id": "pirc-punish-sidelines-kholmov-be3-f3",
@@ -92,7 +93,8 @@ export const pircSidelinesLines = [
       "29": "15...gxf4 — Trade pawns.",
       "31": "16...dxe5 — Liquidate center.",
       "33": "17...Bc8 — Tactical Punishment: Bishop coordinates with d-file rook to pin down White's entire army."
-    }
+    },
+    "previewFEN": "r1bqk2r/ppp1ppb1/2np3p/6pn/3PP3/2N3B1/PPPQNPPP/R3KB1R w KQkq - 4 9"
   },
   {
     "id": "pirc-punish-sidelines-overaggressive-g4",
@@ -123,7 +125,8 @@ export const pircSidelinesLines = [
       "29": "15...Ba6 — Trade off White's only good bishop.",
       "31": "16...Rxa6 — Rook active on 6th rank.",
       "33": "17...Ra8 — Black has completely dominated the board."
-    }
+    },
+    "previewFEN": "r1bqkb1r/p3pp2/1npp1npp/1p6/3PP1P1/2N1BP2/PPPQN2P/R3KB1R w KQkq - 4 9"
   },
   {
     "id": "pirc-punish-sidelines-bc4-trap",
@@ -153,6 +156,163 @@ export const pircSidelinesLines = [
       "27": "14...Bxe5 — Recapture with bishop.",
       "29": "15...Qg5! — Tactical Motif: Mating threat on g2 forcing White into passivity.",
       "31": "16...Rfe8 — Double on the e-file with overwhelming attack."
-    }
+    },
+    "previewFEN": "r1bq1rk1/ppp1ppbp/2n3p1/3n4/2B5/2PP1N2/PP3PPP/RNBQR1K1 w - - 2 9"
+  },
+  {
+    "id": "pirc-punish-kholmov-4-bc4-c6-b5",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-sidelines",
+    "name": "Kholmov 4. Bc4 – 6...Bg4 Pin & 9...Nxe5! Central Outpost",
+    "shortName": "Kholmov 4. Bc4 9...Nxe5! Outpost",
+    "category": "Positional Mastery",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bc4 Bg7 5. Qe2 Nc6 6. Nf3 Bg4 7. Be3 O-O 8. O-O-O e5 9. dxe5 Nxe5 10. Bb3 Qe8 11. h3 Bxf3 12. gxf3 a5 13. a4 Ned7 14. Qd2 Nc5 15. Bxc5 dxc5 16. Rhe1 Qe5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bc4 Bg7 5. Qe2 Nc6 6. Nf3 Bg4 7. Be3 O-O 8. O-O-O e5 9. dxe5 Nxe5 10. Bb3 Qe8 11. h3 Bxf3 12. gxf3 a5 13. a4 Ned7 14. Qd2 Nc5 15. Bxc5 dxc5 16. Rhe1 Qe5",
+    "fullAnnotation": "Kholmov's 4. Bc4 refuted. Black pins with 6...Bg4, exploits the e5 outpost with 9...Nxe5!, shatters White's kingside pawns, and centralizes queen on 16...Qe5 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...Nc6 — Target d4.",
+      "11": "6...Bg4 — Pin the f3 knight.",
+      "13": "7...O-O — Complete king safety.",
+      "15": "8...e5 — Strike center.",
+      "17": "9...Nxe5! — Tactical Outpost: Exploit pin on f3.",
+      "19": "10...Qe8 — Connect rooks.",
+      "21": "11...Bxf3 — Shatter White's kingside pawns.",
+      "23": "12...a5 — Queenside space.",
+      "25": "13...Ned7 — Minor piece coordination.",
+      "27": "14...Nc5 — Outpost knight attacking b3.",
+      "29": "15...dxc5 — Open d-file.",
+      "31": "16...Qe5 — Dominating queen centralization commanding both flanks (+2.5 advantage)."
+    },
+    "previewFEN": "r2q1rk1/ppp2pbp/2np1np1/4p3/2BPP1b1/2N1BN2/PPP1QPPP/2KR3R w - e6 0 9"
+  },
+  {
+    "id": "pirc-punish-byrne-4-bg5-h6-g5",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-sidelines",
+    "name": "Byrne 4. Bg5 – 6...g5! Flank Rush & 16...Nxe4! Royal Fork",
+    "shortName": "Byrne 4. Bg5 16...Nxe4! Fork",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. Qd2 h6 6. Bf4 g5 7. Bg3 Nh5 8. O-O-O Nd7 9. Be2 Nxg3 10. hxg3 c5 11. dxc5 Nxc5 12. f4 Qa5 13. Kb1 Be6 14. a3 Bxc3 15. Qxc3 Qxc3 16. bxc3 Nxe4",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. Qd2 h6 6. Bf4 g5 7. Bg3 Nh5 8. O-O-O Nd7 9. Be2 Nxg3 10. hxg3 c5 11. dxc5 Nxc5 12. f4 Qa5 13. Kb1 Be6 14. a3 Bxc3 15. Qxc3 Qxc3 16. bxc3 Nxe4",
+    "fullAnnotation": "Byrne's 4. Bg5 is blasted off the board! Black kicks the bishop with 6...g5! and 7...Nh5, attacks on the c-file with 12...Qa5!, and strikes 16...Nxe4!, royal-forking c3 and f2 (+5.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...h6 — Question the bishop.",
+      "11": "6...g5! — Tactical Drive: Kick bishop backwards.",
+      "13": "7...Nh5 — Hunt down White's bishop pair.",
+      "15": "8...Nd7 — Minor piece development.",
+      "17": "9...Nxg3 — Secure bishop pair.",
+      "19": "10...c5 — Central strike.",
+      "21": "11...Nxc5 — Centralize knight.",
+      "23": "12...Qa5 — Queen sortie with tempo.",
+      "25": "13...Be6 — Complete development.",
+      "27": "14...Bxc3 — Shatter White's queenside defense.",
+      "29": "15...Qxc3 — Queen trade forcing structural ruin.",
+      "31": "16...Nxe4! — Tactical Motifs: Royal fork attacking f2 and c3 winning clean material (+5.0 advantage)."
+    },
+    "previewFEN": "r1bqk2r/pppnppb1/3p3p/6pn/3PP3/2N3B1/PPPQ1PPP/2KR1BNR w kq - 4 9"
+  },
+  {
+    "id": "pirc-punish-f3-samisch-overextension",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-sidelines",
+    "name": "Sämisch 4. f3 – 8...b4! Queenside Rush & 16...d5! Central Lock",
+    "shortName": "Sämisch 4. f3 16...d5! Central Lock",
+    "category": "Queenside Invasion",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f3 c6 5. Be3 b5 6. Qd2 Nbd7 7. O-O-O Nb6 8. Bd3 b4 9. Nce2 a5 10. Kb1 Ba6 11. Bxa6 Rxa6 12. Qd3 Ra8 13. g4 Bg7 14. h4 h5 15. g5 Nfd7 16. f4 d5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f3 c6 5. Be3 b5 6. Qd2 Nbd7 7. O-O-O Nb6 8. Bd3 b4 9. Nce2 a5 10. Kb1 Ba6 11. Bxa6 Rxa6 12. Qd3 Ra8 13. g4 Bg7 14. h4 h5 15. g5 Nfd7 16. f4 d5",
+    "fullAnnotation": "In the Sämisch 4. f3, Black rolls the b-pawns with 5...b5 and 8...b4!, trades on a6, halts h4 with 14...h5!, and shuts down White's center with 16...d5! with total dominance (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5.",
+      "9": "5...b5 — Queenside advance.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...Nb6 — Target c4.",
+      "15": "8...b4! — Dislodge the c3 knight.",
+      "17": "9...a5 — Advance queenside pawns.",
+      "19": "10...Ba6 — Challenge White's active bishop.",
+      "21": "11...Rxa6 — Recapture with rook.",
+      "23": "12...Ra8 — Safe rook retreat.",
+      "25": "13...Bg7 — Fianchetto bishop.",
+      "27": "14...h5! — Prophylactic freeze.",
+      "29": "15...Nfd7 — Safe knight retreat.",
+      "31": "16...d5! — Tactical Lock: Paralyze White's center and dominate queenside (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqkb1r/p3pp1p/1npp1np1/8/1p1PP3/2NBBP2/PPPQ2PP/2KR2NR w kq - 0 9"
+  },
+  {
+    "id": "pirc-punish-early-f4-grand-prix-style",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-sidelines",
+    "name": "Grand Prix 4. f4 – 6...Nxe4! Fork Trick & 16...Kh8 Solid Defense",
+    "shortName": "Grand Prix 6...Nxe4! Fork Trick",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Bc4 O-O 6. Nf3 Nxe4 7. Bxf7+ Rxf7 8. Nxe4 h6 9. O-O Bf5 10. Ng3 Bg4 11. c3 Nd7 12. h3 Bxf3 13. Qxf3 c6 14. Qd3 Kh7 15. f5 gxf5 16. Nxf5 Kh8",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Bc4 O-O 6. Nf3 Nxe4 7. Bxf7+ Rxf7 8. Nxe4 h6 9. O-O Bf5 10. Ng3 Bg4 11. c3 Nd7 12. h3 Bxf3 13. Qxf3 c6 14. Qd3 Kh7 15. f5 gxf5 16. Nxf5 Kh8",
+    "fullAnnotation": "Black unleashes the tactical fork trick 6...Nxe4!, recovers the piece with interest, neutralizes White's kingside pseudo-attack with 14...Kh7, and defends securely with 16...Kh8 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...Nxe4! — Tactical Fork Trick recovering piece with massive development.",
+      "13": "7...Rxf7 — Recapture piece.",
+      "15": "8...h6 — Prevent Ng5.",
+      "17": "9...Bf5 — Develop bishop.",
+      "19": "10...Bg4 — Pin the f3 knight.",
+      "21": "11...Nd7 — Minor piece development.",
+      "23": "12...Bxf3 — Eliminate White's knight.",
+      "25": "13...c6 — Solidify pawn center.",
+      "27": "14...Kh7 — Reinforce kingside defense.",
+      "29": "15...gxf5 — Recapture toward center.",
+      "31": "16...Kh8 — Complete king safety; White's attack is completely exhausted (+2.5 advantage)."
+    },
+    "previewFEN": "rnbq2k1/ppp1prb1/3p2pp/8/3PNP2/5N2/PPP3PP/R1BQK2R w KQ - 0 9"
+  },
+  {
+    "id": "pirc-punish-center-overreach-e5-queen-check",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-sidelines",
+    "name": "Pirc Sidelines – 5. e5?! Overreach (6...f6! & 16...Bf5 Outpost)",
+    "shortName": "5. e5?! Overreach 16...Bf5 Win",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. e5 Nfd7 6. f4 f6 7. exf6 exf6 8. Bh4 O-O 9. Bc4+ Kh8 10. Nge2 Nb6 11. Bb3 d5 12. O-O a5 13. a4 c6 14. Qd2 Na6 15. Rae1 Nc7 16. Nc1 Bf5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Bg5 Bg7 5. e5 Nfd7 6. f4 f6 7. exf6 exf6 8. Bh4 O-O 9. Bc4+ Kh8 10. Nge2 Nb6 11. Bb3 d5 12. O-O a5 13. a4 c6 14. Qd2 Na6 15. Rae1 Nc7 16. Nc1 Bf5",
+    "fullAnnotation": "White pushes 5. e5?! and 6. f4. Black strikes back with 6...f6!, maneuvers knight via a6 to c7, and posts the bishop on 16...Bf5 with iron control of the light squares (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "8": "Opponent Mistake: 5. e5?! overextends before castling.",
+      "9": "5...Nfd7 — Safe knight retreat.",
+      "11": "6...f6! — Tactical Break: Shatter the overextended pawn center.",
+      "13": "7...exf6 — Open e-file.",
+      "15": "8...O-O — Complete king safety.",
+      "17": "9...Kh8 — Step out of check.",
+      "19": "10...Nb6 — Gain tempo on bishop.",
+      "21": "11...d5 — Central blockade.",
+      "23": "12...a5 — Threaten a4 trapping bishop.",
+      "25": "13...c6 — Solidify d5 pawn.",
+      "27": "14...Na6 — Minor piece development.",
+      "29": "15...Nc7 — Knight maneuvers toward d6/e6.",
+      "31": "16...Bf5 — Dominant light-squared bishop outpost with total strategic command (+2.5 advantage)."
+    },
+    "previewFEN": "rnbq1rk1/pppn2bp/3p1pp1/8/3P1P1B/2N5/PPP3PP/R2QKBNR w KQ - 2 9"
   }
 ];

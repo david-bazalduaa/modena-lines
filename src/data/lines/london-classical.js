@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: london-classical-symmetrical (7 Master Lines)
+   Sub-course: london-classical (13 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -200,5 +200,173 @@ export const londonClassicalLines = [
       "24": "13. Bxf6 — Shatter Black's kingside pawn fortress.",
       "26": "14. Ng4 — White attacks the shattered f6 pawn with decisive king-hunt pressure (+4.0 advantage)."
     }
+  },
+  {
+    "id": "london-punish-early-qb6-b2-grab",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Early 4...Qb6?! & 5...c4 Lock Punished",
+    "shortName": "4...Qb6 & ...c4 Lock Refuted",
+    "category": "Queen Harassment",
+    "eco": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Qb6 5. Qb3 c4 6. Qc2 Nc6 7. Nd2 g6 8. e4 dxe4 9. Nxc4 Qd8 10. Ne2 Bg7 11. Ng3 O-O 12. Nxe4 Nxe4 13. Qxe4",
+    "pgn": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Qb6 5. Qb3 c4 6. Qc2 Nc6 7. Nd2 g6 8. e4 dxe4 9. Nxc4 Qd8 10. Ne2 Bg7 11. Ng3 O-O 12. Nxe4 Nxe4 13. Qxe4",
+    "fullAnnotation": "Black tries early queen pressure with 4...Qb6 and locks the queenside with 5...c4. White counters with 8. e4!, regaining central control and winning the e4 pawn with decisive advantage.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn opening.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid pawn chain.",
+      "6": "4. c3 — Reinforce d4.",
+      "7": "Opponent Choice: 4...Qb6 threatens b2 but misplaces queen.",
+      "8": "5. Qb3 — Neutralize queen pressure.",
+      "10": "6. Qc2 — Queen steps back safely.",
+      "12": "7. Nd2 — Prepare central break.",
+      "14": "8. e4! — Tactical Motif: Strike the locked center immediately.",
+      "16": "9. Nxc4 — Recapture with tempo on queen.",
+      "18": "10. Ne2 — Coordinate minor pieces.",
+      "20": "11. Ng3 — Target e4 weakness.",
+      "22": "12. Nxe4 — Pocket central pawn.",
+      "24": "13. Qxe4 — White is a clean pawn ahead with dominating centralized queen (+3.0 advantage)."
+    },
+    "previewFEN": "r1b1kb1r/pp2pp1p/1qn2np1/8/2pPpB2/2P5/PPQN1PPP/R3KBNR w KQkq - 0 9"
+  },
+  {
+    "id": "london-punish-premature-bg4-pin",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Premature 5...Bg4?! Pin Shattered",
+    "shortName": "5...Bg4?! Pin Shattered",
+    "category": "Tactical Refutation",
+    "eco": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bg4 6. Qb3 Na5 7. Qa4+ Bd7 8. Qc2 cxd4 9. exd4 e6 10. Ngf3 Be7 11. Bd3 O-O 12. Ne5",
+    "pgn": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 Bg4 6. Qb3 Na5 7. Qa4+ Bd7 8. Qc2 cxd4 9. exd4 e6 10. Ngf3 Be7 11. Bd3 O-O 12. Ne5",
+    "fullAnnotation": "Black pins prematurely with 5...Bg4?!. White exploits b7 weakness with 6. Qb3!, forces Black's knight to the rim, and establishes an untouchable knight on 12. Ne5.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid foundation.",
+      "6": "4. c3 — Prepare center.",
+      "8": "5. Nd2 — Flexible development.",
+      "9": "Opponent Inaccuracy: 5...Bg4?! leaves b7 undefended.",
+      "10": "6. Qb3! — Tactical Motif: Double attack on b7 and d5.",
+      "12": "7. Qa4+ — Checking tempo driving bishop backward.",
+      "14": "8. Qc2 — Step back maintaining queen battery.",
+      "16": "9. exd4 — Recapture toward center.",
+      "18": "10. Ngf3 — Bring kingside pieces into play.",
+      "20": "11. Bd3 — Control key diagonal.",
+      "22": "12. Ne5! — Dominant knight outpost commanding the board (+2.5 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pp1bpppp/5n2/n2p4/3p1B2/2P1P3/PPQN1PPP/R3KBNR w KQkq - 0 9"
+  },
+  {
+    "id": "london-punish-steinitz-cxd4-reversal",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Passive 5...cxd4 Release Punished",
+    "shortName": "5...cxd4 Release Punished",
+    "category": "Positional Mastery",
+    "eco": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 cxd4 6. exd4 Bf5 7. Ngf3 e6 8. Qb3 Qc8 9. Nh4 Bg6 10. Nxg6 hxg6 11. Bd3 Be7 12. O-O O-O 13. Nf3",
+    "pgn": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 cxd4 6. exd4 Bf5 7. Ngf3 e6 8. Qb3 Qc8 9. Nh4 Bg6 10. Nxg6 hxg6 11. Bd3 Be7 12. O-O O-O 13. Nf3",
+    "fullAnnotation": "Black relieves tension prematurely with 5...cxd4. White uses the semi-open e-file, hunts Black's light-squared bishop with 9. Nh4!, and commands the dark squares with the bishop pair.",
+    "annotations": {
+      "0": "1. e4 — d4 — Queen's pawn opening.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid structure.",
+      "6": "4. c3 — Classical center.",
+      "8": "5. Nd2 — Develop knight.",
+      "9": "Opponent Choice: 5...cxd4 releases central tension prematurely.",
+      "10": "6. exd4 — Reclaim open e-file.",
+      "12": "7. Ngf3 — Harmonious mobilization.",
+      "14": "8. Qb3 — Eye b7 pawn.",
+      "16": "9. Nh4! — Tactical Motif: Hunt down Black's active bishop.",
+      "18": "10. Nxg6 — Secure bishop pair.",
+      "20": "11. Bd3 — Direct pieces toward Black's kingside.",
+      "22": "12. O-O — Complete king safety.",
+      "24": "13. Nf3 — Dominating central control with bishop pair advantage (+2.5 advantage)."
+    },
+    "previewFEN": "r1q1kb1r/pp3ppp/2n1pn2/3p1b2/3P1B2/1QP2N2/PP1N1PPP/R3KB1R w KQkq - 2 9"
+  },
+  {
+    "id": "london-punish-passive-bd6-trade",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Passive 3...Bd6 (8. f4!) Stonewall Bind",
+    "shortName": "3...Bd6 8. f4! Stonewall Bind",
+    "category": "Center Breakthrough",
+    "eco": "1. d4 d5 2. Bf4 e6 3. e3 Bd6 4. Bg3 Nf6 5. Nd2 O-O 6. Bd3 c5 7. c3 Nc6 8. f4 b6 9. Ngf3 Bb7 10. Ne5 Ne7 11. Qf3 Nf5 12. Bf2",
+    "pgn": "1. d4 d5 2. Bf4 e6 3. e3 Bd6 4. Bg3 Nf6 5. Nd2 O-O 6. Bd3 c5 7. c3 Nc6 8. f4 b6 9. Ngf3 Bb7 10. Ne5 Ne7 11. Qf3 Nf5 12. Bf2",
+    "fullAnnotation": "Black offers the early bishop exchange 3...Bd6. White retreats 4. Bg3!, establishes the crushing Pillsbury Stonewall bind with 8. f4! and 10. Ne5!, and prepares kingside g4 assault.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid center.",
+      "5": "Opponent Choice: 3...Bd6 offers bishop trade.",
+      "6": "4. Bg3 — Preserve bishop.",
+      "8": "5. Nd2 — Develop knight.",
+      "10": "6. Bd3 — Active diagonal.",
+      "12": "7. c3 — Classical triangle.",
+      "14": "8. f4! — Tactical Motif: Erect the impenetrable Pillsbury Stonewall clamp.",
+      "16": "9. Ngf3 — Knight joins attack.",
+      "18": "10. Ne5! — Unshakable monster outpost.",
+      "20": "11. Qf3 — Central queen battery.",
+      "22": "12. Bf2 — Bishop retreats safely preparing g4 expansion (+3.0 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/p4ppp/1pnbpn2/2pp4/3P1P2/2PBP1B1/PP1N2PP/R2QK1NR w KQ - 0 9"
+  },
+  {
+    "id": "london-punish-blunder-nh5-f7",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Thematic 11. Bxh7+! Greek Gift Decimation",
+    "shortName": "11. Bxh7+! Greek Gift Decimation",
+    "category": "Direct Mate",
+    "eco": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 Re8 9. Ne5 Qc7 10. f4 Nd7 11. Bxh7+ Kxh7 12. Qh5+ Kg8 13. Qxf7+ Kh8 14. Qxe8+",
+    "pgn": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 e6 6. Ngf3 Bd6 7. Bg3 O-O 8. Bd3 Re8 9. Ne5 Qc7 10. f4 Nd7 11. Bxh7+ Kxh7 12. Qh5+ Kg8 13. Qxf7+ Kh8 14. Qxe8+",
+    "fullAnnotation": "Black carelessly plays 10...Nd7??. White strikes with the thunderous Greek Gift sacrifice 11. Bxh7+! and 12. Qh5+, winning the e8 rook with unstoppable mating threats.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid foundation.",
+      "6": "4. c3 — Prepare center.",
+      "8": "5. Nd2 — Develop knight.",
+      "10": "6. Ngf3 — Rapid development.",
+      "12": "7. Bg3 — Bishop prophylaxis.",
+      "14": "8. Bd3 — Eye the h7 square.",
+      "16": "9. Ne5 — Classical outpost.",
+      "18": "10. f4 — Solidify outpost.",
+      "19": "Opponent Blunder: 10...Nd7?? removes the f6 knight defender of h7.",
+      "20": "11. Bxh7+! — Tactical Motif: Thunderous Greek Gift bishop sacrifice.",
+      "22": "12. Qh5+ — Royal check dragging king into the open.",
+      "24": "13. Qxf7+ — Drive king into the corner.",
+      "26": "14. Qxe8+ — Pocket clean rook with decisive mating net (+8.0 advantage)."
+    },
+    "previewFEN": "r1bqr1k1/pp3ppp/2nbpn2/2pp4/3P4/2PBPNB1/PP1N1PPP/R2QK2R w KQ - 6 9"
+  },
+  {
+    "id": "london-punish-early-c4-lock",
+    "courseId": "london-system",
+    "subCourseId": "london-classical",
+    "name": "London Classical – Premature 5...c4 Lock Undermined (6. b3!)",
+    "shortName": "5...c4 Lock Undermined (6. b3!)",
+    "category": "Center Breakthrough",
+    "eco": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 c4 6. b3 cxb3 7. axb3 Bf5 8. Ngf3 e6 9. Nh4 Be4 10. f3 Bg6 11. Nxg6 hxg6 12. Bd3 Bd6 13. Bxd6 Qxd6 14. f4",
+    "pgn": "1. d4 d5 2. Bf4 Nf6 3. e3 c5 4. c3 Nc6 5. Nd2 c4 6. b3 cxb3 7. axb3 Bf5 8. Ngf3 e6 9. Nh4 Be4 10. f3 Bg6 11. Nxg6 hxg6 12. Bd3 Bd6 13. Bxd6 Qxd6 14. f4",
+    "fullAnnotation": "Black prematurely closes the queenside with 5...c4. White dismantles the pawn chain with 6. b3!, captures the bishop pair, and locks down the kingside with 14. f4 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Bf4 — London bishop.",
+      "4": "3. e3 — Solid pawn chain.",
+      "6": "4. c3 — Prepare center.",
+      "8": "5. Nd2 — Develop piece.",
+      "9": "Opponent Mistake: 5...c4 prematurely closes tension allowing White to undermine the flank.",
+      "10": "6. b3! — Tactical Motif: Strike Black's overextended pawn chain.",
+      "12": "7. axb3 — Open a-file for rook.",
+      "14": "8. Ngf3 — Kingside mobilization.",
+      "16": "9. Nh4 — Hunt Black's active bishop.",
+      "18": "10. f3 — Kick bishop backwards.",
+      "20": "11. Nxg6 — Secure bishop pair.",
+      "22": "12. Bd3 — Develop bishop aggressively.",
+      "24": "13. Bxd6 — Liquidate enemy active bishop.",
+      "26": "14. f4 — Solidify complete control with bishop pair advantage (+2.5 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pp3ppp/2n1pn2/3p1b2/3P1B2/1PP1PN2/3N1PPP/R2QKB1R w KQkq - 0 9"
   }
 ];

@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: pirc-150-attack (5 Master Lines)
+   Sub-course: pirc-150-attack (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -61,7 +61,8 @@ export const pirc150AttackLines = [
       "27": "14...Bxf1 — Eliminate knight.",
       "29": "15...Ne5 — Central knight outpost.",
       "31": "16...Qb6 — Dominating the a7-g1 diagonal with decisive initiative."
-    }
+    },
+    "previewFEN": "r1b1k2r/p2npp1p/2pp1npQ/qp6/3PP3/2N2P2/PPP3PP/R3KBNR w KQkq - 1 9"
   },
   {
     "id": "pirc-punish-150-h4-h5-blunder",
@@ -91,7 +92,8 @@ export const pirc150AttackLines = [
       "27": "14...Qb6 — Coordinate queen on b-file.",
       "29": "15...Ne5 — Central knight pressure.",
       "31": "16...Re8 — Seize the e-file; White's king is under an irresistible siege."
-    }
+    },
+    "previewFEN": "r1bqk2r/p2n1pbp/2pp1np1/1p2p3/3PP3/2NBBN1P/PPPQ1PP1/R3K2R w KQkq e6 0 9"
   },
   {
     "id": "pirc-punish-150-g4-flank-assault",
@@ -120,7 +122,8 @@ export const pirc150AttackLines = [
       "27": "14...d5 — Lock central pawns.",
       "29": "15...e6 — Granite pawn wall blunts White's knight.",
       "31": "16...Qb6 — White's b2 pawn and king are facing an unavoidable mating attack."
-    }
+    },
+    "previewFEN": "r1bqkb1r/p3pp2/1npp1np1/1p5p/3PP1P1/2NBBP2/PPPQ3P/R3K1NR w KQkq h6 0 9"
   },
   {
     "id": "pirc-punish-150-b5-expansion",
@@ -150,6 +153,162 @@ export const pirc150AttackLines = [
       "27": "14...dxe5 — Open d-file.",
       "29": "15...Qd6 — Central queen fork on e5 knight and b2 pawn.",
       "31": "16...Nfd7 — Reroute knight; Black holds full dynamic counterplay."
-    }
+    },
+    "previewFEN": "r1bqk2r/p3ppbp/1npp1np1/1p6/3PP3/2NBBN1P/PPPQ1PP1/R3K2R w KQkq - 1 9"
+  },
+  {
+    "id": "pirc-punish-150-premature-h4-h5",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-150-attack",
+    "name": "150 Attack – 7. h4?! Halted (7...h5! & 13...Ba6 Bishop Trade)",
+    "shortName": "150 Attack 7...h5! & 13...Ba6 Win",
+    "category": "Positional Mastery",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. h4 h5 8. Nh3 Bg7 9. Ng5 Nb6 10. Bd3 O-O 11. O-O b4 12. Ne2 a5 13. c3 Ba6 14. Bxa6 Rxa6 15. Qd3 Ra8 16. c4 Nfd7",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. h4 h5 8. Nh3 Bg7 9. Ng5 Nb6 10. Bd3 O-O 11. O-O b4 12. Ne2 a5 13. c3 Ba6 14. Bxa6 Rxa6 15. Qd3 Ra8 16. c4 Nfd7",
+    "fullAnnotation": "White rushes 7. h4?!. Black freezes the flank with 7...h5!, expands with 11...b4!, trades light-squared bishops on a6, and anchors knights on b6 and d7 with complete board control (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5 expansion.",
+      "9": "5...b5 — Queenside advance.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...h5! — Prophylactic freeze denying White's g4/h5 storm.",
+      "15": "8...Bg7 — Fianchetto bishop.",
+      "17": "9...Nb6 — Knight targets c4.",
+      "19": "10...O-O — Complete king safety.",
+      "21": "11...b4! — Dislodge the c3 knight.",
+      "23": "12...a5 — Cement b4 pawn.",
+      "25": "13...Ba6 — Challenge White's active bishop.",
+      "27": "14...Rxa6 — Recapture rook on active rank.",
+      "29": "15...Ra8 — Rook steps back safely.",
+      "31": "16...Nfd7 — Complete knight coordination with massive positional advantage (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqk2r/p2nppb1/2pp1np1/1p5p/3PP2P/2N1BP1N/PPPQ2P1/R3KB1R w KQkq - 2 9"
+  },
+  {
+    "id": "pirc-punish-150-kingside-o-o-o-blunder",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-150-attack",
+    "name": "150 Attack – Opposite Castling (13...Nc5! & 16...Nh5 Unpinning)",
+    "shortName": "150 Attack 13...Nc5! & 16...Nh5",
+    "category": "Queenside Invasion",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Nbd7 7. Nf3 e5 8. O-O-O a6 9. dxe5 dxe5 10. Kb1 Qc7 11. h3 Bb7 12. Rhe1 O-O-O 13. Qc1 Nc5 14. Bg5 Be7 15. Qe3 Ne6 16. Bh4 Nh5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Nbd7 7. Nf3 e5 8. O-O-O a6 9. dxe5 dxe5 10. Kb1 Qc7 11. h3 Bb7 12. Rhe1 O-O-O 13. Qc1 Nc5 14. Bg5 Be7 15. Qe3 Ne6 16. Bh4 Nh5",
+    "fullAnnotation": "In opposite-side castling, Black coordinates with ...Bb7 and 12...O-O-O, targets d3 with 13...Nc5!, and unpins with 16...Nh5, completely seizing the initiative (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5.",
+      "9": "5...b5 — Queenside space.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...e5 — Strike center.",
+      "15": "8...a6 — Support b5.",
+      "17": "9...dxe5 — Reclaim open d-file.",
+      "19": "10...Qc7 — Connect rooks.",
+      "21": "11...Bb7 — Long diagonal battery.",
+      "23": "12...O-O-O — Complete king safety.",
+      "25": "13...Nc5! — Monster knight outpost targeting d3.",
+      "27": "14...Be7 — Neutralize pin.",
+      "29": "15...Ne6 — Eye d4 and f4.",
+      "31": "16...Nh5 — Active knight jump exploiting White's overstretched lines (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqkb1r/3n1p1p/p1pp1np1/1p2p3/3PP3/2NBBN2/PPPQ1PPP/2KR3R w kq - 0 9"
+  },
+  {
+    "id": "pirc-punish-150-aggressive-g4-flank",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-150-attack",
+    "name": "150 Attack – 7. g4 Rush (12...a4 & 14...b4! Flank Demolition)",
+    "shortName": "150 Attack 14...b4! Demolition",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. g4 Nb6 8. h4 h5 9. g5 Nfd7 10. b3 Bg7 11. O-O-O a5 12. f4 a4 13. Kb1 axb3 14. cxb3 b4 15. Nce2 c5 16. Nf3 O-O",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. g4 Nb6 8. h4 h5 9. g5 Nfd7 10. b3 Bg7 11. O-O-O a5 12. f4 a4 13. Kb1 axb3 14. cxb3 b4 15. Nce2 c5 16. Nf3 O-O",
+    "fullAnnotation": "White rushes with 7. g4?!. Black freezes with 8...h5!, opens the a-file with 12...a4 and 13...axb3!, dislodges the c3 knight with 14...b4!, and breaks with 15...c5! (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5.",
+      "9": "5...b5 — Queenside expansion.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...Nb6 — Eye c4 outpost.",
+      "15": "8...h5! — Prophylactic freeze.",
+      "17": "9...Nfd7 — Safe knight retreat.",
+      "19": "10...Bg7 — Fianchetto bishop.",
+      "21": "11...a5 — Advance queenside storm.",
+      "23": "12...a4 — Rip open White's king position.",
+      "25": "13...axb3 — Open a-file for rook.",
+      "27": "14...b4! — Dislodge the defending c3 knight.",
+      "29": "15...c5! — Decisive central explosion.",
+      "31": "16...O-O — Complete king safety with completely winning attack (+3.5 advantage)."
+    },
+    "previewFEN": "r1bqkb1r/p3pp2/1npp1np1/1p5p/3PP1PP/2N1BP2/PPPQ4/R3KBNR w KQkq h6 0 9"
+  },
+  {
+    "id": "pirc-punish-150-bh6-trade-trapped",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-150-attack",
+    "name": "150 Attack – 7. Bh6 Trade (12...d5! & 15...Qb6 Pin Dominance)",
+    "shortName": "150 Attack 12...d5! & 15...Qb6 Pin",
+    "category": "Pin Exploitation",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. Bh6 Bxh6 8. Qxh6 Qa5 9. Qd2 O-O 10. Bd3 e5 11. Nge2 b4 12. Nd1 d5 13. exd5 Nxd5 14. O-O exd4 15. Nxd4 Qb6 16. Qf2 Ne5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. f3 Nbd7 7. Bh6 Bxh6 8. Qxh6 Qa5 9. Qd2 O-O 10. Bd3 e5 11. Nge2 b4 12. Nd1 d5 13. exd5 Nxd5 14. O-O exd4 15. Nxd4 Qb6 16. Qf2 Ne5",
+    "fullAnnotation": "White trades bishops with 7. Bh6. Black activates queen on a5, blows open the center with 12...d5!, pins the d4 knight with 15...Qb6!, and targets d3 with 16...Ne5 (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5.",
+      "9": "5...b5 — Queenside space.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...Bxh6 — Liquidate White's bishop.",
+      "15": "8...Qa5 — Queen sortie with tempo.",
+      "17": "9...O-O — Complete king safety.",
+      "19": "10...e5 — Strike center.",
+      "21": "11...b4 — Dislodge knight.",
+      "23": "12...d5! — Tactical Break: Blow open the center against White's uncastled king.",
+      "25": "13...Nxd5 — Centralize knight.",
+      "27": "14...exd4 — Liquidate center pawn.",
+      "29": "15...Qb6! — Tactical Pin: Absolute pin on the d4 knight against White's king.",
+      "31": "16...Ne5 — Monster knight invasion winning material (+3.5 advantage)."
+    },
+    "previewFEN": "r1b1k2r/p2npp1p/2pp1npQ/qp6/3PP3/2N2P2/PPP3PP/R3KBNR w KQkq - 1 9"
+  },
+  {
+    "id": "pirc-punish-150-central-thrust-e5-reversal",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-150-attack",
+    "name": "150 Attack – 7...Bg4 Pin (11...e5! & 16...Rad8 Open d-file)",
+    "shortName": "150 Attack 11...e5! 16...Rad8 Win",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Bg7 7. Nf3 Bg4 8. Bh6 O-O 9. Bxg7 Kxg7 10. Qe3 Bxf3 11. Qxf3 e5 12. dxe5 dxe5 13. O-O Nbd7 14. Rad1 Qe7 15. Ne2 Nc5 16. Qe3 Rad8",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. Be3 c6 5. Qd2 b5 6. Bd3 Bg7 7. Nf3 Bg4 8. Bh6 O-O 9. Bxg7 Kxg7 10. Qe3 Bxf3 11. Qxf3 e5 12. dxe5 dxe5 13. O-O Nbd7 14. Rad1 Qe7 15. Ne2 Nc5 16. Qe3 Rad8",
+    "fullAnnotation": "Black pins with 7...Bg4, eliminates f3, establishes the solid e5 central wedge, and commands the open d-file with 16...Rad8 with total positional control (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...c6 — Prepare b5.",
+      "9": "5...b5 — Queenside space.",
+      "11": "6...Bg7 — Fianchetto bishop.",
+      "13": "7...Bg4 — Pin f3 knight.",
+      "15": "8...O-O — Complete king safety.",
+      "17": "9...Kxg7 — Recapture safely.",
+      "19": "10...Bxf3 — Eliminate knight.",
+      "21": "11...e5! — Tactical Motif: Cement dominant central pawn wedge.",
+      "23": "12...dxe5 — Reclaim open d-file.",
+      "25": "13...Nbd7 — Develop knight.",
+      "27": "14...Qe7 — Connect rooks.",
+      "29": "15...Nc5 — Monster knight outpost.",
+      "31": "16...Rad8 — Flawless control of central files (+2.5 advantage)."
+    },
+    "previewFEN": "rn1q1rk1/p3ppbp/2pp1npB/1p6/3PP1b1/2NB1N2/PPPQ1PPP/R3K2R w KQ - 6 9"
   }
 ];

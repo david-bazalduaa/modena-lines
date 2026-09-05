@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: pirc-fianchetto-system (5 Master Lines)
+   Sub-course: pirc-fianchetto (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -63,7 +63,8 @@ export const pircFianchettoLines = [
       "31": "16...Nc5 — Attack e4 pawn.",
       "33": "17...Qxd4+! — Tactical Punishment: Force queen trade into an advantageous endgame.",
       "35": "18...a5 — Complete control of the queenside with an effortless draw or win."
-    }
+    },
+    "previewFEN": "r1bq1rk1/ppp2pbp/2np1np1/8/3pP3/2N1B1PP/PPP1NPB1/R2QK2R w KQ - 0 9"
   },
   {
     "id": "pirc-punish-fianchetto-passive-f4",
@@ -93,7 +94,8 @@ export const pircFianchettoLines = [
       "29": "15...Nfd7 — Reposition knight.",
       "31": "16...Kxg7 — King recaptures.",
       "33": "17...Qb6! — Deadly discovered check threat on White's king; Black completely dominates."
-    }
+    },
+    "previewFEN": "r1bq1rk1/1p2ppbp/n1pp1np1/p7/P2PP3/2N3P1/1PP1NPBP/R1BQ1RK1 w - - 2 9"
   },
   {
     "id": "pirc-punish-fianchetto-queenside-break",
@@ -122,7 +124,8 @@ export const pircFianchettoLines = [
       "27": "14...Bb7 — Pressure e4 pawn.",
       "29": "15...Bxf6 — Preserve dark-squared bishop.",
       "31": "16...Qc7 — Connect rooks; Black holds total queenside dominance."
-    }
+    },
+    "previewFEN": "r1bq1rk1/1p1nppbp/p2p1np1/2p5/3PP3/2N3PP/PPP1NPB1/R1BQ1RK1 w - - 0 9"
   },
   {
     "id": "pirc-punish-fianchetto-queenless-squeeze",
@@ -152,6 +155,162 @@ export const pircFianchettoLines = [
       "27": "14...Bxc3! — Shatter White's queenside pawn structure.",
       "29": "15...Nxa2! — Tactical Motif: Pocket the a2 pawn.",
       "31": "16...Nxc3 — Win second pawn; Black has a decisive two-pawn endgame advantage."
-    }
+    },
+    "previewFEN": "rnbr2k1/pp2ppbp/5np1/2p5/4P3/2N3P1/PPP1NPBP/R1B1K2R w KQ - 0 9"
+  },
+  {
+    "id": "pirc-punish-fianchetto-passive-c3",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-fianchetto",
+    "name": "Pirc Fianchetto – 8...b5! Expansion (13...dxe5 & 16...Nxd5 Win)",
+    "shortName": "Fianchetto 8...b5! 16...Nxd5 Win",
+    "category": "Positional Mastery",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. O-O c6 8. h3 b5 9. a3 Nbd7 10. Be3 Bb7 11. Qd2 Re8 12. Rad1 a6 13. dxe5 dxe5 14. Nc1 Qc7 15. Nb3 c5 16. Nd5 Nxd5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. O-O c6 8. h3 b5 9. a3 Nbd7 10. Be3 Bb7 11. Qd2 Re8 12. Rad1 a6 13. dxe5 dxe5 14. Nc1 Qc7 15. Nb3 c5 16. Nd5 Nxd5",
+    "fullAnnotation": "In the Fianchetto System, Black expands with 8...b5!, maintains solid central harmony with 13...dxe5, and eliminates White's d5 outpost with 16...Nxd5 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...e5 — Strike center.",
+      "13": "7...c6 — Prepare expansion.",
+      "15": "8...b5! — Queenside expansion.",
+      "17": "9...Nbd7 — Develop knight.",
+      "19": "10...Bb7 — Long diagonal battery.",
+      "21": "11...Re8 — Active rook on e-file.",
+      "23": "12...a6 — Solidify b5 pawn.",
+      "25": "13...dxe5 — Reclaim open d-file.",
+      "27": "14...Qc7 — Connect rooks.",
+      "29": "15...c5 — Queenside space grab.",
+      "31": "16...Nxd5 — Liquidate White's knight with enduring strategic advantage (+2.5 advantage)."
+    },
+    "previewFEN": "rnbq1rk1/p4pbp/2pp1np1/1p2p3/3PP3/2N3PP/PPP1NPB1/R1BQ1RK1 w - b6 0 9"
+  },
+  {
+    "id": "pirc-punish-fianchetto-early-c5-strike",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-fianchetto",
+    "name": "Pirc Fianchetto – Queen Swap 6...c5 (11...Nb4! & 16...Ne8 Target e5)",
+    "shortName": "Fianchetto 6...c5 11...Nb4! Infiltration",
+    "category": "Endgame Conversion",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 c5 7. dxc5 dxc5 8. Qxd8 Rxd8 9. Be3 Na6 10. h3 Be6 11. O-O Nb4 12. Rac1 Rac8 13. a3 Na6 14. Rfd1 b6 15. Nf4 Bc4 16. e5 Ne8",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 c5 7. dxc5 dxc5 8. Qxd8 Rxd8 9. Be3 Na6 10. h3 Be6 11. O-O Nb4 12. Rac1 Rac8 13. a3 Na6 14. Rfd1 b6 15. Nf4 Bc4 16. e5 Ne8",
+    "fullAnnotation": "Black initiates the 6...c5 queen swap, invades with 11...Nb4!, and targets White's overextended e5 pawn with 16...Ne8!, achieving a winning endgame advantage (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...c5 — Challenge center immediately.",
+      "13": "7...dxc5 — Open d-file.",
+      "15": "8...Rxd8 — Dominate the open d-file.",
+      "17": "9...Na6 — Develop knight toward b4.",
+      "19": "10...Be6 — Centralize bishop.",
+      "21": "11...Nb4! — Tactical Infiltration: Threaten c2 pawn.",
+      "23": "12...Rac8 — Defend c5.",
+      "25": "13...Na6 — Knight steps back safely.",
+      "27": "14...b6 — Solidify c5.",
+      "29": "15...Bc4 — Active bishop.",
+      "31": "16...Ne8 — Target White's weak e5 pawn with decisive endgame pressure (+2.5 advantage)."
+    },
+    "previewFEN": "rnbr2k1/pp2ppbp/5np1/2p5/4P3/2N3P1/PPP1NPBP/R1B1K2R w KQ - 0 9"
+  },
+  {
+    "id": "pirc-punish-fianchetto-queen-sortie-b6",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-fianchetto",
+    "name": "Pirc Fianchetto – 13...Qb6! & 15...Qxb2! Queenside Pawn Grab",
+    "shortName": "Fianchetto 15...Qxb2! Pawn Win",
+    "category": "Pawn Grab Punishment",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. O-O exd4 8. Nxd4 Re8 9. h3 c6 10. a4 Nbd7 11. Re1 Nc5 12. Bf4 a5 13. Qd2 Qb6 14. Rad1 Nfd7 15. Bxd6 Qxb2 16. Rb1 Qa3",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. O-O exd4 8. Nxd4 Re8 9. h3 c6 10. a4 Nbd7 11. Re1 Nc5 12. Bf4 a5 13. Qd2 Qb6 14. Rad1 Nfd7 15. Bxd6 Qxb2 16. Rb1 Qa3",
+    "fullAnnotation": "Black coordinates on the queenside with ...Nc5 and ...Qb6, snatches the clean b2 pawn with 15...Qxb2!, and retreats queen safely to a3 with an extra pawn and superior pieces (+3.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...e5 — Strike center.",
+      "13": "7...exd4 — Liquidate center pawn.",
+      "15": "8...Re8 — Dominate e-file.",
+      "17": "9...c6 — Prepare expansion.",
+      "19": "10...Nbd7 — Develop knight.",
+      "21": "11...Nc5 — Monster knight outpost on c5.",
+      "23": "12...a5 — Queenside space.",
+      "25": "13...Qb6! — Tactical Queen Sortie double-attacking b2 and d4.",
+      "27": "14...Nfd7 — Reposition knight.",
+      "29": "15...Qxb2! — Pocket clean queenside pawn.",
+      "31": "16...Qa3 — Safe queen retreat with decisive extra material (+3.5 advantage)."
+    },
+    "previewFEN": "rnbqr1k1/ppp2pbp/3p1np1/8/3NP3/2N3P1/PPP2PBP/R1BQ1RK1 w - - 1 9"
+  },
+  {
+    "id": "pirc-punish-fianchetto-h3-prophylaxis-shattered",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-fianchetto",
+    "name": "Pirc Fianchetto – 11. d5 Clamp (13...c6! & 16...Ne6 Outpost)",
+    "shortName": "Fianchetto 11. d5 16...Ne6 Outpost",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 Nbd7 7. O-O e5 8. h3 b6 9. Be3 Bb7 10. Qd2 Re8 11. d5 a5 12. g4 Nc5 13. Ng3 c6 14. dxc6 Bxc6 15. Rad1 Bf8 16. Bg5 Ne6",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 Nbd7 7. O-O e5 8. h3 b6 9. Be3 Bb7 10. Qd2 Re8 11. d5 a5 12. g4 Nc5 13. Ng3 c6 14. dxc6 Bxc6 15. Rad1 Bf8 16. Bg5 Ne6",
+    "fullAnnotation": "White pushes 11. d5 and 12. g4. Black strikes the center with 13...c6!, neutralizes pins with 15...Bf8, and cements an invincible outpost on 16...Ne6 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — King safety.",
+      "11": "6...Nbd7 — Develop knight.",
+      "13": "7...e5 — Strike center.",
+      "15": "8...b6 — Queenside fianchetto prep.",
+      "17": "9...Bb7 — Long diagonal battery.",
+      "19": "10...Re8 — Dominate e-file.",
+      "21": "11...a5 — Queenside space.",
+      "23": "12...Nc5 — Outpost knight on c5.",
+      "25": "13...c6! — Strike the d5 pawn base.",
+      "27": "14...Bxc6 — Recapture bishop toward center.",
+      "29": "15...Bf8 — Neutralize pins on d-file.",
+      "31": "16...Ne6 — Dominating knight outpost eyeing d4 and f4 (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/p1pn1pbp/1p1p1np1/4p3/3PP3/2N3PP/PPP1NPB1/R1BQ1RK1 w - - 0 9"
+  },
+  {
+    "id": "pirc-punish-fianchetto-sharp-e5-d4-trade",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-fianchetto",
+    "name": "Pirc Fianchetto – 7. dxe5 Trade (10...Rd8 & 16...Ng4! Initiative)",
+    "shortName": "Fianchetto 7. dxe5 16...Ng4! Win",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. dxe5 dxe5 8. O-O c6 9. b3 Qc7 10. Ba3 Rd8 11. Qc1 Nbd7 12. Rd1 Nf8 13. Rxd8 Qxd8 14. Qe3 Ne6 15. Rd1 Qa5 16. Bb2 Ng4",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. g3 Bg7 5. Bg2 O-O 6. Nge2 e5 7. dxe5 dxe5 8. O-O c6 9. b3 Qc7 10. Ba3 Rd8 11. Qc1 Nbd7 12. Rd1 Nf8 13. Rxd8 Qxd8 14. Qe3 Ne6 15. Rd1 Qa5 16. Bb2 Ng4",
+    "fullAnnotation": "White liquidates with 7. dxe5. Black seizes the open d-file with 10...Rd8!, centralizes the queen on a5, and uncorks 16...Ng4! with an overwhelming initiative (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...e5 — Strike center.",
+      "13": "7...dxe5 — Reclaim open d-file.",
+      "15": "8...c6 — Solidify pawn center.",
+      "17": "9...Qc7 — Connect rooks.",
+      "19": "10...Rd8! — Seize the open d-file with tempo.",
+      "21": "11...Nbd7 — Develop knight.",
+      "23": "12...Nf8 — Reroute knight toward e6.",
+      "25": "13...Qxd8 — Recapture queen with central control.",
+      "27": "14...Ne6 — Centralize knight.",
+      "29": "15...Qa5 — Gain tempo on White's bishop.",
+      "31": "16...Ng4! — Tactical Jump: Attack queen and f2 weakness with decisive initiative (+3.0 advantage)."
+    },
+    "previewFEN": "rnbq1rk1/pp3pbp/2p2np1/4p3/4P3/2N3P1/PPP1NPBP/R1BQ1RK1 w - - 0 9"
   }
 ];

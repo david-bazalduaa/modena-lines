@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: ruy-lopez-closed-mainlines (5 Master Lines)
+   Sub-course: ruy-lopez-closed (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -148,5 +148,146 @@ export const ruyLopezClosedLines = [
       "24": "13. Bc2 — Retreat bishop.",
       "26": "14. Rf1 — White is a full piece up with decisive victory (+5.0 advantage)."
     }
+  },
+  {
+    "id": "closed-punish-chigorin-overextension",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-closed",
+    "name": "Closed Ruy Lopez – Chigorin 14. Nb3! Central Outpost Mastery",
+    "shortName": "Chigorin 14. Nb3! Outpost",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Na5 10. Bc2 c5 11. d4 Qc7 12. Nbd2 cxd4 13. cxd4 Nc6 14. Nb3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Na5 10. Bc2 c5 11. d4 Qc7 12. Nbd2 cxd4 13. cxd4 Nc6 14. Nb3",
+    "fullAnnotation": "In the Chigorin Variation, White holds the center with Bc2 and 11. d4, liquidates on d4, and cements control over d4 with 14. Nb3!, keeping Black's knight sidelined (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Bishop retreats preserving pressure.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook on e-file.",
+      "12": "7. Bb3 — Bishop tucks away.",
+      "14": "8. c3 — Prepare d4.",
+      "16": "9. h3 — Deny ...Bg4 pin.",
+      "18": "10. Bc2 — Preserve light-squared bishop.",
+      "20": "11. d4 — Center clash.",
+      "22": "12. Nbd2 — Minor piece development.",
+      "24": "13. cxd4 — Reclaim central duo.",
+      "26": "14. Nb3 — Dominant knight placement controlling d4 and restraining Black's pieces (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9"
+  },
+  {
+    "id": "closed-punish-breyer-reroute-sluggish",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-closed",
+    "name": "Closed Ruy Lopez – Breyer 9...Nb8 (14. Ng3 Kingside Battery)",
+    "shortName": "Breyer 14. Ng3 Battery",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 Nb8 10. d4 Nbd7 11. Nbd2 Bb7 12. Bc2 Re8 13. Nf1 Bf8 14. Ng3",
+    "fullAnnotation": "Against the Breyer rerouting 9...Nb8, White executes the classical knight tour Nbd2-f1-g3, reinforcing e4 and establishing overwhelming kingside pressure (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat preserving pin.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop retreat.",
+      "14": "8. c3 — Prepare center.",
+      "16": "9. h3 — Prophylaxis.",
+      "17": "Opponent Choice: 9...Nb8 Breyer knight rerouting.",
+      "18": "10. d4 — Strike in the center.",
+      "20": "11. Nbd2 — Reroute knight toward kingside.",
+      "22": "12. Bc2 — Preserve bishop.",
+      "24": "13. Nf1 — Knight moves toward f5.",
+      "26": "14. Ng3 — Complete harmonious piece coordination eyeing f5 and h5 (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9"
+  },
+  {
+    "id": "closed-punish-worrall-attack-qe2",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-closed",
+    "name": "Closed Ruy Lopez – Worrall Attack 5. Qe2 & 11. Rd1! Pin Domination",
+    "shortName": "Worrall 11. Rd1! Pin Domination",
+    "category": "Pin Exploitation",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Qe2 b5 6. Bb3 Be7 7. c3 O-O 8. O-O d5 9. d3 dxe4 10. dxe4 Bg4 11. Rd1 Qc8 12. Nbd2 Na5 13. Bc2",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. Qe2 b5 6. Bb3 Be7 7. c3 O-O 8. O-O d5 9. d3 dxe4 10. dxe4 Bg4 11. Rd1 Qc8 12. Nbd2 Na5 13. Bc2",
+    "fullAnnotation": "In the Worrall Attack 5. Qe2, White counters Black's early 8...d5 break with 11. Rd1!, pinning Black's queen along the d-file and preserving a solid central clamp with 13. Bc2 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat preserving bishop.",
+      "8": "5. Qe2 — The Worrall Attack.",
+      "10": "6. Bb3 — Tuck bishop away.",
+      "12": "7. c3 — Prepare center.",
+      "14": "8. O-O — Complete king safety.",
+      "16": "9. d3 — Solidify e4.",
+      "18": "10. dxe4 — Reclaim central pawn.",
+      "20": "11. Rd1! — Tactical Motif: Seize open d-file with tempo against Black's queen.",
+      "22": "12. Nbd2 — Develop knight toward c4.",
+      "24": "13. Bc2 — Preserve key bishop with commanding positional advantage (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1n2n2/1p1pp3/4P3/1BP2N2/PP1PQPPP/RNB2RK1 w - d6 0 9"
+  },
+  {
+    "id": "closed-punish-center-attack-d4-exd4",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-closed",
+    "name": "Closed Ruy Lopez – Premature 9...Bg4?! Shattered (13. d5!)",
+    "shortName": "9...Bg4?! 13. d5! Central Crush",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. d4 Bg4 10. Be3 exd4 11. cxd4 Na5 12. Bc2 c5 13. d5",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. d4 Bg4 10. Be3 exd4 11. cxd4 Na5 12. Bc2 c5 13. d5",
+    "fullAnnotation": "Black pins prematurely with 9...Bg4. White reinforces with 10. Be3, takes 13. d5!, locking Black's knight out on a5 and preparing kingside breakthroughs (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat bishop.",
+      "8": "5. O-O — Castle.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. c3 — Prepare center.",
+      "16": "9. d4 — Strike in the center.",
+      "17": "Opponent Choice: 9...Bg4 pins knight.",
+      "18": "10. Be3 — Reinforce d4.",
+      "20": "11. cxd4 — Reclaim pawn center.",
+      "22": "12. Bc2 — Guard diagonal.",
+      "24": "13. d5! — Tactical Space Clamp: Exile Black's a5 knight to the rim permanently (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9"
+  },
+  {
+    "id": "closed-punish-flank-h6-weakness",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-closed",
+    "name": "Closed Ruy Lopez – Passive 9...h6?! & 14. Bc2 Kingside Preparation",
+    "shortName": "Passive 9...h6?! 14. Bc2 Setup",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 h6 10. d4 Re8 11. Nbd2 Bf8 12. Nf1 Bb7 13. Ng3 Na5 14. Bc2",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3 h6 10. d4 Re8 11. Nbd2 Bf8 12. Nf1 Bb7 13. Ng3 Na5 14. Bc2",
+    "fullAnnotation": "Black wastes time with 9...h6?!. White executes the master knight maneuver Nbd2-f1-g3, preserves the Italian-Ruy bishop on c2, and commands the center effortlessly (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat bishop.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook on e-file.",
+      "12": "7. Bb3 — Bishop retreat.",
+      "14": "8. c3 — Prepare center.",
+      "16": "9. h3 — Deny ...Bg4.",
+      "17": "Opponent Inaccuracy: 9...h6?! creates a hook on the kingside.",
+      "18": "10. d4 — Center clash.",
+      "20": "11. Nbd2 — Knight tour toward kingside.",
+      "22": "12. Nf1 — Maneuver to g3.",
+      "24": "13. Ng3 — Eye f5 and e4 squares.",
+      "26": "14. Bc2 — Complete harmonious piece coordination (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1np1n2/1p2p3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - - 1 9"
   }
 ];

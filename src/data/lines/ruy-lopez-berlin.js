@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: ruy-lopez-berlin-open (5 Master Lines)
+   Sub-course: ruy-lopez-berlin (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -147,5 +147,143 @@ export const ruyLopezBerlinLines = [
       "24": "13. Nc3 — Rapid deployment.",
       "26": "14. Bf4 — White has total central dominance (+3.5 advantage)."
     }
+  },
+  {
+    "id": "berlin-punish-early-bc5-d4",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-berlin",
+    "name": "Berlin Classical – 4...Bc5?! Punished (6. d4! & 13. Nc4)",
+    "shortName": "4...Bc5?! 6. d4! Central Break",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. c3 O-O 6. d4 Bb6 7. Bg5 h6 8. Bh4 d6 9. Qd3 Bg4 10. Nbd2 Qe7 11. Rfe1 Rad8 12. h3 Bd7 13. Nc4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Bc5 5. c3 O-O 6. d4 Bb6 7. Bg5 h6 8. Bh4 d6 9. Qd3 Bg4 10. Nbd2 Qe7 11. Rfe1 Rad8 12. h3 Bd7 13. Nc4",
+    "fullAnnotation": "Black chooses the Classical Berlin 4...Bc5. White establishes the d4 pawn center, pins with 7. Bg5!, and maneuvers knight to c4 with total central control (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. O-O — Castle into safety.",
+      "7": "Opponent Choice: 4...Bc5 Classical Berlin variation.",
+      "8": "5. c3 — Prepare central steamroller.",
+      "10": "6. d4! — Center clash opening lines.",
+      "12": "7. Bg5! — Pin the f6 knight.",
+      "14": "8. Bh4 — Preserve the pin.",
+      "16": "9. Qd3 — Centralize queen defending d4.",
+      "18": "10. Nbd2 — Minor piece development.",
+      "20": "11. Rfe1 — Dominate the open e-file.",
+      "22": "12. h3 — Question Black's bishop.",
+      "24": "13. Nc4 — Monster knight placement with overwhelming central grip (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/ppp2pp1/1bnp1n1p/1B2p3/3PP2B/2P2N2/PP3PPP/RN1Q1RK1 w - - 0 9"
+  },
+  {
+    "id": "berlin-punish-greedy-nxe4-re1",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-berlin",
+    "name": "Berlin Defense – 4...Nxe4 5. Re1! & 13. Ne4 Outpost",
+    "shortName": "4...Nxe4 5. Re1! Outpost",
+    "category": "Pin Exploitation",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5 Be7 7. Bf1 Nxe5 8. Rxe5 O-O 9. d4 Bf6 10. Re1 Nf5 11. d5 d6 12. Nd2 Re8 13. Ne4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. Re1 Nd6 6. Nxe5 Be7 7. Bf1 Nxe5 8. Rxe5 O-O 9. d4 Bf6 10. Re1 Nf5 11. d5 d6 12. Nd2 Re8 13. Ne4",
+    "fullAnnotation": "Black takes with 4...Nxe4. White pins on the e-file with 5. Re1!, recovers material seamlessly, and plants a monster knight outpost on 13. Ne4 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. O-O — Complete king safety.",
+      "7": "Opponent Choice: 4...Nxe4 Open Berlin variation.",
+      "8": "5. Re1! — Tactical Pin: Attack knight along the e-file.",
+      "10": "6. Nxe5 — Recapture with discovered check threat.",
+      "12": "7. Bf1 — Retreat bishop preserving minor piece harmony.",
+      "14": "8. Rxe5 — Recapture piece.",
+      "16": "9. d4 — Reclaim pawn center.",
+      "18": "10. Re1 — Active rook retreat.",
+      "20": "11. d5 — Seize central space.",
+      "22": "12. Nd2 — Reroute knight toward e4.",
+      "24": "13. Ne4 — Dominant knight outpost commanding Black's camp (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/ppppbppp/3n4/4R3/8/8/PPPP1PPP/RNBQ1BK1 w - - 1 9"
+  },
+  {
+    "id": "berlin-punish-l-hermet-fork-trick",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-berlin",
+    "name": "Berlin Defense – 5...a6?! 9. Qf3! & 10. Nxc6! Tactical Decimation",
+    "shortName": "Berlin 10. Nxc6! Tactical Decimation",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 a6 6. Bxc6 dxc6 7. Re1 Bf5 8. Nxe5 Be7 9. Qf3 Nd6 10. Nxc6 bxc6 11. Qxc6+ Bd7 12. Qf3 O-O 13. Nc3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 a6 6. Bxc6 dxc6 7. Re1 Bf5 8. Nxe5 Be7 9. Qf3 Nd6 10. Nxc6 bxc6 11. Qxc6+ Bd7 12. Qf3 O-O 13. Nc3",
+    "fullAnnotation": "Black tries 5...a6 in the open Berlin. White pins on the e-file, fires 9. Qf3! double-attacking f5 and c6, and strikes 10. Nxc6!, winning a pawn and leaving Black in disarray.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. O-O — Castle.",
+      "8": "5. d4 — Center strike.",
+      "9": "Opponent Mistake: 5...a6?! loses crucial tempos under e-file pins.",
+      "10": "6. Bxc6 — Eliminate knight defender.",
+      "12": "7. Re1 — Pin knight against king.",
+      "14": "8. Nxe5 — Recapture piece.",
+      "16": "9. Qf3! — Tactical Motif: Double attack against f5 bishop and c6 pawn.",
+      "18": "10. Nxc6! — Tactical Strike: Rip open Black's queenside.",
+      "20": "11. Qxc6+ — Checking fork winning material.",
+      "22": "12. Qf3 — Queen retreat maintaining central command.",
+      "24": "13. Nc3 — Rapid mobilization with clean extra pawn (+3.0 advantage)."
+    },
+    "previewFEN": "r2qk2r/1pp1bppp/p1p5/4Nb2/3Pn3/8/PPP2PPP/RNBQR1K1 w kq - 1 9"
+  },
+  {
+    "id": "berlin-punish-rio-de-janeiro-variation",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-berlin",
+    "name": "Berlin Defense – Rio de Janeiro 8. e5! & 12. Nf5 Dominance",
+    "shortName": "Rio de Janeiro 12. Nf5 Dominance",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 Be7 6. Qe2 Nd6 7. Bxc6 bxc6 8. dxe5 Nb7 9. Nc3 O-O 10. Re1 Nc5 11. Nd4 Ne6 12. Nf5",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O Nxe4 5. d4 Be7 6. Qe2 Nd6 7. Bxc6 bxc6 8. dxe5 Nb7 9. Nc3 O-O 10. Re1 Nc5 11. Nd4 Ne6 12. Nf5",
+    "fullAnnotation": "In the Rio de Janeiro variation, White clamps down with 8. e5!, dominates the e-file with 10. Re1, and plants 12. Nf5!, paralyzing Black's kingside defense (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. O-O — Complete king safety.",
+      "8": "5. d4 — Center clash.",
+      "10": "6. Qe2 — Step queen into the e-file.",
+      "12": "7. Bxc6 — Trade bishop giving Black doubled pawns.",
+      "14": "8. dxe5! — Space wedge pushing knight to b7.",
+      "16": "9. Nc3 — Rapid development.",
+      "18": "10. Re1 — Active rook on e-file.",
+      "20": "11. Nd4 — Centralize knight.",
+      "22": "12. Nf5 — Dominating knight invasion threatening Black's bishop pair (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqk2r/pnppbppp/2p5/4P3/8/5N2/PPP1QPPP/RNB2RK1 w kq - 1 9"
+  },
+  {
+    "id": "berlin-punish-dubious-d6-passivity",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-berlin",
+    "name": "Berlin Defense – Passive 4...d6?! Punished (9. Bxc6! & 10. Qf3)",
+    "shortName": "4...d6?! 9. Bxc6! Punished",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O d6 5. d4 Bd7 6. Nc3 Be7 7. Re1 exd4 8. Nxd4 O-O 9. Bxc6 bxc6 10. Qf3 Re8 11. Bg5 h6 12. Bh4 Rb8 13. b3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 Nf6 4. O-O d6 5. d4 Bd7 6. Nc3 Be7 7. Re1 exd4 8. Nxd4 O-O 9. Bxc6 bxc6 10. Qf3 Re8 11. Bg5 h6 12. Bh4 Rb8 13. b3",
+    "fullAnnotation": "Black retreats into a passive Steinitz-like defense with 4...d6?!. White liquidates on c6 with 9. Bxc6!, mobilizes the queen with 10. Qf3, and secures dominant positional superiority (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. O-O — Castle.",
+      "7": "Opponent Inaccuracy: 4...d6?! is passive and concedes central space.",
+      "8": "5. d4 — Center clash.",
+      "10": "6. Nc3 — Develop knight.",
+      "12": "7. Re1 — Dominate e-file.",
+      "14": "8. Nxd4 — Centralize knight.",
+      "16": "9. Bxc6! — Tactical Trade: Inflict permanent doubled pawns on Black.",
+      "18": "10. Qf3 — Central queen battery.",
+      "20": "11. Bg5 — Pin the f6 knight.",
+      "22": "12. Bh4 — Preserve pin.",
+      "24": "13. b3 — Solidify queenside with complete control (+2.5 advantage)."
+    },
+    "previewFEN": "r2q1rk1/pppbbppp/2np1n2/1B6/3NP3/2N5/PPP2PPP/R1BQR1K1 w - - 1 9"
   }
 ];

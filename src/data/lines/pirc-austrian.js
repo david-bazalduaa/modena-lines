@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: pirc-austrian-attack (5 Master Lines)
+   Sub-course: pirc-austrian (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -63,7 +63,8 @@ export const pircAustrianLines = [
       "29": "15...Bxe6 — Eliminate dangerous bishop.",
       "31": "16...Nxe6 — Recapture with knight.",
       "33": "17...Ng4! — Tactical Punishment: Threaten Bd4+ and devastating mating threats on f2 and h2!"
-    }
+    },
+    "previewFEN": "rnbq1rk1/pp1np1bp/3pp1p1/2p5/2BP1P2/2N2N2/PPP3PP/R1BQK2R w KQ - 0 9"
   },
   {
     "id": "pirc-punish-austrian-greedy-f5",
@@ -93,7 +94,8 @@ export const pircAustrianLines = [
       "29": "15...e5! — Tactical Punishment: Central blast shatters White's pawn chain!",
       "31": "16...Qxd2 — Trade queens.",
       "33": "17...Nxe5 — Black is a piece ahead in activity with the superior endgame."
-    }
+    },
+    "previewFEN": "r1bq1rk1/ppp1ppbp/2n3p1/4P2n/3P4/2NB1N2/PPP3PP/R1BQK2R w KQ - 1 9"
   },
   {
     "id": "pirc-punish-austrian-overextended-center",
@@ -122,7 +124,8 @@ export const pircAustrianLines = [
       "27": "14...Bh6! — Tactical Punishment: Pin White's queen along the c1-h6 diagonal!",
       "29": "15...Bxf4 — Eliminate bishop.",
       "31": "16...Qb8! — Triple attack on the pinned e5 pawn; White's center collapses."
-    }
+    },
+    "previewFEN": "rnbq1rk1/p3ppbp/1p1p2p1/2p1P3/3P1Pn1/2N2N2/PPP3PP/R2QKBBR w KQ c6 0 9"
   },
   {
     "id": "pirc-punish-austrian-na6-counter",
@@ -153,6 +156,163 @@ export const pircAustrianLines = [
       "29": "15...e6 — Solidify center.",
       "31": "16...Nb6 — Attack c4 pawn.",
       "33": "17...Rad8 — Seize d-file; Black has equalized comfortably with active pieces."
-    }
+    },
+    "previewFEN": "r2q1rk1/pp2ppbp/n2p1np1/2pP4/4PPb1/2NB1N2/PPP3PP/R1BQ1RK1 w - - 1 9"
+  },
+  {
+    "id": "pirc-punish-austrian-5...O-O-6-e5-counter",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-austrian",
+    "name": "Pirc Austrian – 6. e5 Attack 8...c5! & 13...Ndxe5! Piece Sacrifice",
+    "shortName": "Austrian 13...Ndxe5! Sacrifice",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. e5 Nfd7 7. Bc4 Nb6 8. Bb3 c5 9. dxc5 dxc5 10. Qe2 Nc6 11. Be3 Bg4 12. Bxc5 Nd7 13. Be3 Ndxe5 14. fxe5 Nxe5 15. O-O Nxf3+ 16. gxf3 Bh3",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. e5 Nfd7 7. Bc4 Nb6 8. Bb3 c5 9. dxc5 dxc5 10. Qe2 Nc6 11. Be3 Bg4 12. Bxc5 Nd7 13. Be3 Ndxe5 14. fxe5 Nxe5 15. O-O Nxf3+ 16. gxf3 Bh3",
+    "fullAnnotation": "Overextended Austrian Attack refuted! Black strikes with 8...c5!, unleashes the piece sacrifice 13...Ndxe5!, and shatters White's kingside with 15...Nxf3+ and 16...Bh3 (+4.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "10": "Opponent Gambit: 6. e5 Austrian Attack central pawn rush.",
+      "11": "6...Nfd7 — Safe knight retreat.",
+      "13": "7...Nb6 — Kick bishop with tempo.",
+      "15": "8...c5! — Tactical Strike: Blow open the center against White's overextension.",
+      "17": "9...dxc5 — Open d-file.",
+      "19": "10...Nc6 — Develop knight.",
+      "21": "11...Bg4 — Pin the f3 knight.",
+      "23": "12...Nd7 — Retain knight coordination.",
+      "25": "13...Ndxe5! — Tactical Piece Sacrifice demolishing White's central wedge.",
+      "27": "14...Nxe5 — Centralize knight with double attack.",
+      "29": "15...Nxf3+ — Shatter White's kingside shelter.",
+      "31": "16...Bh3 — Skewer rook with decisive winning attack (+4.0 advantage)."
+    },
+    "previewFEN": "rnbq1rk1/pp2ppbp/1n1p2p1/2p1P3/3P1P2/1BN2N2/PPP3PP/R1BQK2R w KQ c6 0 9"
+  },
+  {
+    "id": "pirc-punish-austrian-premature-f5-break",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-austrian",
+    "name": "Pirc Austrian – 7. e5 Rush (8...Nh5 & 16...e5! Central Counter)",
+    "shortName": "Austrian 7. e5 16...e5! Counter",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Bd3 Nc6 7. e5 dxe5 8. fxe5 Nh5 9. Be3 Bg4 10. Be4 f6 11. exf6 Nxf6 12. Bxc6 bxc6 13. O-O Nd5 14. Nxd5 cxd5 15. c3 Qd6 16. Qe2 e5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Bd3 Nc6 7. e5 dxe5 8. fxe5 Nh5 9. Be3 Bg4 10. Be4 f6 11. exf6 Nxf6 12. Bxc6 bxc6 13. O-O Nd5 14. Nxd5 cxd5 15. c3 Qd6 16. Qe2 e5",
+    "fullAnnotation": "Against 7. e5, Black relocates knight to h5, strikes with 10...f6!, and blasts open the center with 16...e5!, seizing the initiative and winning central dominance (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...Nc6 — Develop knight.",
+      "13": "7...dxe5 — Liquidate center.",
+      "15": "8...Nh5 — Outpost knight eyeing f4.",
+      "17": "9...Bg4 — Pin f3 knight.",
+      "19": "10...f6! — Strike the e5 pawn base.",
+      "21": "11...Nxf6 — Recapture toward center.",
+      "23": "12...bxc6 — Open b-file.",
+      "25": "13...Nd5 — Centralize knight outpost.",
+      "27": "14...cxd5 — Open c-file.",
+      "29": "15...Qd6 — Connect rooks.",
+      "31": "16...e5! — Tactical Breakthrough: Blow open central lines with decisive force (+3.0 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/ppp1ppbp/2n3p1/4P2n/3P4/2NB1N2/PPP3PP/R1BQK2R w KQ - 1 9"
+  },
+  {
+    "id": "pirc-punish-austrian-curse-of-e5-pusher",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-austrian",
+    "name": "Pirc Austrian – 5...c5! Strike (10...e4! & 15...Qxb5 Queenside Blitz)",
+    "shortName": "Austrian 5...c5! 15...Qxb5 Blitz",
+    "category": "Queenside Invasion",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 c5 6. Bb5+ Bd7 7. e5 Ng4 8. Bxd7+ Qxd7 9. d5 dxe5 10. h3 e4 11. Nxe4 Nf6 12. Nxf6+ Bxf6 13. O-O O-O 14. c4 b5 15. cxb5 Qxb5 16. Re1 Na6",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 c5 6. Bb5+ Bd7 7. e5 Ng4 8. Bxd7+ Qxd7 9. d5 dxe5 10. h3 e4 11. Nxe4 Nf6 12. Nxf6+ Bxf6 13. O-O O-O 14. c4 b5 15. cxb5 Qxb5 16. Re1 Na6",
+    "fullAnnotation": "Black unleashes the Dragon-style counter-strike 5...c5!, pushes 10...e4!, rips open the queenside with 14...b5! and 15...Qxb5, and commands the board with 16...Na6 (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...c5! — Dragon counter-strike against Austrian.",
+      "11": "6...Bd7 — Neutralize check.",
+      "13": "7...Ng4 — Aggressive knight jump.",
+      "15": "8...Qxd7 — Centralize queen.",
+      "17": "9...dxe5 — Liquidate center.",
+      "19": "10...e4! — Dislodge the c3 knight.",
+      "21": "11...Nf6 — Knight steps back safely.",
+      "23": "12...Bxf6 — Secure dark-squared bishop.",
+      "25": "13...O-O — Complete king safety.",
+      "27": "14...b5! — Queenside breach.",
+      "29": "15...Qxb5 — Infiltrate queenside.",
+      "31": "16...Na6 — Minor piece mobilization with complete queenside domination (+3.0 advantage)."
+    },
+    "previewFEN": "rn2k2r/pp1qppbp/3p2p1/2p1P3/3P1Pn1/2N2N2/PPP3PP/R1BQK2R w KQkq - 0 9"
+  },
+  {
+    "id": "pirc-punish-austrian-6-be3-c5-demolition",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-austrian",
+    "name": "Pirc Austrian – 6. Be3 b6 (8...c5! & 16...Qxa2! Mating Assault)",
+    "shortName": "Austrian 8...c5! 16...Qxa2! Attack",
+    "category": "Direct Mate",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Be3 b6 7. e5 Ng4 8. Bg1 c5 9. h3 Nh6 10. dxc5 bxc5 11. Qd2 Bb7 12. O-O-O Nc6 13. exd6 exd6 14. Qxd6 Qa5 15. Qxc5 Bxc3 16. Qxc3 Qxa2",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Be3 b6 7. e5 Ng4 8. Bg1 c5 9. h3 Nh6 10. dxc5 bxc5 11. Qd2 Bb7 12. O-O-O Nc6 13. exd6 exd6 14. Qxd6 Qa5 15. Qxc5 Bxc3 16. Qxc3 Qxa2",
+    "fullAnnotation": "Against 6. Be3, Black attacks with 8...c5!, invades the queenside with 14...Qa5! and 16...Qxa2!, generating unavoidable mating threats against White's queenside king (+4.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Dark-squared bishop.",
+      "9": "5...O-O — Complete king safety.",
+      "11": "6...b6 — Queenside fianchetto prep.",
+      "13": "7...Ng4 — Attack e3 bishop.",
+      "15": "8...c5! — Tactical Strike: Blow open the center.",
+      "17": "9...Nh6 — Knight retreat.",
+      "19": "10...bxc5 — Open b-file.",
+      "21": "11...Bb7 — Long diagonal battery.",
+      "23": "12...Nc6 — Develop knight.",
+      "25": "13...exd6 — Open e-file.",
+      "27": "14...Qa5! — Tactical Queen Sortie with mate threats on a2.",
+      "29": "15...Bxc3 — Shatter king defense.",
+      "31": "16...Qxa2! — Lethal queen penetration with unstoppable mating attack (+4.0 advantage)."
+    },
+    "previewFEN": "rnbq1rk1/p3ppbp/1p1p2p1/2p1P3/3P1Pn1/2N2N2/PPP3PP/R2QKBBR w KQ c6 0 9"
+  },
+  {
+    "id": "pirc-punish-austrian-uncastled-king-hunt",
+    "courseId": "pirc-defense",
+    "subCourseId": "pirc-austrian",
+    "name": "Pirc Austrian – 6...Na6 Line (13...Ne5! & 16...axb5 Queenside Rip)",
+    "shortName": "Austrian 6...Na6 16...axb5 Rip",
+    "category": "Queenside Invasion",
+    "eco": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Bd3 Na6 7. O-O c5 8. d5 Bg4 9. h3 Bxf3 10. Qxf3 Nc7 11. a4 a6 12. f5 Nd7 13. Bf4 Ne5 14. Bxe5 Bxe5 15. Rae1 b5 16. axb5 axb5",
+    "pgn": "1. e4 d6 2. d4 Nf6 3. Nc3 g6 4. f4 Bg7 5. Nf3 O-O 6. Bd3 Na6 7. O-O c5 8. d5 Bg4 9. h3 Bxf3 10. Qxf3 Nc7 11. a4 a6 12. f5 Nd7 13. Bf4 Ne5 14. Bxe5 Bxe5 15. Rae1 b5 16. axb5 axb5",
+    "fullAnnotation": "In the 6...Na6 system, Black maneuvers knight to c7, controls the e5 outpost with the monster dark-squared bishop, and rips open the queenside with 15...b5! and 16...axb5 (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...d6 — The Pirc Defense.",
+      "3": "2...Nf6 — Attack e4.",
+      "5": "3...g6 — Fianchetto setup.",
+      "7": "4...Bg7 — Fianchetto bishop.",
+      "9": "5...O-O — King safety.",
+      "11": "6...Na6 — Flexible knight development.",
+      "13": "7...c5 — Challenge center.",
+      "15": "8...Bg4 — Pin f3 knight.",
+      "17": "9...Bxf3 — Eliminate defender.",
+      "19": "10...Nc7 — Regroup knight to active queenside square.",
+      "21": "11...a6 — Support b5 push.",
+      "23": "12...Nd7 — Eye e5 outpost.",
+      "25": "13...Ne5! — Monster knight invasion.",
+      "27": "14...Bxe5 — Dominate dark squares.",
+      "29": "15...b5! — Queenside breach.",
+      "31": "16...axb5 — Ripping open the queenside with decisive attacking momentum (+3.0 advantage)."
+    },
+    "previewFEN": "r2q1rk1/pp2ppbp/n2p1np1/2pP4/4PPb1/2NB1N2/PPP3PP/R1BQ1RK1 w - - 1 9"
   }
 ];

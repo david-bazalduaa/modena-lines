@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: ruy-lopez-marshall-anti (5 Master Lines)
+   Sub-course: ruy-lopez-marshall (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -160,5 +160,146 @@ export const ruyLopezMarshallLines = [
       "28": "15. gxf3 — Open g-file.",
       "30": "16. Rxe7 — White wins a clean piece with complete victory (+5.0 advantage)."
     }
+  },
+  {
+    "id": "marshall-punish-anti-8-a4-b4",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-marshall",
+    "name": "Anti-Marshall 8. a4! – 8...b4 & 13. Bxc4 Queenside Clamp",
+    "shortName": "Anti-Marshall 8. a4! 13. Bxc4 Clamp",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. a4 b4 9. d3 d6 10. Nbd2 Na5 11. Ba2 c5 12. Nc4 Nxc4 13. Bxc4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. a4 b4 9. d3 d6 10. Nbd2 Na5 11. Ba2 c5 12. Nc4 Nxc4 13. Bxc4",
+    "fullAnnotation": "White defuses the Marshall Gambit with 8. a4! b4. White trades Black's active knight on c4 and establishes the dominating bishop on c4 with absolute control (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat preserving pin.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. a4! — Tactical Anti-Marshall: Question Black's queenside pawns before ...d5 is possible.",
+      "16": "9. d3 — Solidify center.",
+      "18": "10. Nbd2 — Reroute knight.",
+      "20": "11. Ba2 — Bishop steps back safely.",
+      "22": "12. Nc4 — Challenge the a5 knight.",
+      "24": "13. Bxc4 — Monster dark-squared bishop commanding the board (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2ppbppp/p1n2n2/4p3/Pp2P3/1B3N2/1PPP1PPP/RNBQR1K1 w - - 0 9"
+  },
+  {
+    "id": "marshall-punish-anti-8-h3-d6",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-marshall",
+    "name": "Anti-Marshall 8. h3! – 11. Nc3 & 13. Ng3 Kingside Domination",
+    "shortName": "Anti-Marshall 8. h3! Kingside Dominance",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. h3 Bb7 9. d3 d6 10. a3 Qd7 11. Nc3 Nd8 12. Ne2 Ne6 13. Ng3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. h3 Bb7 9. d3 d6 10. a3 Qd7 11. Nc3 Nd8 12. Ne2 Ne6 13. Ng3",
+    "fullAnnotation": "White sidesteps the Marshall with 8. h3! and 9. d3. White develops smoothly with Nc3-e2-g3, seizing control of the f5 outpost and denying Black any counterplay (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat bishop.",
+      "8": "5. O-O — King safety.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. h3! — Anti-Marshall prophylaxis preventing ...d5 complications.",
+      "16": "9. d3 — Solidify e4.",
+      "18": "10. a3 — Queenside space control.",
+      "20": "11. Nc3 — Rapid minor piece mobilization.",
+      "22": "12. Ne2 — Reroute knight toward f5.",
+      "24": "13. Ng3 — Total kingside piece coordination (+2.5 advantage)."
+    },
+    "previewFEN": "r2q1rk1/1bppbppp/p1n2n2/1p2p3/4P3/1B3N1P/PPPP1PP1/RNBQR1K1 w - - 1 9"
+  },
+  {
+    "id": "marshall-punish-main-gambit-refuted",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-marshall",
+    "name": "Marshall Attack Accepted – 14. g3 & 16. Qd3 Iron Consolidation",
+    "shortName": "Marshall 16. Qd3 Iron Defense",
+    "category": "Pawn Grab Punishment",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. c3 d5 9. exd5 Nxd5 10. Nxe5 Nxe5 11. Rxe5 c6 12. d4 Bd6 13. Re1 Qh4 14. g3 Qh3 15. Be3 Bg4 16. Qd3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. c3 d5 9. exd5 Nxd5 10. Nxe5 Nxe5 11. Rxe5 c6 12. d4 Bd6 13. Re1 Qh4 14. g3 Qh3 15. Be3 Bg4 16. Qd3",
+    "fullAnnotation": "The definitive refutation of the Marshall Attack. White pockets the e5 pawn, defends calmly with 14. g3, develops 15. Be3, and places queen on d3, retaining an extra clean pawn (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Bishop retreat.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook on e-file.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. c3 — Prepare center.",
+      "15": "Opponent Gambit: 8...d5 the Marshall Attack.",
+      "16": "9. exd5 — Liquidate center pawn.",
+      "18": "10. Nxe5 — Pocket the sacrificed pawn.",
+      "20": "11. Rxe5 — Central rook control.",
+      "22": "12. d4 — Solidify center.",
+      "24": "13. Re1 — Rook steps back safely.",
+      "26": "14. g3 — Halt Black's battery.",
+      "28": "15. Be3 — Minor piece development.",
+      "30": "16. Qd3 — Centralize queen with decisive extra material (+2.5 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1n2n2/1p1pp3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - d6 0 9"
+  },
+  {
+    "id": "marshall-punish-premature-f5-counter",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-marshall",
+    "name": "Anti-Marshall – 11. axb5! & 13. Na3 Clean Pawn Pockets",
+    "shortName": "Anti-Marshall 13. Na3 Pawn Win",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. a4 Bb7 9. d3 d6 10. c3 Nd7 11. axb5 axb5 12. Rxa8 Qxa8 13. Na3",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. a4 Bb7 9. d3 d6 10. c3 Nd7 11. axb5 axb5 12. Rxa8 Qxa8 13. Na3",
+    "fullAnnotation": "In the Anti-Marshall, White strikes with 11. axb5!, trades rooks on the a-file, and targets the b5 pawn with 13. Na3!, winning clean material with complete strategic domination (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat preserving pin.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. a4 — Anti-Marshall flank challenge.",
+      "16": "9. d3 — Solidify e4.",
+      "18": "10. c3 — Reinforce d4.",
+      "20": "11. axb5! — Tactical Trade: Open the a-file and isolate b5.",
+      "22": "12. Rxa8 — Liquidate rooks.",
+      "24": "13. Na3 — Double attack against the undefended b5 pawn winning clean material (+2.5 advantage)."
+    },
+    "previewFEN": "r2q1rk1/1bppbppp/p1n2n2/1p2p3/P3P3/1B3N2/1PPP1PPP/RNBQR1K1 w - - 1 9"
+  },
+  {
+    "id": "marshall-punish-steinitz-d5-overreach",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-marshall",
+    "name": "Marshall Steiner 9...e4?! – 10. dxc6! & 14. d4 Decisive Material Win",
+    "shortName": "Marshall Steiner 14. d4 Win",
+    "category": "Tactical Destruction",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. c3 d5 9. exd5 e4 10. dxc6 exf3 11. Qxf3 Bg4 12. Qg3 Bd6 13. f4 Re8 14. d4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 O-O 8. c3 d5 9. exd5 e4 10. dxc6 exf3 11. Qxf3 Bg4 12. Qg3 Bd6 13. f4 Re8 14. d4",
+    "fullAnnotation": "Black tries the aggressive Herman Steiner variation with 9...e4?!. White takes 10. dxc6!, blocks kingside checks with 13. f4!, and consolidates extra pieces with 14. d4 (+4.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Ba4 — Retreat bishop.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Re1 — Active rook.",
+      "12": "7. Bb3 — Bishop tuck.",
+      "14": "8. c3 — Prepare center.",
+      "16": "9. exd5 — Liquidate center.",
+      "17": "Opponent Mistake: 9...e4?! Steiner counter-sacrifice is tactically unsound.",
+      "18": "10. dxc6! — Pocket the knight.",
+      "20": "11. Qxf3 — Recapture toward center.",
+      "22": "12. Qg3 — Queen steps aside maintaining f4 control.",
+      "24": "13. f4! — Tactical Blocker: Neutralize Black's light-squared bishop attack.",
+      "26": "14. d4 — Cement extra piece with completely winning position (+4.0 advantage)."
+    },
+    "previewFEN": "r1bq1rk1/2p1bppp/p1n2n2/1p1pp3/4P3/1BP2N2/PP1P1PPP/RNBQR1K1 w - d6 0 9"
   }
 ];

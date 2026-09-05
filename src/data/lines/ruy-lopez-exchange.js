@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: ruy-lopez-exchange-modern (5 Master Lines)
+   Sub-course: ruy-lopez-exchange (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -147,5 +147,139 @@ export const ruyLopezExchangeLines = [
       "24": "13. Nxd6 — Eliminate bishop pair and isolate d6 pawn.",
       "26": "14. Nd4 — Target isolated d6 pawn with total positional mastery (+3.0 advantage)."
     }
+  },
+  {
+    "id": "exchange-punish-early-bg4-pin",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-exchange",
+    "name": "Ruy Lopez Exchange – 5...Bg4 6...h5 Trap Refuted (12. Nh2!)",
+    "shortName": "Exchange 6...h5?! 12. Nh2! Refuted",
+    "category": "Piece Trap",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7 9. Re1 Ng6 10. d4 Bd6 11. hxg4 hxg4 12. Nh2",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bg4 6. h3 h5 7. d3 Qf6 8. Nbd2 Ne7 9. Re1 Ng6 10. d4 Bd6 11. hxg4 hxg4 12. Nh2",
+    "fullAnnotation": "Black tries the classical 6...h5 fishing pole trap. White calmly dismantles Black's threats with 8. Nbd2 and 10. d4!, winning the piece with 12. Nh2! while Black's attack fizzles (+4.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Bxc6 — The Exchange Variation.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. h3 — Question the bishop.",
+      "11": "Opponent Trap: 6...h5 the Fishing Pole trap offering the bishop.",
+      "12": "7. d3 — Solidify e4.",
+      "14": "8. Nbd2 — Reroute knight toward f1.",
+      "16": "9. Re1 — Active rook.",
+      "18": "10. d4 — Center strike neutralizing Black's piece coordination.",
+      "20": "11. hxg4 — Pocket the piece safely.",
+      "22": "12. Nh2 — Knight covers h-file with clean extra piece (+4.0 advantage)."
+    },
+    "previewFEN": "r3kb1r/1pp1npp1/p1p2q2/4p2p/4P1b1/3P1N1P/PPPN1PP1/R1BQ1RK1 w kq - 3 9"
+  },
+  {
+    "id": "exchange-punish-queen-swap-endgame",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-exchange",
+    "name": "Ruy Lopez Exchange – 5...f6 Endgame 10. Na5! & 12. Bf4 Infiltration",
+    "shortName": "Exchange 5...f6 12. Bf4 Infiltration",
+    "category": "Endgame Conversion",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1 9. Rxd1 Bd6 10. Na5 b6 11. Nc4 Be7 12. Bf4",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O f6 6. d4 exd4 7. Nxd4 c5 8. Nb3 Qxd1 9. Rxd1 Bd6 10. Na5 b6 11. Nc4 Be7 12. Bf4",
+    "fullAnnotation": "Black defends solidly with 5...f6. White initiates the textbook Exchange endgame with 6. d4!, invades the queenside with 10. Na5!, and attacks c7 with 12. Bf4 winning clean material (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Bxc6 — The Exchange Variation.",
+      "8": "5. O-O — Complete king safety.",
+      "9": "Opponent Choice: 5...f6 solidifies e5.",
+      "10": "6. d4! — Center strike initiating endgame.",
+      "12": "7. Nxd4 — Centralize knight.",
+      "14": "8. Nb3 — Safe knight retreat.",
+      "16": "9. Rxd1 — Seize the only open file.",
+      "18": "10. Na5! — Tactical Motif: Target Black's c6/c5/b6 pawn weaknesses.",
+      "20": "11. Nc4 — Attack d6 bishop.",
+      "22": "12. Bf4 — Decisive double attack on c7 winning the pawn (+2.5 advantage)."
+    },
+    "previewFEN": "r1b1kbnr/1pp3pp/p4p2/2p5/4P3/1N6/PPP2PPP/RNBq1RK1 w kq - 0 9"
+  },
+  {
+    "id": "exchange-punish-aggressive-5-bd6",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-exchange",
+    "name": "Ruy Lopez Exchange – 5...Bd6?! 10. Nc4! Bishop Pair Neutralization",
+    "shortName": "Exchange 5...Bd6?! 10. Nc4! Neutralized",
+    "category": "Positional Mastery",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bd6 6. d4 exd4 7. Qxd4 f6 8. Be3 Ne7 9. Nbd2 Be6 10. Nc4 Bxc4 11. Qxc4 Qd7 12. Rad1",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Bd6 6. d4 exd4 7. Qxd4 f6 8. Be3 Ne7 9. Nbd2 Be6 10. Nc4 Bxc4 11. Qxc4 Qd7 12. Rad1",
+    "fullAnnotation": "Black develops passively with 5...Bd6?!. White strikes with 6. d4!, centralizes the queen on d4, eliminates Black's bishop pair with 10. Nc4!, and pins Black's queen on 12. Rad1 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Bxc6 — The Exchange Variation.",
+      "8": "5. O-O — Castle.",
+      "9": "Opponent Choice: 5...Bd6?! blocks the d-file.",
+      "10": "6. d4 — Center clash.",
+      "12": "7. Qxd4 — Centralize queen threatening g7.",
+      "14": "8. Be3 — Develop minor piece.",
+      "16": "9. Nbd2 — Reroute knight toward c4.",
+      "18": "10. Nc4! — Tactical Trade: Strip Black of the bishop pair.",
+      "20": "11. Qxc4 — Centralize queen with tempo.",
+      "22": "12. Rad1 — Absolute pin on the d-file against Black's queen (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqk2r/1pp1n1pp/p1pb1p2/8/3QP3/4BN2/PPP2PPP/RN3RK1 w kq - 2 9"
+  },
+  {
+    "id": "exchange-punish-premature-qe7-pin",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-exchange",
+    "name": "Ruy Lopez Exchange – 5...Qe7?! (6. d4! & 12. e5! Central Clamp)",
+    "shortName": "Exchange 5...Qe7?! 12. e5! Central Clamp",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Qe7 6. d4 exd4 7. Qxd4 Bg4 8. Nbd2 Nf6 9. Re1 Rd8 10. Qc3 Qc5 11. Qb3 Qb5 12. e5",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Qe7 6. d4 exd4 7. Qxd4 Bg4 8. Nbd2 Nf6 9. Re1 Rd8 10. Qc3 Qc5 11. Qb3 Qb5 12. e5",
+    "fullAnnotation": "Black misplaces the queen with 5...Qe7?!. White plays 6. d4!, centralizes the queen on d4, and launches 12. e5!, kicking the f6 knight and dominating the entire board (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Bxc6 — The Exchange Variation.",
+      "8": "5. O-O — King safety.",
+      "9": "Opponent Inaccuracy: 5...Qe7?! exposes the queen to central tactics.",
+      "10": "6. d4 — Center clash.",
+      "12": "7. Qxd4 — Centralize queen.",
+      "14": "8. Nbd2 — Minor piece development.",
+      "16": "9. Re1 — Active rook on e-file.",
+      "18": "10. Qc3 — Step queen away from rook.",
+      "20": "11. Qb3 — Pressure b7.",
+      "22": "12. e5! — Tactical Motif: Central pawn thrust banishing Black's knight (+3.0 advantage)."
+    },
+    "previewFEN": "r3kb1r/1pp1qppp/p1p2n2/8/3QP1b1/5N2/PPPN1PPP/R1B2RK1 w kq - 3 9"
+  },
+  {
+    "id": "exchange-punish-delayed-c5-kingside-push",
+    "courseId": "ruy-lopez",
+    "subCourseId": "ruy-lopez-exchange",
+    "name": "Ruy Lopez Exchange – 5...Ne7 6...Qd4?! (10. Re1! & 12. Qxc7 Win)",
+    "shortName": "Exchange 6...Qd4?! 12. Qxc7 Win",
+    "category": "Queen Harassment",
+    "eco": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Ne7 6. Nxe5 Qd4 7. Qh5 g6 8. Qg5 Bg7 9. Nd3 Qxe4 10. Re1 h6 11. Qg3 Qf5 12. Qxc7",
+    "pgn": "1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Bxc6 dxc6 5. O-O Ne7 6. Nxe5 Qd4 7. Qh5 g6 8. Qg5 Bg7 9. Nd3 Qxe4 10. Re1 h6 11. Qg3 Qf5 12. Qxc7",
+    "fullAnnotation": "Black plays tricky queen forks with 5...Ne7 and 6...Qd4?!. White responds with 7. Qh5! and 8. Qg5, pins the knight with 10. Re1!, and captures 12. Qxc7 with winning material advantage.",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "2": "2. Nf3 — Attack e5.",
+      "4": "3. Bb5 — Ruy Lopez bishop.",
+      "6": "4. Bxc6 — The Exchange Variation.",
+      "8": "5. O-O — Complete king safety.",
+      "10": "6. Nxe5 — Pocket clean central pawn.",
+      "12": "7. Qh5! — Threaten Qxf7#.",
+      "14": "8. Qg5 — Defend knight on e5.",
+      "16": "9. Nd3 — Safe retreat.",
+      "18": "10. Re1! — Tactical Pin: Absolute pin on the e-file against Black's queen and king.",
+      "20": "11. Qg3 — Step queen aside.",
+      "22": "12. Qxc7 — Win pawn on c7 with decisive infiltration (+4.5 advantage)."
+    },
+    "previewFEN": "r1b1k2r/1pp1npbp/p1p3p1/4N1Q1/3qP3/8/PPPP1PPP/RNB2RK1 w kq - 2 9"
   }
 ];

@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: caro-kann-two-knights-fantasy (5 Master Lines)
+   Sub-course: caro-kann-two-knights (10 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -63,7 +63,8 @@ export const caroKannTwoKnightsLines = [
       "27": "14...Qg2+ — Continued assault.",
       "29": "15...Rd8 — Protect the corner rook.",
       "31": "16...f5 — White's king is stranded in the center and facing unavoidable collapse."
-    }
+    },
+    "previewFEN": "r2qkb1r/pp1n1ppp/2p2n2/4p2b/2BPP3/1QP2N2/PP4PP/RNB1K2R w KQkq - 3 9"
   },
   {
     "id": "caro-kann-punish-two-knights-early-d4",
@@ -92,7 +93,8 @@ export const caroKannTwoKnightsLines = [
       "27": "14...Qxd6 — Queen central recapture.",
       "29": "15...Rfe8 — Coordinate rooks on central files.",
       "31": "16...e5! — Tactical Punishment: Blast open the center and shatter White's pawn structure."
-    }
+    },
+    "previewFEN": "r2qkb1r/pp1n1ppp/2p1pn2/8/3P4/2NQ3P/PPP2PP1/R1B1KB1R w KQkq - 3 9"
   },
   {
     "id": "caro-kann-punish-two-knights-bc4",
@@ -123,7 +125,8 @@ export const caroKannTwoKnightsLines = [
       "29": "15...Qh5 — Queen joins the g-file attack.",
       "31": "16...Nxe5 — Trade active knight.",
       "33": "17...Bd7 — Black holds an extra pawn and an active attack on White's king."
-    }
+    },
+    "previewFEN": "rnb1kb1r/pp2pppp/2p5/8/8/4QN2/PPqP1PPP/R1B1KB1R w KQkq - 0 9"
   },
   {
     "id": "caro-kann-punish-fantasy-c5-counter",
@@ -153,6 +156,163 @@ export const caroKannTwoKnightsLines = [
       "25": "14...Qc7 — Maintain queen pressure.",
       "27": "15...b6 — Solidify c5 knight.",
       "29": "16...Bb7 — Harmonious development with superior pawn structure."
-    }
+    },
+    "previewFEN": "r1bqk2r/pp1nnppp/4p3/2Pp4/4P3/P1bBBP2/1PP3PP/R2QK1NR w KQkq - 0 9"
+  },
+  {
+    "id": "caro-punish-two-knights-4-e5-d4-thrust",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights",
+    "name": "Two Knights – 5. Qe2?! (9...b5! & 16...c4 Queenside Steamroller)",
+    "shortName": "Two Knights 5. Qe2?! 16...c4 Win",
+    "category": "Queenside Invasion",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Nd7 7. Bc4 Nf6 8. Ne5 e6 9. Qe2 b5 10. Bb3 Qc7 11. d4 Bd6 12. O-O O-O 13. Bg5 Nd5 14. Bd2 a5 15. c3 c5 16. Rac1 c4",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Nd7 7. Bc4 Nf6 8. Ne5 e6 9. Qe2 b5 10. Bb3 Qc7 11. d4 Bd6 12. O-O O-O 13. Bg5 Nd5 14. Bd2 a5 15. c3 c5 16. Rac1 c4",
+    "fullAnnotation": "White commits queen early with 5. Qe2?!. Black gains tempos with 7...Nf6, expands with 9...b5!, and locks the queenside with 15...c5 and 16...c4!, trapping White's bishop (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...dxe4 — Open d-file.",
+      "7": "4...Nf6 — Challenge e4.",
+      "9": "5...Nxe4 — Liquidate knight.",
+      "11": "6...Nd7 — Develop knight.",
+      "13": "7...Nf6 — Kick queen with tempo.",
+      "15": "8...e6 — Guard f7.",
+      "17": "9...b5! — Aggressive queenside space grab.",
+      "19": "10...Qc7 — Centralize queen on c-file.",
+      "21": "11...Bd6 — Active bishop diagonal.",
+      "23": "12...O-O — Complete king safety.",
+      "25": "13...Nd5 — Centralize knight.",
+      "27": "14...a5 — Threaten a4 trapping bishop.",
+      "29": "15...c5 — Queenside breach.",
+      "31": "16...c4 — Complete queenside spatial steamroller (+2.5 advantage)."
+    },
+    "previewFEN": "r1bqkb1r/pp3ppp/2p1pn2/4N3/2B1Q3/8/PPPP1PPP/R1B1K2R w KQkq - 0 9"
+  },
+  {
+    "id": "caro-punish-two-knights-early-bg4-pin",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights",
+    "name": "Two Knights – 3...Bg4 Pin (11...Qc7 & 16...Be7! Discovery Attack)",
+    "shortName": "Two Knights 3...Bg4 16...Be7! Trap",
+    "category": "Pin Exploitation",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. h3 Bxf3 5. Qxf3 e6 6. d4 dxe4 7. Qxe4 Nf6 8. Qd3 Nbd7 9. Be2 Bd6 10. O-O O-O 11. Bg5 Qc7 12. Rad1 h6 13. Bc1 Rad8 14. Ne4 Nxe4 15. Qxe4 Nf6 16. Qh4 Be7",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. h3 Bxf3 5. Qxf3 e6 6. d4 dxe4 7. Qxe4 Nf6 8. Qd3 Nbd7 9. Be2 Bd6 10. O-O O-O 11. Bg5 Qc7 12. Rad1 h6 13. Bc1 Rad8 14. Ne4 Nxe4 15. Qxe4 Nf6 16. Qh4 Be7",
+    "fullAnnotation": "Black pins with 3...Bg4, forms the powerful battery ...Bd6 and ...Qc7, and unleashes the deadly discovery 16...Be7!, threatening White's exposed queen and seizing the initiative (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bg4 — Tactical Pin on the f3 knight.",
+      "7": "4...Bxf3 — Eliminate knight.",
+      "9": "5...e6 — Solid foundation.",
+      "11": "6...dxe4 — Open d-file.",
+      "13": "7...Nf6 — Gain tempo on queen.",
+      "15": "8...Nbd7 — Develop knight.",
+      "17": "9...Bd6 — Active bishop.",
+      "19": "10...O-O — Complete king safety.",
+      "21": "11...Qc7 — Form central battery.",
+      "23": "12...h6 — Question the bishop.",
+      "25": "13...Rad8 — Double rooks on central files.",
+      "27": "14...Nxe4 — Liquidate knight.",
+      "29": "15...Nf6 — Kick queen with tempo.",
+      "31": "16...Be7! — Tactical Motif: Lethal discovery threat against White's queen (+2.5 advantage)."
+    },
+    "previewFEN": "r2qkb1r/pp1n1ppp/2p1pn2/8/3P4/2NQ3P/PPP2PP1/R1B1KB1R w KQkq - 3 9"
+  },
+  {
+    "id": "caro-punish-two-knights-sharp-4...Nf6",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights",
+    "name": "Two Knights – 5...exf6 Line (15...Bb8 & 16...Qc7 Mating Battery)",
+    "shortName": "Two Knights 16...Qc7 Mating Battery",
+    "category": "Direct Mate",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. d4 Bd6 7. Bd3 O-O 8. O-O Re8 9. h3 Nd7 10. c4 Nf8 11. Be3 Ng6 12. Qd2 Be6 13. Rfe1 Qd7 14. Bf1 Rad8 15. Rad1 Bb8 16. b3 Qc7",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Nxf6+ exf6 6. d4 Bd6 7. Bd3 O-O 8. O-O Re8 9. h3 Nd7 10. c4 Nf8 11. Be3 Ng6 12. Qd2 Be6 13. Rfe1 Qd7 14. Bf1 Rad8 15. Rad1 Bb8 16. b3 Qc7",
+    "fullAnnotation": "In the Two Knights 5...exf6 line, Black constructs the unstoppable queen-bishop battery on the b8-h2 diagonal with 15...Bb8 and 16...Qc7!, generating unavoidable mating threats (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...dxe4 — Open d-file.",
+      "7": "4...Nf6 — Challenge knight.",
+      "9": "5...exf6 — Open e-file for rapid piece activity.",
+      "11": "6...Bd6 — Active bishop.",
+      "13": "7...O-O — Complete king safety.",
+      "15": "8...Re8 — Active rook on e-file.",
+      "17": "9...Nd7 — Develop knight.",
+      "19": "10...Nf8 — Knight tour toward g6.",
+      "21": "11...Ng6 — Eye f4 and h4.",
+      "23": "12...Be6 — Develop bishop.",
+      "25": "13...Qd7 — Connect rooks.",
+      "27": "14...Rad8 — Double on central files.",
+      "29": "15...Bb8 — Tuck bishop into battery position.",
+      "31": "16...Qc7 — Tactical Mating Battery threatening deadly entry on h2 (+3.0 advantage)."
+    },
+    "previewFEN": "rnbqr1k1/pp3ppp/2pb1p2/8/3P4/3B1N2/PPP2PPP/R1BQ1RK1 w - - 5 9"
+  },
+  {
+    "id": "caro-punish-two-knights-premature-d4-pin",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights",
+    "name": "Two Knights – 3...Bg4 4. d4 (14...c5! & 16...Rad8 Central Demolition)",
+    "shortName": "Two Knights 4. d4 14...c5! Blast",
+    "category": "Center Breakthrough",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. d4 e6 5. Be2 Nd7 6. O-O dxe4 7. Nxe4 Ngf6 8. Ng3 Bd6 9. h3 Bxf3 10. Bxf3 O-O 11. Re1 Qc7 12. Ne4 Nxe4 13. Bxe4 Nf6 14. Bd3 c5 15. dxc5 Bxc5 16. Qf3 Rad8",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 Bg4 4. d4 e6 5. Be2 Nd7 6. O-O dxe4 7. Nxe4 Ngf6 8. Ng3 Bd6 9. h3 Bxf3 10. Bxf3 O-O 11. Re1 Qc7 12. Ne4 Nxe4 13. Bxe4 Nf6 14. Bd3 c5 15. dxc5 Bxc5 16. Qf3 Rad8",
+    "fullAnnotation": "Black neutralizes 4. d4 with 6...dxe4 and 9...Bxf3, blows open the center with 14...c5!, and commands the open d-file with 16...Rad8 (+2.5 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...Bg4 — Pin the knight.",
+      "7": "4...e6 — Solid foundation.",
+      "9": "5...Nd7 — Develop knight.",
+      "11": "6...dxe4 — Open d-file.",
+      "13": "7...Ngf6 — Develop knight.",
+      "15": "8...Bd6 — Active diagonal.",
+      "17": "9...Bxf3 — Eliminate knight.",
+      "19": "10...O-O — Complete king safety.",
+      "21": "11...Qc7 — Connect rooks.",
+      "23": "12...Nxe4 — Eliminate White's knight.",
+      "25": "13...Nf6 — Reroute knight.",
+      "27": "14...c5! — Strike back in the center.",
+      "29": "15...Bxc5 — Recapture with tempo.",
+      "31": "16...Rad8 — Total domination of central files with superior active minor pieces (+2.5 advantage)."
+    },
+    "previewFEN": "r2qk2r/pp1n1ppp/2pbpn2/8/3P2b1/5NN1/PPP1BPPP/R1BQ1RK1 w kq - 3 9"
+  },
+  {
+    "id": "caro-punish-two-knights-gambit-refuted",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights",
+    "name": "Two Knights – 8. Qh5?! Attack (8...g6 & 16...Nd5 Monster Outpost)",
+    "shortName": "Two Knights 8. Qh5?! Refuted",
+    "category": "Positional Mastery",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Ne5 Bh7 8. Qh5 g6 9. Bc4 e6 10. Qe2 Qe7 11. d4 Nd7 12. Bf4 Bg7 13. O-O-O Ngf6 14. Rhe1 O-O 15. Qd2 Nxe5 16. dxe5 Nd5",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Ne5 Bh7 8. Qh5 g6 9. Bc4 e6 10. Qe2 Qe7 11. d4 Nd7 12. Bf4 Bg7 13. O-O-O Ngf6 14. Rhe1 O-O 15. Qd2 Nxe5 16. dxe5 Nd5",
+    "fullAnnotation": "White tries early queen aggression with 8. Qh5?!. Black repels the threats with 8...g6 and 9...e6, castles safely, and plants a monster knight outpost on 16...Nd5 (+3.0 advantage).",
+    "annotations": {
+      "0": "1. e4 — King's pawn.",
+      "1": "1...c6 — The Caro-Kann Defense.",
+      "3": "2...d5 — Strike center.",
+      "5": "3...dxe4 — Open d-file.",
+      "7": "4...Bf5 — Develop bishop.",
+      "9": "5...Bg6 — Retreat bishop.",
+      "11": "6...h6 — Bishop escape square.",
+      "13": "7...Bh7 — Safe tuck.",
+      "14": "Opponent Inaccuracy: 8. Qh5?! attacks prematurely before developing.",
+      "15": "8...g6 — Halt the mate threat.",
+      "17": "9...e6 — Neutralize bishop diagonal.",
+      "19": "10...Qe7 — Queen reinforces e6.",
+      "21": "11...Nd7 — Minor piece development.",
+      "23": "12...Bg7 — Fianchetto bishop.",
+      "25": "13...Ngf6 — Coordinate minor pieces.",
+      "27": "14...O-O — Complete king safety.",
+      "29": "15...Nxe5 — Eliminate White's active knight.",
+      "31": "16...Nd5 — Untouchable monster centralized knight outpost dominating the board (+3.0 advantage)."
+    },
+    "previewFEN": "rn1qkbnr/pp2pp1b/2p3pp/4N2Q/7P/6N1/PPPP1PP1/R1B1KB1R w KQkq - 0 9"
   }
 ];

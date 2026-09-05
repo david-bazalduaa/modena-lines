@@ -86,12 +86,12 @@ const caroKannLines = [
 console.log(`\n========================================`);
 console.log(`VALIDATING MASTER OPENING REPERTOIRES`);
 console.log(`========================================`);
-console.log(`Italian Game:     ${italianLines.length} lines (Requirement: >= 25)`);
-console.log(`London System:    ${londonLines.length} lines (Requirement: >= 25)`);
-console.log(`Pirc Defense:     ${pircLines.length} lines (Requirement: >= 25)`);
-console.log(`Ruy Lopez:        ${ruyLopezLines.length} lines (Requirement: >= 25)`);
-console.log(`Sicilian Defense: ${sicilianLines.length} lines (Requirement: >= 25)`);
-console.log(`Caro-Kann:        ${caroKannLines.length} lines (Requirement: >= 25)`);
+console.log(`Italian Game:     ${italianLines.length} lines (Requirement: >= 50)`);
+console.log(`London System:    ${londonLines.length} lines (Requirement: >= 50)`);
+console.log(`Pirc Defense:     ${pircLines.length} lines (Requirement: >= 50)`);
+console.log(`Ruy Lopez:        ${ruyLopezLines.length} lines (Requirement: >= 50)`);
+console.log(`Sicilian Defense: ${sicilianLines.length} lines (Requirement: >= 50)`);
+console.log(`Caro-Kann:        ${caroKannLines.length} lines (Requirement: >= 50)`);
 
 let errors = 0;
 const allIds = new Set();
@@ -99,8 +99,8 @@ const allIds = new Set();
 function validateRepertoire(name, lines, expectedSide) {
   console.log(`\n--- Validating ${name} (${lines.length} lines, Expected Side: ${expectedSide}) ---`);
   
-  if (lines.length < 25) {
-    console.error(`[FAIL] ${name} has fewer than 25 lines: ${lines.length}`);
+  if (lines.length < 50) {
+    console.error(`[FAIL] ${name} has fewer than 50 lines: ${lines.length}`);
     errors++;
   }
 

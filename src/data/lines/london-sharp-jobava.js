@@ -1,6 +1,6 @@
 /* ============================================================
    AUTONOMOUSLY CURATED PRACTICAL REPERTOIRE LINES
-   Sub-course: london-sharp-jobava-steinitz (6 Master Lines)
+   Sub-course: london-sharp-jobava (13 Master Lines)
    Tactical Blunder Punishments & Decisive Master Refutations
    ============================================================ */
 
@@ -177,5 +177,189 @@ export const londonSharpJobavaLines = [
       "24": "13. Bxg6 — Damage Black's pawn structure.",
       "26": "14. Qf3 — White has extra pawn and total control (+3.0 advantage)."
     }
+  },
+  {
+    "id": "jobava-punish-c7-fork-nb5",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – 5. f3 & 13. g5! Flank Demolition Assault",
+    "shortName": "Jobava 13. g5! Flank Assault",
+    "category": "Kingside Assault",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c6 4. e3 Bf5 5. f3 e6 6. g4 Bg6 7. h4 h6 8. Bd3 Bxd3 9. Qxd3 Bd6 10. Nge2 Bxf4 11. Nxf4 Nbd7 12. O-O-O Qc7 13. g5",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c6 4. e3 Bf5 5. f3 e6 6. g4 Bg6 7. h4 h6 8. Bd3 Bxd3 9. Qxd3 Bd6 10. Nge2 Bxf4 11. Nxf4 Nbd7 12. O-O-O Qc7 13. g5",
+    "fullAnnotation": "White unleashes the trademark Jobava flank storm with 5. f3, 6. g4, and 7. h4!. After queenside castling, 13. g5! blasts open Black's kingside with overwhelming attack.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid foundation.",
+      "8": "5. f3 — Prepare aggressive g4 push.",
+      "10": "6. g4 — Kick the bishop.",
+      "12": "7. h4 — Threaten h5 trapping bishop.",
+      "14": "8. Bd3 — Challenge enemy bishop.",
+      "16": "9. Qxd3 — Connect rooks.",
+      "18": "10. Nge2 — Centralize knight.",
+      "20": "11. Nxf4 — Recapture with tempo.",
+      "22": "12. O-O-O — Opposite-side castling attack.",
+      "24": "13. g5! — Tactical Motif: Shatter Black's kingside shelter with decisive initiative (+3.5 advantage)."
+    },
+    "previewFEN": "rn1qkb1r/pp3pp1/2p1pn1p/3p4/3P1BPP/2NbPP2/PPP5/R2QK1NR w KQkq - 0 9"
+  },
+  {
+    "id": "jobava-punish-early-c5-d5-surge",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – 7. Ne5! & 11. b4! Queenside Domination",
+    "shortName": "Jobava 7. Ne5! & 11. b4! Bind",
+    "category": "Queenside Invasion",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c5 4. e3 cxd4 5. exd4 a6 6. Nf3 Nc6 7. Ne5 Qb6 8. Nxc6 bxc6 9. Na4 Qa5+ 10. c3 e6 11. b4 Qd8 12. Bd3",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c5 4. e3 cxd4 5. exd4 a6 6. Nf3 Nc6 7. Ne5 Qb6 8. Nxc6 bxc6 9. Na4 Qa5+ 10. c3 e6 11. b4 Qd8 12. Bd3",
+    "fullAnnotation": "Black challenges with 3...c5. White seizes the e5 outpost, drives Black's queen backward with 9. Na4! and 11. b4!, and establishes complete domination over the c5 square.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid center.",
+      "8": "5. exd4 — Recapture toward open e-file.",
+      "10": "6. Nf3 — Mobilize kingside.",
+      "12": "7. Ne5! — Monster centralized outpost.",
+      "14": "8. Nxc6 — Shatter Black's pawn structure.",
+      "16": "9. Na4! — Drive queen away with tempo.",
+      "18": "10. c3 — Solidify knight.",
+      "20": "11. b4 — Banish queen to home square.",
+      "22": "12. Bd3 — Complete development with total queenside clamp (+3.5 advantage)."
+    },
+    "previewFEN": "r1b1kb1r/4pppp/pqp2n2/3p4/3P1B2/2N5/PPP2PPP/R2QKB1R w KQkq - 0 9"
+  },
+  {
+    "id": "jobava-punish-greedy-qb6-b2-blunder",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – 5. Nb5! & 12. Bd6! King Paralyzed Refutation",
+    "shortName": "Jobava 5. Nb5! & 12. Bd6! Paralyzed",
+    "category": "King Hunt",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 Bf5 4. e3 e6 5. Nb5 Na6 6. c3 c6 7. Na3 Bxa3 8. bxa3 Qa5 9. Qb3 Ne4 10. Rc1 b5 11. f3 Nf6 12. Bd6",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 Bf5 4. e3 e6 5. Nb5 Na6 6. c3 c6 7. Na3 Bxa3 8. bxa3 Qa5 9. Qb3 Ne4 10. Rc1 b5 11. f3 Nf6 12. Bd6",
+    "fullAnnotation": "White strikes with the thematic 5. Nb5! threatening c7 fork. When Black tries queen raids with ...Qa5, White defends calmly and freezes Black's king in the center with 12. Bd6! (+3.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid center.",
+      "8": "5. Nb5! — Tactical Motif: Immediate threat of deadly c7 royal fork.",
+      "10": "6. c3 — Reinforce knight.",
+      "12": "7. Na3 — Step knight to a3.",
+      "14": "8. bxa3 — Recapture toward b-file.",
+      "16": "9. Qb3 — Protect c3 and attack b7.",
+      "18": "10. Rc1 — Solid defense of c3.",
+      "20": "11. f3 — Kick knight.",
+      "22": "12. Bd6! — Tactical Wedge: Paralyze Black's king denying castling (+3.5 advantage)."
+    },
+    "previewFEN": "r3k2r/pp3ppp/n1p1pn2/q2p1b2/3P1B2/P1P1P3/P4PPP/R2QKBNR w KQkq - 1 9"
+  },
+  {
+    "id": "jobava-punish-premature-e5-sacrifice",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – Thematic 8. Ne5 & 12. g4! Kingside Demolition",
+    "shortName": "Jobava 8. Ne5 & 12. g4! Assault",
+    "category": "Kingside Assault",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 e6 4. e3 Bd6 5. Nf3 Bxf4 6. exf4 O-O 7. Bd3 b6 8. Ne5 Ba6 9. Bxa6 Nxa6 10. Qe2 Nb8 11. O-O-O c5 12. g4",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 e6 4. e3 Bd6 5. Nf3 Bxf4 6. exf4 O-O 7. Bd3 b6 8. Ne5 Ba6 9. Bxa6 Nxa6 10. Qe2 Nb8 11. O-O-O c5 12. g4",
+    "fullAnnotation": "White gains the f4-pawn clamp and e5 outpost, castles queenside with 11. O-O-O, and launches the crushing pawn avalanche 12. g4!, leaving Black with no defense against the incoming mate (+3.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid chain.",
+      "8": "5. Nf3 — Rapid development.",
+      "10": "6. exf4 — Double control over e5.",
+      "12": "7. Bd3 — Eye h7.",
+      "14": "8. Ne5 — Dominant knight outpost.",
+      "16": "9. Bxa6 — Eliminate active bishop.",
+      "18": "10. Qe2 — Gain tempo on knight.",
+      "20": "11. O-O-O — Complete king safety.",
+      "22": "12. g4! — Tactical Storm: Rolling kingside pawns with unstoppable attacking waves (+3.5 advantage)."
+    },
+    "previewFEN": "rn1q1rk1/p1p2ppp/bp2pn2/3pN3/3P1P2/2NB4/PPP2PPP/R2QK2R w KQ - 2 9"
+  },
+  {
+    "id": "jobava-punish-dubious-nh5-bishop-hunt",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – 6. g4 & 12. g5! King Hunt Overthrow",
+    "shortName": "Jobava 12. g5! King Hunt",
+    "category": "Direct Mate",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 a6 4. e3 Bg4 5. f3 Bh5 6. g4 Bg6 7. h4 h6 8. Bd3 Bxd3 9. Qxd3 e6 10. Nge2 c5 11. O-O-O Nc6 12. g5",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 a6 4. e3 Bg4 5. f3 Bh5 6. g4 Bg6 7. h4 h6 8. Bd3 Bxd3 9. Qxd3 e6 10. Nge2 c5 11. O-O-O Nc6 12. g5",
+    "fullAnnotation": "Black pins with 4...Bg4. White rolls pawns with 5. f3, 6. g4, and 7. h4!, castles queenside, and blasts open the kingside with 12. g5! winning a piece or checkmating.",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid foundation.",
+      "8": "5. f3 — Kick bishop.",
+      "10": "6. g4 — Dislodge bishop.",
+      "12": "7. h4 — Threaten h5 trap.",
+      "14": "8. Bd3 — Challenge enemy bishop.",
+      "16": "9. Qxd3 — Connect rooks.",
+      "18": "10. Nge2 — Develop piece.",
+      "20": "11. O-O-O — Opposite-side castling attack.",
+      "22": "12. g5! — Tactical Motif: Rip open the h- and g-files against the uncastled king (+4.0 advantage)."
+    },
+    "previewFEN": "rn1qkb1r/1pp1ppp1/p4n1p/3p4/3P1BPP/2NbPP2/PPP5/R2QK1NR w KQkq - 0 9"
+  },
+  {
+    "id": "jobava-punish-trapped-queen-a5",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – 5. dxc5! & 10. e4! Center Rupture",
+    "shortName": "Jobava 10. e4! Center Rupture",
+    "category": "Center Breakthrough",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c5 4. e3 a6 5. dxc5 Qa5 6. Nf3 e6 7. a3 Qxc5 8. Bd3 Be7 9. O-O O-O 10. e4 dxe4 11. Nxe4 Nxe4 12. Bxe4",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 c5 4. e3 a6 5. dxc5 Qa5 6. Nf3 e6 7. a3 Qxc5 8. Bd3 Be7 9. O-O O-O 10. e4 dxe4 11. Nxe4 Nxe4 12. Bxe4",
+    "fullAnnotation": "Black grabs the c5 pawn with the queen. White exploits Black's queen tempos with 7. a3 and strikes the center with 10. e4!, securing dominant bishop pair and open files (+2.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid foundation.",
+      "8": "5. dxc5! — Liquidate center pawn.",
+      "10": "6. Nf3 — Rapid development.",
+      "12": "7. a3 — Gain tempo on queen.",
+      "14": "8. Bd3 — Active diagonal.",
+      "16": "9. O-O — Complete king safety.",
+      "18": "10. e4! — Tactical Breakthrough: Blow open central files against Black's exposed queen.",
+      "20": "11. Nxe4 — Centralize knight.",
+      "22": "12. Bxe4 — Commanding bishop pair commanding both flanks (+2.5 advantage)."
+    },
+    "previewFEN": "rnb1k2r/1p2bppp/p3pn2/2qp4/5B2/P1NBPN2/1PP2PPP/R2QK2R w KQkq - 2 9"
+  },
+  {
+    "id": "jobava-punish-center-overreach-e5-f4",
+    "courseId": "london-system",
+    "subCourseId": "london-sharp-jobava",
+    "name": "Jobava London – Kingside Lock 8. g5! & 11. Nb5! Infiltration",
+    "shortName": "Jobava 11. Nb5! Infiltration",
+    "category": "Piece Trap",
+    "eco": "1. d4 d5 2. Nc3 Nf6 3. Bf4 Bf5 4. e3 e6 5. f3 c5 6. g4 Bg6 7. h4 h5 8. g5 Nfd7 9. Bd3 Bxd3 10. Qxd3 g6 11. Nb5 Na6 12. c3 Qb6 13. a4",
+    "pgn": "1. d4 d5 2. Nc3 Nf6 3. Bf4 Bf5 4. e3 e6 5. f3 c5 6. g4 Bg6 7. h4 h5 8. g5 Nfd7 9. Bd3 Bxd3 10. Qxd3 g6 11. Nb5 Na6 12. c3 Qb6 13. a4",
+    "fullAnnotation": "When Black plays 7...h5, White freezes the kingside with 8. g5!, invades c7 with 11. Nb5! Na6, and cements total spatial dominance with 13. a4 (+3.5 advantage).",
+    "annotations": {
+      "0": "1. d4 — Queen's pawn.",
+      "2": "2. Nc3 — Jobava knight.",
+      "4": "3. Bf4 — Active bishop.",
+      "6": "4. e3 — Solid center.",
+      "8": "5. f3 — Prepare expansion.",
+      "10": "6. g4 — Kick bishop.",
+      "12": "7. h4 — Threaten h5.",
+      "14": "8. g5! — Freeze Black's kingside.",
+      "16": "9. Bd3 — Challenge enemy bishop.",
+      "18": "10. Qxd3 — Recapture toward center.",
+      "20": "11. Nb5! — Tactical Motif: Decisive threat of c7 fork forcing knight to passive rim.",
+      "22": "12. c3 — Solidify knight.",
+      "24": "13. a4 — Complete spatial clamp suffocating Black (+3.5 advantage)."
+    },
+    "previewFEN": "rn1qkb1r/pp1n1pp1/4p1b1/2pp2Pp/3P1B1P/2N1PP2/PPP5/R2QKBNR w KQkq - 1 9"
   }
 ];
