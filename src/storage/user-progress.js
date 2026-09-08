@@ -2,50 +2,124 @@
    USER PROGRESS MANAGER WITH REPOSITORY PATTERN & CLOUD SYNC
    ============================================================ */
 
-import { progressRepository } from './progress-repository.js';
+import { progressRepository, reconcileProgressStates } from './progress-repository.js';
 import { authService } from '../services/auth-service.js';
 
 class UserProgress {
   constructor() {
-    this.state = {
-      lineStats: {},       // map lineId -> { completed: bool, attempts: int, accuracy: int, mistakes: int }
-      totalAttempts: 0,
-      completedCount: 0,
-      overallAccuracy: 100
-    };
     this.currentUser = null;
     this.changeListeners = [];
+    this._lastRevalidation = 0;
 
     // Initialize with local cache first for instant synchronous startup
-    this.state = progressRepository.loadFromLocalStorage();
+    this.state = progressRepository.loadFromLocalStorage(null);
+
+    // Bind multi-tab storage synchronization and mobile lifecycle listeners
+    this.initLifecycleListeners();
 
     // Hook into authentication state changes for cloud sync & migration
     authService.onAuthStateChanged(async (user) => {
       this.currentUser = user;
       try {
         if (user) {
-          // Authenticated: merge any guest progress with Cloud Firestore
+          // Authenticated: merge any guest/local progress with Cloud Firestore
           const cloudState = await progressRepository.mergeLocalWithCloud(user);
           if (cloudState) {
             this.state = cloudState;
             this.notifySubscribers();
           }
+
+          // Attach real-time snapshot listener for multi-device synchronization
+          progressRepository.subscribeToRemoteProgress(user, (remoteReconciledState) => {
+            this.state = remoteReconciledState;
+            this.notifySubscribers();
+          });
         } else {
-          // Guest / Logged out: fallback to local storage
-          this.state = progressRepository.loadFromLocalStorage();
+          // Logged out: teardown remote snapshot listener and flush pending cloud state
+          progressRepository.unsubscribeRemoteProgress();
+          await progressRepository.flushCloudSave();
+
+          // Reset to isolated guest local storage
+          this.state = progressRepository.loadFromLocalStorage(null);
           this.notifySubscribers();
         }
       } catch (err) {
-        console.warn('[UserProgress] Cloud sync error, keeping local progress:', err);
-        this.state = progressRepository.loadFromLocalStorage();
+        console.warn('[UserProgress] Auth state transition error:', err);
+        this.state = progressRepository.loadFromLocalStorage(user);
         this.notifySubscribers();
       }
     });
   }
 
   /**
+   * Sets up cross-tab storage events and mobile foreground revalidation listeners.
+   */
+  initLifecycleListeners() {
+    if (typeof window === 'undefined') return;
+
+    // Cross-Tab Synchronization via Storage Event
+    window.addEventListener('storage', (event) => {
+      const activeKey = progressRepository.getStorageKey(this.currentUser);
+      if (event.key === activeKey && event.newValue) {
+        try {
+          const parsed = JSON.parse(event.newValue);
+          if (parsed && typeof parsed === 'object' && parsed.lineStats) {
+            this.state = reconcileProgressStates(this.state, parsed);
+            this.notifySubscribers();
+          }
+        } catch (e) {
+          console.warn('[UserProgress] Cross-tab storage parse error:', e);
+        }
+      }
+    });
+
+    // Mobile Safari & Desktop tab revalidation on focus, visibility change, and online events
+    const handleResume = () => {
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') {
+        return;
+      }
+      this.revalidateState();
+    };
+
+    document.addEventListener('visibilitychange', handleResume);
+    window.addEventListener('focus', handleResume);
+    window.addEventListener('pageshow', handleResume);
+    window.addEventListener('online', handleResume);
+  }
+
+  /**
+   * Revalidates progress state from Cloud or LocalStorage on app resume.
+   * Throttled to at most once per second.
+   */
+  async revalidateState() {
+    const now = Date.now();
+    if (this._lastRevalidation && now - this._lastRevalidation < 1000) {
+      return;
+    }
+    this._lastRevalidation = now;
+
+    try {
+      if (this.currentUser) {
+        const cloudState = await progressRepository.loadProgress(this.currentUser);
+        if (cloudState) {
+          this.state = reconcileProgressStates(this.state, cloudState);
+          progressRepository.saveToLocalStorage(this.state, this.currentUser);
+          this.notifySubscribers();
+        }
+      } else {
+        const localState = progressRepository.loadFromLocalStorage(null);
+        this.state = reconcileProgressStates(this.state, localState);
+        this.notifySubscribers();
+      }
+    } catch (err) {
+      console.warn('[UserProgress] Lifecycle revalidation error:', err);
+    }
+  }
+
+  /**
    * Subscribe to progress state changes (e.g., after cloud sync).
    * @param {Function} callback (state) => void
+   * @returns {Function} Unsubscribe function
    */
   subscribe(callback) {
     if (typeof callback === 'function') {
@@ -66,8 +140,12 @@ class UserProgress {
     });
   }
 
-  save() {
-    progressRepository.saveProgress(this.state, this.currentUser);
+  /**
+   * Dispatches persistence to repository with debounced or immediate cloud save.
+   * @param {Object} options { immediate: boolean }
+   */
+  save(options = {}) {
+    progressRepository.saveProgress(this.state, this.currentUser, options);
   }
 
   getLineStat(lineId) {
@@ -118,6 +196,7 @@ class UserProgress {
       this.state.streakData.lastActiveDate = today;
     }
 
+    this.state.updatedAt = new Date().toISOString();
     this.save();
     return this.state.streakData.currentDailyStreak;
   }
@@ -142,9 +221,15 @@ class UserProgress {
   }
 
   recordAttempt(lineId) {
+    const nowIso = new Date().toISOString();
     const st = this.getLineStat(lineId);
     st.attempts = (st.attempts || 0) + 1;
+    st.lastAttemptedAt = nowIso;
+    st.updatedAt = nowIso;
+
     this.state.totalAttempts = (this.state.totalAttempts || 0) + 1;
+    this.state.updatedAt = nowIso;
+
     this.checkAndUpdateDailyStreak();
     this.save();
     this.notifySubscribers();
@@ -185,8 +270,12 @@ class UserProgress {
   }
 
   recordMistake(lineId) {
+    const nowIso = new Date().toISOString();
     const st = this.getLineStat(lineId);
     st.mistakes = (st.mistakes || 0) + 1;
+    st.updatedAt = nowIso;
+    this.state.updatedAt = nowIso;
+
     this.save();
     this.notifySubscribers();
   }
@@ -203,6 +292,7 @@ class UserProgress {
   }
 
   markCompleted(lineId, totalMoves) {
+    const nowIso = new Date().toISOString();
     const st = this.getLineStat(lineId);
     st.completed = true;
     const mistakes = st.mistakes || 0;
@@ -210,9 +300,15 @@ class UserProgress {
     const acc = Math.max(0, Math.round(((moves - mistakes) / moves) * 100));
     st.accuracy = acc;
     st.mistakes = 0;
+    st.lastCompletedAt = nowIso;
+    st.updatedAt = nowIso;
+    this.state.updatedAt = nowIso;
+
     this.checkAndUpdateDailyStreak();
-    this.save();
+    // Immediate save for line mastery to guarantee zero progress loss across devices
+    this.save({ immediate: true });
     this.notifySubscribers();
+
     try {
       window.dispatchEvent(new CustomEvent('line-mastered', { detail: { lineId, accuracy: acc } }));
     } catch (e) {}
