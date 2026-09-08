@@ -36,6 +36,7 @@ import { caroKannAdvanceLines } from './lines/caro-kann-advance.js';
 import { caroKannModernLines } from './lines/caro-kann-modern.js';
 import { caroKannTwoKnightsLines } from './lines/caro-kann-two-knights.js';
 import { caroKannPanovLines } from './lines/caro-kann-panov.js';
+import { alienGambitLines } from './lines/alien-gambit.js';
 
 export const COURSES = [
   {
@@ -202,6 +203,27 @@ export const COURSES = [
     ]
   },
   {
+    id: 'alien-gambit',
+    title: 'The Alien Gambit Master Repertoire',
+    subtitle: '1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Nf6 5. Ng5 h6 6. Nxf7!? (12 Tactical Master Lines - 92% Punishments)',
+    category: '1. e4 Gambits',
+    side: 'white',
+    description: 'A hyper-aggressive sacrificial weapon blasting open Black\'s king on f7 with rapid piece coordination, royal pins, queen sacrifices, and inescapable mating nets.',
+    previewFEN: 'rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/8/PPP2PPP/R1BQKBNR w KQ - 0 7',
+    subCourses: [
+      {
+        id: 'alien-gambit-tactics',
+        courseId: 'alien-gambit',
+        title: 'The Alien Gambit – King Hunts & Forced Mates',
+        subtitle: '6. Nxf7!? Sacrificial Firestorm (12 Lines - 92% Tactical Punishments)',
+        category: 'Tactical Gambit',
+        description: 'Blast open Black\'s king with 6. Nxf7!?, following up with rapid piece coordination, royal pins, queen sacrifices, and inescapable mating nets.',
+        previewFEN: 'rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/8/PPP2PPP/R1BQKBNR w KQ - 0 7',
+        lines: alienGambitLines
+      }
+    ]
+  },
+  {
     id: 'sicilian-defense',
     title: 'Sicilian Defense Master Repertoire',
     subtitle: '1. e4 c5 Dynamic Asymmetric Mastery (52 Tactical Master Lines - 81% Punishments)',
@@ -255,7 +277,7 @@ export const COURSES = [
   {
     id: 'caro-kann',
     title: 'Caro-Kann Defense Master Repertoire',
-    subtitle: '1. e4 c6 The Impenetrable Fortress (50 Tactical Master Lines - 80% Punishments)',
+    subtitle: '1. e4 c6 The Impenetrable Fortress (58 Tactical Master Lines - 83% Punishments)',
     category: 'Black Defenses',
     side: 'black',
     description: 'Build an invincible defensive wall against 1. e4: Capablanca Classical 4...Bf5, Nigel Short Advance counters, Korchnoi 4...Nf6, Two Knights & Fantasy, and Panov mastery.',
@@ -265,7 +287,7 @@ export const COURSES = [
         id: 'caro-kann-classical',
         courseId: 'caro-kann',
         title: 'Caro-Kann – Classical / Capablanca Variation',
-        subtitle: 'Classical Mainline & 6. f4/Nh3 Refutations (10 Lines - 80% Punishments)',
+        subtitle: 'Classical Mainline & 6. f4/Nh3 Refutations (12 Lines - 83% Punishments)',
         category: 'Rock-Solid Masterpiece',
         description: 'Master Capablanca\'s immortal system with 4...Bf5 outside the pawn chain, neutralize White overextensions, and punish dubious knight maneuvers.',
         previewFEN: 'r2q1rk1/pp2bpp1/2p1pn1p/7P/3PQ3/5N2/PPPB1PP1/1K1R3R w - - 1 16',
@@ -275,7 +297,7 @@ export const COURSES = [
         id: 'caro-kann-advance',
         courseId: 'caro-kann',
         title: 'Caro-Kann – Advance Variation',
-        subtitle: 'Short System, 4. g4?! Overreach & Tal 4. h4 Shattered (10 Lines - 80% Punishments)',
+        subtitle: 'Short System, 4. g4?! Overreach & Tal 4. h4 Shattered (12 Lines - 83% Punishments)',
         category: 'Sharp Dynamic Counter',
         description: 'Demolish the Advance Variation: snatch the b2 pawn with 8...Qxb2! in the Short System, freeze Bayonet 4. g4, and counter Tal with 12...Nxe5!.',
         previewFEN: 'r4k1r/pp3ppp/3Np3/b2pPb2/8/2N5/Pq2BPPP/2R1QRK1 w - - 4 16',
@@ -295,7 +317,7 @@ export const COURSES = [
         id: 'caro-kann-two-knights-fantasy',
         courseId: 'caro-kann',
         title: 'Caro-Kann – Two Knights & Fantasy Variations',
-        subtitle: 'Two Knights 3...Bg4 & Fantasy 3. f3 Dismantling (10 Lines - 80% Punishments)',
+        subtitle: 'Two Knights 3...Bg4 & Fantasy 3. f3 Dismantling (12 Lines - 83% Punishments)',
         category: 'Sharp Firefight & Precision',
         description: 'Pin and liquidate in the Two Knights with 3...Bg4, grab undefended pawns with 8...Qxc2!, and demolish the Fantasy Variation (3. f3) with 11...Qh4+! and 6...c5!.',
         previewFEN: 'r4rk1/1p2bppp/p3pn2/3p4/3P4/2PBB2P/PP3PP1/3R1RK1 w - - 0 16',
@@ -305,7 +327,7 @@ export const COURSES = [
         id: 'caro-kann-panov-attack',
         courseId: 'caro-kann',
         title: 'Caro-Kann – Panov-Botvinnik Attack & Accelerated Systems',
-        subtitle: 'IQP Blockade, 17...Qa1+! Decimation & 5...g6 Fianchetto (10 Lines - 80% Punishments)',
+        subtitle: 'IQP Blockade, 17...Qa1+! Decimation & 5...g6 Fianchetto (12 Lines - 83% Punishments)',
         category: 'Blockade & Counter-Attack',
         description: 'Master Isolated Queen\'s Pawn strategy against the Panov 4. c4: establish an iron d5 blockade, undermine queenside pawns, and refute greedy pawn grabs with 10...Nxd4!.',
         previewFEN: 'r2qr1k1/pp1bnp1p/4pbpB/3n4/3PB3/P1N2N2/1PQ2PPP/3R1RK1 w - - 6 16',

@@ -314,5 +314,71 @@ export const caroKannTwoKnightsLines = [
       "31": "16...Nd5 — Untouchable monster centralized knight outpost dominating the board (+3.0 advantage)."
     },
     "previewFEN": "rn1qkbnr/pp2pp1b/2p3pp/4N2Q/7P/6N1/PPPP1PP1/R1B1KB1R w KQkq - 0 9"
+  },
+  {
+    "id": "caro-kann-punish-fantasy-queen-trap",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights-fantasy",
+    "name": "Caro-Kann Fantasy – 3. f3 / 9...cxb2+! Queen & Rook Decimation",
+    "shortName": "Fantasy 9...cxb2+! Decimation",
+    "category": "Tactical Decimation",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. f3 dxe4 4. fxe4 e5 5. Nf3 exd4 6. Bc4 Bb4+ 7. c3 dxc3 8. Bxf7+ Kxf7 9. Qxd8 cxb2+ 10. Ke2 bxa1=Q 11. Qxc8 Qxb1 12. Qxb7+ Be7 13. Qxa8 Nf6 14. e5 Qe4+ 15. Be3 Ng4 16. Qxa7 Rd8",
+    "pgn": "1. e4 c6 2. d4 d5 3. f3 dxe4 4. fxe4 e5 5. Nf3 exd4 6. Bc4 Bb4+ 7. c3 dxc3 8. Bxf7+ Kxf7 9. Qxd8 cxb2+ 10. Ke2 bxa1=Q 11. Qxc8 Qxb1 12. Qxb7+ Be7 13. Qxa8 Nf6 14. e5 Qe4+ 15. Be3 Ng4 16. Qxa7 Rd8",
+    "fullAnnotation": "The definitive punishment of the Fantasy Variation (3. f3). Black blows open the center with 4...e5!, delivers 6...Bb4+, ignores White's queen sacrifice trap with the stunning discovered check 9...cxb2+!, promotes to a new queen on a1, and wins overwhelming material with ...Qe4+ and ...Rd8.",
+    "previewFEN": "rnbQ2nr/pp3kpp/2p5/8/1b2P3/5N2/Pp4PP/RNB1K2R w KQ - 0 10",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Central challenge.",
+      "4": "3. f3 — The sharp Fantasy Variation.",
+      "5": "3... dxe4! — Shattering White's e4 pawn.",
+      "7": "4... e5! — Striking directly at White's weakened king diagonals.",
+      "9": "5... exd4 — Opening the center.",
+      "11": "6... Bb4+! — Developing bishop with check.",
+      "13": "7... dxc3! — Opening diagonal lines.",
+      "14": "Trap: White plays 8. Bxf7+ hoping for 8...Kxf7 9. Qxd8.",
+      "15": "8... Kxf7 — King captures.",
+      "17": "9... cxb2+! — Tactical Punishment: The lethal discovered check winning White's rook and promoting!",
+      "19": "10... bxa1=Q — Black makes a new queen with insurmountable material advantage!",
+      "21": "11... Qxb1 — Eliminating White's queenside bishop.",
+      "23": "12... Be7 — Calm interposition.",
+      "25": "13... Nf6 — Natural piece development with tempo.",
+      "27": "14... Qe4+! — Powerful central check pinning White's king.",
+      "29": "15... Ng4 — Doubling the attack on White's e3 bishop.",
+      "31": "16... Rd8 — Dominating the open d-file with unstoppable mate and material win."
+    }
+  },
+  {
+    "id": "caro-kann-punish-two-knights-early-e5",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-two-knights-fantasy",
+    "name": "Caro-Kann Two Knights – 5. Qe2 Inaccuracy & 8...e6 Solid Refutation",
+    "shortName": "Two Knights 5. Qe2 Refuted",
+    "category": "Positional Refutation",
+    "side": "black",
+    "eco": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Nd7 7. Bc4 Nf6 8. Ne5 e6 9. Qe2 Bd6 10. d4 O-O 11. O-O c5 12. dxc5 Bxc5 13. Bg5 Be7 14. Rad1 Qc7 15. Rfe1 b6 16. Rd3 Bb7",
+    "pgn": "1. e4 c6 2. Nc3 d5 3. Nf3 dxe4 4. Nxe4 Nf6 5. Qe2 Nxe4 6. Qxe4 Nd7 7. Bc4 Nf6 8. Ne5 e6 9. Qe2 Bd6 10. d4 O-O 11. O-O c5 12. dxc5 Bxc5 13. Bg5 Be7 14. Rad1 Qc7 15. Rfe1 b6 16. Rd3 Bb7",
+    "fullAnnotation": "White plays the tricky 5. Qe2 and 8. Ne5 aiming for cheap mating threats on f7. Black calmly diffuses the attack with 8...e6, castles into safety, strikes back with 11...c5, and seizes the long diagonal with 16...Bb7, controlling the board with superior coordination.",
+    "previewFEN": "r1bqkb1r/pp3ppp/2p1pn2/4N3/2B1Q3/8/PPPP1PPP/R1B1K2R w KQkq - 0 9",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Center stake.",
+      "5": "3... dxe4 — Liquidation.",
+      "7": "4... Nf6 — Challenging knight.",
+      "8": "Trick: 5. Qe2?! prematurely places White's queen in the center.",
+      "9": "5... Nxe4 — Trade knights.",
+      "11": "6... Nd7 — Developing knight towards f6.",
+      "13": "7... Nf6 — Gaining a tempo on White's queen.",
+      "15": "8... e6! — Tactical Prophylaxis: Shutting down all f7 tricks cold.",
+      "17": "9... Bd6 — Developing bishop opposite White's e5 knight.",
+      "19": "10... O-O — Complete king safety.",
+      "21": "11... c5! — Immediate central counter-strike.",
+      "23": "12... Bxc5 — Recapturing with active piece play.",
+      "25": "13... Be7 — Calm retreat breaking the pin.",
+      "27": "14... Qc7 — Connecting rooks.",
+      "29": "15... b6 — Preparing bishop fianchetto.",
+      "31": "16... Bb7 — Black's bishop commands the long diagonal with complete strategic superiority."
+    }
   }
 ];
+

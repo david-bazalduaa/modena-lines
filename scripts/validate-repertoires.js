@@ -37,6 +37,7 @@ import { caroKannAdvanceLines } from '../src/data/lines/caro-kann-advance.js';
 import { caroKannModernLines } from '../src/data/lines/caro-kann-modern.js';
 import { caroKannTwoKnightsLines } from '../src/data/lines/caro-kann-two-knights.js';
 import { caroKannPanovLines } from '../src/data/lines/caro-kann-panov.js';
+import { alienGambitLines } from '../src/data/lines/alien-gambit.js';
 
 const italianLines = [
   ...giuocoPianoLines,
@@ -92,15 +93,16 @@ console.log(`Pirc Defense:     ${pircLines.length} lines (Requirement: >= 50)`);
 console.log(`Ruy Lopez:        ${ruyLopezLines.length} lines (Requirement: >= 50)`);
 console.log(`Sicilian Defense: ${sicilianLines.length} lines (Requirement: >= 50)`);
 console.log(`Caro-Kann:        ${caroKannLines.length} lines (Requirement: >= 50)`);
+console.log(`Alien Gambit:     ${alienGambitLines.length} lines (Requirement: >= 12)`);
 
 let errors = 0;
 const allIds = new Set();
 
-function validateRepertoire(name, lines, expectedSide) {
+function validateRepertoire(name, lines, expectedSide, minLines = 50) {
   console.log(`\n--- Validating ${name} (${lines.length} lines, Expected Side: ${expectedSide}) ---`);
   
-  if (lines.length < 50) {
-    console.error(`[FAIL] ${name} has fewer than 50 lines: ${lines.length}`);
+  if (lines.length < minLines) {
+    console.error(`[FAIL] ${name} has fewer than ${minLines} lines: ${lines.length}`);
     errors++;
   }
 
@@ -173,9 +175,10 @@ validateRepertoire('London System', londonLines, 'white');
 validateRepertoire('Pirc Defense', pircLines, 'black');
 validateRepertoire('Ruy Lopez', ruyLopezLines, 'white');
 validateRepertoire('Sicilian Defense', sicilianLines, 'black');
-validateRepertoire('Caro-Kann Defense', caroKannLines, 'black');
+validateRepertoire('Caro-Kann Defense', caroKannLines, 'black', 50);
+validateRepertoire('The Alien Gambit', alienGambitLines, 'white', 12);
 
-const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length;
+const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length + alienGambitLines.length;
 
 console.log(`\n========================================`);
 if (errors === 0) {

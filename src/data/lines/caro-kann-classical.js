@@ -313,5 +313,69 @@ export const caroKannClassicalLines = [
       "31": "16...e5! — Tactical Motif: Decisive pawn fork attacking knight on d4 and bishop on f4 (+5.0 advantage)."
     },
     "previewFEN": "r2qkb1r/pp1n1ppp/2p1pnb1/8/3P4/3B1NN1/PPP2PPP/R1BQ1RK1 w kq - 2 9"
+  },
+  {
+    "id": "caro-kann-punish-classical-6h4-nh3-overextension",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-classical",
+    "name": "Caro-Kann Classical – 6. h4 / 7. Nh3 Flank Overreach Punished",
+    "shortName": "Classical 6. h4 / 7. Nh3 Overreach",
+    "category": "Flank Overextension",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Nh3 e6 8. Nf4 Bh7 9. c3 Nf6 10. Bd3 Bxd3 11. Qxd3 Bd6 12. Bd2 Qc7 13. Nfh5 Nxh5 14. Nxh5 O-O 15. O-O-O Nd7 16. g4 c5",
+    "pgn": "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. h4 h6 7. Nh3 e6 8. Nf4 Bh7 9. c3 Nf6 10. Bd3 Bxd3 11. Qxd3 Bd6 12. Bd2 Qc7 13. Nfh5 Nxh5 14. Nxh5 O-O 15. O-O-O Nd7 16. g4 c5",
+    "fullAnnotation": "White tries to hunt Black's light-squared bishop with 6. h4 and 7. Nh3-f4. Black calmly tucks the bishop to h7, trades dark-squared bishops, castles into safety, and strikes back with 16...c5! blowing open White's center and targeting the loose kingside knights.",
+    "previewFEN": "rn1qkbnr/pp3ppb/2p1p2p/8/3P1N1P/6N1/PPP2PP1/R1BQKB1R w KQkq - 2 9",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Central stake.",
+      "5": "3... dxe4 — Center trade.",
+      "7": "4... Bf5 — Classical bishop development.",
+      "9": "5... Bg6 — Bishop retreat.",
+      "11": "6... h6 — Creating the h7 flight square.",
+      "13": "7... e6 — Solidifying the pawn chain.",
+      "15": "8... Bh7 — Safe sanctuary on h7.",
+      "17": "9... Nf6 — Natural piece development.",
+      "19": "10... Bxd3 — Liquidating White's attacking bishop.",
+      "21": "11... Bd6 — Controlling central diagonals.",
+      "23": "12... Qc7 — Battery attacking the f4 knight.",
+      "25": "13... Nxh5 — Eliminating White's attacking knight.",
+      "27": "14... O-O — Complete king safety.",
+      "29": "15... Nd7 — Connecting rooks.",
+      "31": "16... c5! — Tactical Punishment: Center counter-strike exposing White's uncoordinated flank army."
+    }
+  },
+  {
+    "id": "caro-kann-punish-classical-early-bc4",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-classical",
+    "name": "Caro-Kann Classical – Early 6. Bc4?! & 11...c5 Central Pin Counter",
+    "shortName": "Classical 6. Bc4?! Refuted",
+    "category": "Center Demolition",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. Bc4 e6 7. N1e2 Bd6 8. O-O Qc7 9. f4 Ne7 10. Bd3 Nd7 11. c4 c5 12. d5 O-O-O 13. dxe6 fxe6 14. Bxg6 Nxg6 15. Ne4 Nf6 16. Nxd6+ Rxd6",
+    "pgn": "1. e4 c6 2. d4 d5 3. Nc3 dxe4 4. Nxe4 Bf5 5. Ng3 Bg6 6. Bc4 e6 7. N1e2 Bd6 8. O-O Qc7 9. f4 Ne7 10. Bd3 Nd7 11. c4 c5 12. d5 O-O-O 13. dxe6 fxe6 14. Bxg6 Nxg6 15. Ne4 Nf6 16. Nxd6+ Rxd6",
+    "fullAnnotation": "White aims early at f7 with 6. Bc4?!. Black solidifies with 6...e6 and 7...Bd6, castles queenside, strikes the center with 11...c5!, and seizes the open d-file with 16...Rxd6 with commanding piece activity.",
+    "previewFEN": "r3k2r/ppqnnppp/3bp1b1/2p5/2PP1P2/3B2N1/PP2N1PP/R1BQ1RK1 w kq - 0 12",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Strike center.",
+      "5": "3... dxe4 — Open lines.",
+      "7": "4... Bf5 — Capablanca Classical bishop.",
+      "9": "5... Bg6 — Bishop retreat.",
+      "10": "Inaccuracy: 6. Bc4?! targets f7 prematurely into a granite pawn wall.",
+      "11": "6... e6 — Granite French-style barrier.",
+      "13": "7... Bd6 — Eyeing the h2-b8 diagonal.",
+      "15": "8... Qc7 — Battery putting pressure on White's kingside.",
+      "17": "9... Ne7 — Flexible knight development.",
+      "19": "10... Nd7 — Developing queenside knight.",
+      "21": "11... c5! — Tactical Punishment: Ripping open White's center!",
+      "23": "12... O-O-O — Long castling securing king safety.",
+      "25": "13... fxe6 — Opening lines towards White's king.",
+      "27": "14... Nxg6 — Centralizing knight.",
+      "29": "15... Nf6 — Natural tempo attack on e4.",
+      "31": "16... Rxd6 — Dominating the open d-file with crushing active piece play."
+    }
   }
 ];
+

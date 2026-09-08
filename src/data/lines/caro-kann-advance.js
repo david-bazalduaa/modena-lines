@@ -315,5 +315,71 @@ export const caroKannAdvanceLines = [
       "31": "16...Rfc8 — Complete control of open c-file with total board dominance (+2.5 advantage)."
     },
     "previewFEN": "r2qkb1r/pp2nppp/1np1p3/4Pb2/2BP4/2N2N2/PP3PPP/R1BQK2R w KQkq - 1 9"
+  },
+  {
+    "id": "caro-kann-punish-advance-reckless-h4",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Reckless 4. h4 Overextension Punished",
+    "shortName": "Advance 4. h4 Overextension",
+    "category": "Flank Overextension",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. h4 h5 5. c4 e6 6. Nc3 Ne7 7. Bg5 Qb6 8. Qd2 dxc4 9. Bxc4 Nd5 10. Nge2 Nd7 11. O-O f6 12. exf6 gxf6 13. Be3 O-O-O 14. Ng3 Bg6 15. Rac1 Kb8 16. Rfe1 Bd6",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. h4 h5 5. c4 e6 6. Nc3 Ne7 7. Bg5 Qb6 8. Qd2 dxc4 9. Bxc4 Nd5 10. Nge2 Nd7 11. O-O f6 12. exf6 gxf6 13. Be3 O-O-O 14. Ng3 Bg6 15. Rac1 Kb8 16. Rfe1 Bd6",
+    "fullAnnotation": "White pushes 4. h4 aggressively without piece support. Black freezes the flank with 4...h5, strikes White's center with ...f6, castles queenside, and coordinates an overwhelming piece attack on the e-file and d6-h2 diagonal.",
+    "previewFEN": "r3kb1r/pp1n2p1/1qp1pp2/3nPbBp/2BP3P/2N5/PP1QNPP1/R4RK1 w kq - 0 12",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Strike center.",
+      "5": "3... Bf5 — Flagship Advance bishop development.",
+      "6": "Inaccuracy: 4. h4?! overextends on the wing before completing central development.",
+      "7": "4... h5! — Tactical Prophylaxis: Freezing White's kingside pawn wedge.",
+      "9": "5... e6 — Solid pawn chain.",
+      "11": "6... Ne7 — Developing knight towards d5/f5.",
+      "13": "7... Qb6 — Double attack on b2 and d4.",
+      "15": "8... dxc4 — Opening lines.",
+      "17": "9... Nd5 — Anchor knight outpost.",
+      "19": "10... Nd7 — Developing the queenside knight.",
+      "21": "11... f6! — Tactical Punishment: Undermining White's e5 wedge.",
+      "23": "12... gxf6 — Opening the g-file.",
+      "25": "13... O-O-O — Long castling securing king safety.",
+      "27": "14... Bg6 — Bishop retreat preserving activity.",
+      "29": "15... Kb8 — Prophylactic king step.",
+      "31": "16... Bd6 — Black enjoys harmonious piece development and crushing central control."
+    }
+  },
+  {
+    "id": "caro-kann-punish-advance-bayonet-f4",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-advance",
+    "name": "Caro-Kann Advance – Bayonet 4. g4 / 5. f4 Overreach Dismantled",
+    "shortName": "Advance 4. g4 / 5. f4 Overreach",
+    "category": "Flank Demolition",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. g4 Bd7 5. f4 e6 6. Nf3 c5 7. c3 Nc6 8. Be3 h5 9. g5 g6 10. dxc5 Nge7 11. Bd3 Nf5 12. Bxf5 gxf5 13. Nbd2 a5 14. a4 Be7 15. Kf2 Kf8 16. Nb3 Kg7",
+    "pgn": "1. e4 c6 2. d4 d5 3. e5 Bf5 4. g4 Bd7 5. f4 e6 6. Nf3 c5 7. c3 Nc6 8. Be3 h5 9. g5 g6 10. dxc5 Nge7 11. Bd3 Nf5 12. Bxf5 gxf5 13. Nbd2 a5 14. a4 Be7 15. Kf2 Kf8 16. Nb3 Kg7",
+    "fullAnnotation": "White launches the violent double-pawn storm 4. g4 and 5. f4. Black retreats calmly with 4...Bd7, shatters White's structure with 8...h5!, establishes a monster outpost on f5, and locks down the dark squares with complete positional dominance.",
+    "previewFEN": "r2qkbnr/pp1b1pp1/2n1p3/2ppP2p/3P1PP1/2P1BN2/PP5P/RN1QKB1R w KQkq h6 0 9",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Challenge center.",
+      "5": "3... Bf5 — Advance variation.",
+      "6": "Inaccuracy: 4. g4?! wildly pushes kingside pawns.",
+      "7": "4... Bd7! — Calm retreat keeping the dark-square bishop alive.",
+      "8": "Blunder: 5. f4?! creates fatal kingside holes.",
+      "9": "5... e6 — Securing d5 and eyeing Qh4+ diagonals.",
+      "11": "6... c5! — Immediate central counter-attack.",
+      "13": "7... Nc6 — Developing with pressure on d4.",
+      "15": "8... h5! — Tactical Punishment: Shattering White's kingside pawn chain.",
+      "17": "9... g6 — Fixing White's doubled kingside pawns.",
+      "19": "10... Nge7 — Eyeing the f5 outpost.",
+      "21": "11... Nf5! — Monster knight outpost.",
+      "23": "12... gxf5 — Recapturing towards the center.",
+      "25": "13... a5 — Clamping queenside expansion.",
+      "27": "14... Be7 — Developing bishop.",
+      "29": "15... Kf8 — Safe artificial castling route.",
+      "31": "16... Kg7 — Black has iron control of all dark squares and a completely safe king."
+    }
   }
 ];
+

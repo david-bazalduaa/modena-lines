@@ -316,5 +316,70 @@ export const caroKannPanovLines = [
       "31": "16...Qc7 — Double attack against the isolated c5 pawn with decisive advantage (+3.5 advantage)."
     },
     "previewFEN": "r1bqkb1r/3n1ppp/1p2pn2/p1Pp4/NP1P4/8/P4PPP/R1BQKBNR w KQkq - 2 9"
+  },
+  {
+    "id": "caro-kann-punish-panov-early-c5-overreach",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov-attack",
+    "name": "Panov-Botvinnik – Early 5. c5?! Overreach Shattered by 13...e5!",
+    "shortName": "Panov 5. c5?! 13...e5! Shattered",
+    "category": "Center Demolition",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. c5 Nc6 6. Bb5 g6 7. Nf3 Bg7 8. Ne5 Bd7 9. Bxc6 Bxc6 10. O-O O-O 11. Nc3 Nd7 12. f4 f6 13. Nf3 e5 14. fxe5 fxe5 15. Bg5 Qc7 16. Be7 Rf5",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. c5 Nc6 6. Bb5 g6 7. Nf3 Bg7 8. Ne5 Bd7 9. Bxc6 Bxc6 10. O-O O-O 11. Nc3 Nd7 12. f4 f6 13. Nf3 e5 14. fxe5 fxe5 15. Bg5 Qc7 16. Be7 Rf5",
+    "fullAnnotation": "White prematurely closes the center with 5. c5?!. Black fianchettoes with ...g6 and ...Bg7, dismantles White's knight on e5, and shatters the position with the devastating 13...e5! central rupture, gaining a dynamic attacking initiative.",
+    "previewFEN": "r2q1rk1/pp1n2bp/2b2pp1/2Ppp3/3P1P2/2N2N2/PP4PP/R1BQ1RK1 w - e6 0 14",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Strike center.",
+      "5": "3... cxd5 — Symmetrical recapture.",
+      "7": "4... Nf6 — Natural knight development.",
+      "8": "Inaccuracy: 5. c5?! prematurely closes the center, releasing all pressure on d5.",
+      "9": "5... Nc6 — Developing with central control.",
+      "11": "6... g6 — Preparing the king's fianchetto.",
+      "13": "7... Bg7 — Bishop occupies the long diagonal.",
+      "15": "8... Bd7 — Neutralizing the pin on c6.",
+      "17": "9... Bxc6 — Recapturing with the bishop.",
+      "19": "10... O-O — Securing king safety.",
+      "21": "11... Nd7 — Challenging the e5 knight.",
+      "23": "12... f6! — Kicking the knight from its outpost.",
+      "25": "13... e5! — Tactical Breakthrough: Blowing open White's center!",
+      "27": "14... fxe5 — Recapture opening the f-file.",
+      "29": "15... Qc7 — Connecting rooks with central pressure.",
+      "31": "16... Rf5 — Double attack pinning White and seizing total board control."
+    }
+  },
+  {
+    "id": "caro-kann-punish-panov-pin-fork-combo",
+    "courseId": "caro-kann",
+    "subCourseId": "caro-kann-panov-attack",
+    "name": "Panov-Botvinnik – 7. cxd5 / 10...Nxd4! Fork & Endgame Squeeze",
+    "shortName": "Panov 10...Nxd4! Fork Squeeze",
+    "category": "Endgame Dominance",
+    "side": "black",
+    "eco": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    "pgn": "1. e4 c6 2. d4 d5 3. exd5 cxd5 4. c4 Nf6 5. Nc3 Nc6 6. Nf3 Bg4 7. cxd5 Nxd5 8. Qb3 Bxf3 9. gxf3 e6 10. Qxb7 Nxd4 11. Bb5+ Nxb5 12. Qc6+ Ke7 13. Qxb5 Qd7 14. Nxd5+ Qxd5 15. Qxd5 exd5 16. Be3 Ke6",
+    "fullAnnotation": "White plays the greedy 8. Qb3 trying to win the b7 pawn. Black ignores the threat with 8...Bxf3! and 10...Nxd4!, unleashing a devastating fork on c2 and liquidation into a winning queenless endgame where White's shattered f-pawns and isolated d4-pawn guarantee Black victory.",
+    "previewFEN": "r2qkb1r/pQ3ppp/4p3/3n4/3n4/2N2P2/PP3P1P/R1B1KB1R w KQkq - 0 11",
+    "annotations": {
+      "1": "1... c6 — Caro-Kann Defense.",
+      "3": "2... d5 — Strike center.",
+      "5": "3... cxd5 — Open c-file.",
+      "7": "4... Nf6 — Develop knight.",
+      "9": "5... Nc6 — Developing with pressure on d4.",
+      "11": "6... Bg4 — Pinning White's f3 knight.",
+      "13": "7... Nxd5 — Recapture.",
+      "14": "Greedy: 8. Qb3? targets b7 and d5 but neglects kingside safety.",
+      "15": "8... Bxf3! — Shattering White's kingside pawn structure.",
+      "17": "9... e6 — Protecting the d5 knight.",
+      "19": "10... Nxd4! — Tactical Punishment: Lethal knight fork threatening Nc2+ and the b3 queen!",
+      "21": "11... Nxb5 — Eliminating White's checking bishop.",
+      "23": "12... Ke7 — Calm king step preserving all material.",
+      "25": "13... Qd7 — Offering queen liquidation.",
+      "27": "14... Qxd5 — Central queen recapture.",
+      "29": "15... exd5 — Isolated d4 pawn liquidated.",
+      "31": "16... Ke6! — King centralization in a winning endgame with superior pawn structure."
+    }
   }
 ];
+
