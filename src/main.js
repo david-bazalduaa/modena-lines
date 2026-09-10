@@ -7,6 +7,7 @@ import { APP_CONFIG, PAYPAL_DONATE_URL } from './config/settings.js';
 import { userProgress } from './storage/user-progress.js';
 import { authService } from './services/auth-service.js';
 import { authModal, renderHeaderAuth } from './ui/auth-modal.js';
+import { supportModal } from './ui/support-modal.js';
 import { HeaderView } from './ui/header-view.js';
 import { renderDashboard } from './ui/dashboard-view.js';
 import { renderSubCourseHub } from './ui/subcourse-view.js';
@@ -70,11 +71,11 @@ class App {
       }
     });
 
-    // Configure Support / Donate button URL from settings
-    const donateUrl = (APP_CONFIG && APP_CONFIG.paypalDonateUrl) || PAYPAL_DONATE_URL;
-    if (donateUrl) {
-      $('#btn-donate').attr('href', donateUrl);
-    }
+    // Configure Support / Donate button to open in-app Support Modal
+    $('#btn-donate').off('click').on('click', (e) => {
+      e.preventDefault();
+      supportModal.open();
+    });
   }
 
   initAuth() {

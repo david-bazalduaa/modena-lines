@@ -58,16 +58,16 @@ test('index.html contains #btn-donate inside .header-actions wrapper', () => {
   assert.ok(indexHtml.includes('id="btn-donate"'), '#btn-donate anchor must exist in index.html');
 });
 
-test('#btn-donate has required security and accessibility attributes', () => {
-  assert.ok(indexHtml.includes('target="_blank"'), '#btn-donate must have target="_blank"');
-  assert.ok(indexHtml.includes('rel="noopener noreferrer"'), '#btn-donate must have rel="noopener noreferrer"');
-  assert.ok(indexHtml.includes('aria-label="Support Modena Lines"'), '#btn-donate must have accessible aria-label');
+test('#btn-donate has required attributes and Spanish aria-label', () => {
+  assert.ok(indexHtml.includes('type="button"'), '#btn-donate must have type="button"');
+  assert.ok(indexHtml.includes('aria-label="Apoyar a Modena Lines"'), '#btn-donate must have accessible Spanish aria-label');
+  assert.ok(indexHtml.includes('title="Apoyar a Modena Lines"'), '#btn-donate must have title attribute');
 });
 
-test('#btn-donate contains SVG icon and Support label', () => {
+test('#btn-donate contains SVG icon and Apoyar label', () => {
   assert.ok(indexHtml.includes('donate-icon'), '#btn-donate must include SVG donate icon');
   assert.ok(indexHtml.includes('donate-label'), '#btn-donate must include donate-label');
-  assert.ok(indexHtml.includes('Support'), '#btn-donate text must read Support');
+  assert.ok(indexHtml.includes('Apoyar'), '#btn-donate text must read Apoyar');
 });
 
 test('.header-actions encapsulates both #btn-donate and #header-auth-container', () => {
