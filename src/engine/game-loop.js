@@ -20,7 +20,17 @@ export function resolvePlayerColor(line, subCourse, course) {
 
   const courseId = line?.courseId || subCourse?.courseId;
   if (courseId) {
-    const blackCourseIds = ['pirc-defense', 'sicilian-defense', 'caro-kann'];
+    const blackCourseIds = [
+      'pirc-defense',
+      'sicilian-defense',
+      'caro-kann',
+      'french-defense',
+      'kings-indian-defense',
+      'nimzo-indian-defense',
+      'slav-defense',
+      'scandinavian-defense',
+      'grunfeld-defense'
+    ];
     if (blackCourseIds.includes(courseId)) {
       return 'black';
     }

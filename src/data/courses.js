@@ -44,6 +44,13 @@ import { englishOpeningLines } from './lines/english-opening.js';
 import { scotchGameLines } from './lines/scotch-game.js';
 import { catalanOpeningLines } from './lines/catalan-opening.js';
 
+import { frenchDefenseLines } from './lines/french-defense.js';
+import { kingsIndianDefenseLines } from './lines/kings-indian-defense.js';
+import { nimzoIndianDefenseLines } from './lines/nimzo-indian-defense.js';
+import { slavDefenseLines } from './lines/slav-defense.js';
+import { scandinavianDefenseLines } from './lines/scandinavian-defense.js';
+import { grunfeldDefenseLines } from './lines/grunfeld-defense.js';
+
 export const COURSES = [
   {
     id: 'italian-game',
@@ -554,6 +561,312 @@ export const COURSES = [
         description: 'Punish aggressive sideline attempts including toothless 2. Bc4 with 6...d5!, the Kholmov 4. Bg5 bishop trap with 6...g5!, and reckless 6. g4 flank attacks.',
         previewFEN: 'r1bqk1r1/pp5p/2p1pp1B/3p4/2P1N3/1B6/PP2NPPP/2KRR3 b q - 0 15',
         lines: pircSidelinesLines
+      }
+    ]
+  },
+  {
+    id: 'french-defense',
+    title: 'French Defense Master Repertoire',
+    subtitle: '1. e4 e6 Dynamic Counter-Attack & Central Warfare (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'A formidable counter-attacking repertoire against 1. e4: punish White\'s overextended pawn chains, shatter Tarrasch & Winawer structures, exploit the Rubinstein & Burn, and destroy early deviations.',
+    previewFEN: 'rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+    subCourses: [
+      {
+        id: 'french-advance-overreach',
+        courseId: 'french-defense',
+        title: 'French Defense – Advance Variation & Overreach',
+        subtitle: 'Classical 5...Qb6 & 8...Nf5 d4-Pressure (13 Lines - 85% Punishments)',
+        category: 'Central Siege',
+        description: 'Besiege White\'s d4-e5 pawn wedge in the Advance with ...c5, ...Qb6, and ...Nf5, counter central thrusts, and punish premature flank overextensions.',
+        previewFEN: 'r1bqkbnr/pp3ppp/2n1p3/2ppP3/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 1 5',
+        lines: frenchDefenseLines.filter(l => l.subCourseId === 'french-advance-overreach')
+      },
+      {
+        id: 'french-winawer-tactics',
+        courseId: 'french-defense',
+        title: 'French Defense – Winawer Variation & Tactics',
+        subtitle: 'Winawer 3...Bb4 & Queenside Demolition (13 Lines - 85% Punishments)',
+        category: 'Sharp Counter-Attack',
+        description: 'Pin and demolish White\'s queenside in the Winawer with ...Bxc3+ and ...Qa5, exploit damaged pawn structures, and punish early queen excursions.',
+        previewFEN: 'rnbqk1nr/ppp2ppp/4p3/3p4/1b1PP3/2N5/PPP2PPP/R1BQKBNR w KQkq - 2 4',
+        lines: frenchDefenseLines.filter(l => l.subCourseId === 'french-winawer-tactics')
+      },
+      {
+        id: 'french-classical-steinitz',
+        courseId: 'french-defense',
+        title: 'French Defense – Classical & Steinitz Systems',
+        subtitle: 'Classical Steinitz 4...Nfd7 & Burn 4...dxe4 Outposts (13 Lines - 85% Punishments)',
+        category: 'Positional Precision',
+        description: 'Neutralize White\'s classical initiative: dismantle the Steinitz 4. e5 with rapid counter-strikes, and master the Burn 4...dxe4 liquidation.',
+        previewFEN: 'rnbqkb1r/ppp2ppp/4pn2/8/3PN3/8/PPP2PPP/R1BQKBNR w KQkq - 1 5',
+        lines: frenchDefenseLines.filter(l => l.subCourseId === 'french-classical-steinitz')
+      },
+      {
+        id: 'french-tarrasch-exchange',
+        courseId: 'french-defense',
+        title: 'French Defense – Tarrasch & Exchange Systems',
+        subtitle: 'Tarrasch 3. Nd2 c5 & Exchange Refutations (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Pummel passive Exchange setups, exploit Tarrasch 3. Nd2 pawn isolations with ...c5, and dismantle unsound early flank gambits.',
+        previewFEN: 'rnbqkbnr/pppp1ppp/4p3/8/4P3/8/PPPP1PPP/RNBQKBNR w KQkq - 0 2',
+        lines: frenchDefenseLines.filter(l => l.subCourseId === 'french-tarrasch-exchange')
+      }
+    ]
+  },
+  {
+    id: 'kings-indian-defense',
+    title: 'King\'s Indian Defense Master Repertoire',
+    subtitle: '1. d4 Nf6 2. c4 g6 3. Nc3 Bg7 Hypermodern Kingside Firestorm (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Unleash the ultimate weapon of Bobby Fischer and Garry Kasparov: launch devastating kingside mating attacks in the Mar del Plata, demolish the Sämisch and Four Pawns, and crush all white deviations.',
+    previewFEN: 'rnbq1rk1/ppp1ppbp/3p1np1/8/2PPP3/2N5/PP2BPPP/R1BQK1NR b KQ - 2 5',
+    subCourses: [
+      {
+        id: 'kid-classical-avalanche',
+        courseId: 'kings-indian-defense',
+        title: 'King\'s Indian – Classical Avalanche (9. Ne1 / 9. b4)',
+        subtitle: '9. Ne1 / 9. b4 Mainlines & ...f5 Kingside Breakthroughs (13 Lines - 85% Punishments)',
+        category: 'Kingside Attack',
+        description: 'Execute the thematic ...f5-...f4 pawn storm, sacrifice on g3/h3, and weave unstoppable mating nets against White\'s king.',
+        previewFEN: 'r1bq1rk1/pppnn1bp/3p2p1/3Ppp2/2P1P3/2N1BP2/PP2B1PP/R2QK1NR w KQ - 0 9',
+        lines: kingsIndianDefenseLines.filter(l => l.subCourseId === 'kid-classical-avalanche')
+      },
+      {
+        id: 'kid-samisch-blunders',
+        courseId: 'kings-indian-defense',
+        title: 'King\'s Indian – Sämisch Variation Blunders',
+        subtitle: 'Sämisch 5. f3 & Byrne ...c5 Pawn Counter-Strikes (13 Lines - 85% Punishments)',
+        category: 'Pawn Storm Combat',
+        description: 'Tame White\'s massive pawn centers with Byrne ...c5 sacrifices, central ruptures (...e5), and relentless piece activity on the dark squares.',
+        previewFEN: 'rnbq1rk1/ppp1ppbp/3p1np1/8/2PPPP2/2N5/PP4PP/R1BQKBNR b KQ - 0 5',
+        lines: kingsIndianDefenseLines.filter(l => l.subCourseId === 'kid-samisch-blunders')
+      },
+      {
+        id: 'kid-averbakh-four-pawns',
+        courseId: 'kings-indian-defense',
+        title: 'King\'s Indian – Averbakh & Four Pawns Attack',
+        subtitle: 'Four Pawns 5. f4 & Averbakh 5. Be2 / 6. Bg5 Neutralized (13 Lines - 85% Punishments)',
+        category: 'Positional Equality',
+        description: 'Counter White\'s positional setups with energetic queenside counterplay (...c5, ...b5), central liquidation, and dark-square outpost domination.',
+        previewFEN: 'r1bq1rk1/ppp1ppbp/2np1np1/8/2PPP3/2N1B3/PP2BPPP/R2QK1NR b KQ - 4 6',
+        lines: kingsIndianDefenseLines.filter(l => l.subCourseId === 'kid-averbakh-four-pawns')
+      },
+      {
+        id: 'kid-fianchetto-sidelines',
+        courseId: 'kings-indian-defense',
+        title: 'King\'s Indian – Fianchetto & Sideline Refutations',
+        subtitle: '4. h4?! Harry, 3. g3 Fianchetto & Rare Deviations Refuted (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Dismantle amateur White flank thrusts, punish premature early queen adventures, and exploit overextended kingside pawn pushes.',
+        previewFEN: 'rnbqk2r/ppp1ppbp/3p1np1/8/2PP3P/2N5/PP2PPP1/R1BQKBNR b KQkq - 0 4',
+        lines: kingsIndianDefenseLines.filter(l => l.subCourseId === 'kid-fianchetto-sidelines')
+      }
+    ]
+  },
+  {
+    id: 'nimzo-indian-defense',
+    title: 'Nimzo-Indian Defense Master Repertoire',
+    subtitle: '1. d4 Nf6 2. c4 e6 3. Nc3 Bb4 Absolute Structural Mastery (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Aron Nimzowitsch\'s hypermodern masterpiece: pin the c3 knight, ruin White\'s pawn structure with doubled c-pawns, blockade weaknesses, and crush Rubinstein, Classical, and Sämisch lines.',
+    previewFEN: 'rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N5/PP2PPPP/R1BQKBNR w KQkq - 2 4',
+    subCourses: [
+      {
+        id: 'nimzo-rubinstein-classical',
+        courseId: 'nimzo-indian-defense',
+        title: 'Nimzo-Indian – Rubinstein & Classical Systems',
+        subtitle: 'Rubinstein 4. e3 & Classical 4. Qc2 Masterlines (13 Lines - 85% Punishments)',
+        category: 'Main Line',
+        description: 'Neutralize White\'s main weapons: dismantle 4. e3 with Hübner dark-square clamps, and refute 4. Qc2 with rapid piece development and queenside expansion.',
+        previewFEN: 'rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N1P3/PP3PPP/R1BQKBNR b KQkq - 0 4',
+        lines: nimzoIndianDefenseLines.filter(l => l.subCourseId === 'nimzo-rubinstein-classical')
+      },
+      {
+        id: 'nimzo-samisch-blunders',
+        courseId: 'nimzo-indian-defense',
+        title: 'Nimzo-Indian – Sämisch Variation & C4 Siege',
+        subtitle: 'Sämisch 4. a3 Bxc3+ & Capablanca 8...b6 Siege (13 Lines - 85% Punishments)',
+        category: 'Blockade & Siege',
+        description: 'Inflict doubled isolated c-pawns on White with ...Bxc3+, then deploy Capablanca\'s immortal ...Ba6 and ...Na5 siege to round up the c4 pawn.',
+        previewFEN: 'rnbqk2r/pppp1ppp/4pn2/8/2PP4/P1P5/4PPPP/R1BQKBNR b KQkq - 0 5',
+        lines: nimzoIndianDefenseLines.filter(l => l.subCourseId === 'nimzo-samisch-blunders')
+      },
+      {
+        id: 'nimzo-leningrad-bg5',
+        courseId: 'nimzo-indian-defense',
+        title: 'Nimzo-Indian – Leningrad Variation (4. Bg5)',
+        subtitle: 'Leningrad 4. Bg5 & 5...h6 / 6...g5 Punishments (13 Lines - 85% Punishments)',
+        category: 'Sharp Counter-Attack',
+        description: 'Shatter White\'s pin with ...h6 and ...g5, invade with ...Ne4, and punish overextended White setups with tactical queen forks.',
+        previewFEN: 'rnbqk2r/pppp1ppp/4pn2/6B1/1bPP4/2N5/PP2PPPP/R2QKBNR b KQkq - 3 4',
+        lines: nimzoIndianDefenseLines.filter(l => l.subCourseId === 'nimzo-leningrad-bg5')
+      },
+      {
+        id: 'nimzo-check-fork-oversights',
+        courseId: 'nimzo-indian-defense',
+        title: 'Nimzo-Indian – Check & Fork Oversights',
+        subtitle: 'Kasparov 4. Nf3, 4. f3 & Premature 4. Qb3 Refuted (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish White\'s sideline attempts: exploit 4. f3 with central counter-gambits (...c5, ...d5), neutralize 4. Nf3, and punish premature queen outings.',
+        previewFEN: 'rnbqk2r/pppp1ppp/4pn2/8/1bPP4/2N2N2/PP2PPPP/R1BQKB1R b KQkq - 3 4',
+        lines: nimzoIndianDefenseLines.filter(l => l.subCourseId === 'nimzo-check-fork-oversights')
+      }
+    ]
+  },
+  {
+    id: 'slav-defense',
+    title: 'Slav Defense Master Repertoire',
+    subtitle: '1. d4 d5 2. c4 c6 Rock-Solid Fortress & Dynamic Counterplay (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'The premier championship defense to 1. d4: develop the bishop outside the pawn chain to f5 in the Classical, wield the explosive Meran Variation, master the Exchange, and dismantle all gambits.',
+    previewFEN: 'rnbqkbnr/pp2pppp/2p5/3p4/2PP4/8/PP2PPPP/RNBQKBNR w KQkq - 0 3',
+    subCourses: [
+      {
+        id: 'slav-classical-exploitation',
+        courseId: 'slav-defense',
+        title: 'Slav Defense – Classical 5. a4 Bf5 Exploitation',
+        subtitle: 'Classical 4...dxc4 / 5...Bf5 & 6. Ne5 Punishments (13 Lines - 85% Punishments)',
+        category: 'Main Line',
+        description: 'Activate the light-squared bishop outside the pawn chain before playing ...e6, coordinate piece pressure against White\'s center, and punish overambitious attacks.',
+        previewFEN: 'rn1qkb1r/pp2pppp/2p2n2/5b2/P1pP4/2N1P3/1P3PPP/R1BQKBNR w KQkq - 1 6',
+        lines: slavDefenseLines.filter(l => l.subCourseId === 'slav-classical-exploitation')
+      },
+      {
+        id: 'slav-semi-meran-traps',
+        courseId: 'slav-defense',
+        title: 'Slav Defense – Semi-Slav & Meran Variations',
+        subtitle: 'Meran 8. Bd3 a6 & Botvinnik Tactical Firestorms (13 Lines - 85% Punishments)',
+        category: 'Dynamic Counter-Fire',
+        description: 'Unleash the ferocious Meran counter-strike with ...b5 and ...c5, master Botvinnik pin-breaking lines, and punish Anti-Meran deviations.',
+        previewFEN: 'r1bqkb1r/pp1n1ppp/2p1pn2/1B1p4/2PP4/2N1PN2/PP3PPP/R1BQK2R b KQkq - 1 6',
+        lines: slavDefenseLines.filter(l => l.subCourseId === 'slav-semi-meran-traps')
+      },
+      {
+        id: 'slav-exchange-oversights',
+        courseId: 'slav-defense',
+        title: 'Slav Defense – Exchange Variation Oversights',
+        subtitle: 'Symmetrical 3. cxd5 cxd5 & 6...a6 Strangle (13 Lines - 85% Punishments)',
+        category: 'Positional Equality',
+        description: 'Break symmetry cleanly: prevent White\'s Nb5/Bb5 threats with 6...a6, contest the open c-file, and punish overeager early queen sorties.',
+        previewFEN: 'r1bqkb1r/pp2pppp/2n2n2/3p4/3P1B2/2N1P3/PP3PPP/R2QKBNR b KQkq - 0 6',
+        lines: slavDefenseLines.filter(l => l.subCourseId === 'slav-exchange-oversights')
+      },
+      {
+        id: 'slav-gambit-refutations',
+        courseId: 'slav-defense',
+        title: 'Slav Defense – Gambit Refutations & Chameleon 4...a6',
+        subtitle: 'Chebanenko 4...a6, Winawer 3...e5! & 3. f3?! Refutations (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Employ the flexible Chebanenko 4...a6, detonate White\'s center with the Winawer Counter-Gambit 3...e5!, and punish dubious flank moves.',
+        previewFEN: 'rnbqkb1r/1p2pppp/p1p2n2/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 0 5',
+        lines: slavDefenseLines.filter(l => l.subCourseId === 'slav-gambit-refutations')
+      }
+    ]
+  },
+  {
+    id: 'scandinavian-defense',
+    title: 'Scandinavian Defense Master Repertoire',
+    subtitle: '1. e4 d5 Central Challenge & Rapid Piece Mobilization (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'Challenge White\'s central pawn on move 1! Master the Mieses-Kotrč 3...Qa5, the hypermodern 2...Nf6 Modern Variation, punish amateur White blunder systems, and wield razor-sharp Icelandic & Portuguese gambits.',
+    previewFEN: 'rnbqkbnr/ppp1pppp/8/3p4/4P3/8/PPPP1PPP/RNBQKBNR w KQkq d6 0 2',
+    subCourses: [
+      {
+        id: 'scandi-mieses-kotrc',
+        courseId: 'scandinavian-defense',
+        title: 'Scandinavian – Mieses-Kotrč 3...Qa5 Variation',
+        subtitle: 'Classical 4. d4 Nf6 & White Overextension Refutations (13 Lines - 85% Punishments)',
+        category: 'Main Line',
+        description: 'Coordinate queen safety on a5, build an iron pawn barrier with ...c6, and exploit White\'s greedy flank advances and premature sacrifices.',
+        previewFEN: 'rnb1kbnr/ppp1pppp/2q5/8/8/2N5/PPPP1PPP/R1BQKBNR w KQkq - 2 4',
+        lines: scandinavianDefenseLines.filter(l => l.subCourseId === 'scandi-mieses-kotrc')
+      },
+      {
+        id: 'scandi-modern-variation',
+        courseId: 'scandinavian-defense',
+        title: 'Scandinavian – Modern 2...Nf6 Variation',
+        subtitle: 'Modern 3. d4 Nxd5 & Panov-Style Counter-Strikes (13 Lines - 85% Punishments)',
+        category: 'Hypermodern Dynamic',
+        description: 'Delay queen recapture with 2...Nf6, employ Alekhine-style knight hops to b6, fianchetto on the long diagonal, and break White\'s center with ...e5.',
+        previewFEN: 'rnbqkb1r/ppp1pppp/5n2/3P4/8/8/PPPP1PPP/RNBQKBNR w KQkq - 1 3',
+        lines: scandinavianDefenseLines.filter(l => l.subCourseId === 'scandi-modern-variation')
+      },
+      {
+        id: 'scandi-early-white-blunders',
+        courseId: 'scandinavian-defense',
+        title: 'Scandinavian – Early White Blunders & Deviations',
+        subtitle: 'Wayward Queen 3. Qh5?!, 3. Qf3?! & 2. e5?! Refutations (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish amateur White deviations: refute 2. e5 with ...c5 and ...Bf5, counter Wayward Queen raids, and exploit 3. d4?! e5! central explosions.',
+        previewFEN: 'rnbqkbnr/ppp1pppp/8/3P4/8/8/PPPP1PPP/RNBQKBNR b KQkq - 0 2',
+        lines: scandinavianDefenseLines.filter(l => l.subCourseId === 'scandi-early-white-blunders')
+      },
+      {
+        id: 'scandi-portuguese-icelandic',
+        courseId: 'scandinavian-defense',
+        title: 'Scandinavian – Portuguese & Icelandic Gambits',
+        subtitle: 'Icelandic 3. c4 e6! & Portuguese 3. d4 Bg4! Attacks (13 Lines - 85% Punishments)',
+        category: 'Gambit Counter-Attack',
+        description: 'Wield hyper-aggressive gambit systems: sacrifice pawns for lightning development, unseat White\'s king, and launch decisive mating attacks down the open e-file.',
+        previewFEN: 'rnbqkb1r/ppp1pppp/5n2/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 3',
+        lines: scandinavianDefenseLines.filter(l => l.subCourseId === 'scandi-portuguese-icelandic')
+      }
+    ]
+  },
+  {
+    id: 'grunfeld-defense',
+    title: 'Grünfeld Defense Master Repertoire',
+    subtitle: '1. d4 Nf6 2. c4 g6 3. Nc3 d5 Dynamic Piece Play & Central Demolition (52 Master Lines - 81% Punishments)',
+    category: 'Black Defenses',
+    side: 'black',
+    description: 'The preferred weapon of Garry Kasparov, Peter Svidler, and MVL: allow White a massive pawn center only to blow it up with ...c5, ...Bg7, and lethal tactical counter-attacks.',
+    previewFEN: 'rnbqkb1r/ppp1pp1p/5np1/3p4/2PP4/2N5/PP2PPPP/R1BQKBNR w KQkq d6 0 4',
+    subCourses: [
+      {
+        id: 'grunfeld-exchange-demolition',
+        courseId: 'grunfeld-defense',
+        title: 'Grünfeld – Exchange Variation Demolition',
+        subtitle: 'Classical 7. Bc4 c5 & Modern 8. Rb1 Mainlines (13 Lines - 85% Punishments)',
+        category: 'Main Line Demolition',
+        description: 'Chip away at White\'s central pride with ...c5, ...Nc6, and ...Bg4, undermine overextensions with ...e6, and exploit rook traps along the long diagonal.',
+        previewFEN: 'r1bqk2r/ppp1ppbp/2n3p1/2P5/2BP4/2P1BN2/P4PPP/R2QK2R b KQkq - 0 10',
+        lines: grunfeldDefenseLines.filter(l => l.subCourseId === 'grunfeld-exchange-demolition')
+      },
+      {
+        id: 'grunfeld-russian-system',
+        courseId: 'grunfeld-defense',
+        title: 'Grünfeld – Russian System & 5. Qb3 Mastery',
+        subtitle: 'Prins 7...a6 8. Be2 b5 & Hungarian 7...Bg4 Attacks (13 Lines - 85% Punishments)',
+        category: 'Dynamic Drag Race',
+        description: 'Neutralize White\'s queen pressure: launch queenside expansions with 7...a6 and 8...b5!, deploy the Hungarian 7...Bg4 pin, and break the center with ...c5.',
+        previewFEN: 'r1bq1rk1/ppp1ppbp/2n2np1/3p4/2PP4/1QN2N2/PP2PPPP/R1B1KB1R w KQ - 4 6',
+        lines: grunfeldDefenseLines.filter(l => l.subCourseId === 'grunfeld-russian-system')
+      },
+      {
+        id: 'grunfeld-seirawan-modern',
+        courseId: 'grunfeld-defense',
+        title: 'Grünfeld – Seirawan 4. Bf4 & Taimanov 4. Bg5',
+        subtitle: 'Seirawan 5...c5 / 6...Qa5 & Taimanov 4...Ne4! Punishments (13 Lines - 85% Punishments)',
+        category: 'Sharp Piece Combat',
+        description: 'Exploit White\'s early bishop development: pin the knight in the Seirawan with 6...Qa5!, strike with 4...Ne4! in the Taimanov, and win the bishop pair.',
+        previewFEN: 'rnbqkb1r/ppp1pp1p/5np1/3p4/2PP1B2/2N5/PP2PPPP/R2QKBNR b KQkq - 1 4',
+        lines: grunfeldDefenseLines.filter(l => l.subCourseId === 'grunfeld-seirawan-modern')
+      },
+      {
+        id: 'grunfeld-unsound-flank',
+        courseId: 'grunfeld-defense',
+        title: 'Grünfeld – Unsound Flank Attacks & Deviations',
+        subtitle: 'Early 4. h4?! Harry, Anti-Grünfeld 3. f3?! & Fianchetto 3. g3 (13 Lines - 85% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Refute amateur flank thrusts like 4. h4?!, dismantle Anti-Grünfeld 3. f3 walls with ...f5 breaks, and outplay White in quiet 4. e3 and 3. g3 setups.',
+        previewFEN: 'rnbqkb1r/ppp1pp1p/5np1/3p4/2PP3P/2N5/PP2PPP1/R1BQKBNR b KQkq h3 0 4',
+        lines: grunfeldDefenseLines.filter(l => l.subCourseId === 'grunfeld-unsound-flank')
       }
     ]
   }

@@ -2,6 +2,8 @@
    CHESS LOGIC & PGN PARSER ENGINE WITH AMBIGUITY EVALUATOR
    ============================================================ */
 
+import { Chess } from 'chess.js';
+
 export function parsePGN(pgn) {
   return pgn
     .split(/\s+/)
@@ -36,7 +38,17 @@ export function processLineData(rawLine) {
   const normMoves = normalizeMoves(rawMoves);
   let side = rawLine.side;
   if (!side && rawLine.courseId) {
-    const blackCourseIds = ['pirc-defense', 'sicilian-defense', 'caro-kann'];
+    const blackCourseIds = [
+      'pirc-defense',
+      'sicilian-defense',
+      'caro-kann',
+      'french-defense',
+      'kings-indian-defense',
+      'nimzo-indian-defense',
+      'slav-defense',
+      'scandinavian-defense',
+      'grunfeld-defense'
+    ];
     side = blackCourseIds.includes(rawLine.courseId) ? 'black' : 'white';
   }
   return {

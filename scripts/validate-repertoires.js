@@ -45,6 +45,13 @@ import { englishOpeningLines } from '../src/data/lines/english-opening.js';
 import { scotchGameLines } from '../src/data/lines/scotch-game.js';
 import { catalanOpeningLines } from '../src/data/lines/catalan-opening.js';
 
+import { frenchDefenseLines } from '../src/data/lines/french-defense.js';
+import { kingsIndianDefenseLines } from '../src/data/lines/kings-indian-defense.js';
+import { nimzoIndianDefenseLines } from '../src/data/lines/nimzo-indian-defense.js';
+import { slavDefenseLines } from '../src/data/lines/slav-defense.js';
+import { scandinavianDefenseLines } from '../src/data/lines/scandinavian-defense.js';
+import { grunfeldDefenseLines } from '../src/data/lines/grunfeld-defense.js';
+
 const italianLines = [
   ...giuocoPianoLines,
   ...evansGambitLines,
@@ -194,7 +201,14 @@ validateRepertoire('English Opening', englishOpeningLines, 'white', 50);
 validateRepertoire('Scotch Game', scotchGameLines, 'white', 50);
 validateRepertoire('Catalan Opening', catalanOpeningLines, 'white', 50);
 
-const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length + alienGambitLines.length + queensGambitLines.length + openSicilianLines.length + englishOpeningLines.length + scotchGameLines.length + catalanOpeningLines.length;
+validateRepertoire('French Defense', frenchDefenseLines, 'black', 50);
+validateRepertoire('King\'s Indian Defense', kingsIndianDefenseLines, 'black', 50);
+validateRepertoire('Nimzo-Indian Defense', nimzoIndianDefenseLines, 'black', 50);
+validateRepertoire('Slav Defense', slavDefenseLines, 'black', 50);
+validateRepertoire('Scandinavian Defense', scandinavianDefenseLines, 'black', 50);
+validateRepertoire('Grünfeld Defense', grunfeldDefenseLines, 'black', 50);
+
+const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length + alienGambitLines.length + queensGambitLines.length + openSicilianLines.length + englishOpeningLines.length + scotchGameLines.length + catalanOpeningLines.length + frenchDefenseLines.length + kingsIndianDefenseLines.length + nimzoIndianDefenseLines.length + slavDefenseLines.length + scandinavianDefenseLines.length + grunfeldDefenseLines.length;
 
 console.log(`\n========================================`);
 if (errors === 0) {

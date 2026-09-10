@@ -55,7 +55,17 @@ COURSES.forEach(course => {
 allLines.forEach(rawLine => {
   const line = processLineData(rawLine);
   const resolvedSide = resolvePlayerColor(line, null, null);
-  const expectedSide = ['pirc-defense', 'sicilian-defense', 'caro-kann'].includes(rawLine.courseId)
+  const expectedSide = [
+    'pirc-defense',
+    'sicilian-defense',
+    'caro-kann',
+    'french-defense',
+    'kings-indian-defense',
+    'nimzo-indian-defense',
+    'slav-defense',
+    'scandinavian-defense',
+    'grunfeld-defense'
+  ].includes(rawLine.courseId)
     ? 'black'
     : 'white';
 
