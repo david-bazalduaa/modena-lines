@@ -481,12 +481,60 @@
 }
 
 /* ============================================================
-   HEADER AUTH DECK & USER PROFILE DROPDOWN
+   HEADER ACTIONS (DONATE / SUPPORT & AUTH DECK)
    ============================================================ */
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
 
 .header-auth-container {
   display: flex;
   align-items: center;
+}
+
+.nav-pill-btn.donate-pill,
+.donate-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.05rem;
+  border-radius: var(--radius-pill);
+  border: none;
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-extruded-sm);
+  color: var(--primary-accent, #334155);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  user-select: none;
+  white-space: nowrap;
+  transition: all var(--spring-transition);
+}
+
+.donate-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-extruded);
+  color: var(--primary-accent-dark, #1e293b);
+}
+
+.donate-pill:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-pressed);
+}
+
+.donate-pill .donate-icon {
+  color: #f43f5e;
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.donate-pill:hover .donate-icon {
+  transform: scale(1.2);
 }
 
 .header-auth-btn {

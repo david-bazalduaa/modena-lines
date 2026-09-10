@@ -921,13 +921,21 @@ body {
     display: none !important;
   }
 
-  #header-auth-container {
+  .header-actions {
     display: flex;
     align-items: center;
+    gap: 6px;
     margin-left: auto;
     flex-shrink: 0;
   }
 
+  #header-auth-container {
+    display: flex;
+    align-items: center;
+  }
+
+  #btn-donate,
+  .donate-pill,
   #header-signin-btn,
   .header-auth-btn {
     padding: 4px 12px;
@@ -937,6 +945,17 @@ body {
     border-radius: 20px;
     gap: 5px;
     touch-action: manipulation;
+  }
+
+  @media (max-width: 440px) {
+    .donate-pill {
+      padding: 0 9px;
+      min-width: 32px;
+      justify-content: center;
+    }
+    .donate-pill .donate-label {
+      display: none;
+    }
   }
 
   .header-user-profile-btn {

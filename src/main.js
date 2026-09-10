@@ -3,6 +3,7 @@
    ============================================================ */
 
 import { COURSES, getAllLines } from './data/courses.js';
+import { APP_CONFIG, PAYPAL_DONATE_URL } from './config/settings.js';
 import { userProgress } from './storage/user-progress.js';
 import { authService } from './services/auth-service.js';
 import { authModal, renderHeaderAuth } from './ui/auth-modal.js';
@@ -68,6 +69,12 @@ class App {
         this.showCatalogView();
       }
     });
+
+    // Configure Support / Donate button URL from settings
+    const donateUrl = (APP_CONFIG && APP_CONFIG.paypalDonateUrl) || PAYPAL_DONATE_URL;
+    if (donateUrl) {
+      $('#btn-donate').attr('href', donateUrl);
+    }
   }
 
   initAuth() {
