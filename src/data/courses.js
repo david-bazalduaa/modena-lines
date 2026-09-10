@@ -38,6 +38,12 @@ import { caroKannTwoKnightsLines } from './lines/caro-kann-two-knights.js';
 import { caroKannPanovLines } from './lines/caro-kann-panov.js';
 import { alienGambitLines } from './lines/alien-gambit.js';
 
+import { queensGambitLines } from './lines/queens-gambit.js';
+import { openSicilianLines } from './lines/open-sicilian.js';
+import { englishOpeningLines } from './lines/english-opening.js';
+import { scotchGameLines } from './lines/scotch-game.js';
+import { catalanOpeningLines } from './lines/catalan-opening.js';
+
 export const COURSES = [
   {
     id: 'italian-game',
@@ -220,6 +226,161 @@ export const COURSES = [
         description: 'Blast open Black\'s king with 6. Nxf7!?, following up with rapid piece coordination, royal pins, queen sacrifices, and inescapable mating nets.',
         previewFEN: 'rnbq1b1r/pp2pkp1/2p2n1p/8/3P4/8/PPP2PPP/R1BQKBNR w KQ - 0 7',
         lines: alienGambitLines
+      }
+    ]
+  },
+  {
+    id: 'queens-gambit',
+    title: "Queen's Gambit Master Repertoire",
+    subtitle: '1. d4 d5 2. c4 Classical Dominance & Blunder Refutations (12 Master Lines - 83% Punishments)',
+    category: '1. d4 Openings',
+    side: 'white',
+    description: 'Master classical central control with d4 and c4, punishing greedy pawn clings, Albin Counter-Gambit tricks, and premature ...Bf5 adventures.',
+    previewFEN: 'rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 2',
+    subCourses: [
+      {
+        id: 'queens-gambit-classical',
+        courseId: 'queens-gambit',
+        title: "Queen's Gambit – Classical Anchor Mainlines",
+        subtitle: 'Classical QGD & Exchange Variation (2 Lines - 100% Solid Control)',
+        category: 'Main Line',
+        description: 'Establish classical central dominance with Nc3, Bg5, and Rc1, suffocating Black\'s counterplay.',
+        previewFEN: 'rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 2',
+        lines: queensGambitLines.filter(l => l.subCourseId === 'queens-gambit-classical')
+      },
+      {
+        id: 'queens-gambit-tactics',
+        courseId: 'queens-gambit',
+        title: "Queen's Gambit – Tactical Punishments & Traps",
+        subtitle: 'QGA b5 Greed, Albin Refutations & Tarrasch Pins (10 Lines - 100% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Decisive tactical executions against greedy pawn clings, counter-gambits, premature ...Bf5 setups, and Tarrasch overreaches.',
+        previewFEN: 'rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR b KQkq - 0 2',
+        lines: queensGambitLines.filter(l => l.subCourseId === 'queens-gambit-tactics')
+      }
+    ]
+  },
+  {
+    id: 'open-sicilian',
+    title: 'Open Sicilian Master Repertoire',
+    subtitle: '1. e4 c5 2. Nf3 & 3. d4 Kingside Attacks & Trap Refutations (12 Master Lines - 83% Punishments)',
+    category: '1. e4 Openings',
+    side: 'white',
+    description: 'Crush the Sicilian from White\'s perspective with the English Attack, Richter-Rauzer, and thematic tactical refutations against premature queen checks, central overreaches, and uncastled kings.',
+    previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+    subCourses: [
+      {
+        id: 'open-sicilian-mainline',
+        courseId: 'open-sicilian',
+        title: 'Open Sicilian – Anchor Systems (Najdorf & Richter-Rauzer)',
+        subtitle: 'English Attack & Classical Rauzer (2 Lines - 100% Strategic Mastery)',
+        category: 'Main Line',
+        description: 'The premier attacking setups against Najdorf and Classical structures, combining rapid castling with devastating kingside pawn storms.',
+        previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+        lines: openSicilianLines.filter(l => l.subCourseId === 'open-sicilian-mainline')
+      },
+      {
+        id: 'open-sicilian-tactics',
+        courseId: 'open-sicilian',
+        title: 'Open Sicilian – Tactical Punishments & King Hunts',
+        subtitle: 'Early Queen Blunders, e5-Holes & Poisoned Pawn Traps (10 Lines - 100% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish early ...Qa5+ checks, premature ...e5 d5-hole pushes, Kalashnikov smothered mate traps, and Dragon Ng4 blunders.',
+        previewFEN: 'rnbqkbnr/pp1ppppp/8/2p5/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+        lines: openSicilianLines.filter(l => l.subCourseId === 'open-sicilian-tactics')
+      }
+    ]
+  },
+  {
+    id: 'english-opening',
+    title: 'English Opening Master Repertoire',
+    subtitle: '1. c4 Flank Mastery & Tactical Punishments (12 Master Lines - 83% Punishments)',
+    category: '1. c4 Openings',
+    side: 'white',
+    description: 'Control the center from the flank with the hypermodern English Opening, punishing overextended Reversed Sicilians, Wing Gambits, and dubious Dutch setups.',
+    previewFEN: 'rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq - 0 1',
+    subCourses: [
+      {
+        id: 'english-symmetrical',
+        courseId: 'english-opening',
+        title: 'English Opening – Anchor Systems (Symmetrical & Reversed)',
+        subtitle: 'Four Knights & Reversed Sicilian Anchor Setups (2 Lines - 100% Solid Control)',
+        category: 'Main Line',
+        description: 'Harmonious piece coordination with g3, Bg2, and queenside expansion controlling the key central files.',
+        previewFEN: 'rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq - 0 1',
+        lines: englishOpeningLines.filter(l => l.subCourseId === 'english-symmetrical')
+      },
+      {
+        id: 'english-tactics',
+        courseId: 'english-opening',
+        title: 'English Opening – Tactical Punishments & Gambit Refutations',
+        subtitle: 'd4-Forks, Wing Gambits & Anglo-Dutch Sacrifices (10 Lines - 100% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish overextended Reversed Sicilians with d4-forks and Rd1 pins, shatter Wing Gambits, and execute crushing kingside attacks against Dutch structures.',
+        previewFEN: 'rnbqkbnr/pppppppp/8/8/2P5/8/PP1PPPPP/RNBQKBNR b KQkq - 0 1',
+        lines: englishOpeningLines.filter(l => l.subCourseId === 'english-tactics')
+      }
+    ]
+  },
+  {
+    id: 'scotch-game',
+    title: 'Scotch Game Master Repertoire',
+    subtitle: '1. e4 e5 2. Nf3 Nc6 3. d4 Open Combat (12 Master Lines - 83% Punishments)',
+    category: '1. e4 Openings',
+    side: 'white',
+    description: 'Blown open on move 3! Take the fight directly to Black with the dynamic Scotch Game, refuting Steinitz Queen Raids, Mieses mistakes, and dubious early exchanges.',
+    previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+    subCourses: [
+      {
+        id: 'scotch-classical',
+        courseId: 'scotch-game',
+        title: 'Scotch Game – Anchor Systems (Classical & Mieses)',
+        subtitle: '4...Bc5 & 4...Nf6 Mieses Mainlines (2 Lines - 100% Solid Authority)',
+        category: 'Main Line',
+        description: 'Anchor variations establishing broad central command with c3, Be3, and active piece harmonization.',
+        previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+        lines: scotchGameLines.filter(l => l.subCourseId === 'scotch-classical')
+      },
+      {
+        id: 'scotch-tactics',
+        courseId: 'scotch-game',
+        title: 'Scotch Game – Tactical Punishments & King Hunts',
+        subtitle: 'Steinitz 4...Qh4 Queen Traps & Gambit Blasts (10 Lines - 100% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish Steinitz 4...Qh4?! queen expeditions, Mieses 8...Nb6 passivity, premature 4...Nxd4 trades, and unleash the Scotch Gambit 6. Bxf7+! king hunt.',
+        previewFEN: 'r1bqkbnr/pppp1ppp/2n5/4p3/3PP3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 3',
+        lines: scotchGameLines.filter(l => l.subCourseId === 'scotch-tactics')
+      }
+    ]
+  },
+  {
+    id: 'catalan-opening',
+    title: 'Catalan Opening Master Repertoire',
+    subtitle: '1. d4 Nf6 2. c4 e6 3. g3 Long Diagonal Domination (12 Master Lines - 83% Punishments)',
+    category: '1. d4 Openings',
+    side: 'white',
+    description: 'The ultimate positional and tactical weapon favored by world champions. Weaponize the g2 sniper bishop to dominate the board, punishing greedy c4 clinging and premature checks.',
+    previewFEN: 'rnbqkb1r/pppp1ppp/4pn2/8/2PP4/6P1/PP2PP1P/RNBQKBNR b KQkq - 0 3',
+    subCourses: [
+      {
+        id: 'catalan-open',
+        courseId: 'catalan-opening',
+        title: 'Catalan Opening – Anchor Systems (Open & Closed Classical)',
+        subtitle: 'Classical Open Catalan Recovery & Closed Catalan Squeeze (2 Lines - 100% Mastery)',
+        category: 'Main Line',
+        description: 'Classical center recovery with Qe2, Rd1, and e4, or the Closed Catalan e5 space strangle.',
+        previewFEN: 'rnbqkb1r/pppp1ppp/4pn2/8/2PP4/6P1/PP2PP1P/RNBQKBNR b KQkq - 0 3',
+        lines: catalanOpeningLines.filter(l => l.subCourseId === 'catalan-open')
+      },
+      {
+        id: 'catalan-tactics',
+        courseId: 'catalan-opening',
+        title: 'Catalan Opening – Tactical Punishments & Diagonal Refutations',
+        subtitle: 'Long Diagonal Traps, c4 Cling Blasts & Bogo Checks (10 Lines - 100% Punishments)',
+        category: 'Tactical Refutation',
+        description: 'Punish Black clinging desperately to c4 with 10. Nxf7! sacrificial blasts, exploit ...b6 blunders with 13. Nd6! octopus binds, and refute premature ...Bb4+ checks.',
+        previewFEN: 'rnbqkb1r/pppp1ppp/4pn2/8/2PP4/6P1/PP2PP1P/RNBQKBNR b KQkq - 0 3',
+        lines: catalanOpeningLines.filter(l => l.subCourseId === 'catalan-tactics')
       }
     ]
   },

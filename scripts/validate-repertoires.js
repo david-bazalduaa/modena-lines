@@ -39,6 +39,12 @@ import { caroKannTwoKnightsLines } from '../src/data/lines/caro-kann-two-knights
 import { caroKannPanovLines } from '../src/data/lines/caro-kann-panov.js';
 import { alienGambitLines } from '../src/data/lines/alien-gambit.js';
 
+import { queensGambitLines } from '../src/data/lines/queens-gambit.js';
+import { openSicilianLines } from '../src/data/lines/open-sicilian.js';
+import { englishOpeningLines } from '../src/data/lines/english-opening.js';
+import { scotchGameLines } from '../src/data/lines/scotch-game.js';
+import { catalanOpeningLines } from '../src/data/lines/catalan-opening.js';
+
 const italianLines = [
   ...giuocoPianoLines,
   ...evansGambitLines,
@@ -94,6 +100,11 @@ console.log(`Ruy Lopez:        ${ruyLopezLines.length} lines (Requirement: >= 50
 console.log(`Sicilian Defense: ${sicilianLines.length} lines (Requirement: >= 50)`);
 console.log(`Caro-Kann:        ${caroKannLines.length} lines (Requirement: >= 50)`);
 console.log(`Alien Gambit:     ${alienGambitLines.length} lines (Requirement: >= 12)`);
+console.log(`Queen's Gambit:   ${queensGambitLines.length} lines (Requirement: >= 12)`);
+console.log(`Open Sicilian:    ${openSicilianLines.length} lines (Requirement: >= 12)`);
+console.log(`English Opening:  ${englishOpeningLines.length} lines (Requirement: >= 12)`);
+console.log(`Scotch Game:      ${scotchGameLines.length} lines (Requirement: >= 12)`);
+console.log(`Catalan Opening:  ${catalanOpeningLines.length} lines (Requirement: >= 12)`);
 
 let errors = 0;
 const allIds = new Set();
@@ -177,8 +188,13 @@ validateRepertoire('Ruy Lopez', ruyLopezLines, 'white');
 validateRepertoire('Sicilian Defense', sicilianLines, 'black');
 validateRepertoire('Caro-Kann Defense', caroKannLines, 'black', 50);
 validateRepertoire('The Alien Gambit', alienGambitLines, 'white', 12);
+validateRepertoire('Queen\'s Gambit', queensGambitLines, 'white', 12);
+validateRepertoire('Open Sicilian', openSicilianLines, 'white', 12);
+validateRepertoire('English Opening', englishOpeningLines, 'white', 12);
+validateRepertoire('Scotch Game', scotchGameLines, 'white', 12);
+validateRepertoire('Catalan Opening', catalanOpeningLines, 'white', 12);
 
-const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length + alienGambitLines.length;
+const totalLines = italianLines.length + londonLines.length + pircLines.length + ruyLopezLines.length + sicilianLines.length + caroKannLines.length + alienGambitLines.length + queensGambitLines.length + openSicilianLines.length + englishOpeningLines.length + scotchGameLines.length + catalanOpeningLines.length;
 
 console.log(`\n========================================`);
 if (errors === 0) {
