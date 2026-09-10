@@ -19,6 +19,7 @@ import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
 import { DrillDeckController } from '../engine/drill-controller.js';
+import { LearnQueueController } from '../engine/learn-controller.js';
 
 /**
  * Strips all emoji characters from a string for crisp, pure text rendering.
@@ -61,6 +62,8 @@ export class TrainerView {
     this.currentAttemptRegistered = false;
     this.sessionAttempts = 0;
     this.drillDeckController = new DrillDeckController();
+    this.learnQueueController = new LearnQueueController();
+    this.isAllMasteredReviewPass = false;
 
     // Unified move execution alias
     this.attemptMove = this.handleUserMove.bind(this);
@@ -146,6 +149,18 @@ export class TrainerView {
     const poolLines = this.getActivePoolLines();
     if (!poolLines || poolLines.length === 0) {
       return -1;
+    }
+
+    // In Learn Mode (when not on an explicit review pass of an already mastered module):
+    // Strictly advance to the next unlearned / uncompleted line in the sub-module.
+    if (this.currentMode === 'learn' && !this.isAllMasteredReviewPass) {
+      const nextUnlearnedIdx = this.learnQueueController.getNextUnlearnedLineIndex(
+        poolLines,
+        this.currentLine?.id,
+        userProgress,
+        this.completedInLoop
+      );
+      return nextUnlearnedIdx;
     }
 
     // Check if all lines in the active pool have been completed in this session
@@ -244,6 +259,11 @@ export class TrainerView {
         // Pool loop completed!
         this.completedInLoop.clear();
         this.initLineQueue();
+        if (this.currentMode === 'learn') {
+          this.isAllMasteredReviewPass = true;
+          this.renderVariationDropdown();
+          this.renderModeDeckPanel();
+        }
         const finishMsg = this.currentMode === 'practice'
           ? "Practice Session Completed! You have practiced all your unlocked repertoire lines."
           : "Sub-Course Module Mastered! You have completed all repertoire lines in this module.";
@@ -549,12 +569,23 @@ export class TrainerView {
         this.loadLine(lineToLoad, 'practice');
       }
     } else {
-      // Learn mode
+      // Learn mode: deterministically prioritize first unlearned line
       this.isBlindStreak = false;
       this.initLineQueue();
-      this.renderVariationDropdown();
       const subLines = (activePool && activePool.lines) ? activePool.lines : [];
-      const lineToLoad = subLines.find(l => l.id === this.currentLine?.id) || (subLines[0] || null);
+      const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
+      this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+
+      let lineToLoad = null;
+      if (this.currentLine && !this.learnQueueController.isLineMastered(this.currentLine, userProgress) && subLines.some(l => l.id === this.currentLine.id)) {
+        lineToLoad = this.currentLine;
+      } else if (unlearnedInfo.index >= 0 && subLines[unlearnedInfo.index]) {
+        lineToLoad = subLines[unlearnedInfo.index];
+      } else {
+        lineToLoad = subLines[0] || null;
+      }
+
+      this.renderVariationDropdown();
       if (lineToLoad) {
         this.loadLine(lineToLoad, 'learn');
       } else {
@@ -579,6 +610,7 @@ export class TrainerView {
     this.isBlindStreak = false;
     this.streakScore = 0;
     this.currentMode = 'learn';
+    this.isAllMasteredReviewPass = false;
     this.completedInLoop.clear();
     this.drillDeckController.reset();
     this.closeModePopover();
@@ -589,7 +621,7 @@ export class TrainerView {
    * Loads a Sub-Course module into the trainer view with isolated line pools.
    * Deterministically resets the training mode to default 'learn' on every sub-module entry.
    */
-  loadSubCourse(subCourse, lineIndex = 0, parentCourse = null) {
+  loadSubCourse(subCourse, lineIndex = null, parentCourse = null) {
     this.cancelAutoAdvance();
     if (this.opponentMoveTimeout) {
       clearTimeout(this.opponentMoveTimeout);
@@ -608,20 +640,34 @@ export class TrainerView {
     this.currentCourse = parentCourse || (subCourse ? getCourseById(subCourse.courseId) : null);
 
     if (!subCourse || !subCourse.lines || subCourse.lines.length === 0) return;
+
+    // Resolve target line index in Learn Mode:
+    // If a specific lineIndex was explicitly passed, respect it;
+    // Otherwise, deterministically find the first unlearned/uncompleted line.
+    let targetIndex = 0;
+    if (typeof lineIndex === 'number' && lineIndex >= 0 && lineIndex < subCourse.lines.length) {
+      targetIndex = lineIndex;
+      this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subCourse.lines, userProgress);
+    } else {
+      const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subCourse.lines, userProgress);
+      targetIndex = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
+      this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+    }
+
     this.initLineQueue();
 
     // Synchronize UI labels for default Learn mode
     $('#bottom-mode-label').text('Learn');
-    $('#coach-mode-badge').text('Active Recall');
+    $('#coach-mode-badge').text(this.isAllMasteredReviewPass ? 'Review Pass' : 'Active Recall');
 
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
 
-    this.loadLine(subCourse.lines[lineIndex], 'learn');
+    this.loadLine(subCourse.lines[targetIndex], 'learn');
   }
 
 
-  loadCourse(course, lineIndex = 0) {
+  loadCourse(course, lineIndex = null) {
     if (course && course.subCourses && course.subCourses.length > 0) {
       this.loadSubCourse(course.subCourses[0], lineIndex, course);
       return;
@@ -644,7 +690,7 @@ export class TrainerView {
     poolLines.forEach((line, index) => {
       const isCompleted = userProgress.isLineCompleted(line);
       const cleanName = stripEmojis(line.name);
-      const label = `${cleanName} ${isCompleted ? '(Mastered)' : ''}`;
+      const label = `${cleanName} ${isCompleted ? '(Mastered)' : '(New)'}`;
       $select.append(`<option value="${index}">${label}</option>`);
     });
 
@@ -720,7 +766,10 @@ export class TrainerView {
       const activePool = this.currentSubCourse || this.currentCourse;
       const subLines = (activePool && activePool.lines) ? activePool.lines : [];
       if (subLines.length > 0) {
-        this.loadLine(subLines[0], 'learn');
+        const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
+        const lineIdx = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
+        this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+        this.loadLine(subLines[lineIdx], 'learn');
       }
     });
 
@@ -1250,7 +1299,10 @@ export class TrainerView {
         const activePool = this.currentSubCourse || this.currentCourse;
         const subLines = (activePool && activePool.lines) ? activePool.lines : [];
         if (subLines.length > 0) {
-          this.loadLine(subLines[0], 'learn');
+          const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
+          const lineIdx = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
+          this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+          this.loadLine(subLines[lineIdx], 'learn');
         }
       }
     }, 400);
@@ -1449,14 +1501,25 @@ export class TrainerView {
         commentary = "Line Complete! You've mastered all moves in this repertoire variation.";
       }
     }
-    $('#commentary-text').html(stripEmojis(commentary));
+
+    if (this.currentMode === 'learn' && this.isAllMasteredReviewPass && this.moveIndex === 0) {
+      const bannerHtml = `
+        <div class="module-mastered-banner">
+          <span class="module-mastered-badge">Module Mastered</span>
+          <span>All lines in this module are completed! Reviewing line. Switch to <strong>Practice</strong> or <strong>Drill</strong> mode for active recall testing.</span>
+        </div>
+      `;
+      $('#commentary-text').html(bannerHtml + stripEmojis(commentary));
+    } else {
+      $('#commentary-text').html(stripEmojis(commentary));
+    }
 
 
     this.renderMoveHistory();
     this.renderStepTree();
 
     const modeLabels = {
-      learn: 'Active Recall',
+      learn: this.isAllMasteredReviewPass ? 'Review Pass' : 'Active Recall',
       practice: 'Practice',
       drill: 'Drill Streak',
       arena: 'Arena Survival'

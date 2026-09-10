@@ -255,13 +255,13 @@ class App {
 
     if (subCourse) {
       this.selectedSubCourse = subCourse;
-      this.trainer.loadSubCourse(subCourse, 0, this.selectedCourse);
+      this.trainer.loadSubCourse(subCourse, null, this.selectedCourse);
     } else if (!this.trainer.currentSubCourse) {
       // Default to first subcourse of first course
       if (COURSES.length > 0 && COURSES[0].subCourses && COURSES[0].subCourses.length > 0) {
         this.selectedCourse = COURSES[0];
         this.selectedSubCourse = COURSES[0].subCourses[0];
-        this.trainer.loadSubCourse(this.selectedSubCourse, 0, this.selectedCourse);
+        this.trainer.loadSubCourse(this.selectedSubCourse, null, this.selectedCourse);
       }
     } else if (this.trainer.board) {
       setTimeout(() => this.trainer.board.resize(), 50);
