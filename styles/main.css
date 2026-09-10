@@ -919,8 +919,16 @@ body {
     display: none !important;
   }
 
-  #repertoire-filter-tabs {
+  #repertoire-filter-tabs,
+  .repertoire-filter-desktop {
     display: none !important;
+  }
+
+  #repertoire-filter-mobile,
+  .repertoire-filter-mobile {
+    display: flex !important;
+    align-items: center;
+    flex-shrink: 0;
   }
 
   .header-actions {

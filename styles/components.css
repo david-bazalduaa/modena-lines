@@ -484,6 +484,90 @@
    HEADER ACTIONS (DONATE / SUPPORT & AUTH DECK)
    ============================================================ */
 
+/* ============================================================
+   RESPONSIVE MOBILE MINIMALIST PAWN TOGGLE (WHITE VS BLACK)
+   ============================================================ */
+
+.repertoire-filter-mobile {
+  display: none;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.mobile-pawn-track {
+  position: relative;
+  width: 64px;
+  height: 32px;
+  border-radius: var(--radius-pill, 9999px);
+  background: var(--bg-surface, #e2e8f0);
+  box-shadow: var(--shadow-pressed, inset 2px 2px 4px rgba(0, 0, 0, 0.15), inset -2px -2px 4px rgba(255, 255, 255, 0.7));
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  display: flex;
+  align-items: center;
+  padding: 2px;
+  box-sizing: border-box;
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.mobile-pawn-slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--bg-surface, #ffffff);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2), var(--shadow-extruded-sm, 2px 2px 4px rgba(163, 177, 198, 0.4));
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mobile-pawn-slider.slide-black {
+  transform: translateX(32px);
+}
+
+.mobile-pawn-btn {
+  position: relative;
+  z-index: 2;
+  width: 30px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 50%;
+  outline: none;
+  touch-action: manipulation;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+
+.mobile-pawn-btn:active {
+  transform: scale(0.92);
+}
+
+.mobile-pawn-btn.active {
+  opacity: 1;
+}
+
+.mobile-pawn-btn:not(.active) {
+  opacity: 0.55;
+}
+
+.mobile-pawn-btn:hover:not(.active) {
+  opacity: 0.85;
+}
+
+.mobile-pawn-svg {
+  display: block;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.1));
+}
+
 .header-actions {
   display: flex;
   align-items: center;

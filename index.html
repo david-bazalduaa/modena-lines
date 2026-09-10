@@ -54,8 +54,8 @@
         </div>
       </div>
 
-      <!-- Repertoire Filter Switch Tabs (White Openings vs Black Defenses) -->
-      <nav class="view-tabs repertoire-filter-nav" id="repertoire-filter-tabs" aria-label="Repertoire Category Filter">
+      <!-- Desktop Repertoire Filter Switch Tabs (White Openings vs Black Defenses) -->
+      <nav class="view-tabs repertoire-filter-nav repertoire-filter-desktop" id="repertoire-filter-tabs" aria-label="Repertoire Category Filter">
         <button id="nav-white-btn" class="nav-tab active" data-filter="white" title="White Openings & Repertoires">
           <span class="tab-piece-icon">♔</span>
           <span>White Openings</span>
@@ -65,6 +65,41 @@
           <span>Black Defenses</span>
         </button>
       </nav>
+
+      <!-- Mobile Minimalist Pawn Toggle (Compact Capsule Track, visible on < 768px) -->
+      <div class="repertoire-filter-mobile" id="repertoire-filter-mobile" role="radiogroup" aria-label="Toggle White Openings or Black Defenses">
+        <div class="mobile-pawn-track" id="mobile-pawn-track">
+          <div class="mobile-pawn-slider" id="mobile-pawn-slider" data-active="white"></div>
+          <button
+            type="button"
+            class="mobile-pawn-btn active"
+            id="mobile-nav-white-btn"
+            data-filter="white"
+            role="radio"
+            aria-checked="true"
+            aria-label="White Openings"
+            title="White Openings"
+          >
+            <svg class="mobile-pawn-svg pawn-white" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 2.5a2.5 2.5 0 0 0-2.5 2.5c0 .67.27 1.28.7 1.73A4.5 4.5 0 0 0 8 11a4.49 4.49 0 0 0 2.22 3.89L10 18H8v2.5h8V18h-2l-.22-3.11A4.49 4.49 0 0 0 16 11a4.5 4.5 0 0 0-2.2-4.27c.43-.45.7-1.06.7-1.73A2.5 2.5 0 0 0 12 2.5z" fill="#ffffff" stroke="#475569" stroke-width="1.2"/>
+            </svg>
+          </button>
+          <button
+            type="button"
+            class="mobile-pawn-btn"
+            id="mobile-nav-black-btn"
+            data-filter="black"
+            role="radio"
+            aria-checked="false"
+            aria-label="Black Defenses"
+            title="Black Defenses"
+          >
+            <svg class="mobile-pawn-svg pawn-black" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+              <path d="M12 2.5a2.5 2.5 0 0 0-2.5 2.5c0 .67.27 1.28.7 1.73A4.5 4.5 0 0 0 8 11a4.49 4.49 0 0 0 2.22 3.89L10 18H8v2.5h8V18h-2l-.22-3.11A4.49 4.49 0 0 0 16 11a4.5 4.5 0 0 0-2.2-4.27c.43-.45.7-1.06.7-1.73A2.5 2.5 0 0 0 12 2.5z" fill="#1e293b"/>
+            </svg>
+          </button>
+        </div>
+      </div>
 
       <!-- Header Actions Deck (Support & Auth) -->
       <div class="header-actions">
