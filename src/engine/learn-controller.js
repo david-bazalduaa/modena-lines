@@ -3,6 +3,46 @@
    ============================================================ */
 
 /**
+ * Pure helper function to resolve the initial line index when launching Learn Mode.
+ * Iterates through the active sub-module lines and returns the index of the first
+ * unlearned/uncompleted line. If all lines in the sub-module are completed/mastered,
+ * falls back to index 0.
+ *
+ * @param {Object[]} lines - Array of repertoire lines in the active sub-module
+ * @param {Object} userProgress - User progress manager or state map
+ * @returns {number} The resolved line index (first unlearned index or 0 fallback)
+ */
+export function resolveInitialLearnLineIndex(lines = [], userProgress = null) {
+  if (!Array.isArray(lines) || lines.length === 0) {
+    return 0;
+  }
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    if (!line) continue;
+
+    let isMastered = false;
+    if (line.mastered === true || line.completedInLearn === true) {
+      isMastered = true;
+    } else if (userProgress && typeof userProgress.isLineCompleted === 'function') {
+      isMastered = userProgress.isLineCompleted(line);
+    } else if (userProgress && userProgress.lineStats && userProgress.lineStats[line.id]) {
+      const st = userProgress.lineStats[line.id];
+      isMastered = Boolean(st.completed || st.mastered);
+    } else if (userProgress && typeof userProgress === 'object' && userProgress[line.id]) {
+      const st = userProgress[line.id];
+      isMastered = Boolean(st.completed || st.mastered);
+    }
+
+    if (!isMastered) {
+      return i;
+    }
+  }
+
+  return 0;
+}
+
+/**
  * Controller managing line selection and linear acquisition in Learn Mode.
  * Strictly prioritizes unlearned / uncompleted lines so learners discover new
  * material immediately rather than re-playing already-mastered variations.

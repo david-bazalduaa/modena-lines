@@ -19,7 +19,7 @@ import { getCourseById } from '../data/courses.js';
 import { userProgress } from '../storage/user-progress.js';
 import { renderModeDeck } from './mode-selector.js';
 import { DrillDeckController } from '../engine/drill-controller.js';
-import { LearnQueueController } from '../engine/learn-controller.js';
+import { resolveInitialLearnLineIndex, LearnQueueController } from '../engine/learn-controller.js';
 
 /**
  * Strips all emoji characters from a string for crisp, pure text rendering.
@@ -569,28 +569,29 @@ export class TrainerView {
         this.loadLine(lineToLoad, 'practice');
       }
     } else {
-      // Learn mode: deterministically prioritize first unlearned line
+      // Learn mode: deterministically prioritize first unlearned line using shared helper
       this.isBlindStreak = false;
       this.initLineQueue();
       const subLines = (activePool && activePool.lines) ? activePool.lines : [];
-      const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
-      this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+      const targetIndex = resolveInitialLearnLineIndex(subLines, userProgress);
+      this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subLines, userProgress);
 
       let lineToLoad = null;
       if (this.currentLine && !this.learnQueueController.isLineMastered(this.currentLine, userProgress) && subLines.some(l => l.id === this.currentLine.id)) {
         lineToLoad = this.currentLine;
-      } else if (unlearnedInfo.index >= 0 && subLines[unlearnedInfo.index]) {
-        lineToLoad = subLines[unlearnedInfo.index];
+      } else if (subLines[targetIndex]) {
+        lineToLoad = subLines[targetIndex];
       } else {
         lineToLoad = subLines[0] || null;
       }
 
-      this.renderVariationDropdown();
       if (lineToLoad) {
         this.loadLine(lineToLoad, 'learn');
       } else {
         this.resetDrill();
       }
+
+      this.renderVariationDropdown();
     }
 
     this.renderModeDeckPanel();
@@ -642,17 +643,16 @@ export class TrainerView {
     if (!subCourse || !subCourse.lines || subCourse.lines.length === 0) return;
 
     // Resolve target line index in Learn Mode:
-    // If a specific lineIndex was explicitly passed, respect it;
+    // If a specific lineIndex > 0 was explicitly passed, respect it;
     // Otherwise, deterministically find the first unlearned/uncompleted line.
     let targetIndex = 0;
-    if (typeof lineIndex === 'number' && lineIndex >= 0 && lineIndex < subCourse.lines.length) {
+    if (typeof lineIndex === 'number' && lineIndex > 0 && lineIndex < subCourse.lines.length) {
       targetIndex = lineIndex;
-      this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subCourse.lines, userProgress);
     } else {
-      const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subCourse.lines, userProgress);
-      targetIndex = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
-      this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+      targetIndex = resolveInitialLearnLineIndex(subCourse.lines, userProgress);
     }
+
+    this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subCourse.lines, userProgress);
 
     this.initLineQueue();
 
@@ -660,10 +660,12 @@ export class TrainerView {
     $('#bottom-mode-label').text('Learn');
     $('#coach-mode-badge').text(this.isAllMasteredReviewPass ? 'Review Pass' : 'Active Recall');
 
+    // Mount and load the initial resolved line FIRST so currentLine is set
+    this.loadLine(subCourse.lines[targetIndex], 'learn');
+
+    // Synchronize UI components (variation dropdown, deck panel) with currentLine accurately populated
     this.renderVariationDropdown();
     this.renderModeDeckPanel();
-
-    this.loadLine(subCourse.lines[targetIndex], 'learn');
   }
 
 
@@ -762,15 +764,14 @@ export class TrainerView {
     $('#btn-switch-to-learn').off('click').on('click', () => {
       this.currentMode = 'learn';
       this.renderModeDeckPanel();
-      this.renderVariationDropdown();
       const activePool = this.currentSubCourse || this.currentCourse;
       const subLines = (activePool && activePool.lines) ? activePool.lines : [];
       if (subLines.length > 0) {
-        const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
-        const lineIdx = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
-        this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+        const lineIdx = resolveInitialLearnLineIndex(subLines, userProgress);
+        this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subLines, userProgress);
         this.loadLine(subLines[lineIdx], 'learn');
       }
+      this.renderVariationDropdown();
     });
 
     $('#progress-label').text('Lines Mastered: 0 / 0');
@@ -1295,15 +1296,14 @@ export class TrainerView {
       } else {
         this.currentMode = 'learn';
         this.renderModeDeckPanel();
-        this.renderVariationDropdown();
         const activePool = this.currentSubCourse || this.currentCourse;
         const subLines = (activePool && activePool.lines) ? activePool.lines : [];
         if (subLines.length > 0) {
-          const unlearnedInfo = this.learnQueueController.findFirstUnlearnedLineIndex(subLines, userProgress);
-          const lineIdx = unlearnedInfo.index >= 0 ? unlearnedInfo.index : 0;
-          this.isAllMasteredReviewPass = unlearnedInfo.allMastered;
+          const lineIdx = resolveInitialLearnLineIndex(subLines, userProgress);
+          this.isAllMasteredReviewPass = this.learnQueueController.isModuleFullyMastered(subLines, userProgress);
           this.loadLine(subLines[lineIdx], 'learn');
         }
+        this.renderVariationDropdown();
       }
     }, 400);
   }
@@ -1514,6 +1514,14 @@ export class TrainerView {
       $('#commentary-text').html(stripEmojis(commentary));
     }
 
+
+    const $select = $('#variation-select');
+    if ($select.length && this.currentLine) {
+      const currentIdx = subCourseLines.findIndex(l => l.id === this.currentLine.id);
+      if (currentIdx >= 0 && $select.val() != currentIdx) {
+        $select.val(currentIdx);
+      }
+    }
 
     this.renderMoveHistory();
     this.renderStepTree();
