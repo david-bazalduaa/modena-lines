@@ -892,6 +892,7 @@ body {
     align-items: center;
     gap: 8px;
     min-width: 0;
+    flex-shrink: 0;
   }
 
   .brand-icon-wrapper {
@@ -911,6 +912,7 @@ body {
     font-weight: 800;
     line-height: 1.1;
     white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .header-subtitle {
@@ -932,6 +934,7 @@ body {
   #header-auth-container {
     display: flex;
     align-items: center;
+    flex-shrink: 0;
   }
 
   #btn-donate,
@@ -945,6 +948,7 @@ body {
     border-radius: 20px;
     gap: 5px;
     touch-action: manipulation;
+    flex-shrink: 0;
   }
 
   @media (max-width: 440px) {
@@ -958,22 +962,52 @@ body {
     }
   }
 
-  .header-user-profile-btn {
-    padding: 3px 8px;
-    min-height: 32px;
-    height: 32px;
-    gap: 6px;
-    touch-action: manipulation;
+  /* Compact Avatar-Only User Profile Button on Mobile Screens (< 640px) */
+  @media (max-width: 640px) {
+    .header-user-profile-btn {
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      padding: 0 !important;
+      border-radius: 50% !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      gap: 0 !important;
+      touch-action: manipulation;
+    }
+
+    .header-user-profile-btn .user-profile-info,
+    .header-user-profile-btn .user-profile-name,
+    .header-user-profile-btn .user-dropdown-arrow {
+      display: none !important;
+    }
+
+    .header-user-profile-btn .user-avatar-badge {
+      width: 30px;
+      height: 30px;
+    }
   }
 
-  .user-avatar-badge {
-    width: 26px;
-    height: 26px;
-  }
+  @media (min-width: 641px) and (max-width: 767px) {
+    .header-user-profile-btn {
+      padding: 3px 8px;
+      min-height: 32px;
+      height: 32px;
+      gap: 6px;
+      touch-action: manipulation;
+      flex-shrink: 0;
+    }
 
-  .user-profile-name {
-    font-size: 0.8rem;
-    max-width: 80px;
+    .user-avatar-badge {
+      width: 26px;
+      height: 26px;
+    }
+
+    .user-profile-name {
+      font-size: 0.8rem;
+      max-width: 90px;
+    }
   }
 
   /* Fixed Viewport Main App Canvas with Safe Area Integration */

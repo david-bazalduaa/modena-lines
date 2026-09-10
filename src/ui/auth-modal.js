@@ -264,10 +264,12 @@ export function renderHeaderAuth(containerElement, user, onSignInClick) {
             ${avatarHTML}
             <span class="user-cloud-dot" title="Cloud Sync Active"></span>
           </div>
-          <span class="user-profile-name">${displayName}</span>
-          <svg class="user-dropdown-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="6 9 12 15 18 9"></polyline>
-          </svg>
+          <span class="user-profile-info">
+            <span class="user-profile-name">${displayName}</span>
+            <svg class="user-dropdown-arrow" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </span>
         </button>
 
         <div id="user-profile-dropdown" class="user-profile-dropdown hidden">

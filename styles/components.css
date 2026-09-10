@@ -626,6 +626,12 @@
   box-shadow: 0 0 6px var(--accent-emerald);
 }
 
+.user-profile-info {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .user-profile-name {
   font-size: 0.82rem;
   font-weight: 700;
@@ -643,6 +649,31 @@
 
 .header-user-profile-btn[aria-expanded="true"] .user-dropdown-arrow {
   transform: rotate(180deg);
+}
+
+@media (max-width: 640px) {
+  .header-user-profile-btn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    gap: 0 !important;
+  }
+
+  .user-profile-info,
+  .user-profile-name,
+  .user-dropdown-arrow {
+    display: none !important;
+  }
+
+  .user-avatar-badge {
+    width: 30px;
+    height: 30px;
+  }
 }
 
 .user-profile-dropdown {
