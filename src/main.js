@@ -10,6 +10,7 @@ import { authModal, renderHeaderAuth } from './ui/auth-modal.js';
 import { supportModal } from './ui/support-modal.js';
 import { HeaderView } from './ui/header-view.js';
 import { renderDashboard } from './ui/dashboard-view.js';
+import { CatalogSearchController } from './ui/catalog-search.js';
 import { renderSubCourseHub } from './ui/subcourse-view.js';
 import { TrainerView } from './ui/trainer-view.js';
 
@@ -22,12 +23,14 @@ class App {
     this.trainer = new TrainerView();
     this.allLines = getAllLines();
     this.headerView = null;
+    this.searchController = null;
   }
 
   init() {
     this.initHeader();
     this.updateHeaderMetrics();
     this.initNavigation();
+    this.initSearch();
     this.initAuth();
 
     // Subscribe to progress changes from local or cloud synchronization
@@ -114,6 +117,7 @@ class App {
 
   refreshCurrentView() {
     if (this.currentView === 'catalog') {
+      const query = this.searchController ? this.searchController.getQuery() : '';
       renderDashboard(
         (targetCourse) => {
           this.showSubCourseHub(targetCourse);
@@ -122,6 +126,12 @@ class App {
         (targetFilter) => {
           if (this.headerView) {
             this.headerView.setActiveFilter(targetFilter, true);
+          }
+        },
+        query,
+        () => {
+          if (this.searchController) {
+            this.searchController.setQuery('', true);
           }
         }
       );
@@ -194,6 +204,7 @@ class App {
     $('#dashboard-view').removeClass('hidden').addClass('active');
 
     this.updateHeaderMetrics();
+    const query = this.searchController ? this.searchController.getQuery() : '';
     renderDashboard(
       (targetCourse) => {
         this.showSubCourseHub(targetCourse);
@@ -203,8 +214,32 @@ class App {
         if (this.headerView) {
           this.headerView.setActiveFilter(targetFilter, true);
         }
+      },
+      query,
+      () => {
+        if (this.searchController) {
+          this.searchController.setQuery('', true);
+        }
       }
     );
+  }
+
+  initSearch() {
+    this.searchController = new CatalogSearchController({
+      debounceMs: 150,
+      onSearch: () => {
+        if (this.currentView !== 'catalog') {
+          this.showCatalogView();
+        } else {
+          this.refreshCurrentView();
+        }
+      },
+      onOpenMobile: () => {
+        if (this.currentView !== 'catalog') {
+          this.showCatalogView();
+        }
+      }
+    });
   }
 
   /**

@@ -945,6 +945,25 @@ body {
     flex-shrink: 0;
   }
 
+  #btn-search-mobile,
+  .search-pill-btn {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    min-height: 32px;
+    padding: 0 !important;
+    border-radius: 50% !important;
+    flex-shrink: 0 !important;
+    touch-action: manipulation;
+  }
+
+  .catalog-search-desktop-wrapper {
+    display: none !important;
+  }
+
   #btn-donate,
   .donate-pill,
   #header-signin-btn,

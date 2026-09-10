@@ -101,8 +101,22 @@
         </div>
       </div>
 
-      <!-- Header Actions Deck (Support & Auth) -->
+      <!-- Header Actions Deck (Search, Support & Auth) -->
       <div class="header-actions">
+        <!-- Mobile Navbar Search Trigger Button (Strictly between pawn toggle and support pill) -->
+        <button
+          id="btn-search-mobile"
+          type="button"
+          class="nav-pill-btn search-pill-btn"
+          aria-label="Search repertoires and lines"
+          title="Search repertoires, lines & tactics"
+        >
+          <svg class="search-btn-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+
         <button
           id="btn-donate"
           type="button"
@@ -123,6 +137,32 @@
       </div>
     </div>
   </header>
+
+  <!-- Mobile Monochromatic Search Bar Overlay -->
+  <div id="mobile-search-overlay" class="mobile-search-overlay hidden" role="search" aria-label="Mobile Repertoire Search">
+    <div class="mobile-search-inner">
+      <svg class="mobile-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <input
+        id="catalog-search-mobile"
+        type="text"
+        placeholder="Search openings, lines, tactics..."
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false"
+      />
+      <button id="mobile-search-clear" class="mobile-search-clear-btn hidden" type="button" aria-label="Clear search">&times;</button>
+      <button id="mobile-search-close" class="mobile-search-close-btn" type="button" aria-label="Close search">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </div>
 
   <!-- ==================== MAIN CONTENT AREA ==================== -->
   <main id="app-main">
@@ -157,9 +197,24 @@
         </div>
       </div>
 
-      <!-- Course Cards Grid -->
-      <div class="section-title-bar">
+      <!-- Course Cards Grid Section Title Bar & Desktop Recessed Search Bar -->
+      <div class="section-title-bar catalog-header-row">
         <h3 id="catalog-section-title">Master White Opening Repertoires</h3>
+        <div class="catalog-search-desktop-wrapper">
+          <svg class="catalog-search-icon" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input
+            id="catalog-search-desktop"
+            type="text"
+            placeholder="Search openings, lines, tactics..."
+            class="catalog-search-input"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="catalog-search-desktop-clear" class="catalog-search-clear-btn hidden" type="button" aria-label="Clear search">&times;</button>
+        </div>
       </div>
 
       <div id="course-grid" class="course-grid">

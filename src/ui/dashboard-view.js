@@ -12,7 +12,75 @@ import { userProgress } from '../storage/user-progress.js';
  * @param {'white' | 'black'} activeColorFilter - Selected side filter
  * @param {Function} onSwitchFilter - Optional callback to switch filter programmatically
  */
-export function renderDashboard(onSelectCourse, activeColorFilter = 'white', onSwitchFilter = null) {
+/**
+ * Pure helper function to test if a course matches a search query.
+ * Matches against course title, subtitle, category, description, sub-course variations,
+ * and individual line names, annotations, and tactical punishment tags (e.g. Checkmate, Greek Gift, Fork, Blunder, Gambit).
+ * @param {Object} course
+ * @param {string} query
+ * @returns {boolean}
+ */
+export function matchesCourseQuery(course, query) {
+  if (!course) return false;
+  if (!query || !query.trim()) return true;
+  const q = query.toLowerCase().trim();
+
+  // 1. Top-level course metadata
+  if (course.title && course.title.toLowerCase().includes(q)) return true;
+  if (course.subtitle && course.subtitle.toLowerCase().includes(q)) return true;
+  if (course.category && course.category.toLowerCase().includes(q)) return true;
+  if (course.description && course.description.toLowerCase().includes(q)) return true;
+
+  const testLine = (line) => {
+    if (!line) return false;
+    if (line.name && line.name.toLowerCase().includes(q)) return true;
+    if (line.shortName && line.shortName.toLowerCase().includes(q)) return true;
+    if (line.category && line.category.toLowerCase().includes(q)) return true;
+    if (line.description && line.description.toLowerCase().includes(q)) return true;
+    if (line.fullAnnotation && line.fullAnnotation.toLowerCase().includes(q)) return true;
+    if (line.tag && line.tag.toLowerCase().includes(q)) return true;
+    if (line.punishmentTag && line.punishmentTag.toLowerCase().includes(q)) return true;
+    if (Array.isArray(line.tags) && line.tags.some(t => t && t.toLowerCase().includes(q))) return true;
+    if (line.annotations && typeof line.annotations === 'object') {
+      for (const key of Object.keys(line.annotations)) {
+        if (line.annotations[key] && line.annotations[key].toLowerCase().includes(q)) return true;
+      }
+    }
+    return false;
+  };
+
+  // 2. Sub-course modules & lines inspection
+  const subCourses = Array.isArray(course.subCourses) ? course.subCourses : [];
+  for (const sub of subCourses) {
+    if (!sub) continue;
+    if (sub.title && sub.title.toLowerCase().includes(q)) return true;
+    if (sub.description && sub.description.toLowerCase().includes(q)) return true;
+
+    const lines = Array.isArray(sub.lines) ? sub.lines : [];
+    for (const line of lines) {
+      if (testLine(line)) return true;
+    }
+  }
+
+  // 3. Flat course lines fallback
+  if (Array.isArray(course.lines)) {
+    for (const line of course.lines) {
+      if (testLine(line)) return true;
+    }
+  }
+
+  return false;
+}
+
+/**
+ * Renders the main Course Catalog grid filtered by repertoire side ('white' | 'black') and optional search query.
+ * @param {Function} onSelectCourse - Callback invoked when a course card is selected
+ * @param {'white' | 'black'} activeColorFilter - Selected side filter
+ * @param {Function} onSwitchFilter - Optional callback to switch filter programmatically
+ * @param {string} [searchQuery=''] - Real-time search query
+ * @param {Function} [onClearSearch=null] - Callback to clear search query
+ */
+export function renderDashboard(onSelectCourse, activeColorFilter = 'white', onSwitchFilter = null, searchQuery = '', onClearSearch = null) {
   const $grid = $('#course-grid');
   if (!$grid.length) return;
   $grid.empty();
@@ -29,14 +97,48 @@ export function renderDashboard(onSelectCourse, activeColorFilter = 'white', onS
 
   // Filter courses safely by side ('white' vs 'black')
   const courseList = Array.isArray(COURSES) ? COURSES : [];
-  const filteredCourses = courseList.filter(course => {
+  let filteredCourses = courseList.filter(course => {
     if (!course) return false;
     const side = course.side || 'white';
     return side === activeColorFilter;
   });
 
-  // Empty state handling when no courses match the filter
+  // Filter by search query if active
+  const isSearchActive = Boolean(searchQuery && searchQuery.trim().length > 0);
+  if (isSearchActive) {
+    filteredCourses = filteredCourses.filter(course => matchesCourseQuery(course, searchQuery));
+  }
+
+  // Empty state handling when no courses match the filter or search
   if (filteredCourses.length === 0) {
+    if (isSearchActive) {
+      const sanitizedQuery = $('<div>').text(searchQuery).html();
+      const emptySearchHTML = `
+        <div class="empty-state-card empty-search-card" style="grid-column: 1 / -1;">
+          <div class="empty-state-icon">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="color: var(--text-muted);">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </div>
+          <h4>No openings found for "${sanitizedQuery}"</h4>
+          <p>Try searching for a different opening name, variation, or tactical tag like "Gambit", "Fork", or "Greek Gift".</p>
+          <button id="btn-clear-search-empty" class="card-action-btn" style="width: auto; padding: 0.6rem 1.4rem; margin-top: 0.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+            <span>Clear Search</span>
+          </button>
+        </div>
+      `;
+      $grid.append(emptySearchHTML);
+
+      $('#btn-clear-search-empty').off('click').on('click', function (e) {
+        e.stopPropagation();
+        if (typeof onClearSearch === 'function') {
+          onClearSearch();
+        }
+      });
+      return;
+    }
+
     const emptyStateHTML = `
       <div class="empty-state-card empty-repertoire-card" style="grid-column: 1 / -1;">
         <div class="empty-state-icon">${activeColorFilter === 'black' ? '♚' : '♔'}</div>
