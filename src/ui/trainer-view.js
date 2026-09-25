@@ -477,6 +477,10 @@ export class TrainerView {
       if (boardWrapper) {
         this.resizeObserver.observe(boardWrapper);
       }
+      const boardContainer = document.getElementById('board-container');
+      if (boardContainer) {
+        this.resizeObserver.observe(boardContainer);
+      }
     }
 
     if (typeof window !== 'undefined') {
@@ -1512,6 +1516,11 @@ export class TrainerView {
       $('#commentary-text').html(bannerHtml + stripEmojis(commentary));
     } else {
       $('#commentary-text').html(stripEmojis(commentary));
+    }
+
+    const commentaryScroll = document.getElementById('commentary-scroll-container');
+    if (commentaryScroll) {
+      commentaryScroll.scrollTop = 0;
     }
 
 

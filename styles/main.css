@@ -424,7 +424,21 @@ body {
 }
 
 @media (min-width: 768px) {
+  #board-header-bar {
+    order: 1;
+    display: flex !important;
+  }
+
+  #commentary-card {
+    order: 2;
+  }
+
+  #board-wrapper {
+    order: 3;
+  }
+
   .desktop-board-toolbar {
+    order: 4;
     display: flex;
   }
 }
@@ -1128,7 +1142,7 @@ body {
     width: 100%;
   }
 
-  /* Level 3 Interactive Study Board: 100vh Single-Page Zero Scroll Stack */
+  /* Level 3 Interactive Study Board: 100dvh Disciplined Flex Column */
   #study-view {
     display: none !important;
   }
@@ -1142,9 +1156,9 @@ body {
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    padding: 6px 10px calc(58px + env(safe-area-inset-bottom, 16px)) 10px !important;
+    padding: 4px 10px calc(58px + env(safe-area-inset-bottom, 16px)) 10px !important;
     box-sizing: border-box !important;
-    gap: 6px !important;
+    gap: 0 !important;
     touch-action: none !important;
   }
 
@@ -1162,92 +1176,138 @@ body {
     flex-direction: column !important;
     justify-content: flex-start !important;
     align-items: center !important;
-    gap: 8px !important;
+    gap: 0 !important;
     flex: 1 !important;
     min-height: 0 !important;
+    overflow: hidden !important;
   }
 
   #board-header-bar {
     display: none !important;
   }
 
-  /* Coach Guidance Box (Top Scrollable Card above chessboard) */
-  #commentary-card.coach-card {
-    width: 100% !important;
-    max-width: 440px !important;
-    min-height: 40px !important;
-    max-height: min(76px, 10vh) !important;
-    flex-shrink: 0 !important;
-    padding: 4px 10px !important;
-    border-radius: var(--radius-md, 12px) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    overflow: hidden !important;
-    box-sizing: border-box !important;
-    box-shadow: var(--shadow-extruded-sm, 3px 3px 6px #b8c0cc, -3px -3px 6px #ffffff) !important;
-    margin: 0 !important;
-  }
-
-  .coach-card .card-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2px;
-    padding-bottom: 0;
-    border-bottom: none;
-  }
-
-  .coach-title-wrap {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-
-  .coach-heading {
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--primary-accent, #334155);
-  }
-
-  .coach-badge {
-    font-size: 0.65rem;
-    padding: 2px 7px;
-  }
-
-  .coach-commentary-scroll {
-    flex: 1;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    padding-right: 4px;
-    max-height: 60px;
-  }
-
-  #commentary-text {
-    font-size: 0.76rem;
-    line-height: 1.35;
-    color: var(--text-primary);
-    margin: 0;
-    font-weight: 500;
-  }
-
-  /* Fixed Viewport 1:1 Chessboard Placement - Positioned higher up with snug top alignment */
+  /* Fixed Viewport 1:1 Chessboard Placement - Anchored and Stable at Top of Mobile Study View */
   #board-wrapper {
-    width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
-    max-width: min(calc(100vw - 20px), calc(100dvh - 48px - 82px - 58px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 16px) - 24px), 380px) !important;
+    order: 1 !important;
+    width: 100% !important;
+    max-width: min(calc(100vw - 20px), 390px, calc(100dvh - 250px)) !important;
     height: auto !important;
     aspect-ratio: 1 / 1 !important;
     padding: 6px !important;
     border-radius: var(--radius-md, 14px) !important;
     box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff) !important;
-    margin: 4px 0 0 0 !important;
-    flex-shrink: 1 !important;
+    margin: 2px auto 8px auto !important;
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
   }
 
   #board-container {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: 1 / 1 !important;
     border-radius: var(--radius-sm, 8px) !important;
+    flex-shrink: 0 !important;
+    overflow: hidden !important;
+  }
+
+  #board {
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  /* Coach Guidance Panel Container - Isolated Scrollable Commentary Box Below Board */
+  #commentary-card.coach-card,
+  .coach-guidance-box {
+    order: 2 !important;
+    width: 100% !important;
+    max-width: min(calc(100vw - 20px), 390px) !important;
+    height: 120px !important;
+    min-height: 110px !important;
+    max-height: 140px !important;
+    flex-shrink: 0 !important;
+    padding: 8px 12px 10px 12px !important;
+    border-radius: var(--radius-md, 14px) !important;
+    background: var(--bg-surface, #e8ecf1) !important;
+    box-shadow: var(--shadow-extruded-sm, 3px 3px 6px #b8c0cc, -3px -3px 6px #ffffff) !important;
+    border: var(--border-subtle, 1px solid rgba(255, 255, 255, 0.6)) !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+  }
+
+  .coach-card .card-header {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    margin-bottom: 4px !important;
+    padding-bottom: 3px !important;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .coach-title-wrap {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .coach-heading {
+    font-size: 0.76rem !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    color: var(--primary-accent, #334155) !important;
+  }
+
+  .coach-badge {
+    font-size: 0.65rem !important;
+    padding: 2px 7px !important;
+  }
+
+  .coach-commentary-scroll {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-y !important;
+    padding-right: 4px !important;
+    margin-top: 2px !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: rgba(148, 163, 184, 0.45) transparent !important;
+  }
+
+  .coach-commentary-scroll::-webkit-scrollbar {
+    width: 4px !important;
+  }
+
+  .coach-commentary-scroll::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+
+  .coach-commentary-scroll::-webkit-scrollbar-thumb {
+    background: rgba(148, 163, 184, 0.45) !important;
+    border-radius: 9999px !important;
+  }
+
+  .coach-commentary-scroll::-webkit-scrollbar-thumb:hover {
+    background: rgba(100, 116, 139, 0.65) !important;
+  }
+
+  #commentary-text {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+    color: var(--text-primary) !important;
+    margin: 0 !important;
+    font-weight: 500 !important;
+    word-break: break-word !important;
   }
 
   /* Fixed Mobile Trainer Toolbar (< 768px) with iOS Safe Area Insets */
