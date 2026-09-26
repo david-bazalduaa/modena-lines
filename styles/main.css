@@ -1154,9 +1154,9 @@ body {
     overflow: hidden !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     align-items: center !important;
-    padding: 4px 10px calc(58px + env(safe-area-inset-bottom, 16px)) 10px !important;
+    padding: 12px 10px calc(46px + max(0.5rem, env(safe-area-inset-bottom, 0px))) 10px !important;
     box-sizing: border-box !important;
     gap: 0 !important;
     touch-action: none !important;
@@ -1174,19 +1174,21 @@ body {
     height: 100% !important;
     display: flex !important;
     flex-direction: column !important;
-    justify-content: flex-start !important;
+    justify-content: center !important;
     align-items: center !important;
-    gap: 0 !important;
+    gap: 10px !important;
     flex: 1 !important;
     min-height: 0 !important;
     overflow: hidden !important;
+    padding: 0 !important;
+    margin: 0 auto !important;
   }
 
   #board-header-bar {
     display: none !important;
   }
 
-  /* Fixed Viewport 1:1 Chessboard Placement - Anchored and Stable at Top of Mobile Study View */
+  /* Fixed Viewport 1:1 Chessboard Placement - Anchored and Stable in Mobile Study View */
   #board-wrapper {
     order: 1 !important;
     width: 100% !important;
@@ -1196,7 +1198,7 @@ body {
     padding: 6px !important;
     border-radius: var(--radius-md, 14px) !important;
     box-shadow: var(--shadow-extruded, 4px 4px 10px #b8c0cc, -4px -4px 10px #ffffff) !important;
-    margin: 2px auto 8px auto !important;
+    margin: 0 auto !important;
     flex-shrink: 0 !important;
     box-sizing: border-box !important;
     display: flex !important;
@@ -1324,16 +1326,20 @@ body {
     bottom: 0 !important;
     left: 0 !important;
     right: 0 !important;
-    height: calc(56px + env(safe-area-inset-bottom, 16px)) !important;
-    min-height: calc(56px + env(safe-area-inset-bottom, 16px)) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: calc(44px + max(0.5rem, env(safe-area-inset-bottom, 0px))) !important;
+    max-height: calc(52px + max(0.5rem, env(safe-area-inset-bottom, 0px))) !important;
+    border-radius: 0 !important;
     z-index: 99999 !important;
     display: flex !important;
     align-items: flex-start !important;
     justify-content: space-around !important;
     background: var(--bg-surface, #e0e5ec) !important;
-    box-shadow: 0 -4px 16px rgba(163, 177, 198, 0.45), 0 -1px 3px rgba(255, 255, 255, 0.9) !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.6) !important;
-    padding: 6px 1rem env(safe-area-inset-bottom, 16px) 1rem !important;
+    box-shadow: 0 -3px 12px rgba(163, 177, 198, 0.35), 0 -1px 2px rgba(255, 255, 255, 0.8) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.65) !important;
+    padding: 6px 0.75rem max(0.5rem, env(safe-area-inset-bottom, 0px)) 0.75rem !important;
     box-sizing: border-box !important;
     pointer-events: auto !important;
   }
